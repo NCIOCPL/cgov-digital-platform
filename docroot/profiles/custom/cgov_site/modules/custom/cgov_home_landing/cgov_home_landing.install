@@ -5,6 +5,8 @@
  * Contains cgov_home_landing.install.
  */
 
+use Drupal\node\Entity\Node;
+
 /**
  * Implements hook_install().
  *
@@ -26,7 +28,43 @@ function cgov_home_landing_install() {
 }
 
 /**
- * Latest update hook.
+ * Implements hook_update_N().
+ *
+ * Changes field values for nodes of type 'cgov_home_landing' for
+ * field 'field_page_style'; sets all values of 'standard' or 'special_report'
+ * to 'ncids_with_title'.
  */
-function cgov_home_landing_update_10001() {
+function cgov_home_landing_update_10003() {
+  // Load all nodes of type cgov_home_landing.
+  $nids = \Drupal::entityTypeManager()->getStorage('node')->getQuery()
+    ->condition('type', 'cgov_home_landing')
+  // Disable access check for batch processing.
+    ->accessCheck(FALSE)
+  // Get the latest revision of each node.
+    ->latestRevision()
+    ->execute();
+  $nodes = Node::loadMultiple($nids);
+  // ... (code to change field values) ...
+  // Loop through each node and change the field values of field
+  // 'field_page_style' to 'ncids_with_title' if
+  // it is 'standard' or 'special_report'.
+  $changedIds = 0;
+  foreach ($nodes as $node) {
+    if (($node->hasField('field_page_style'))
+          && !$node->get('field_page_style')->isEmpty()
+          && ($node->get('field_page_style')->value === 'standard'
+          || $node->get('field_page_style')->value === 'special_report')) {
+      $node->set('field_page_style', 'ncids_with_title');
+      $changedIds++;
+      \Drupal::logger("cgov_home_landing")->notice("Node ID:  " . $node->id() . ", " . $node->getTitle() . " updated. Field 'field_page_style' set to 'ncids_with_title'.");
+      $node->save();
+    }
+  }
+  // If nothing found, log that no entities were found to update.
+  if ($changedIds === 0) {
+    \Drupal::logger("cgov_home_landing")->notice("No nodes of type 'cgov_home_landing' found to update.");
+  }
+  else {
+    \Drupal::logger("cgov_home_landing")->notice("Entities updated: " . $changedIds);
+  }
 }
