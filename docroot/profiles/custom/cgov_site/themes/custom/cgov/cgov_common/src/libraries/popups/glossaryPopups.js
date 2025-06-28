@@ -109,7 +109,7 @@ export const cleanKnownAudience = (audience) => {
  * <a class="definition" href="/dicationary-app/def/1234" data-gloss-id="1234" data-gloss-dictionary="Cancer.gov" data-gloss-audience="Patient" data-gloss-lang="en">Term</a>
  */
 const addListenersToNciDefinitionTerms = () => {
-  const glossaryLinks = Array.from(document.querySelectorAll('a.definition[data-gloss-id]'));
+  const glossaryLinks = Array.from(document.querySelectorAll('a[data-gloss-id]'));
 
   for (const element of glossaryLinks) {
     element.addEventListener('click', (e) => {
