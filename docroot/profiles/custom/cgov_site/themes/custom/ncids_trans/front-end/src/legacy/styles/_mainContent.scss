@@ -24,14 +24,15 @@ a:hover, a:focus {
 	text-decoration: underline;
 }
 
-a.definition,
-a.definition:hover, a.definition:focus {
+a.definition {
 	color: $body-font-color;
-	text-decoration: none;
-	border-bottom: thin dotted;
-}
-a.definition:hover, a.definition:focus {
-	border-bottom: thin solid;
+	text-decoration: underline;
+	text-decoration-style: dotted;
+	text-underline-position: under;
+
+	&:hover, &:focus {
+		text-decoration-style: solid;
+	}
 }
 
 // Who knows what that first child is that does not have a correct width.
