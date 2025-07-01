@@ -12,6 +12,8 @@ import nciHeaderInit from '../../lib/components/nci-header';
 // CGDP Imports
 import cgdpPageOptionsInit from '../../lib/components/cgdp-page-options';
 
+import cgdpDefinitionInit from '../../lib/components/cgdp-definition';
+
 /* *********************************************************************
  * There is a LOT of legacy junk going on in here. We do want this to be
  * typescript, but that also means we need types for things that have
@@ -59,8 +61,8 @@ $.extend($.ui.dialog.prototype.options, {
 });
 
 import 'Core/libraries/jQueryUIExtensions/jQueryUIExtensions';
-import popupFunctions from 'Libraries/popups/popup_functions';
-popupFunctions();
+// import popupFunctions from 'Libraries/popups/popup_functions';
+// popupFunctions();
 
 import 'Core/libraries/enlarge/enlarge';
 import 'Core/libraries/preventEnter/jquery.nci.prevent_enter';
@@ -85,7 +87,7 @@ import DeepLinkPatch from 'Core/libraries/deepLinkPatch/deepLinkPatch';
 import linkAudioPlayer from 'Core/libraries/linkAudioPlayer/linkAudioPlayer';
 import videoCarousel from 'Core/libraries/videoCarousel/video-carousel';
 import { GoogleAPIKey } from 'Core/libraries/nciConfig/NCI.config';
-import glossaryPopups from 'Libraries/popups/glossaryPopups';
+//import glossaryPopups from 'Libraries/popups/glossaryPopups';
 import imageCarousel from 'Core/libraries/imageCarousel/image-carousel';
 import charts from 'Libraries/charts';
 
@@ -195,7 +197,8 @@ const onDOMContentLoaded = () => {
 	initLiveHelp();
 
 	// Shim for handling drupal glossified terms
-	glossaryPopups();
+	//glossaryPopups();
+	cgdpDefinitionInit();
 
 	imageCarousel();
 
