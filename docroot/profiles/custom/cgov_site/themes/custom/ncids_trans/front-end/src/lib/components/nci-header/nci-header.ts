@@ -21,7 +21,7 @@ import {
 
 declare global {
 	interface CDEConfig {
-		sitewideSearchConfig: {
+		sitewideSearchConfig?: {
 			searchApiServer: string;
 		};
 	}

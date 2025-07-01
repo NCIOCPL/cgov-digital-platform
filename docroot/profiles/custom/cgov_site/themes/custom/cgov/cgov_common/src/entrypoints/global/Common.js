@@ -20,8 +20,6 @@ import "./Common.scss";
 
 import $ from "jquery";
 import "Core/libraries/jQueryUIExtensions/jQueryUIExtensions";
-import popupFunctions from "Libraries/popups/popup_functions";
-popupFunctions();
 
 import "Core/libraries/enlarge/enlarge";
 import "Core/libraries/preventEnter/jquery.nci.prevent_enter";
@@ -53,7 +51,6 @@ import DeepLinkPatch from "Core/libraries/deepLinkPatch/deepLinkPatch";
 import linkAudioPlayer from "Core/libraries/linkAudioPlayer/linkAudioPlayer";
 import videoCarousel from "Core/libraries/videoCarousel/video-carousel";
 import { GoogleAPIKey } from "Core/libraries/nciConfig/NCI.config";
-import glossaryPopups from "Libraries/popups/glossaryPopups";
 import imageCarousel from "Core/libraries/imageCarousel/image-carousel";
 import charts from "Libraries/charts";
 
@@ -160,9 +157,6 @@ const onDOMContentLoaded = () => {
 
   // initialize Proactive Live Help for CTS
   initLiveHelp();
-
-  // Shim for handling drupal glossified terms
-  glossaryPopups();
 
   imageCarousel();
 

@@ -28,6 +28,24 @@ describe('eddl-util', () => {
 		expect(el.outerHTML).toBe('<div><div id="foo">Hello World</div></div>');
 	});
 
+	it('renders html correctly when set with dangerouslySetInnerHtml', async () => {
+		const stringOfHtml = `<div id="foo">Hello World</div>`;
+		const myComponent = (
+			<div dangerouslySetInnerHTML={{ __html: stringOfHtml }} />
+		);
+		const el = myComponent as unknown as HTMLElement;
+		expect(el.outerHTML).toBe('<div><div id="foo">Hello World</div></div>');
+	});
+
+	it('renders html correctly when dangerouslySetInnerHtml is empty', async () => {
+		const stringOfHtml = '';
+		const myComponent = (
+			<div dangerouslySetInnerHTML={{ __html: stringOfHtml }} />
+		);
+		const el = myComponent as unknown as HTMLElement;
+		expect(el.outerHTML).toBe('<div></div>');
+	});
+
 	it('supports click handlers', async () => {
 		// eslint-disable-next-line @typescript-eslint/no-empty-function
 		const mockHandler = jest.fn(() => {});
