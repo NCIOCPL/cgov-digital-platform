@@ -1,0 +1,37 @@
+@forward 'usa-modal';
+@use 'uswds-core' as *;
+
+.usa-modal__main {
+	@include u-text-align('center');
+	dd {
+		margin-inline-start: 0;
+		@include u-text-align('left');
+	}
+}
+
+// .CDR_audiofile {
+// 	$svg-size: 30;
+// 	@include place-icon(
+// 		(
+// 			'name': 'volume_off',
+// 			'svg-height': $svg-size,
+// 			'svg-width': $svg-size,
+// 			'height': 2ex,
+// 			'color': 'black',
+// 		),
+// 		'after',
+// 		'1px',
+// 		middle,
+// 		'white'
+// 	);
+// }
+
+.cgdp-definition-term {
+	@include u-display('inline');
+	@include u-text('underline');
+}
+
+// Legacy Styles (Delete when migration is COMPLETE)
+.definition {
+	// Remove .definition from front-end/src/legacy/styles/_mainContent
+}
