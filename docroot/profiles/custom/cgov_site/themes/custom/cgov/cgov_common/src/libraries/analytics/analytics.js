@@ -243,6 +243,7 @@ $(window).on("load", function () {
     NCIAnalytics.BlogBodyLinkClick(this, linkText, pageName);
   });
 
+  // Derek, you're replacing this and the definition stuff below it
   // This is for glossary popup tracking on content pages.
   $("#cgvBody").on("click", ".definition", function () {
     var linkText = this.innerText;
