@@ -340,3 +340,16 @@ figure.drupal-entity.align-right.ck-widget {
 figure.drupal-entity.align-left.ck-widget {
 	margin-right: 8px !important;
 }
+
+// Hack until #3005 and #4444 get in
+// Just gonna copy styles from article.
+a.cgdp-definition-link {
+	@include u-color($theme-text-color);
+	@include u-text('underline');
+	text-decoration-style: dotted;
+	text-underline-position: under;
+
+	&:hover, &:focus {
+		text-decoration-style: solid;
+	}
+}
