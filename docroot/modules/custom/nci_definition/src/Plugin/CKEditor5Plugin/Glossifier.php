@@ -65,9 +65,9 @@ class Glossifier extends CKEditor5PluginDefault implements ContainerFactoryPlugi
     if (
       isset($filter_configs['nci_definition']['status']) &&
       $filter_configs['nci_definition']['status'] === TRUE &&
-      isset($filter_configs['nci_definition']['definition_classes'])
+      !empty($filter_configs['nci_definition']['settings']['definition_classes'])
     ) {
-      $plugin_config['nci_definition']['definition_classes'] = $filter_configs['nci_definition']['definition_classes'];
+      $plugin_config['nci_definition']['definition_classes'] = $filter_configs['nci_definition']['settings']['definition_classes'];
     }
 
     return $plugin_config;
