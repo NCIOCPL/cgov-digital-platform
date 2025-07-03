@@ -5,27 +5,30 @@
  * Contains cgov_core.module.
  */
 
-use Drupal\Core\Entity\EntityInterface;
-use Drupal\Core\Entity\EntityTypeInterface;
-use Drupal\Core\Entity\Display\EntityViewDisplayInterface;
-use Drupal\Core\Field\FieldDefinitionInterface;
+use Drupal\Component\Render\FormattableMarkup;
 use Drupal\Core\Access\AccessResult;
+use Drupal\Core\Block\BlockPluginInterface;
+use Drupal\Core\Cache\Cache;
+use Drupal\Core\Cache\RefinableCacheableDependencyInterface;
+use Drupal\Core\Entity\ContentEntityInterface;
+use Drupal\Core\Entity\Display\EntityViewDisplayInterface;
+use Drupal\Core\Entity\EntityInterface;
+use Drupal\Core\Entity\EntityPublishedInterface;
+use Drupal\Core\Entity\EntityTypeInterface;
+use Drupal\Core\Field\FieldDefinitionInterface;
+use Drupal\Core\Form\FormStateInterface;
+use Drupal\Core\Language\Language;
 use Drupal\Core\Render\Element;
 use Drupal\Core\Session\AccountInterface;
-use Drupal\node\NodeInterface;
-use Drupal\Core\Block\BlockPluginInterface;
-use Drupal\Core\Form\FormStateInterface;
+use Drupal\Core\Site\Settings;
+use Drupal\Core\StringTranslation\TranslatableMarkup;
 use Drupal\Core\Url;
 use Drupal\field\Entity\FieldConfig;
-use Drupal\views\ViewExecutable;
-use Drupal\views\Plugin\views\query\QueryPluginBase;
-use Drupal\Core\Cache\Cache;
-use Drupal\Core\StringTranslation\TranslatableMarkup;
-use Drupal\Component\Render\FormattableMarkup;
-use Drupal\Core\Cache\RefinableCacheableDependencyInterface;
-use Drupal\Core\Site\Settings;
+use Drupal\node\NodeInterface;
+use Drupal\path_alias\PathAliasInterface;
 use Drupal\redirect\Entity\Redirect;
-use Drupal\Core\Language\Language;
+use Drupal\views\Plugin\views\query\QueryPluginBase;
+use Drupal\views\ViewExecutable;
 
 /**
  * Implements hook_block_build_alter().
@@ -184,14 +187,14 @@ function cgov_core_field_widget_single_element_form_alter(&$element, FormStateIn
     array_key_exists('#type', $element) &&
     $element['#type'] === 'text_format'
   ) {
-    $element['#after_build'][] = '__cgov_core_text_filter_modify';
+    $element['#after_build'][] = '_cgov_core_text_filter_modify';
   }
 }
 
 /**
  * Helper function for cgov_core_field_widget_single_element_form_alter.
  */
-function __cgov_core_text_filter_modify($form_element) {
+function _cgov_core_text_filter_modify($form_element) {
   /*
    * So a couple of notes:
    * 1. This gets fired twice for each element that is of text_format. The
@@ -221,8 +224,9 @@ function cgov_core_user_presave(EntityInterface $entity) {
     $entity->set('preferred_admin_langcode', 'en');
   }
   elseif ($entity->preferred_admin_langcode->value === 'no-preference') {
-    // support the drush command(bulk-load-users), we use no-preference because
-    // aLL new users on pre-save have a value for this field whether or not it is empty.
+    // Support the drush command(bulk-load-users), we use no-preference because
+    // ALL new users on pre-save have a value for this field regardless of
+    // whether it's empty.
     $entity->set('preferred_admin_langcode', '');
   }
 }
@@ -231,7 +235,7 @@ function cgov_core_user_presave(EntityInterface $entity) {
  * Implements hook_form_alter().
  */
 function cgov_core_form_alter(&$form, FormStateInterface $form_state, $form_id) {
-  // We want to remove the 'Reset by Alphabetical' form button on taxonomy tree forms.
+  // Remove the 'Reset by Alphabetical' form button on taxonomy tree forms.
   if ($form_id === 'taxonomy_overview_terms') {
     if (isset($form['actions']) && isset($form['actions']['reset_alphabetical'])) {
       unset($form['actions']['reset_alphabetical']);
@@ -239,20 +243,28 @@ function cgov_core_form_alter(&$form, FormStateInterface $form_state, $form_id) 
   }
 
   if (strpos($form_id, 'taxonomy_term') !== FALSE && isset($form['tid']['#value'])) {
-    $vocabs = ['cgov_cancer_center_types', 'cgov_cancer_center_regions', 'cgov_event_series', 'cgov_event_venues', 'cgov_biography_campuses', 'cgov_site_sections'];
+    $vocabs = [
+      'cgov_cancer_center_types',
+      'cgov_cancer_center_regions',
+      'cgov_event_group',
+      'cgov_event_series',
+      'cgov_event_venues',
+      'cgov_biography_campuses',
+      'cgov_site_sections',
+    ];
     $vid = $form['vid']['#value'];
     if (in_array($vid, $vocabs)) {
-      $references = getTermRefsFromField($form['tid']['#value'], $vid);
+      $references = _cgov_core_get_term_refs_from_field($form['tid']['#value'], $vid);
       if (count($references) > 0) {
         \Drupal::messenger()->addWarning('Taxonomy term cannot be deleted. The term is used in a published revision.');
       }
     }
   }
-  // "administer permissions" is too much power for a user in production, but we
-  // still need to be able to add users and grant them roles. This hooks into the
-  // user form and allows users with the "edit user roles" permissions to be able
-  // to grant those roles. See the user form code in core for more on how they
-  // make the roles field.
+  // "administer permissions" is too much power for a user in production, but
+  // we still need to be able to add users and grant them roles. This hooks
+  // into the user form and allows users with the "edit user roles" permissions
+  // to be able to grant those roles. See the user form code in core for more
+  // on how they make the roles field.
   if ($form_id === 'user_form' || $form_id === 'user_register_form') {
     if (isset($form['account']['roles'])) {
       $user = \Drupal::currentUser();
@@ -341,13 +353,13 @@ function cgov_core_page_attachments_alter(array &$attachments) {
     ],
     'CDEConfig',
   ];
-  $cache_tags = isset($attachments['#cache']['tags']) ? $attachments['#cache']['tags'] : [];
+  $cache_tags = $attachments['#cache']['tags'] ?? [];
   $attachments['#cache']['tags'] = Cache::mergeTags($cache_tags, $config->getCacheTags());
 
   // Hack to remove the "ad" inserted by the responsive_favicons module.
   $headings = &$attachments['#attached']['html_head'];
-  foreach($headings as &$element) {
-    if($element[1] === 'responsive_favicons'){
+  foreach ($headings as &$element) {
+    if ($element[1] === 'responsive_favicons') {
       $element[0]['#attributes']['name'] = 'x-no-op';
       $element[0]['#attributes']['content'] = 'none';
     }
@@ -498,7 +510,7 @@ function cgov_core_moderation_sidebar_alter(array &$build, EntityInterface $enti
       (!empty($build['actions']['primary']['edit']['#title'])) &&
       ($build['actions']['primary']['edit']['#title']->getUntranslatedString() == 'Edit content')
     ) {
-      $edit = $build['actions']['primary']['edit']['#title'] = new TranslatableMarkup("View in edit form");
+      $build['actions']['primary']['edit']['#title'] = new TranslatableMarkup("View in edit form");
     }
   }
 
@@ -515,7 +527,7 @@ function cgov_core_moderation_sidebar_alter(array &$build, EntityInterface $enti
     ) {
       $untranslatedString = $build['actions']['primary'][$element]['#title']->getUntranslatedString();
       $arguments = $build['actions']['primary'][$element]['#title']->getArguments();
-      $edit = $build['actions']['primary'][$element]['#title'] = new FormattableMarkup($untranslatedString, $arguments);
+      $build['actions']['primary'][$element]['#title'] = new FormattableMarkup($untranslatedString, $arguments);
     }
 
     $build['actions']['primary'][$element]['#weight'] = $tmp_weight + 100;
@@ -533,7 +545,7 @@ function cgov_core_moderation_sidebar_alter(array &$build, EntityInterface $enti
       ) {
         $untranslatedString = $build['actions']['secondary'][$element]['#title']->getUntranslatedString();
         $arguments = $build['actions']['secondary'][$element]['#title']->getArguments();
-        $edit = $build['actions']['secondary'][$element]['#title'] = new FormattableMarkup($untranslatedString, $arguments);
+        $build['actions']['secondary'][$element]['#title'] = new FormattableMarkup($untranslatedString, $arguments);
       }
 
       $build['actions']['secondary'][$element]['#weight'] = $tmp_weight + 100;
@@ -732,7 +744,7 @@ function cgov_core_page_attachments(array &$attachments) {
  * @return array
  *   An array of additional libraries within ncids_trans theme.
  */
-function cgov_addl_lib_allowed_values_function(EntityInterface $entity) {
+function cgov_core_addl_lib_allowed_values_function(EntityInterface $entity) {
   $front_end_theme = \Drupal::service('theme_handler')->getDefault();
   $libs = \Drupal::service('library.discovery')->getLibrariesByExtension($front_end_theme);
   // Filters out all libraries that don't start with "addl-"
@@ -746,6 +758,11 @@ function cgov_addl_lib_allowed_values_function(EntityInterface $entity) {
 }
 
 /**
+ * Callback function to provide a default for the additional library field.
+ *
+ * Called from field.field.node.cgov_home_landing.field_additional_library
+ * to supply a default value for the additional library field.
+ *
  * @param \Drupal\Core\Entity\EntityInterface $entity
  *   The entity being created.
  * @param \Drupal\Core\Field\FieldDefinitionInterface $definition
@@ -754,7 +771,7 @@ function cgov_addl_lib_allowed_values_function(EntityInterface $entity) {
  * @return array
  *   An array of default value keys with each entry keyed with the "value" key.
  */
-function cgov_addl_lib_default_value_function(EntityInterface $entity, FieldDefinitionInterface $definition) {
+function cgov_core_addl_lib_default_value_function(EntityInterface $entity, FieldDefinitionInterface $definition) {
   return [
     ['value' => 'None'],
   ];
@@ -766,11 +783,19 @@ function cgov_addl_lib_default_value_function(EntityInterface $entity, FieldDefi
 function cgov_core_taxonomy_term_access($entity, $operation, $account) {
   // Prevent term deletion if used in default revision.
   $references = [];
-  $vocabs = ['cgov_cancer_center_types', 'cgov_cancer_center_regions', 'cgov_event_series', 'cgov_event_venues', 'cgov_biography_campuses', 'cgov_site_sections'];
+  $vocabs = [
+    'cgov_cancer_center_types',
+    'cgov_cancer_center_regions',
+    'cgov_event_group',
+    'cgov_event_series',
+    'cgov_event_venues',
+    'cgov_biography_campuses',
+    'cgov_site_sections',
+  ];
   if (in_array($entity->bundle(), $vocabs)) {
     switch ($operation) {
       case 'delete':
-        $references = getTermRefsFromField($entity->id(), $entity->bundle());
+        $references = _cgov_core_get_term_refs_from_field($entity->id(), $entity->bundle());
         if (count($references) > 0) {
           return AccessResult::forbidden();
         }
@@ -787,7 +812,7 @@ function cgov_core_taxonomy_term_access($entity, $operation, $account) {
 /**
  * Method to find if term refrence exist.
  */
-function getTermRefsFromField($tid, $vid) {
+function _cgov_core_get_term_refs_from_field($tid, $vid) {
   $entities = [];
 
   $entity_reference_fields = [];
@@ -837,7 +862,7 @@ function cgov_core_taxonomy_term_delete(EntityInterface $entity) {
   $tid = $entity->id();
   $tags = [];
   if ($bundle == 'cgov_blog_topics') {
-    $references = getTermRefsFromField($tid, $bundle);
+    $references = _cgov_core_get_term_refs_from_field($tid, $bundle);
     if (count($references) > 0) {
       foreach ($references as $type => $ids) {
         if ($type === 'node') {
@@ -854,7 +879,7 @@ function cgov_core_taxonomy_term_delete(EntityInterface $entity) {
 }
 
 /**
- * Implements hook_menu_local_tasks_alter.
+ * Implements hook_menu_local_tasks_alter().
  *
  * D10.3 Added revisions for taxonomy terms, but considering how
  * specialized some of our vocabularies are, we need more
@@ -883,25 +908,48 @@ function cgov_core_form_taxonomy_term_form_alter(&$form, FormStateInterface $for
 }
 
 /**
- * Method to clear source paths for redirects when inserted or updated.
+ * Method to clear the cache for an array of relative URLs.
  */
-function _cgov_core_clear_redirect_source_cache(Redirect $entity) {
+function _cgov_core_invalidate_urls(array $urls) {
+
+  if (empty($urls)) {
+    return;
+  }
   // On local development without purge, make sure we don't fail.
-  $moduleHandler = \Drupal::service('module_handler');
-  if (!$moduleHandler->moduleExists('purge')) {
-    \Drupal::logger('cgov_core')->notice("Attempted to purge redirect without the purge module installed.");
+  $module_handler = \Drupal::service('module_handler');
+  if (!$module_handler->moduleExists('purge')) {
+    return;
+  }
+  $purge_queuers = \Drupal::service('purge.queuers');
+  $queuer = $purge_queuers->get('drush_purge_queue_add');
+  if (empty($queuer)) {
+    \Drupal::logger('cgov_core')->notice("Attempted to purge redirect without the drush purgue queuer installed.");
     return;
   }
 
-  // Set up our needed variables for calculating the URL.
+  // The purge invalidation factory helps us construct an invalidation object
+  // that can be understood by the queuer and purgers.
+  $purge_invalidation_factory = \Drupal::service('purge.invalidation.factory');
+
   // The value for cgdp.cache_url_host is computed in cgov_caching.settings.php.
   $host = Settings::get('cgdp.cache_url_host');
   $host = rtrim($host, '/');
-  $sourcePath = '/' . $entity->redirect_source->path;
+  $invalidations = [];
 
-  // The purge invalidation factory helps us construct an invalidation object
-  // that can be understood by the queuer and purgers.
-  $purgeInvalidationFactory = \Drupal::service('purge.invalidation.factory');
+  foreach ($urls as $url) {
+    $full_url = $host . $url;
+    $invalidations[] = $purge_invalidation_factory->get('url', $full_url);
+  }
+
+  // Actually add the invalidations to the purge queue.
+  $purge_queue = \Drupal::service('purge.queue');
+  $purge_queue->add($queuer, $invalidations);
+}
+
+/**
+ * Method to clear source paths for redirects when inserted or updated.
+ */
+function _cgov_core_clear_redirect_source_cache(Redirect $entity) {
 
   // If no language is specified for the redirect,
   // purge the url for all languages.
@@ -914,30 +962,22 @@ function _cgov_core_clear_redirect_source_cache(Redirect $entity) {
   // Create an absolute url for all languages based on $language,
   // then create an invalidation object using it.
   $invalidations = [];
+  $source_path = '/' . $entity->redirect_source->path;
   foreach ($language as $value) {
+    $localized_path = $source_path;
     $language_prefix = \Drupal::config('language.negotiation')->get("url.prefixes.$value");
     if (!empty($language_prefix)) {
-      $sourcePath = Url::fromUri("internal:/{$language_prefix}{$sourcePath}")->toString();
+      $localized_path = Url::fromUri("internal:/{$language_prefix}{$localized_path}")->toString();
     }
-    $invalidateUrl = $host . $sourcePath;
-    $invalidations[] = $purgeInvalidationFactory->get('url', $invalidateUrl);
+    $invalidations[] = $localized_path;
   }
-
-  // Actually add the invalidations to the purge queue.
-  $purgeQueuers = \Drupal::service('purge.queuers');
-  $queuer = $purgeQueuers->get('drush_purge_queue_add');
-  if (empty($queuer)) {
-    \Drupal::logger('cgov_core')->notice("Attempted to purge redirect without the drush purgue queuer installed.");
-    return;
-  }
-  $purgeQueue = \Drupal::service('purge.queue');
-  $purgeQueue->add($queuer, $invalidations);
+  _cgov_core_invalidate_urls($invalidations);
 }
 
 /**
  * Implements hook_ENTITY_TYPE_insert().
  *
- * hook_redirect_insert is called on all new redirect creations, per Redirect module API.
+ * The hook_redirect_insert is called on all new redirect creations.
  */
 function cgov_core_redirect_insert(Redirect $entity) {
   _cgov_core_clear_redirect_source_cache($entity);
@@ -946,7 +986,7 @@ function cgov_core_redirect_insert(Redirect $entity) {
 /**
  * Implements hook_ENTITY_TYPE_update().
  *
- * hook_redirect_update is called on all redirect updates, per Redirect module API.
+ * The hook_redirect_update is called on all redirect updates.
  */
 function cgov_core_redirect_update(Redirect $entity) {
   _cgov_core_clear_redirect_source_cache($entity);
@@ -968,14 +1008,113 @@ function cgov_core_preprocess_views_view_field(array &$variables) {
   $isMediaView = fn($viewID): bool => in_array($viewID, ['media', 'moderated_media']) && strpos($view->current_display, 'media_page_list') === 0;
 
   // We only want to do this for content and media views.
-  if (!$isContentView($view->id()) && !$isMediaView($view->id()))
+  if (!$isContentView($view->id()) && !$isMediaView($view->id())) {
     return;
+  }
 
   // We only want to do this for the 'changed' field.
-  if ($variables['field']->field !== 'changed' || empty($variables['row']->_entity))
+  if ($variables['field']->field !== 'changed' || empty($variables['row']->_entity)) {
     return;
+  }
 
   // Apply short date format to the 'changed' field.
   $timestamp = $variables['row']->_entity->getChangedTime();
-  $variables['output'] = \Drupal::service('date.formatter')->format($timestamp,'short','',NULL,'en');
+  $variables['output'] = \Drupal::service('date.formatter')->format($timestamp, 'short', '', NULL, 'en');
+}
+
+/**
+ * Method to determine if we are in batch or CLI.
+ */
+function _cgov_core_is_programatic() {
+  $batch = batch_get();
+  $is_batch = !empty($batch['sets']);
+  $is_cli = (PHP_SAPI === 'cli');
+  return ($is_cli || $is_batch);
+}
+
+/**
+ * Implements hook_ENTITY_TYPE_update().
+ *
+ * Clears the cache for a path alias when it is updated.
+ * Updates only happen if fields that affect the path are changed.
+ * Updates don't occur until the entity revision is published.
+ */
+function cgov_core_path_alias_update(PathAliasInterface $alias) {
+  // Skip if this is not user triggered.
+  if (_cgov_core_is_programatic()) {
+    return;
+  }
+  $alias_path = $alias->getAlias();
+  $langcode = $alias->language()->getId();
+
+  // Check if language prefix is enabled for the language.
+  // If so, get the language prefix for the URL.
+  $language_manager = \Drupal::service('language_manager');
+  $default_langcode = $language_manager->getDefaultLanguage()->getId();
+  $prefix = '';
+  if ($langcode && $langcode !== $default_langcode) {
+    $prefix = '/' . \Drupal::config('language.negotiation')->get("url.prefixes.$langcode");
+  }
+
+  // Clear the cache for the resulting URL.
+  $url = $prefix . $alias_path;
+  _cgov_core_invalidate_urls([$url]);
+}
+
+/**
+ * Implements hook_entity_update().
+ *
+ * Performs a cache clear for the entity's URL on first publish.
+ *
+ * This is required for instances where an entity with a path alias is created
+ * but stays in draft for a while before being published. hook_path_alias_update
+ * won't fire on publish because the path has not changed, but we want to clear
+ * the cache.
+ */
+function cgov_core_entity_update(EntityInterface $entity) {
+
+  // If we're not a content entity.
+  if (!$entity instanceof ContentEntityInterface) {
+    return;
+  }
+  // If we're not in the Editorial Workflow.
+  $moderation_info = \Drupal::service('content_moderation.moderation_information');
+  $workflow = $moderation_info->getWorkflowForEntity($entity);
+  if ($workflow === NULL || $workflow->id() !== 'editorial_workflow') {
+    return;
+  }
+  // If we don't have a moderation state or we're not coming from "In Review".
+  if (!$entity->hasField('moderation_state') || !isset($entity->original) || ($entity->original->moderation_state->value !== "review")) {
+    return;
+  }
+  // If we're not moving to a "Published" state.
+  if (!$entity instanceof EntityPublishedInterface || !$entity->isPublished()) {
+    return;
+  }
+
+  // If this is in batch or from the cli.
+  if (_cgov_core_is_programatic()) {
+    return;
+  }
+  $url = $entity->toUrl('canonical', ['absolute' => FALSE])->toString();
+  _cgov_core_invalidate_urls([$url]);
+}
+
+/**
+ * Implements hook_module_implements_alter().
+ *
+ * Make sure our cgov_core_entity_update comes at the very end of the
+ * implementation list because the path alias hooks need to run first.
+ *
+ * This is required for the first publish of translated nodes where the
+ * path alias has changed since the initial draft. Transaltion publishing
+ * doesn't trigger hook_path_alias_update, it triggers hook_path_alias_insert,
+ * which we don't have.
+ */
+function cgov_core_module_implements_alter(&$implementations, $hook) {
+  if ($hook === 'entity_update') {
+    $group = $implementations['cgov_core'];
+    unset($implementations['cgov_core']);
+    $implementations['cgov_core'] = $group;
+  }
 }

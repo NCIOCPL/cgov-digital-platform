@@ -51,7 +51,7 @@ function _cgov_image_install_permissions(CgovCoreTools $siteHelper) {
       'use simple_workflow transition create_new_draft',
       'use simple_workflow transition publish',
       'view any cgov_contextual_image media revisions',
-      'view any cgov_image media revisions'
+      'view any cgov_image media revisions',
     ],
   ];
 
@@ -59,132 +59,7 @@ function _cgov_image_install_permissions(CgovCoreTools $siteHelper) {
 }
 
 /**
- * Update for v1.1.6.
- *
- * Install ImageMagick as an image manipulation toolkit.
- */
-function cgov_image_update_8001() {
-  if (!\Drupal::moduleHandler()->moduleExists('imagemagick')) {
-    $installer = \Drupal::service('module_installer');
-    $installer->install(['imagemagick']);
-  }
-}
-
-/**
- * Update for Special Report.
- *
- * Force installation of borderless card node.view_mode prior to view display.
- */
-function cgov_image_update_8002() {
-    $service = \Drupal::service('features.manager');
-    $result = $service->import(['cgov_image']);
-}
-
-/**
- * Update for NCIDS Internal Feature Card.
- *
- * Force installation of core.entity_view_mode.node.ncids_feature_card_image
- * before node core.entity_view_display configs are loaded.
- */
-function cgov_image_update_8003() {
-  $service = \Drupal::service('features.manager');
-  $result = $service->import(['cgov_image']);
-}
-
-/**
- * Update for NCIDS Internal Promo Blocks.
- *
- * Force installation of core.entity_view_mode.node.ncids_promo_block_image
- * before node core.entity_view_display configs are loaded.
- */
-function cgov_image_update_8004() {
-  $service = \Drupal::service('features.manager');
-  $result = $service->import(['cgov_image']);
-}
-
-/**
- * Update for NCIDS Media Feature Card.
- *
- * Force installation of core.entity_view_mode.media.ncids_feature_card_image
- * before node core.entity_view_display configs are loaded.
- */
-function cgov_image_update_8005() {
-  $service = \Drupal::service('features.manager');
-  $result = $service->import(['cgov_image']);
-}
-
-/**
- * Update for NCIDS Dynamic List.
- *
- * Force installation of core.entity_view_mode.media.ncids_collections_media
- * before node core.entity_view_display configs are loaded.
- */
-function cgov_image_update_8006() {
-  $service = \Drupal::service('features.manager');
-  $result = $service->import(['cgov_image']);
-}
-
-/**
- * Update for NCIDS Feature Card.
- *
- * Deletes ncids_featured_4x3 image style.
- */
-function cgov_image_update_8007() {
-  $service = \Drupal::service('features.manager');
-  $result = $service->import(['cgov_image']);
-
-  $config = \Drupal::configFactory()
-    ->getEditable('image.style.ncids_featured_4x3');
-  $config->delete();
-}
-
-/**
- * Set permissions for editing media file revisions.
- */
-function cgov_image_update_10001() {
-  $siteHelper = \Drupal::service('cgov_core.tools');
-  $perms = [
-    'image_manager' => [
-      'revert any cgov_contextual_image media revisions',
-      'revert any cgov_image media revisions',
-      'view any cgov_contextual_image media revisions',
-      'view any cgov_image media revisions'    ],
-  ];
-  $siteHelper->addRolePermissions($perms);
-}
-
- /*
- * Enable ncids_list_style view mode.
- */
-function cgov_image_update_10002() {
-  $service = \Drupal::service('features.manager');
-  $assigner = \Drupal::service('features_assigner');
-  $assigner->assignConfigPackages();
-  $service->import(['cgov_image']);
-}
-
-/**
- * Update for NCIDS Flag Card Group.
- *
- * Force installation of core.entity_view_mode.media.ncids_image_display_flag_card
- * before node core.entity_view_display configs are loaded.
- */
-function cgov_image_update_10003() {
-  $service = \Drupal::service('features.manager');
-  $assigner = \Drupal::service('features_assigner');
-  $assigner->assignConfigPackages();
-  $result = $service->import(['cgov_image']);
-}
-
-/**
- * Update for NCIDS Image.
- *
- * Force installation of core.entity_view_mode.media.ncids_aspect_ratio
- * before node core.entity_view_display configs are loaded.
+ * Latest update hook.
  */
 function cgov_image_update_10004() {
-  $service = \Drupal::service('features.manager');
-  $assigner = \Drupal::service('features_assigner');
-  $assigner->assignConfigPackages();
-  $result = $service->import(['cgov_image']);
 }

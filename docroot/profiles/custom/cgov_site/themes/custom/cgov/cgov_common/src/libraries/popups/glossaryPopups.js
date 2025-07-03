@@ -104,6 +104,30 @@ export const cleanKnownAudience = (audience) => {
 }
 
 /**
+ * This is handler for the new <nci-definition> filter. The filter will output
+ * something like:
+ * <a class="definition" href="/dicationary-app/def/1234" data-gloss-id="1234" data-gloss-dictionary="Cancer.gov" data-gloss-audience="Patient" data-gloss-lang="en">Term</a>
+ */
+const addListenersToNciDefinitionTerms = () => {
+  const glossaryLinks = Array.from(document.querySelectorAll('a.definition[data-gloss-id]'));
+
+  for (const element of glossaryLinks) {
+    element.addEventListener('click', (e) => {
+      e.preventDefault();
+
+      // <nci-definition> terms have their parameters as part of the
+      // link. So no need to lookup helpers and such.
+      fetchAndPop(
+        element.dataset.glossDictionary,
+        element.dataset.glossAudience,
+        element.dataset.glossLang,
+        element.dataset.glossId
+      );
+    });
+  }
+}
+
+/**
  * These glossary terms have been glossified using Drupal. They are all for the Dictionary of
  * Cancer Terms and they all match the pattern like:
  *
@@ -254,6 +278,7 @@ const renderTerm = (term) => {
  * Initialize all glossary link popups.
  */
 const addListenersToGlossaryTerms = () => {
+  addListenersToNciDefinitionTerms();
   addListenersToDrupalGlossaryTerms();
   addListenersToPdqAndLegacyGlossaryTerms();
 };

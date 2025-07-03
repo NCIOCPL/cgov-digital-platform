@@ -5,13 +5,13 @@
  * Contains cgov_blog.module.
  */
 
+use Drupal\Core\Access\AccessResult;
+use Drupal\Core\Cache\Cache;
 use Drupal\Core\Form\FormStateInterface;
+use Drupal\Core\Url;
+use Drupal\node\NodeInterface;
 use Drupal\taxonomy\Entity\Term;
 use Drupal\views\ViewExecutable;
-use Drupal\Core\Cache\Cache;
-use Drupal\node\NodeInterface;
-use Drupal\Core\Url;
-use Drupal\Core\Access\AccessResult;
 
 /**
  * Implements hook_form_alter().
@@ -26,13 +26,13 @@ function cgov_blog_form_alter(&$form, FormStateInterface $form_state, $form_id) 
     $form['field_blog_topics']['#suffix'] = '</div>';
 
     // Check if the current form is in the draft or review state.
-    if (_is_selectable($form)) {
+    if (_cgov_blog_is_selectable($form)) {
       // Hide blog topics on initial content creation.
       $form['field_blog_topics']['#states']['invisible']['select[name="field_blog_series"]']['value'] = '_none';
       // Set replacing wrapper for initial load and ajax
       // requests when creating a blog post.
       $form['field_blog_series']['widget']['#ajax'] = [
-        'callback' => '_update_blog_post_checkboxes',
+        'callback' => '_cgov_blog_update_blog_post_checkboxes',
         'wrapper' => 'cgov-edit-blog-topics-wrapper',
         'event' => 'change',
         'method' => 'replace',
@@ -88,7 +88,7 @@ function cgov_blog_form_alter(&$form, FormStateInterface $form_state, $form_id) 
 /**
  * Custom callback for updating blog post topic checkboxes.
  */
-function _update_blog_post_checkboxes($form, &$form_state) {
+function _cgov_blog_update_blog_post_checkboxes($form, &$form_state) {
   // Returns the form element for replacing.
   return $form['field_blog_topics'];
 }
@@ -114,7 +114,7 @@ function cgov_blog_views_pre_view(ViewExecutable $view, $display_id, array &$arg
   // Can use ?series=cancer-currents&topic=clinical-trial-results.
   // NOTE: query parameters will only get the last value if the
   // parameters are duplicated. e.g., ?a=1&a=2 returns 2 when you
-  // get('a');
+  // get('a');.
   $series = \Drupal::request()->query->get('series');
   $topic = \Drupal::request()->query->get('topic');
 
@@ -132,7 +132,6 @@ function cgov_blog_views_pre_view(ViewExecutable $view, $display_id, array &$arg
     $view->element['#cache']['contexts'] ?? [],
     $contexts
   );
-
 
   // Convert BlogSeries.Shortname to ID.
   if ($series && !is_numeric($series) && $series != 'all') {
@@ -166,7 +165,7 @@ function cgov_blog_views_pre_view(ViewExecutable $view, $display_id, array &$arg
 /**
  * Check if the current form is in the draft or review state.
  */
-function _is_selectable(array $form) {
+function _cgov_blog_is_selectable(array $form) {
   $curr_state = $form['moderation_state']['widget'][0]['state']['#default_value'];
   $selectable = ($curr_state == 'draft' || $curr_state == 'review') ? TRUE : FALSE;
   return $selectable;
@@ -188,7 +187,6 @@ function cgov_blog_preprocess_block(&$variables) {
     // there is therefore no need to sanitize them.
     $year = \Drupal::request()->query->get('year');
     $topic = \Drupal::request()->query->get('topic');
-
 
     // Proceed only if the view contains query params.
     if (!empty($topic) || !empty($year)) {
@@ -258,7 +256,7 @@ function cgov_blog_entity_update($entity) {
 }
 
 /**
- * Implments hook_language_switch_links_alter
+ * Implments hook_language_switch_links_alter.
  *
  * Makes sure that the correct 'field_topic_pretty_url' is being
  * assigned to the translation of the topic.
@@ -307,7 +305,6 @@ function cgov_blog_module_implements_alter(&$implementations, $hook) {
     $implementations['cgov_blog'] = $group;
   }
 }
-
 
 /**
  * Implements hook_node_access().

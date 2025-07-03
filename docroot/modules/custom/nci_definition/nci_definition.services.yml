@@ -1,0 +1,7 @@
+services:
+  nci_definition.legacy_converter:
+    class: Drupal\nci_definition\Services\NciDefinitionLegacyConverter
+
+  logger.channel.nci_definition:
+    parent: logger.channel_base
+    arguments: ['nci_definition']

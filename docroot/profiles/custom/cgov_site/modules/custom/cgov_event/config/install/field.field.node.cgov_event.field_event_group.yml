@@ -1,0 +1,28 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_event_group
+    - node.type.cgov_event
+    - taxonomy.vocabulary.cgov_event_group
+id: node.cgov_event.field_event_group
+field_name: field_event_group
+entity_type: node
+bundle: cgov_event
+label: 'Event Group'
+description: 'Select the event group for which your event is associated.'
+required: true
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:taxonomy_term'
+  handler_settings:
+    target_bundles:
+      cgov_event_group: cgov_event_group
+    sort:
+      field: name
+      direction: asc
+    auto_create: false
+    auto_create_bundle: ''
+field_type: entity_reference

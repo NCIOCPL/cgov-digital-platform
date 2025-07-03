@@ -8,9 +8,6 @@
 use Drupal\block\Entity\Block;
 use Drupal\block_content\Entity\BlockContent;
 use Drupal\cgov_core\CgovCoreTools;
-use Drupal\views\Entity\View;
-use Symfony\Component\Yaml\Yaml;
-use Drupal\Core\Database\Database;
 
 /**
  * Implements hook_install().
@@ -172,420 +169,47 @@ function cgov_core_themes_installed($theme_list) {
       continue;
     }
     $blockContent = \Drupal::entityTypeManager()->getStorage('block_content')->loadByProperties(['info' => 'Public Use']);
-      if(empty($blockContent)) {
-        $block_theme = $theme;
-        $block_region = 'public_use';
-        $block_label = 'Public Use';
-        $block_html = <<<EOMarkup
+    if (empty($blockContent)) {
+      $block_theme = $theme;
+      $block_region = 'public_use';
+      $block_label = 'Public Use';
+      $block_html = <<<EOMarkup
       <p><em>If you would like to reproduce some or all of this content, see <a href="/policies/copyright-reuse">Reuse of NCI Information</a> for guidance about copyright and permissions. In the case of permitted digital reproduction, please credit the National Cancer Institute as the source and link to the original NCI product using the original product's title; e.g., “[current-page:title] was originally published by the National Cancer Institute.”</em></p>
       EOMarkup;
 
-        // Create block content.
-        $block_content = BlockContent::create([
-          'id' => 'public_use',
-          'type' => 'content_block',
-          'info' => $block_label,
-          'body' => ['value' => $block_html, 'format' => 'full_html'],
-        ]);
-        $block_content->save();
+      // Create block content.
+      $block_content = BlockContent::create([
+        'id' => 'public_use',
+        'type' => 'content_block',
+        'info' => $block_label,
+        'body' => ['value' => $block_html, 'format' => 'full_html'],
+      ]);
+      $block_content->save();
 
-        // Assign block to Region.
-        $data = [
-          'id' => 'public_use',
-          'plugin' => 'block_content:' . $block_content->uuid(),
-          'region' => $block_region,
-          'provider' => 'block_content',
-          'weight' => 0,
-          'theme' => $block_theme,
-          'settings' => [
-            'label' => $block_label,
-            'label_display' => '0',
-          ],
-        ];
+      // Assign block to Region.
+      $data = [
+        'id' => 'public_use',
+        'plugin' => 'block_content:' . $block_content->uuid(),
+        'region' => $block_region,
+        'provider' => 'block_content',
+        'weight' => 0,
+        'theme' => $block_theme,
+        'settings' => [
+          'label' => $block_label,
+          'label_display' => '0',
+        ],
+      ];
 
-        $block = Block::create($data);
-        $block->save();
-      }
-    }
-}
-
-/**
- * Update for Hotfix 1.0.2.
- *
- * Adds view all media revisions and view all revisions to
- * content author role. This allows for media moderation
- * tab to appear.
- */
-function cgov_core_update_8001() {
-  // Get the helper service.
-  $siteHelper = \Drupal::service('cgov_core.tools');
-
-  $perms = [
-    'content_author' => [
-      'view all media revisions',
-      'view all revisions',
-    ],
-  ];
-
-  $siteHelper->addRolePermissions($perms);
-}
-
-/**
- * Update for Hotfix 1.1.2.
- *
- * Adds view latest version to content previewer role.
- */
-function cgov_core_update_8002() {
-  // Get the helper service.
-  $siteHelper = \Drupal::service('cgov_core.tools');
-
-  $perms = [
-    'content_previewer' => [
-      'view latest version',
-    ],
-  ];
-
-  $siteHelper->addRolePermissions($perms);
-}
-
-/**
- * Update for v1.1.14.
- *
- * Install cgov_mail as a CGov Module.
- */
-function cgov_core_update_8003() {
-  if (!\Drupal::moduleHandler()->moduleExists('cgov_mail')) {
-    $installer = \Drupal::service('module_installer');
-    $installer->install(['cgov_mail']);
-  }
-}
-
-/**
- * Update for Issue #2784.
- *
- * Adds regenerate urls to site admin role.
- */
-function cgov_core_update_8004() {
-  // Get the helper service.
-  $siteHelper = \Drupal::service('cgov_core.tools');
-
-  $perms = [
-    'site_admin' => [
-      'regenerate urls',
-    ],
-  ];
-
-  $siteHelper->addRolePermissions($perms);
-}
-
-/**
- * Update for Cgov Adobe. (Issue #3121)
- */
-function cgov_core_update_8005() {
-
-  // Enable cgov adobe
-  if (!\Drupal::moduleHandler()->moduleExists('cgov_adobe')) {
-    $installer = \Drupal::service('module_installer');
-    $installer->install(['cgov_adobe']);
-  }
-  // add role 'administer cgov adobe'
-  $siteHelper = \Drupal::service('cgov_core.tools');
-
-  $perms = [
-    'site_admin' => [
-      'administer cgov adobe',
-    ],
-  ];
-  $siteHelper->addRolePermissions($perms);
-
-  // If adobe dtm does not exist, then we should bail.
-  if (!\Drupal::moduleHandler()->moduleExists('adobe_dtm')) {
-    return;
-  }
-
-  /* Copy launch tag from adobe_dtm settings to cgov_adobe settings. */
-  $launch_url = \Drupal::config('adobe_dtm.settings')->get('launch_property_build_url');
-
-  if ($launch_url) {
-  /* remove role 'administer adobe dynamic tag management', */
-  \Drupal::configFactory()->getEditable('cgov_adobe.settings')
-    ->set('launch_property_build_url', $launch_url)
-    ->save(TRUE);
-  }
-
-  // Uninstall Adobe DTM
-  if (\Drupal::moduleHandler()->moduleExists('adobe_dtm')) {
-    $installer = \Drupal::service('module_installer');
-    $installer->uninstall(['adobe_dtm'], FALSE);
-  }
-}
-
-/**
- * Update for Clam AV. (Issue #3755)
- */
-function cgov_core_update_9001() {
-  // Enable clam_av
-  if (!\Drupal::moduleHandler()->moduleExists('clamav')) {
-    $installer = \Drupal::service('module_installer');
-    $installer->install(['clamav']);
-
-    // Make extra sure all our settings are in place.
-    $config = \Drupal::configFactory()->getEditable('clamav.settings');
-    $config->set('enabled', true);
-    $config->set('outage_action', 1);
-    $config->set('scan_mode', 1);
-    $config->set('verbosity', 0);
-    $config->set('mode_executable', [
-      'executable_path' => '/usr/bin/clamscan',
-      'executable_parameters' => '',
-    ]);
-    $config->save();
-
-  }
-}
-
-/**
- * Remove Clam AV. (Issue #3781)
- */
-function cgov_core_update_9002() {
-  if (\Drupal::moduleHandler()->moduleExists('clamav')) {
-    $installer = \Drupal::service('module_installer');
-    $installer->uninstall(['clamav'], FALSE);
-  }
-}
-
-/**
- * Remove role_delegation. (Issue #4106)
- */
-function cgov_core_update_9003() {
-
-  $siteHelper = \Drupal::service('cgov_core.tools');
-
-  // Remove role_delegation permissions from site_admin.
-  $roles_to_remove = [
-    'site_admin' => [
-      'assign admin_ui role',
-      'assign advanced_editor role',
-      'assign blog_manager role',
-      'assign content_author role',
-      'assign content_editor role',
-      'assign content_previewer role',
-      'assign image_manager role',
-      'assign layout_manager role',
-      'assign pdq_importer role',
-      'assign site_admin role',
-    ],
-  ];
-  $siteHelper->removeRolePermissions($roles_to_remove);
-
-  // Add new "edit user roles" permission for saving user roles.
-  $siteHelper->addRolePermissions([
-    'site_admin' => [ 'edit user roles' ],
-  ]);
-
-  if (\Drupal::moduleHandler()->moduleExists('role_delegation')) {
-    $installer = \Drupal::service('module_installer');
-    $installer->uninstall(['role_delegation'], FALSE);
-  }
-
-  // Role delegation provides views extensions, so the removal of
-  // role_delegation delete's the people view. We need to re-add.
-  if (\Drupal::moduleHandler()->moduleExists('views') && !View::load('user_admin_people')) {
-    $config_path = \Drupal::service('extension.list.module')->getPath('user') . '/config/optional/views.view.user_admin_people.yml';
-    $data = Yaml::parseFile($config_path);
-    Drupal::configFactory()->getEditable('views.view.user_admin_people')->setData($data)->save(TRUE);
-  }
-}
-
-/**
- * Switch from simplesamlphp_auth to samlauth. (Issue #4116)
- */
-function cgov_core_update_9004() {
-
-  $module_handler = \Drupal::moduleHandler();
-
-  // (Re-)install cgov_saml_auth_config, which will bring along samlauth
-  if (!$module_handler->moduleExists('cgov_saml_auth_config')) {
-    $installer = \Drupal::service('module_installer');
-    $installer->install(['cgov_saml_auth_config']);
-  }
-
-  // Update the externalauth mapping table to switch from simplesamlphp to samlauth.
-  $connection = Database::getConnection();
-  if ($module_handler->moduleExists('samlauth') && $module_handler->moduleExists('externalauth') && $connection->schema()->tableExists('authmap')) {
-    $query = $connection->update('authmap')
-      ->fields(['provider' => 'samlauth'])
-      ->condition('provider', 'simplesamlphp_auth');
-    $query->execute();
-  }
-}
-
-/**
- * Turn off HAL module. (Issue #4150)
- *
- * pdq_core and pdq_glossary bother required this, but it will
- * be removed in D10. Adding the uninstall here as this is
- * more of a global project change.
- */
-function cgov_core_update_9005() {
-
-  if (\Drupal::moduleHandler()->moduleExists('hal')) {
-    $installer = \Drupal::service('module_installer');
-    $installer->uninstall(['hal'], FALSE);
-  }
-
-}
-
-/**
- * Install Claro theme.
- */
-function cgov_core_update_9006() {
-  \Drupal::service('theme_installer')->install(['claro']);
-}
-
-/**
- * Fixed up block visibility for configs referencing node_type. (Issue #4163)
- *
- * 2 years ago this update hook went in place to migrate this to the new
- * way. We did not know and did not update our install hooks in biography
- * and press release. So we need to update any blocks using the old way.
- */
-function cgov_core_update_9007() {
-  $config_factory = \Drupal::configFactory();
-  foreach ($config_factory->listAll('block.block.') as $block_config_name) {
-    $block = $config_factory->getEditable($block_config_name);
-    if ($block->get('visibility.node_type')) {
-      $configuration = $block->get('visibility.node_type');
-      $configuration['id'] = 'entity_bundle:node';
-      $block->set('visibility.entity_bundle:node', $configuration);
-      $block->clear('visibility.node_type');
-      $block->save(TRUE);
+      $block = Block::create($data);
+      $block->save();
     }
   }
 }
 
 /**
- * A new permission for viewing the block library was added in D10.
- */
-function cgov_core_update_10001() {
-  $siteHelper = \Drupal::service('cgov_core.tools');
-  $perms = [
-    'advanced_editor' => [
-      'access block library',
-    ],
-  ];
-  $siteHelper->addRolePermissions($perms);
-}
-
-/**
- * Set NCI as default site Branding.
- */
-function cgov_core_update_10002() {
-  $siteHelper = \Drupal::service('cgov_core.tools');
-  // Set Default Site Branding.
-  $siteHelper->setDefaultSiteBranding();
-}
-
-/**
- * Set adobe launch to mark script as async.
- */
-function cgov_core_update_10003() {
-  \Drupal::configFactory()->getEditable('cgov_adobe.settings')
-    ->set('load_async', TRUE)
-    ->save(TRUE);
-}
-
-/*
- * Enable responsive_favicons & set Permission.
- */
-function cgov_core_update_10004() {
-  $module_handler = \Drupal::moduleHandler();
-  if (!$module_handler->moduleExists('responsive_favicons')) {
-    $installer = \Drupal::service('module_installer');
-    $installer->install(['responsive_favicons']);
-  }
-
-  $siteHelper = \Drupal::service('cgov_core.tools');
-  $perms = [
-    'site_admin' => [
-      'administer responsive favicons',
-    ],
-  ];
-  $siteHelper->addRolePermissions($perms);
-}
-
-/**
- * Add permissions for new ncids_streamlined editor.
- */
-function cgov_core_update_10005() {
-  $siteHelper = \Drupal::service('cgov_core.tools');
-
-  // Import the configs to create the new ncids_streamlined
-  // so the permission exists so we can add it.
-  $service = \Drupal::service('features.manager');
-  $service->import(['cgov_core']);
-
-  $perms = [
-    'admin_ui' => [
-      'use text format ncids_streamlined',
-    ],
-  ];
-  $siteHelper->addRolePermissions($perms);
-}
-
-/*
- * Fix permission for viewing help pages.
- */
-function cgov_core_update_10006() {
-  $siteHelper = \Drupal::service('cgov_core.tools');
-  $perms_to_remove = [
-    'admin_ui' => [
-      'access help pages',
-    ],
-  ];
-  $siteHelper->removeRolePermissions($perms_to_remove);
-}
-
-/**
- * Enable schema_metatag.
- */
-function cgov_core_update_10007() {
-  $module_handler = \Drupal::moduleHandler();
-  if (!$module_handler->moduleExists('schema_metatag')) {
-    $installer = \Drupal::service('module_installer');
-    $installer->install(['schema_metatag']);
-    $installer->install(['schema_web_site']);
-
-  }
-}
-
-/**
- * Set default search result sitename.
- */
-function cgov_core_update_10008() {
-  $siteHelper = \Drupal::service('cgov_core.tools');
-  $siteHelper->setDefaultSiteBrandingForSchemaOrg();
-}
-
-/**
- * Add permissions for new ncids_streamlined_no_headings editor.
+ * The most recent update hook.
  */
 function cgov_core_update_10009() {
-  $siteHelper = \Drupal::service('cgov_core.tools');
-
-  // Import the configs to create the new ncids_streamlined_no_headings
-  // so the permission exists so we can add it.
-  $service = \Drupal::service('features.manager');
-  $assigner = \Drupal::service('features_assigner');
-  $assigner->assignConfigPackages();
-  $service->import(['cgov_core']);
-
-  $perms = [
-    'admin_ui' => [
-      'use text format ncids_streamlined_no_headings',
-    ],
-  ];
-  $siteHelper->addRolePermissions($perms);
 }
 
 /**
@@ -598,5 +222,15 @@ function cgov_core_update_10010() {
   }
   if (!\Drupal::moduleHandler()->moduleExists('ckeditor5')) {
     $installer->install(['ckeditor5']);
+  }
+}
+
+/**
+ * Enable nci_definition.
+ */
+function cgov_core_update_10011() {
+  $installer = \Drupal::service('module_installer');
+  if (!\Drupal::moduleHandler()->moduleExists('nci_definition')) {
+    $installer->install(['nci_definition']);
   }
 }

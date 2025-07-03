@@ -15,7 +15,7 @@ export const cgdpDynamicListNoDataDom = `
                                             <span>AI approach outperformed human experts in identifying cervical precancer</span>
                                         </a>
                                     </h3>
-                                    <ul class="usa-collection__meta" aria-label="testing label">
+                                    <ul class="usa-collection__meta">
                                         <li class="usa-collection__meta-item">
                                             <time datetime="2019-01-10T12:00:00Z">January 10, 2019</time>
                                         </li>
@@ -31,7 +31,7 @@ export const cgdpDynamicListNoDataDom = `
                                             <span>BRCA Exchange aggregates data on thousands of BRCA variants to inform understanding of cancer risk</span>
                                         </a>
                                     </h3>
-                                    <ul class="usa-collection__meta" aria-label="testing label">
+                                    <ul class="usa-collection__meta">
                                         <li class="usa-collection__meta-item">
                                             <time datetime="2019-01-09T12:00:00Z">January 9, 2019</time>
                                         </li>
@@ -47,7 +47,7 @@ export const cgdpDynamicListNoDataDom = `
                                             <span>Norman Sharpless sworn in as director of the National Cancer Institute</span>
                                         </a>
                                     </h3>
-                                    <ul class="usa-collection__meta" aria-label="testing label">
+                                    <ul class="usa-collection__meta">
                                         <li class="usa-collection__meta-item">
                                             <time datetime="2018-12-20T12:00:00Z">December 20, 2018</time>
                                         </li>
@@ -63,7 +63,7 @@ export const cgdpDynamicListNoDataDom = `
                                             <span>Ibrutinib plus rituximab superior to standard treatment for some patients with chronic leukemia</span>
                                         </a>
                                     </h3>
-                                    <ul class="usa-collection__meta" aria-label="testing label">
+                                    <ul class="usa-collection__meta">
                                         <li class="usa-collection__meta-item">
                                             <time datetime="2018-12-14T12:00:00Z">December 14, 2018</time>
                                         </li>
@@ -79,7 +79,7 @@ export const cgdpDynamicListNoDataDom = `
                                             <span>Annual Report to the Nation: overall cancer mortality continues to decline, prostate cancer mortality has stabilized</span>
                                         </a>
                                     </h3>
-                                    <ul class="usa-collection__meta" aria-label="testing label">
+                                    <ul class="usa-collection__meta">
                                         <li class="usa-collection__meta-item">
                                             <time datetime="2018-08-14T12:00:00Z">August 14, 2018</time>
                                         </li>

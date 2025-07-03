@@ -24,6 +24,9 @@ function cgov_file_install() {
   _cgov_file_install_permissions($siteHelper);
 }
 
+/**
+ * Shared code to install requiews permissions.
+ */
 function _cgov_file_install_permissions($siteHelper) {
 
   $perms = [
@@ -37,15 +40,7 @@ function _cgov_file_install_permissions($siteHelper) {
 }
 
 /**
- * Set permissions for editing media file revisions.
+ * Latest update hook.
  */
 function cgov_file_update_10001() {
-  $siteHelper = \Drupal::service('cgov_core.tools');
-  $perms = [
-    'content_author' => [
-      'revert any cgov_file media revisions',
-      'view any cgov_file media revisions',
-    ],
-  ];
-  $siteHelper->addRolePermissions($perms);
 }
