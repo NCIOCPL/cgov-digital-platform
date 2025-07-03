@@ -244,6 +244,8 @@ class PDQResource extends ResourceBase {
       /** @var \Drupal\Core\Entity\ContentEntityStorageBase $storage */
       $storage = $this->entityTypeManager->getStorage('node');
       $vid = $storage->getLatestRevisionId($nid);
+      // The latest revision of a node is going to be ... a node!
+      /** @var \Drupal\node\Entity\Node */
       $node = $storage->loadRevision($vid);
       if ($node->hasTranslation($language)) {
         $node = $node->getTranslation($language);

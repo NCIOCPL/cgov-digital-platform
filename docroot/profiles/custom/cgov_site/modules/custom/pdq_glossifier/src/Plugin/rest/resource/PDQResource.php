@@ -2,6 +2,7 @@
 
 namespace Drupal\pdq_glossifier\Plugin\rest\resource;
 
+use Drupal\Core\Database\Connection;
 use Drupal\Core\Session\AccountProxyInterface;
 use Drupal\rest\Plugin\ResourceBase;
 use Drupal\rest\ResourceResponse;
@@ -28,17 +29,18 @@ class PDQResource extends ResourceBase {
 
   /**
    * A current user instance.
-   *
-   * @var \Drupal\Core\Session\AccountProxyInterface
    */
-  protected $currentUser;
+  protected AccountProxyInterface $currentUser;
+
+  /**
+   * Access to the database connection.
+   */
+  protected Connection $dbConnection;
 
   /**
    * Values retrieved from the `pdq_glossary` table.
-   *
-   * @var array
    */
-  protected $terms;
+  protected array $terms;
 
   /**
    * Constructs a new PDQResource object.
@@ -55,6 +57,8 @@ class PDQResource extends ResourceBase {
    *   A logger instance.
    * @param \Drupal\Core\Session\AccountProxyInterface $current_user
    *   A current user instance.
+   * @param \Drupal\Core\Database\Connection $dbConnection
+   *   The database connection.
    */
   public function __construct(
     array $configuration,
@@ -63,10 +67,12 @@ class PDQResource extends ResourceBase {
     array $serializer_formats,
     LoggerInterface $logger,
     AccountProxyInterface $current_user,
+    Connection $dbConnection,
   ) {
     parent::__construct($configuration, $plugin_id, $plugin_definition, $serializer_formats, $logger);
 
     $this->currentUser = $current_user;
+    $this->dbConnection = $dbConnection;
   }
 
   /**
@@ -79,7 +85,8 @@ class PDQResource extends ResourceBase {
       $plugin_definition,
       $container->getParameter('serializer.formats'),
       $container->get('logger.factory')->get('pdq'),
-      $container->get('current_user')
+      $container->get('current_user'),
+      $container->get('database')
     );
   }
 
@@ -126,7 +133,7 @@ class PDQResource extends ResourceBase {
    */
   private function loadTerms() {
     try {
-      $query = \Drupal::database()->select('pdq_glossary', 'g');
+      $query = $this->dbConnection->select('pdq_glossary', 'g');
       $json = $query->fields('g', ['terms'])->execute()->fetchField();
       $terms = json_decode($json, TRUE);
       $normalized = [];
