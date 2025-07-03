@@ -186,9 +186,9 @@ class PDQResource extends ResourceBase {
 
     // The node already exists: fetch it.
     else {
-      /** @var \Drupal\Core\Entity\ContentEntityStorageBase $storage */
       $storage = $this->entityTypeManager->getStorage('node');
       $vid = $storage->getLatestRevisionId($nid);
+      /** @var \Drupal\node\Entity\Node */
       $node = $storage->loadRevision($vid);
     }
 

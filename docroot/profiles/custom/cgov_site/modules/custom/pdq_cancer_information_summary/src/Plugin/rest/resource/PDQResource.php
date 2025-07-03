@@ -241,9 +241,9 @@ class PDQResource extends ResourceBase {
     // The node already exists: fetch it and point to the entity
     // for the language being stored.
     else {
-      /** @var \Drupal\Core\Entity\ContentEntityStorageBase $storage */
       $storage = $this->entityTypeManager->getStorage('node');
       $vid = $storage->getLatestRevisionId($nid);
+      /** @var \Drupal\node\Entity\Node */
       $node = $storage->loadRevision($vid);
       if ($node->hasTranslation($language)) {
         $node = $node->getTranslation($language);
