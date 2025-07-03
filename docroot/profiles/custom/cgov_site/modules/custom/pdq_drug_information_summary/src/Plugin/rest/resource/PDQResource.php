@@ -189,6 +189,7 @@ class PDQResource extends ResourceBase {
       /** @var \Drupal\Core\Entity\ContentEntityStorageBase $storage */
       $storage = $this->entityTypeManager->getStorage('node');
       $vid = $storage->getLatestRevisionId($nid);
+      /** @var \Drupal\node\Entity\Node */
       $node = $storage->loadRevision($vid);
     }
 
