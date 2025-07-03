@@ -43,7 +43,7 @@ class MailAPIController extends ControllerBase {
   /**
    * Configuration object for cgov_mail.settings.
    *
-   * @var \Drupal\Core\Config\EditableConfigInterface
+   * @var \Drupal\Core\Config\ImmutableConfig
    */
   protected $cgovMailConfig;
 
@@ -57,7 +57,7 @@ class MailAPIController extends ControllerBase {
   /**
    * The mail plugin.
    *
-   * @var \Drupal\Core\Config\EditableConfigInterface
+   * @var \Drupal\Core\Config\Config
    */
   protected $mailPlugin;
 
@@ -107,6 +107,7 @@ class MailAPIController extends ControllerBase {
     $from = $to = $subject = $body = $redirect = $requiredFields = $splitFields = '';
     $errorList = [];
     $error_p = FALSE;
+    $recaptchaResponseField = NULL;
 
     $data = $request->request->all();
     foreach ($data as $key => $value) {
