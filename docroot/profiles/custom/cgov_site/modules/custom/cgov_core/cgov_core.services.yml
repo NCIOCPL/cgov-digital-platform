@@ -63,6 +63,30 @@ services:
     class: Drupal\cgov_core\Routing\DisallowedRouteSubscriber
     tags:
       - { name: event_subscriber }
+  cgov_core.html_transformer_manager:
+    class: Drupal\cgov_core\Services\NcidsHtmlTransformerManager
+    tags:
+      - { name: service_collector, tag: cgov_core.ncids_html_transform, call: addTransformer }
+  cgov_core.transformer.no_bullets:
+    class: Drupal\cgov_core\Services\NoBulletsToBulletsTransformer
+    tags:
+      - { name: cgov_core.ncids_html_transform }
+  cgov_core.transformer.msobodytext:
+    class: Drupal\cgov_core\Services\RemoveMsoBodyTextTransformer
+    tags:
+      - { name: cgov_core.ncids_html_transform }
+  cgov_core.transformer.remove_image_carousel:
+    class: Drupal\cgov_core\Services\RemoveImageCarouselTransformer
+    tags:
+      - { name: cgov_core.ncids_html_transform }
+  cgov_core.transformer.remove_mso_bidi_theme_font:
+    class: Drupal\cgov_core\Services\RemoveMsoBidiThemeFontTransformer
+    tags:
+      - { name: cgov_core.ncids_html_transform }
+  cgov_core.transformer.feature_card_view_mode:
+    class: Drupal\cgov_core\Services\FeatureCardViewModeTransformer
+    tags:
+      - { name: cgov_core.ncids_html_transform }
   cache_context.nci_primary_nav_active_path:
     class: Drupal\cgov_core\NciPrimaryNavCacheContext
     calls:
