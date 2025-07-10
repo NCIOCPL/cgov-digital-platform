@@ -46,9 +46,7 @@ parameters:
     - docroot/profiles/custom/cgov_site/modules/custom/cgov_vocab_manager/src/Form/CgovVocabManagerForm.php
     - docroot/profiles/custom/cgov_site/modules/custom/cgov_vocab_manager/src/Manager/CgovVocabManager.php
     - docroot/profiles/custom/cgov_site/modules/custom/pdq_cancer_information_summary/src/OrphanCleanup.php
-    - docroot/profiles/custom/cgov_site/modules/custom/pdq_cancer_information_summary/src/Plugin/rest/resource/PDQResource.php
     - docroot/profiles/custom/cgov_site/modules/custom/pdq_core/src/PDQConfigOverrider.php
-    - docroot/profiles/custom/cgov_site/modules/custom/pdq_core/src/Plugin/rest/resource/PDQResource.php
     - docroot/profiles/custom/cgov_site/modules/custom/pdq_core/src/RevisionPruner.php
 
   ignoreErrors:
@@ -93,4 +91,13 @@ parameters:
     -
       ## This ignore is for the deprecated CacheDecoratorInterface module.
       message: "#Usage of deprecated trait Symfony\\\\Component\\\\DependencyInjection\\\\ContainerAwareTrait in class#"
+      reportUnmatched: false
+
+      ## With php 8.2+, various magic properties are reported as errors; this doesn't occur with php 8.1.
+      ## phpstan complains when a line is marked to be ignored but doesn't cause an error, so we have
+      ## to ignore them here and make appropriate changes when we get to php 8.4 / Drupal 11.
+
+    -
+      # docroot/profiles/custom/cgov_site/modules/custom/pdq_core/src/Plugin/rest/resource/PDQResource.php
+      message: "#Access to an undefined property Drupal\\\\node\\\\NodeInterface::\\$moderation_state.#"
       reportUnmatched: false
