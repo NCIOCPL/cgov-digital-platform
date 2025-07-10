@@ -8,6 +8,7 @@
  */
 
 use Drupal\Core\Language\LanguageInterface;
+use Drupal\media\Entity\Media;
 use Drupal\node\Entity\Node;
 
 /**
@@ -19,6 +20,18 @@ use Drupal\node\Entity\Node;
  *   Collection of variables.
  */
 function ncids_trans_theme_suggestions_page_alter(array &$suggestions, array $variables) {
+
+  // These are the types need a new page template, however, we need
+  // page.html.twig to stay as is for things like login routes and
+  // other Drupal things. Anyway, this array will allow us to
+  // determine which types should get a suggestion of
+  // page--ncids-inner-page.html.twig.
+  $ncids_inner_page_types = [
+    'cgov_article', 'cgov_biography', 'cgov_cancer_center',
+    'cgov_cancer_research', 'cgov_event', 'cgov_press_release',
+    'cgov_infographic', 'cgov_video',
+  ];
+
   if ($node = \Drupal::routeMatch()->getParameter('node')) {
 
     // If $node is the NID instead of Node object, get Node object.
@@ -28,8 +41,12 @@ function ncids_trans_theme_suggestions_page_alter(array &$suggestions, array $va
       $node = Node::load($node);
     }
 
-    // Add theme suggestion of 'page__article', 'page__biography', etc.
     $content_type = $node->bundle();
+    if (in_array($content_type, $ncids_inner_page_types)) {
+      $suggestions[] = 'page__ncids_inner_page';
+    }
+
+    // Add theme suggestion of 'page__article', 'page__biography', etc.
     $suggestions[] = 'page__' . $content_type;
 
     // Add theme suggestion for special report template if appropriate.
@@ -39,6 +56,21 @@ function ncids_trans_theme_suggestions_page_alter(array &$suggestions, array $va
         $suggestions[] = 'page__' . $content_type . '__' . $page_template;
       }
     }
+  }
+
+  // Page Templates for Media.
+  if ($media = \Drupal::routeMatch()->getParameter('media')) {
+    if (!$media instanceof Media) {
+      $media = Media::load($media);
+    }
+
+    $content_type = $media->bundle();
+
+    if (in_array($content_type, $ncids_inner_page_types)) {
+      $suggestions[] = 'page__ncids_inner_page';
+    }
+
+    $suggestions[] = 'page__' . $content_type;
   }
 
   // ADD SUGGESTIONS FOR CUSTOM 401/403/404 PAGE TEMPLATES.

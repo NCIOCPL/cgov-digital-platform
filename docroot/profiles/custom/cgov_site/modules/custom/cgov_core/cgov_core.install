@@ -174,7 +174,7 @@ function cgov_core_themes_installed($theme_list) {
       $block_region = 'public_use';
       $block_label = 'Public Use';
       $block_html = <<<EOMarkup
-      <p><em>If you would like to reproduce some or all of this content, see <a href="/policies/copyright-reuse">Reuse of NCI Information</a> for guidance about copyright and permissions. In the case of permitted digital reproduction, please credit the National Cancer Institute as the source and link to the original NCI product using the original product's title; e.g., “[current-page:title] was originally published by the National Cancer Institute.”</em></p>
+      <p><em>If you would like to reproduce some or all of this content, see <a class="usa-link" href="/policies/copyright-reuse">Reuse of NCI Information</a> for guidance about copyright and permissions. In the case of permitted digital reproduction, please credit the National Cancer Institute as the source and link to the original NCI product using the original product's title; e.g., “[current-page:title] was originally published by the National Cancer Institute.”</em></p>
       EOMarkup;
 
       // Create block content.
@@ -233,4 +233,23 @@ function cgov_core_update_10011() {
   if (!\Drupal::moduleHandler()->moduleExists('nci_definition')) {
     $installer->install(['nci_definition']);
   }
+}
+
+/**
+ * Updates article page intro text to use ncids_streamlined_no_headings.
+ */
+function cgov_core_update_10012() {
+  $db = \Drupal::database();
+  $bundle = 'cgov_article';
+  // Node table updates.
+  $db->update('node__field_intro_text')
+    ->fields(['field_intro_text_format' => 'ncids_streamlined_no_headings'])
+    ->condition('bundle', $bundle)
+    ->execute();
+
+  // Node revision table updates.
+  $db->update('node_revision__field_intro_text')
+    ->fields(['field_intro_text_format' => 'ncids_streamlined_no_headings'])
+    ->condition('bundle', $bundle)
+    ->execute();
 }

@@ -1,0 +1,18 @@
+@forward 'usa-accordion';
+@forward "usa-link";
+@use 'uswds-core' as *;
+
+.cgdp-article-footer-citation {
+	ol {
+		@include u-margin-bottom(2);
+		@include u-padding(0);
+		li {
+			@include u-margin-left(5);
+			@include u-margin-y(1);
+			@include u-line-height('body', 4);
+			p {
+				@include u-display('inline');
+			}
+		}
+	}
+}

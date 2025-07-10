@@ -249,14 +249,16 @@ $(window).on("load", function () {
     var blogLink = $("#cgvBody").hasClass("cgvblogpost") ? true : false;
     NCIAnalytics.glossifiedTerm(this, linkText, blogLink);
   });
-
-  // Related Resources tracking on most content pages.
-  $("#nvcgRelatedResourcesArea").on("click", "a", function () {
-    var $this = $(this);
-    var linkText = $this.text();
-    var index = $this.closest("li").index() + 1;
-    NCIAnalytics.RelatedResourceClick(this, linkText, index);
+  $(".cgdp-field-intro-text").on("click", ".cgdp-definition-link", function () {
+    // Typing this made me get a little sick in the mouth. Until #3005 is
+    // implemented in the next release we need to just capture the legacy
+    // analytics for glossary links that fire the popups. Which is what
+    // is above. So once #3005 goes in this and the above popup tracker
+    // should be removed.
+    var linkText = this.innerText;
+    NCIAnalytics.glossifiedTerm(this, linkText, false);
   });
+
 
   // Track clicks on feature cards on blog posts.
   $(".blog-feature .feature-card").each(function (i, el) {

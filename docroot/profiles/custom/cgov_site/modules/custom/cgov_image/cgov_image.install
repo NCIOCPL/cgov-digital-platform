@@ -59,7 +59,15 @@ function _cgov_image_install_permissions(CgovCoreTools $siteHelper) {
 }
 
 /**
- * Latest update hook.
+ * Update for Article Page Lead Image.
+ *
+ * Force installation of
+ * core.entity_view_mode.media.image_display_article_ncids_lead
+ * before node core.entity_view_display configs are loaded.
  */
-function cgov_image_update_10004() {
+function cgov_image_update_10005() {
+  $service = \Drupal::service('features.manager');
+  $assigner = \Drupal::service('features_assigner');
+  $assigner->assignConfigPackages();
+  $service->import(['cgov_image']);
 }

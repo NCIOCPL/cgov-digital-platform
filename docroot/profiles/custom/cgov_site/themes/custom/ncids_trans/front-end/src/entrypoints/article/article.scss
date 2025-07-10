@@ -1,3 +1,56 @@
 // This contains the NCIDS Settings and required items. Nothing in this
 // file should generate markup.
 @forward '../cgdp-required';
+
+// Specific page styles
+@forward '../../lib/components/cgdp-article-footer/';
+@forward '../../lib/components/cgdp-article-footer-citation/';
+@forward '../../lib/components/cgdp-related-resources';
+@forward '../../lib/components/cgdp-document-dates';
+@forward '../../lib/components/cgdp-public-use';
+@forward '../../lib/components/cgdp-hhs-syndication';
+@forward '../../lib/components/cgdp-field-image-article';
+@forward '../../lib/components/wysiwyg/common/cgdp-embed-image';
+
+@forward '../../lib/components/cgdp-on-this-page';
+@forward '../../lib/components/cgdp-article-body';
+
+@use 'uswds-core' as *;
+
+// TODO: Move this to the new definition popup component once
+// NCIOCPL/cgov-digital-platform#3005 is implemented. It might
+// even be able to change to not be just cgdp-definition-link.
+a.cgdp-definition-link {
+	@include u-color($theme-text-color);
+	@include u-text('underline');
+	text-decoration-style: dotted;
+	text-underline-position: under;
+
+	&:hover, &:focus {
+		text-decoration-style: solid;
+	}
+}
+
+// TODO: When we move to the NCIDS Full WYSIWYG
+// We should remove this as we'll be apply
+// Measure throughout the page
+.cgdp-field-intro-text {
+	.usa-prose > p {
+		@include u-measure('none');
+	}
+}
+
+// Margin between accordion sections (8px)
+.cgdp-article-body.usa-accordion {
+	@include u-margin-top(3);
+	section:not(:first-child) {
+		@include u-margin-top(1);
+	}
+}
+// Margin for butting related resources accordion
+// directly up against article content accordion above it
+.cgdp-article-footer {
+	&:has(.usa-accordion) {
+		@include u-margin-top(1);
+	}
+}

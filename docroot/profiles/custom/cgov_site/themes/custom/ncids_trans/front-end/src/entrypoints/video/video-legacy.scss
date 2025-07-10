@@ -1,0 +1,13 @@
+// This contains the NCIDS Settings and required items. Nothing in this
+// file should generate markup.
+@forward '../cgdp-required';
+
+// Expose USWDS variables and mixins to our imports.
+@use 'uswds-core' as *;
+
+@import '../../legacy/styles/variables';
+@import '../../legacy/styles/breakpoint-mixins';
+
+// Override wrapper styles for embedded images
+// (Specifically the figure and caption/credit/enlarge styles
+@import '../../legacy/transition-hacks/inner-page-embed-image-hack';
