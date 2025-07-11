@@ -16,8 +16,17 @@
 		@extend .usa-list;
 		& > li {
 			@include u-margin-bottom(1);
+
 			a {
 				text-decoration: none;
+
+				// CKEditor5 wraps content in a <p> tag, which is not changeable.
+				// Without adding more processing to everything that uses the
+				// "simple" WYSIWYG (e.g., make a filter to strip the <p> tag),
+				// we are just going to zero out the margin here.
+				p {
+					@include u-margin(0);
+				}
 			}
 		}
 	}
