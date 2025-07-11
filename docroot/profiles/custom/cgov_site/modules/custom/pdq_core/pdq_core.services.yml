@@ -5,5 +5,7 @@ services:
       - '@entity_type.manager'
   pdq_core.config_overrider:
     class: Drupal\pdq_core\PDQConfigOverrider
+    arguments:
+      - '@service_container'
     tags:
       - {name: config.factory.override, priority: 5}
