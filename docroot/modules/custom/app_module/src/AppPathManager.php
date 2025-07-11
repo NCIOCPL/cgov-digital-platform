@@ -220,6 +220,7 @@ class AppPathManager implements AppPathManagerInterface, CacheDecoratorInterface
 
     // Nothing to see here. Exit.
     /** @var \Drupal\path_alias\PathAliasInterface */
+    // @todo /w PHP 8.2, phpstan reports property.notFound (Fix in Drupal 11.)
     $originalPath = $path->original;
     if ($path->getAlias() === $originalPath->getAlias()) {
       return;
