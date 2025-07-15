@@ -1,5 +1,4 @@
 <?php
-//phpcs:ignoreFile
 
 namespace Drupal\cgov_vocab_manager\Form;
 
@@ -9,8 +8,8 @@ use Drupal\Core\Access\AccessResult;
 use Drupal\Core\DependencyInjection\DeprecatedServicePropertyTrait;
 use Drupal\Core\Entity\EntityRepositoryInterface;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
-use Drupal\Core\Form\FormBase;
 use Drupal\Core\Extension\ModuleHandlerInterface;
+use Drupal\Core\Form\FormBase;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Render\RendererInterface;
 use Drupal\Core\Url;
@@ -87,27 +86,27 @@ class CgovVocabManagerForm extends FormBase {
    *   The module handler service.
    * @param \Drupal\Core\Entity\EntityTypeManagerInterface $entity_type_manager
    *   The entity type manager service.
+   * @param \Drupal\cgov_vocab_manager\Manager\CgovVocabManager $vocab_manager
+   *   The vocab manager.
    * @param \Drupal\Core\Render\RendererInterface $renderer
    *   The renderer service.
    * @param \Drupal\Core\Entity\EntityRepositoryInterface $entity_repository
    *   The entity repository.
-   * @param \Drupal\cgov_vocab_manager\Manager\CgovVocabManager $vocab_manager
-   *   The vocab manager.
    */
   public function __construct(
-    ModuleHandlerInterface $module_handler, 
-    EntityTypeManagerInterface $entity_type_manager, 
-    RendererInterface $renderer = NULL, 
-    EntityRepositoryInterface $entity_repository = NULL,
-    CgovVocabManager $vocab_manager
-    ) {
-      $this->moduleHandler = $module_handler;
-      $this->entityTypeManager = $entity_type_manager;
-      $this->storageController = $entity_type_manager->getStorage('taxonomy_term');
-      $this->termListBuilder = $entity_type_manager->getListBuilder('taxonomy_term');
-      $this->renderer = $renderer;
-      $this->entityRepository = $entity_repository;
-      $this->vocabManager = $vocab_manager;
+    ModuleHandlerInterface $module_handler,
+    EntityTypeManagerInterface $entity_type_manager,
+    CgovVocabManager $vocab_manager,
+    RendererInterface $renderer,
+    EntityRepositoryInterface $entity_repository ,
+  ) {
+    $this->moduleHandler = $module_handler;
+    $this->entityTypeManager = $entity_type_manager;
+    $this->storageController = $entity_type_manager->getStorage('taxonomy_term');
+    $this->termListBuilder = $entity_type_manager->getListBuilder('taxonomy_term');
+    $this->renderer = $renderer;
+    $this->entityRepository = $entity_repository;
+    $this->vocabManager = $vocab_manager;
   }
 
   /**
@@ -117,9 +116,9 @@ class CgovVocabManagerForm extends FormBase {
     return new static(
       $container->get('module_handler'),
       $container->get('entity_type.manager'),
+      $container->get('cgov_vocab_manager.manager'),
       $container->get('renderer'),
       $container->get('entity.repository'),
-      $container->get('cgov_vocab_manager.manager')
     );
   }
 
@@ -143,6 +142,9 @@ class CgovVocabManagerForm extends FormBase {
     return 'cgov_vocab_manager_form';
   }
 
+  /**
+   * Get arguments for find children of the current tree element.
+   */
   public function getTreeArgs($taxonomy_vocabulary) {
 
     $tree_args = [
@@ -169,13 +171,15 @@ class CgovVocabManagerForm extends FormBase {
    *   The current state of the form.
    * @param \Drupal\taxonomy\VocabularyInterface $taxonomy_vocabulary
    *   The vocabulary to display the overview form for.
+   * @param int|null $parent_tid
+   *   ID of the parent term.
    *
    * @return array
    *   The form structure.
    */
-  public function buildForm(array $form, FormStateInterface $form_state, VocabularyInterface $taxonomy_vocabulary = NULL, int $parent_tid = NULL) {
+  public function buildForm(array $form, FormStateInterface $form_state, ?VocabularyInterface $taxonomy_vocabulary = NULL, ?int $parent_tid = NULL) {
     // @todo Remove global variables when https://www.drupal.org/node/2044435 is
-    //   in.
+    //   in. Do in https://github.com/NCIOCPL/cgov-digital-platform/issues/4821
     global $pager_page_array, $pager_total, $pager_total_items;
 
     $form_state->set(['taxonomy', 'vocabulary'], $taxonomy_vocabulary);
@@ -211,6 +215,8 @@ class CgovVocabManagerForm extends FormBase {
 
     $tree = $this->storageController->loadTree($tree_args['vid'], $tree_args['parent'], $tree_args['max_depth'], $tree_args['load_entities']);
     $tree_index = 0;
+    // Flag for when the tree is completely rendered.
+    $complete_tree = FALSE;
     do {
       // In case this tree is completely empty.
       if (empty($tree[$tree_index])) {
@@ -223,7 +229,7 @@ class CgovVocabManagerForm extends FormBase {
         continue;
       }
       // Count entries after the current page.
-      elseif ($page_entries > $page_increment && isset($complete_tree)) {
+      elseif ($page_entries > $page_increment && $complete_tree) {
         $after_entries++;
         continue;
       }
@@ -242,7 +248,7 @@ class CgovVocabManagerForm extends FormBase {
           }
         }
       }
-      $back_step = isset($back_step) ? $back_step : 0;
+      $back_step = $back_step ?? 0;
 
       // Continue rendering the tree until we reach the a new root item.
       if ($page_entries >= $page_increment + $back_step + 1 && $term->depth == 0 && $root_entries > 1) {
@@ -291,6 +297,9 @@ class CgovVocabManagerForm extends FormBase {
         // Verify this is a term for the current page and set at the current
         // depth.
         if (is_array($user_input['terms'][$key]) && is_numeric($user_input['terms'][$key]['term']['tid'])) {
+          // The depth property is added in loadTermsByStubs() and
+          // is not part of TermInterface.
+          // @phpstan-ignore property.nonObject
           $current_page[$key]->depth = $user_input['terms'][$key]['term']['depth'];
         }
         else {
@@ -311,6 +320,9 @@ class CgovVocabManagerForm extends FormBase {
     // Get the IDs of the terms edited on the current page which have pending
     // revisions.
     $edited_term_ids = array_map(function ($item) {
+      // The tid property is added in loadTermsByStubs() and
+      // is not part of TermInterface.
+      // @phpstan-ignore property.nonObject
       return $item->tid;
     }, $current_page);
     $pending_term_ids = array_intersect($this->storageController->getTermIdsWithPendingRevisions(), $edited_term_ids);
@@ -371,8 +383,9 @@ class CgovVocabManagerForm extends FormBase {
         'operations' => [],
         'weight' => $update_tree_access->isAllowed() ? [] : NULL,
       ];
-      // Removing the below line because it is translating the $term for the current
-      // language. If we are translating an english term to english, its the same term.
+      // Removing the below line because it is translating the $term for the
+      // current language. If we are translating an english term to english,
+      // its the same term.
       // $term = $this->entityRepository->getTranslationFromContext($term);
       $form['terms'][$key]['#term'] = $term;
       $indentation = [];
@@ -585,19 +598,20 @@ class CgovVocabManagerForm extends FormBase {
     $page_increment = $this->config('taxonomy.settings')
       ->get('terms_per_page_admin');
 
-
     // Renumber the current page weights and assign any new parents.
     $level_weights = [];
     $weight = $page * $page_increment;
     foreach ($form_state->getValue('terms') as $tid => $values) {
       if (isset($form['terms'][$tid]['#term'])) {
         $term = $form['terms'][$tid]['#term'];
-        // Give terms at the root level a weight in sequence with terms on previous pages.
+        // Give terms at the root level a weight in sequence with terms on
+        // previous pages.
         if ($values['term']['parent'] == 0 && $term->getWeight() != $weight) {
           $term->setWeight($weight);
           $changed_terms[$term->id()] = $term;
         }
-        // Terms not at the root level can safely start from 0 because they're all on this page.
+        // Terms not at the root level can safely start from 0 because they're
+        // all on this page.
         elseif ($values['term']['parent'] > 0) {
           $level_weights[$values['term']['parent']] = isset($level_weights[$values['term']['parent']]) ? $level_weights[$values['term']['parent']] + 1 : 0;
           if ($level_weights[$values['term']['parent']] != $term->getWeight()) {
@@ -632,6 +646,5 @@ class CgovVocabManagerForm extends FormBase {
         ->addStatus($this->t('The configuration options have been saved.'));
     }
   }
-
 
 }
