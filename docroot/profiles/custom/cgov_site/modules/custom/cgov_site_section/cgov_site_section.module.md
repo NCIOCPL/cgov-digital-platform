@@ -1,0 +1,72 @@
+Call tree for the hooks and their helpers.
+
+
+```mermaid
+graph LR
+  cgov_site_section_entity_field_storage_info
+
+  cgov_site_section_entity_bundle_field_info-->cgov_site_section_entity_field_storage_info
+
+  cgov_site_section_taxonomy_term_presave
+
+  cgov_site_section_entity_update-->_cgov_site_section_will_trigger_cache_tag_invalidation
+  cgov_site_section_entity_update-->_cgov_site_section_get_sections_to_clear
+  cgov_site_section_entity_update-->_cgov_site_section_get_rendering_sections_for_mobile
+  cgov_site_section_entity_update-->_cgov_site_section_invalidate_section_cache_tag
+  cgov_site_section_entity_update-->_cgov_site_section_invalidate_mobile_nav_cache_tag
+
+  cgov_site_section_block_content_update
+
+  cgov_site_section_taxonomy_term_update-->_cgov_site_section_attempt_set_front_page
+  cgov_site_section_taxonomy_term_update-->_cgov_site_section_will_trigger_save_children
+  cgov_site_section_taxonomy_term_update-->_cgov_site_section_save_term_children
+  cgov_site_section_taxonomy_term_update-->_cgov_site_section_will_trigger_cache_tag_invalidation
+  cgov_site_section_taxonomy_term_update-->_cgov_site_section_get_sections_to_clear
+  cgov_site_section_taxonomy_term_update-->_cgov_site_section_invalidate_section_cache_tag
+  cgov_site_section_taxonomy_term_update-->_cgov_site_section_should_invalidate_mobile_nav
+  cgov_site_section_taxonomy_term_update-->_cgov_site_section_get_rendering_sections_for_mobile
+  cgov_site_section_taxonomy_term_update-->_cgov_site_section_invalidate_mobile_nav_cache_tag
+
+
+  _cgov_site_section_get_sections_to_clear-->_cgov_site_section_get_rendering_sections
+  _cgov_site_section_get_sections_to_clear-->_cgov_site_section_entity_fields_modified
+
+  _cgov_site_section_invalidate_section_cache_tag
+
+  _cgov_site_section_invalidate_mobile_nav_cache_tag
+
+  _cgov_site_section_save_term_children
+
+  _cgov_site_section_will_trigger_save_children-->_cgov_site_section_entity_fields_modified
+
+  _cgov_site_section_will_trigger_cache_tag_invalidation-->_cgov_site_section_entity_fields_modified
+
+  _cgov_site_section_should_invalidate_mobile_nav-->_cgov_site_section_entity_fields_modified
+
+  _cgov_site_section_entity_fields_modified
+
+  _cgov_site_section_attempt_set_front_page
+
+  cgov_site_section_entity_presave
+
+  cgov_site_section_entity_type_build
+
+  cgov_site_section_entity_bundle_field_info_alter
+
+  cgov_site_section_views_data
+
+  _cgov_site_section_get_rendering_sections-->_cgov_site_section_get_term_tree
+
+  _cgov_site_section_get_rendering_sections_for_mobile-->_cgov_site_section_get_term_tree
+
+  _cgov_site_section_get_term_tree-->_cgov_site_section_get_section_parent
+
+  _cgov_site_section_get_section_parent
+
+  cgov_site_section_link_alter
+
+  cgov_site_section_block_content_presave
+
+
+
+```
