@@ -86,19 +86,19 @@ class CgovVocabManagerForm extends FormBase {
    *   The module handler service.
    * @param \Drupal\Core\Entity\EntityTypeManagerInterface $entity_type_manager
    *   The entity type manager service.
+   * @param \Drupal\cgov_vocab_manager\Manager\CgovVocabManager $vocab_manager
+   *   The vocab manager.
    * @param \Drupal\Core\Render\RendererInterface $renderer
    *   The renderer service.
    * @param \Drupal\Core\Entity\EntityRepositoryInterface $entity_repository
    *   The entity repository.
-   * @param \Drupal\cgov_vocab_manager\Manager\CgovVocabManager $vocab_manager
-   *   The vocab manager.
    */
   public function __construct(
     ModuleHandlerInterface $module_handler,
     EntityTypeManagerInterface $entity_type_manager,
+    CgovVocabManager $vocab_manager,
     ?RendererInterface $renderer = NULL,
     ?EntityRepositoryInterface $entity_repository = NULL,
-    CgovVocabManager $vocab_manager,
   ) {
     $this->moduleHandler = $module_handler;
     $this->entityTypeManager = $entity_type_manager;
@@ -116,9 +116,9 @@ class CgovVocabManagerForm extends FormBase {
     return new static(
       $container->get('module_handler'),
       $container->get('entity_type.manager'),
+      $container->get('cgov_vocab_manager.manager'),
       $container->get('renderer'),
       $container->get('entity.repository'),
-      $container->get('cgov_vocab_manager.manager')
     );
   }
 
@@ -297,6 +297,9 @@ class CgovVocabManagerForm extends FormBase {
         // Verify this is a term for the current page and set at the current
         // depth.
         if (is_array($user_input['terms'][$key]) && is_numeric($user_input['terms'][$key]['term']['tid'])) {
+          // The depth property is added in loadTermsByStubs() and
+          // is not part of TermInterface.
+          // @phpstan-ignore property.nonObject
           $current_page[$key]->depth = $user_input['terms'][$key]['term']['depth'];
         }
         else {
@@ -317,6 +320,9 @@ class CgovVocabManagerForm extends FormBase {
     // Get the IDs of the terms edited on the current page which have pending
     // revisions.
     $edited_term_ids = array_map(function ($item) {
+      // The tid property is added in loadTermsByStubs() and
+      // is not part of TermInterface.
+      // @phpstan-ignore property.nonObject
       return $item->tid;
     }, $current_page);
     $pending_term_ids = array_intersect($this->storageController->getTermIdsWithPendingRevisions(), $edited_term_ids);
