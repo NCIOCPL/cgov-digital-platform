@@ -11,6 +11,8 @@ use Drupal\Core\Entity\EntityInterface;
 use Drupal\Core\Entity\EntityTypeInterface;
 use Drupal\Core\Field\FieldDefinition;
 use Drupal\Core\Url;
+use Drupal\node\Entity\Node;
+use Drupal\node\NodeInterface;
 use Drupal\taxonomy\Entity\Term;
 
 /**
@@ -47,7 +49,9 @@ function cgov_site_section_entity_bundle_field_info(EntityTypeInterface $entity_
  */
 function cgov_site_section_taxonomy_term_presave(EntityInterface $entity) {
   // Only do the following for site sections.
-  if ($entity->bundle() !== 'cgov_site_sections') {
+  if (!$entity instanceof Term ||
+      $entity->bundle() !== 'cgov_site_sections'
+  ) {
     return;
   }
 
@@ -100,17 +104,17 @@ function cgov_site_section_taxonomy_term_presave(EntityInterface $entity) {
 }
 
 /**
- * Implements hook_ENTITY_TYPE_update().
+ * Implements hook_entity_update().
  */
 function cgov_site_section_entity_update(EntityInterface $entity) {
   /*
-   * If this is a node or media item and has changed its section parent or
+   * If this is a node and has changed its section parent or
    * alias, if it displays in navigation, cascade those changes
    *  to any subsections and pages within those subsections.
    *
    */
   if (
-    $entity->getEntityTypeId() === 'node' &&
+    $entity instanceof Node &&
     $entity->hasField('field_site_section')
   ) {
     // Check for moderation state AFTER determining its a node instead
@@ -214,7 +218,10 @@ function cgov_site_section_taxonomy_term_update(EntityInterface $entity) {
   // a vocabulary in which we attach site_section for managing its node's
   // pretty urls, then that vocabulary needs to do something very similar.
   // BUT not in this module!
-  if ($entity->bundle() !== 'cgov_site_sections') {
+  if (
+    $entity instanceof Term &&
+    $entity->bundle() !== 'cgov_site_sections'
+  ) {
     return;
   }
 
@@ -466,12 +473,15 @@ function _cgov_site_section_will_trigger_save_children(EntityInterface $updated_
  */
 function _cgov_site_section_will_trigger_cache_tag_invalidation(EntityInterface $updated_entity) {
 
-  $entityType = $updated_entity->getEntityTypeId();
-
-  // Exit early for Media items.
-  if ($entityType === 'media') {
+  // Exit early if called for anything other than a node or taxonomy term.
+  if (
+    !$updated_entity instanceof Node &&
+    !$updated_entity instanceof Term
+   ) {
     return FALSE;
   }
+
+  $entityType = $updated_entity->getEntityTypeId();
 
   $values = [];
   // Invalidation check for Nodes.
@@ -649,6 +659,12 @@ function _cgov_site_section_should_invalidate_mobile_nav(EntityInterface $update
  *   A TRUE or FALSE as to whether the fields were modified.
  */
 function _cgov_site_section_entity_fields_modified(array $fields, EntityInterface $entity) {
+  if (!$entity instanceof Term &&
+    !$entity instanceof Node
+  ) {
+    // If the entity is not a Term or Node, we cannot check for fields.
+    return FALSE;
+  }
 
   // Exit early if no fields were passed.
   if (empty($fields)) {
