@@ -1,4 +1,5 @@
 import { Plugin } from 'ckeditor5/src/core';
+import { toWidget } from "ckeditor5/src/widget";
 import GlossifyActionCommand from './glossifyactioncommand';
 
 export default class GlossifyEditing extends Plugin {
@@ -128,7 +129,7 @@ export default class GlossifyEditing extends Plugin {
           matchingFormatter.replace('%s', glossId) :
           `#UNKNOWN_FORMATTER`;
 
-        return writer.createContainerElement('a', {
+        const container = writer.createContainerElement('span', {
           ...(config['definition_classes'] ?
             { class: config['definition_classes'] } :
             { }
@@ -138,7 +139,9 @@ export default class GlossifyEditing extends Plugin {
           'data-gloss-dictionary': glossDictionary,
           'data-gloss-audience': glossAudience,
           'data-gloss-lang': glossLang,
-        })
+        });
+
+        return toWidget(container, writer, { label: "Definition Link" });
       },
     });
   }

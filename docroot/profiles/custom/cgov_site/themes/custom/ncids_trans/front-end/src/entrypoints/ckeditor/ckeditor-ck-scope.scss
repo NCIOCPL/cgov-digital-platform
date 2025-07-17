@@ -343,7 +343,9 @@ figure.drupal-entity.align-left.ck-widget {
 
 // Hack until #3005 and #4444 get in
 // Just gonna copy styles from article.
-a.cgdp-definition-link {
+// This should probably move to the nci_definition module.
+span.definition,
+span.cgdp-definition-link {
 	@include u-color($theme-text-color);
 	@include u-text('underline');
 	text-decoration-style: dotted;
