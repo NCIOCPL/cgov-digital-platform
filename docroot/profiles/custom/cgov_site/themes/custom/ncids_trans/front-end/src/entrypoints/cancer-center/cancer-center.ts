@@ -2,7 +2,9 @@ import './cancer-center.scss';
 import './cancer-center-legacy.scss';
 
 import cgdpRelatedResourcesInit from '../../lib/components/cgdp-related-resources';
+import cgdpInfographicInit from '../../lib/components/cgdp-infographic';
 
 document.addEventListener('DOMContentLoaded', () => {
 	cgdpRelatedResourcesInit();
+	cgdpInfographicInit();
 });
