@@ -31,9 +31,6 @@ graph LR
   _cgov_site_section_get_sections_to_clear-->_cgov_site_section_get_rendering_sections
   _cgov_site_section_get_sections_to_clear-->_cgov_site_section_entity_fields_modified
 
-  _cgov_site_section_get_mobile_nav_to_clear-->_cgov_site_section_get_rendering_sections
-  _cgov_site_section_get_mobile_nav_to_clear-->_cgov_site_section_entity_fields_modified
-
   _cgov_site_section_invalidate_section_cache_tag
 
   _cgov_site_section_invalidate_mobile_nav_cache_tag
@@ -57,9 +54,6 @@ graph LR
   cgov_site_section_entity_bundle_field_info_alter
 
   cgov_site_section_views_data
-
-  _cgov_site_section_get_root_nav_section-->_cgov_site_section_get_section_parent
-  _cgov_site_section_get_root_nav_section-->_cgov_site_section_get_root_nav_section
 
   _cgov_site_section_get_rendering_sections-->_cgov_site_section_get_term_tree
 

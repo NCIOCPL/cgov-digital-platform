@@ -335,43 +335,6 @@ function _cgov_site_section_get_sections_to_clear(EntityInterface $section_entit
 }
 
 /**
- * Returns the set of sections IDs to clear for a given mpbile nav update.
- *
- * @param \Drupal\Core\Entity\EntityInterface $section_entity
- *   The section being updated.
- *
- * @return array
- *   The mobile nav IDs to cache tag clear.
- */
-function _cgov_site_section_get_mobile_nav_to_clear(EntityInterface $section_entity) {
-  // Get the current set of section IDs that display this item.
-  // Includes this term itself if its a nav root.
-  $sectionsToClear = _cgov_site_section_get_rendering_sections($section_entity);
-
-  // If this section changed parents, or visibility, invalidate
-  // the cache tags for the original rendering sections as well.
-  if (_cgov_site_section_entity_fields_modified([
-    'parent',
-    'field_navigation_display_options',
-  ], $section_entity)) {
-    $originalRenderingSections = _cgov_site_section_get_rendering_sections($section_entity->original);
-    $sectionsToClear = array_merge($sectionsToClear, $originalRenderingSections);
-  }
-
-  // If this section changed from being a section nav root to not,
-  // we need to invalidate pages having its old section nav root ID.
-  if ($section_entity->field_main_nav_root->value == 0 &&
-    $section_entity->original->field_main_nav_root->value == 1) {
-    $sectionsToClear[] = $section_entity->id();
-  }
-
-  // De-dupe the IDs.
-  $sectionsToClear = array_unique($sectionsToClear);
-
-  return $sectionsToClear;
-}
-
-/**
  * Invalidate the section nav cache tag with the given Site Section ID.
  *
  * Int $section_id
@@ -854,42 +817,6 @@ function cgov_site_section_views_data() {
   ];
 
   return $data;
-}
-
-/**
- * Returns the Root Nav Section.
- *
- * @param mixed $term
- *   The section term or NULL.
- *
- * @return bool|mixed
- *   The root term or False.
- *
- * @throws \Drupal\Component\Plugin\Exception\InvalidPluginDefinitionException
- * @throws \Drupal\Component\Plugin\Exception\PluginNotFoundException
- */
-function _cgov_site_section_get_root_nav_section($term) {
-  // Base Case.
-  if (!$term) {
-    return FALSE;
-  }
-
-  // Get the parent, return it if it's the root.
-  $parent = _cgov_site_section_get_section_parent($term);
-  if ($parent) {
-    // Get section nav root value.
-    $isRoot_section_nav = $parent->field_section_nav_root->value ? (int) $parent->field_section_nav_root->value : FALSE;
-    // Get main nav root value.
-    $isRoot_main_nav = $parent->field_main_nav_root->value ? (int) $parent->field_main_nav_root->value : FALSE;
-    if ($isRoot_section_nav || $isRoot_main_nav) {
-      return $parent;
-    }
-  }
-  else {
-    return FALSE;
-  }
-  // If its not the root, recursively call this function.
-  return _cgov_site_section_get_root_nav_section($parent);
 }
 
 /**
