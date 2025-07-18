@@ -1,0 +1,58 @@
+// This contains the NCIDS Settings and required items. Nothing in this
+// file should generate markup.
+@forward '../cgdp-required';
+
+// Specific page styles
+@forward '../../lib/components/cgdp-article-footer/';
+@forward '../../lib/components/cgdp-related-resources';
+@forward '../../lib/components/cgdp-document-dates';
+@forward '../../lib/components/cgdp-public-use/';
+@forward '../../lib/components/cgdp-article-footer-citation';
+@forward '../../lib/components/cgdp-field-image-article';
+@forward '../../lib/components/wysiwyg/common/cgdp-embed-image';
+
+@use 'uswds-core' as *;
+
+.cgdp-press-release-title-block {
+	@include u-margin-bottom(2);
+	div,
+	div > .usa-list {
+		@include u-line-height('body', 5);
+	}
+	.nci-heading-h1 {
+		@include u-margin-top(2);
+	}
+	&__release-info {
+		@include at-media('tablet') {
+			display: flex;
+			justify-content: space-between;
+		}
+		// Override Document Dates Margin for Press Releases
+		// These dates appear under the title for press releases
+		// As opposed to in the article footer otherwise
+		.cgdp-document-dates {
+			@include u-margin-bottom(1);
+			@include at-media('tablet') {
+				@include u-margin-bottom(0);
+			}
+		}
+		// This is the contact info
+		// We target it this way due to the drupal element which
+		// Wraps our media contact with a div of id="block-contact-us-press-release"
+		div:has(.cgdp-media-contact) {
+			white-space: nowrap;
+			@include u-margin-left('auto');
+			.cgdp-media-contact {
+				@include u-margin-left(0);
+				@include at-media('tablet') {
+					@include u-margin-left(2);
+					@include u-text-align('right');
+				}
+				.cgdp-media-contact__info p {
+					@include u-margin-y(0);
+					@include u-line-height('body', 5);
+				}
+			}
+		}
+	}
+}

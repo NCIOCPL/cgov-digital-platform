@@ -1,0 +1,23 @@
+@forward "usa-link";
+@use 'uswds-core' as *;
+
+.cgdp-public-use {
+	// add styles for public use
+	// margin top 0, padding 0, italics, font stuff
+	clear: both;
+	// add uswds mixin
+	@include u-padding(0);
+	@include u-border-top(1px, $theme-color-base);
+	p {
+		@include u-line-height('body', 4);
+	}
+}
+
+// The last child of the public use section shouldn't
+// Have any margin bottom, since its parents' are handling it
+.cgdp-public-use > * {
+	&:last-child {
+		@include u-margin-bottom(0);
+	}
+}
+

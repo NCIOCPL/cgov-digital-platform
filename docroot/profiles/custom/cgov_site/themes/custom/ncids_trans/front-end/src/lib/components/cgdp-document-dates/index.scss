@@ -1,0 +1,24 @@
+@use 'uswds-core' as *;
+
+.cgdp-document-dates {
+	clear: both;
+	ul {
+		@include u-display('block');
+		@include at-media('tablet') {
+			@include u-display('flex');
+			@include u-flex('wrap');
+		}
+		& > li {
+			@include u-display('block');
+			@include at-media('tablet') {
+				@include u-display('inline');
+				&:not(:last-child)::after {
+					content: '|';
+					@include u-margin-right(1);
+					@include u-position('relative');
+					top: -0.1rem;
+				}
+			}
+		}
+	}
+}

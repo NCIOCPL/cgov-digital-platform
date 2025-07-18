@@ -45,9 +45,21 @@ module.exports = {
 		__dirname,
 		'src/entrypoints/ncids-application-page-no-left-nav/ncids-application-page-no-left-nav.ts'
 	),
+	'ncids-trans-common': path.resolve(
+		__dirname,
+		'src/entrypoints/ncids-trans-common/ncids-trans-common.ts'
+	),
 	'cancer-center': path.resolve(
 		__dirname,
 		'src/entrypoints/cancer-center/cancer-center.ts'
+	),
+	'press-release': path.resolve(
+		__dirname,
+		'src/entrypoints/press-release/press-release.ts'
+	),
+	'cancer-research': path.resolve(
+		__dirname,
+		'src/entrypoints/cancer-research/cancer-research.ts'
 	),
 	blogs: path.resolve(__dirname, 'src/entrypoints/blogs/blogs.ts'),
 	biography: path.resolve(__dirname, 'src/entrypoints/biography/biography.ts'),
@@ -57,7 +69,10 @@ module.exports = {
 		__dirname,
 		'src/entrypoints/app-module/app-module.ts'
 	),
-	'addl-lib-test': path.resolve(__dirname, 'src/entrypoints/addl-lib-test/addl-lib-test.ts'),
+	'addl-lib-test': path.resolve(
+		__dirname,
+		'src/entrypoints/addl-lib-test/addl-lib-test.ts'
+	),
 	// addl-cancer-types-landing-page is an additional library
 	// that can be added to a Home and Landing Page that contains
 	// the CSS and JS that will be used on the Cancer Types Landing Page
@@ -65,4 +80,9 @@ module.exports = {
 		__dirname,
 		'src/entrypoints/addl-cancer-types-landing-page/addl-cancer-types-landing-page.ts'
 	),
+	infographic: path.resolve(
+		__dirname,
+		'src/entrypoints/infographic/infographic.ts'
+	),
+	video: path.resolve(__dirname, 'src/entrypoints/video/video.ts'),
 };
