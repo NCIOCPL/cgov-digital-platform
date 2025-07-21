@@ -73,14 +73,14 @@ jobs:
       - name: Setup Node
         uses: actions/setup-node@v4
         with:
-          node-version: '16.13.0'
+          node-version: '22.17.1'
           cache: 'npm'
           cache-dependency-path: '**/package-lock.json'
           registry-url: https://npm.pkg.github.com
           scope: '@nciocpl'
-      - name: Install NPM 8
+      - name: Install NPM
         run: |
-          npm install -g npm@8.19.4
+          npm install -g npm@10.9.2
       ## Setup PHP and Composer Caching
       - name: Setup PHP with tools
         uses: shivammathur/setup-php@v2
