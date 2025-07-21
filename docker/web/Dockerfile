@@ -107,8 +107,8 @@ RUN chmod +x /usr/local/bin/docker-entrypoint.sh
 
 # Install Node
 # nvm environment variables
-ENV NVM_DIR /usr/local
-ENV NODE_VERSION 16.13.0
+ENV NVM_DIR=/usr/local
+ENV NODE_VERSION=22.17.1
 
 # install nvm
 # https://github.com/creationix/nvm#install-script
@@ -121,10 +121,10 @@ RUN . $NVM_DIR/nvm.sh \
   && nvm use default
 
 # add node and npm to path so the commands are available
-ENV PATH $NVM_DIR/versions/node/v$NODE_VERSION/bin:$PATH
+ENV PATH=$NVM_DIR/versions/node/v$NODE_VERSION/bin:$PATH
 
 # update npm
-RUN npm install -g npm@8.19.4
+RUN npm install -g npm@10.9.2
 
 # Install composer
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer --2
@@ -134,7 +134,7 @@ RUN php --version; composer --version;
 
 # Make vendor/bin versions of drush, blt, etc. available.
 # NOTE: Putting this on the end in order to match the CI workflow.
-ENV PATH $PATH:/var/www/vendor/bin
+ENV PATH=$PATH:/var/www/vendor/bin
 
 ## Turn off xdebug as it uses resources that could be best used
 ## elsewhere. Once the container is up you can use
