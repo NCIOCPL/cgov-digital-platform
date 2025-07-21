@@ -111,7 +111,9 @@ export const createElement = (
 	});
 
 	for (const child of children) {
-		appendChild(el, child);
+		// Our JSX parser will return null when the conditional doesn't return a value
+		// e.g., {false && ()}
+		if (child) appendChild(el, child);
 	}
 	return el;
 };

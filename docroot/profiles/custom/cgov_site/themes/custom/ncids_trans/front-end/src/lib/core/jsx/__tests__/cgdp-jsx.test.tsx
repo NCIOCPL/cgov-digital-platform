@@ -17,6 +17,17 @@ describe('eddl-util', () => {
 		expect(el.outerHTML).toBe('<div id="foo">Hello World</div>');
 	});
 
+	it('renders html correctly when there is a conditional in the JSX', async () => {
+		const myComponent = (
+			<div>
+				<div id="foo">Hello World</div>
+				{false && <p>This shouldn't show.</p>}
+			</div>
+		);
+		const el = myComponent as unknown as HTMLElement;
+		expect(el.outerHTML).toBe('<div><div id="foo">Hello World</div></div>');
+	});
+
 	it('supports click handlers', async () => {
 		// eslint-disable-next-line @typescript-eslint/no-empty-function
 		const mockHandler = jest.fn(() => {});
