@@ -51,12 +51,12 @@ class CgovNavTreeController extends ControllerBase {
 
     // If this is not a section nav root we need to return a 400.
     // We do this check here to avoid any more data fetches for an error.
-    if (!$taxonomy_term->field_section_nav_root->value) {
+    if (!$taxonomy_term->get('field_section_nav_root')->value) {
       return $this->getEmpty400Response();
     }
 
     // Fetch the tree.
-    $depth = $taxonomy_term->field_levels_to_display->value ?? 5;
+    $depth = $taxonomy_term->get('field_levels_to_display')->value ?? 5;
     $tree_root = $this->getNavData($taxonomy_term, $menu_type, $depth);
 
     if ($tree_root !== NULL) {
@@ -78,7 +78,7 @@ class CgovNavTreeController extends ControllerBase {
 
     // If this is not a main nav root we need to return a 400.
     // We do this check here to avoid any more data fetches for an error.
-    if (!$taxonomy_term->field_main_nav_root->value) {
+    if (!$taxonomy_term->get('field_main_nav_root')->value) {
       return $this->getEmpty400Response();
     }
 
@@ -153,7 +153,7 @@ class CgovNavTreeController extends ControllerBase {
 
     // Note: this just loads the entity in the default language.
     /** @var \Drupal\node\NodeInterface */
-    $landing_page = $term->field_landing_page->entity;
+    $landing_page = $term->get('field_landing_page')->entity;
 
     if ($landing_page) {
       $langcode = $this->languageManager()->getCurrentLanguage()->getId();
@@ -218,7 +218,7 @@ class CgovNavTreeController extends ControllerBase {
       'id' => $pruned_parent_branch[0]->id(),
       // So we prefer main nav over section, and if we have a node then it must
       // be one of the two. So the ternary works here.
-      'menu_type' => $pruned_parent_branch[0]->field_main_nav_root->value ? 'mobile-nav' : 'section-nav',
+      'menu_type' => $pruned_parent_branch[0]->get('field_main_nav_root')->value ? 'mobile-nav' : 'section-nav',
     ];
 
     $closest_node = $pruned_parent_branch[array_key_last($pruned_parent_branch) ?? 0];
@@ -240,13 +240,13 @@ class CgovNavTreeController extends ControllerBase {
     // 4. Make the nav item.
     $parent_link_nav_item = [
       'id' => $parent_link_node->id(),
-      'langcode' => $parent_link_node->langcode->value,
-      'label' => $parent_link_node->field_navigation_label->value ?? $parent_link_node->getName(),
-      'weight' => $parent_link_node->weight->value,
+      'langcode' => $parent_link_node->get('langcode')->value,
+      'label' => $parent_link_node->get('field_navigation_label')->value ?? $parent_link_node->getName(),
+      'weight' => $parent_link_node->get('weight')->value,
       'path' => $path,
       'navigation_display_options' => $display_options,
-      'is_section_nav_root' => (bool) $parent_link_node->field_section_nav_root->value ?? FALSE,
-      'is_main_nav_root' => (bool) $parent_link_node->field_main_nav_root->value ?? FALSE,
+      'is_section_nav_root' => (bool) $parent_link_node->get('field_section_nav_root')->value ?? FALSE,
+      'is_main_nav_root' => (bool) $parent_link_node->get('field_main_nav_root')->value ?? FALSE,
       'children' => [],
     ];
 
@@ -291,13 +291,13 @@ class CgovNavTreeController extends ControllerBase {
     // Make the NavItem data for the parent term.
     $nav_item = [
       'id' => $taxonomy_term->id(),
-      'langcode' => $taxonomy_term->langcode->value,
-      'label' => $taxonomy_term->field_navigation_label->value ?? $taxonomy_term->getName(),
-      'weight' => $taxonomy_term->weight->value,
+      'langcode' => $taxonomy_term->get('langcode')->value,
+      'label' => $taxonomy_term->get('field_navigation_label')->value ?? $taxonomy_term->getName(),
+      'weight' => $taxonomy_term->get('weight')->value,
       'path' => $path,
       'navigation_display_options' => $this->getNavigationDisplayOptions($taxonomy_term),
-      'is_section_nav_root' => (bool) $taxonomy_term->field_section_nav_root->value ?? FALSE,
-      'is_main_nav_root' => (bool) $taxonomy_term->field_main_nav_root->value ?? FALSE,
+      'is_section_nav_root' => (bool) $taxonomy_term->get('field_section_nav_root')->value ?? FALSE,
+      'is_main_nav_root' => (bool) $taxonomy_term->get('field_main_nav_root')->value ?? FALSE,
       'children' => $children,
     ];
 
@@ -348,13 +348,13 @@ class CgovNavTreeController extends ControllerBase {
       // 4. Make the nav item.
       $nav_item = [
         'id' => $child_term->id(),
-        'langcode' => $child_term->langcode->value,
-        'label' => $child_term->field_navigation_label->value ?? $child_term->getName(),
-        'weight' => $child_term->weight->value,
+        'langcode' => $child_term->get('langcode')->value,
+        'label' => $child_term->get('field_navigation_label')->value ?? $child_term->getName(),
+        'weight' => $child_term->get('weight')->value,
         'path' => $path,
         'navigation_display_options' => $display_options,
-        'is_section_nav_root' => (bool) $child_term->field_section_nav_root->value ?? FALSE,
-        'is_main_nav_root' => (bool) $child_term->field_main_nav_root->value ?? FALSE,
+        'is_section_nav_root' => (bool) $child_term->get('field_section_nav_root')->value ?? FALSE,
+        'is_main_nav_root' => (bool) $child_term->get('field_main_nav_root')->value ?? FALSE,
         'children' => $children,
       ];
 
@@ -385,7 +385,7 @@ class CgovNavTreeController extends ControllerBase {
     $parent_term = $this->getParentTerm($term);
     while ($parent_term !== NULL) {
       $ancestry[] = $parent_term;
-      $isNavRoot = ($parent_term->field_main_nav_root->value || $parent_term->field_section_nav_root->value);
+      $isNavRoot = ($parent_term->get('field_main_nav_root')->value || $parent_term->get('field_section_nav_root')->value);
       // If we found the next nav root, then stop fetching.
       $parent_term = $isNavRoot ? NULL : $this->getParentTerm($parent_term);
     }
@@ -395,7 +395,7 @@ class CgovNavTreeController extends ControllerBase {
 
     if (
       $branch[0] === $term ||
-      !($branch[0]->field_main_nav_root->value || $branch[0]->field_section_nav_root->value)
+      !($branch[0]->get('field_main_nav_root')->value || $branch[0]->get('field_section_nav_root')->value)
     ) {
       // Basically, there is no other term in the ancestry that is the root.
       return [];
@@ -405,12 +405,12 @@ class CgovNavTreeController extends ControllerBase {
 
     // No term *should* be a main nav root and a section nav root. When they
     // are, the mobile nav takes precedence.
-    if ($branch[0]->field_main_nav_root->value) {
+    if ($branch[0]->get('field_main_nav_root')->value) {
       $max_depth = (theme_get_setting('mobile_levels_to_display', 'cgov_common') ?? 4) + 1;
       $pruned_branch = $this->pruneBranch($branch, 'mobile_nav', $max_depth);
     }
-    elseif ($branch[0]->field_section_nav_root->value) {
-      $max_depth = $branch[0]->field_levels_to_display->value ?? 5;
+    elseif ($branch[0]->get('field_section_nav_root')->value) {
+      $max_depth = $branch[0]->get('field_levels_to_display')->value ?? 5;
       $pruned_branch = $this->pruneBranch($branch, 'section_nav', $max_depth);
     }
 
@@ -479,6 +479,8 @@ class CgovNavTreeController extends ControllerBase {
       /** @var \Drupal\taxonomy\TermInterface */
       return $parents[array_keys($parents)[0]];
     }
+
+    return NULL;
   }
 
 }

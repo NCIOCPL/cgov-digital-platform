@@ -64,6 +64,7 @@ function cgov_site_section_tokens($type, $tokens, array $data, array $options, B
         }
 
         if (!empty($entity->get('field_site_section')->first())) {
+          $tid = NULL;
           try {
             $tid = $entity->get('field_site_section')->first()->getValue()['target_id'];
             $term = Term::load($tid);
@@ -166,7 +167,7 @@ function _get_taxonomy_field_token(array $data, $fieldname) {
  *   Node object.
  */
 function _get_valid_parent($alias) {
-  if (!isset($alias) || trim($alias) === '') {
+  if ($alias === NULL || trim($alias) === '') {
     return NULL;
   }
 
