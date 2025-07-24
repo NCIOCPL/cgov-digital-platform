@@ -1,2 +1,6 @@
 import './infographic.scss';
-import './infographic-legacy.scss';
+import cgdpInfographicInit from '../../lib/components/cgdp-infographic';
+
+document.addEventListener('DOMContentLoaded', () => {
+	cgdpInfographicInit();
+});
