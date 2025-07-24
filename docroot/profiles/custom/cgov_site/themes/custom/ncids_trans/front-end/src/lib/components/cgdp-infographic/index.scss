@@ -1,0 +1,41 @@
+@use 'uswds-core' as *;
+
+// Mixin for font styles shared between enlarge text and captions
+@mixin infographic-caption-styles {
+	@include u-font('sans', '2xs');
+	line-height: line-height($theme-body-font-family, $theme-body-line-height);
+	@include u-border-left(0.5, $theme-color-secondary);
+	@include u-padding-y(1);
+	@include u-padding-x(2);
+	@include u-text('left');
+}
+
+.cgdp-infographic {
+	@include u-display('flex');
+	@include u-flex('column');
+	@include u-flex('align-center');
+	&__wrapper {
+		@include u-display('inline-block');
+	}
+	figure {
+		@include u-margin(0);
+		line-height: 0;
+		img {
+			@include u-height('auto');
+		}
+	}
+	&__caption {
+		@include infographic-caption-styles();
+		p {
+			@include u-margin(0);
+		}
+	}
+	&__link-container {
+		@include u-display('none');
+
+		@include at-media('tablet') {
+			@include u-display('block');
+			@include infographic-caption-styles();
+		}
+	}
+}

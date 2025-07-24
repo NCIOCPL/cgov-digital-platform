@@ -5,6 +5,7 @@ import * as $ from 'jquery';
 import { doAccordion } from 'Core/libraries/accordion/accordion';
 import cgdpRelatedResourcesInit from '../../lib/components/cgdp-related-resources';
 import cgdpCitationInit from '../../lib/components/cgdp-article-footer-citation';
+import cgdpInfographicInit from '../../lib/components/cgdp-infographic';
 
 // Cheating here and just copying in the jqueryui type since TS is not pulling it in.
 interface AccordionUIParams {
@@ -98,6 +99,7 @@ const onDOMContentLoaded = () => {
 	initializeAccordions();
 	cgdpRelatedResourcesInit();
 	cgdpCitationInit();
+	cgdpInfographicInit();
 };
 
 document.addEventListener('DOMContentLoaded', onDOMContentLoaded);
