@@ -27,12 +27,35 @@ describe('glossifyTermFromLabel', () => {
   });
 
   it('handles preexisting terms with HTML tags', () => {
-    testContainer.innerHTML = `<label data-gloss-lang="en" data-gloss-id="123" data-gloss-dictionary="Cancer.gov" data-gloss-audience="Patient" data-html="strong,em" data-preexisting="true">cancer</label>`;
+    testContainer.innerHTML = `<label data-gloss-lang="en" data-gloss-id="123" data-gloss-dictionary="Cancer.gov" data-gloss-audience="Patient" data-html="%3Cem%3E%3Cstrong%3Ecancer%3C%2Fstrong%3E%3C%2Fem%3E%0A" data-preexisting="true">cancer</label>`;
     const mockLabel = testContainer.querySelector('label');
 
     suggestionDisplay.glossifyTermFromLabel(mockLabel);
 
-    const expectedHtml = `<nci-definition data-gloss-id="123" data-gloss-dictionary="Cancer.gov" data-gloss-audience="Patient" data-gloss-lang="en"><em><strong>cancer</strong></em></nci-definition>`;
+    const expectedHtml = `<nci-definition data-gloss-id="123" data-gloss-dictionary="Cancer.gov" data-gloss-audience="Patient" data-gloss-lang="en"><em><strong>cancer</strong></em>`
+    + `\n</nci-definition>`;
+    expect(testContainer.innerHTML).toBe(expectedHtml);
+  });
+
+  it('handles preexisting terms with HTML tags and single quotes', () => {
+    testContainer.innerHTML = `<label data-gloss-lang="en" data-gloss-id="123" data-gloss-dictionary="Cancer.gov" data-gloss-audience="Patient" data-html="%3Cem%3E%3Cstrong%3E%27cancer%27%3C%2Fstrong%3E%3C%2Fem%3E%0A" data-preexisting="true">cancer</label>`;
+    const mockLabel = testContainer.querySelector('label');
+
+    suggestionDisplay.glossifyTermFromLabel(mockLabel);
+
+    const expectedHtml = `<nci-definition data-gloss-id="123" data-gloss-dictionary="Cancer.gov" data-gloss-audience="Patient" data-gloss-lang="en"><em><strong>'cancer'</strong></em>`
+    + `\n</nci-definition>`;
+
+    expect(testContainer.innerHTML).toBe(expectedHtml);
+  });
+
+  it('handles preexisting terms with HTML tags and double quotes', () => {
+    testContainer.innerHTML = `<label data-gloss-lang="en" data-gloss-id="123" data-gloss-dictionary="Cancer.gov" data-gloss-audience="Patient" data-html="%3Cem%3E%3Cstrong%3E%22cancer%22%3C%2Fstrong%3E%3C%2Fem%3E" data-preexisting="true">cancer</label>`;
+    const mockLabel = testContainer.querySelector('label');
+
+    suggestionDisplay.glossifyTermFromLabel(mockLabel);
+
+    const expectedHtml = `<nci-definition data-gloss-id="123" data-gloss-dictionary="Cancer.gov" data-gloss-audience="Patient" data-gloss-lang="en"><em><strong>"cancer"</strong></em></nci-definition>`;
     expect(testContainer.innerHTML).toBe(expectedHtml);
   });
 
