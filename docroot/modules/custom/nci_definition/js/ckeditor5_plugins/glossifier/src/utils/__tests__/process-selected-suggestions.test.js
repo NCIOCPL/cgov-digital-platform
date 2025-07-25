@@ -69,12 +69,42 @@ describe('processSelectedSuggestions', () => {
 
       const parser = new window.DOMParser();
       const contentDoc = parser.parseFromString(
-        `Placeholder <label data-gloss-id="45333" data-gloss-dictionary="Cancer.gov" data-gloss-audience="Patient" data-gloss-lang="en" class="glossify-dialog__term glossify-dialog__term--first" data-preexisting="true" data-html="strong,em" data-glossify-label="">cancer<input type="checkbox" checked></label> Placeholder`,
+        `Placeholder <label data-gloss-id="45333" data-gloss-dictionary="Cancer.gov" data-gloss-audience="Patient" data-gloss-lang="en" class="glossify-dialog__term glossify-dialog__term--first" data-preexisting="true" data-html="%3Cstrong%3E%3Cem%3Ecancer%3C%2Fem%3E%3C%2Fstrong%3E" data-glossify-label="">cancer<input type="checkbox" checked></label> Placeholder`,
         'text/html'
       );
 
       const actual = processSelectedSuggestions(contentDoc.body);
-      const expected = `Placeholder <nci-definition data-gloss-id="45333" data-gloss-dictionary="Cancer.gov" data-gloss-audience="Patient" data-gloss-lang="en"><em><strong>cancer</strong></em></nci-definition> Placeholder`;
+      const expected = `Placeholder <nci-definition data-gloss-id="45333" data-gloss-dictionary="Cancer.gov" data-gloss-audience="Patient" data-gloss-lang="en"><strong><em>cancer</em></strong></nci-definition> Placeholder`;
+
+      expect(actual).toBe(expected);
+
+    });
+
+    it('should restore html tags with single quotes', () => {
+
+      const parser = new window.DOMParser();
+      const contentDoc = parser.parseFromString(
+        `Placeholder <label data-gloss-id="45333" data-gloss-dictionary="Cancer.gov" data-gloss-audience="Patient" data-gloss-lang="en" class="glossify-dialog__term glossify-dialog__term--first" data-preexisting="true" data-html="%3Cstrong%3E%3Cem%3E%27cancer%27%3C%2Fem%3E%3C%2Fstrong%3E" data-glossify-label="">cancer<input type="checkbox" checked></label> Placeholder`,
+        'text/html'
+      );
+
+      const actual = processSelectedSuggestions(contentDoc.body);
+      const expected = `Placeholder <nci-definition data-gloss-id="45333" data-gloss-dictionary="Cancer.gov" data-gloss-audience="Patient" data-gloss-lang="en"><strong><em>'cancer'</em></strong></nci-definition> Placeholder`;
+
+      expect(actual).toBe(expected);
+
+    });
+
+    it('should restore html tags with double quotes', () => {
+
+      const parser = new window.DOMParser();
+      const contentDoc = parser.parseFromString(
+        `Placeholder <label data-gloss-id="45333" data-gloss-dictionary="Cancer.gov" data-gloss-audience="Patient" data-gloss-lang="en" class="glossify-dialog__term glossify-dialog__term--first" data-preexisting="true" data-html="%3Cstrong%3E%3Cem%3E%22cancer%22%3C%2Fem%3E%3C%2Fstrong%3E%0A" data-glossify-label="">cancer<input type="checkbox" checked></label> Placeholder`,
+        'text/html'
+      );
+
+      const actual = processSelectedSuggestions(contentDoc.body);
+      const expected = `Placeholder <nci-definition data-gloss-id="45333" data-gloss-dictionary="Cancer.gov" data-gloss-audience="Patient" data-gloss-lang="en"><strong><em>"cancer"</em></strong>\n</nci-definition> Placeholder`;
 
       expect(actual).toBe(expected);
 
@@ -130,12 +160,12 @@ describe('processSelectedSuggestions', () => {
 
       const parser = new window.DOMParser();
       const contentDoc = parser.parseFromString(
-        `Placeholder <label data-gloss-id="45333" data-gloss-dictionary="Cancer.gov" data-gloss-audience="Patient" data-gloss-lang="en" class="glossify-dialog__term glossify-dialog__term--first" data-preexisting="true" data-html="strong,em" data-glossify-label="">cancer<input type="checkbox"></label> Placeholder`,
+        `Placeholder <label data-gloss-id="45333" data-gloss-dictionary="Cancer.gov" data-gloss-audience="Patient" data-gloss-lang="en" class="glossify-dialog__term glossify-dialog__term--first" data-preexisting="true" data-html="%3Cstrong%3E%3Cem%3Ecancer%3C%2Fem%3E%3C%2Fstrong%3E" data-glossify-label="">cancer<input type="checkbox"></label> Placeholder`,
         'text/html'
       );
 
       const actual = processSelectedSuggestions(contentDoc.body);
-      const expected = `Placeholder <em><strong>cancer</strong></em> Placeholder`;
+      const expected = `Placeholder <strong><em>cancer</em></strong> Placeholder`;
 
       expect(actual).toBe(expected);
 

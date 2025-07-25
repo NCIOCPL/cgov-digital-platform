@@ -2,19 +2,6 @@
 // These are "as-is" tests based in the original code.
 import * as contentPrep from '../content-preparation';
 
-describe('convertTagStringToHTML', () => {
-  it('wraps text in single tag', () => {
-    expect(contentPrep.convertTagStringToHTML('foo', 'strong')).toBe('<strong>foo</strong>');
-  });
-  it('wraps text in multiple tags', () => {
-    // @bug The whole wrapping and unwrapping tags is a bug.
-    expect(contentPrep.convertTagStringToHTML('bar', 'em,strong')).toBe('<strong><em>bar</em></strong>');
-  });
-  it('returns text unchanged if tagString is empty', () => {
-    expect(contentPrep.convertTagStringToHTML('baz', '')).toBe('baz');
-  });
-});
-
 describe('prepareEditorBodyForGlossificationRequest', () => {
   // Note, this is a weird test. Previously this test took in html entities and
   // needed the "fixSpanish" to translate (some) to unicode chars. With our new
@@ -75,12 +62,14 @@ describe('prepareEditorBodyForGlossificationRequest', () => {
       `<p>Lorum ipsum dolor sit colon cancer, consectetur adipiscing elit.</p>` +
       `<p>Lorem ipsum dolor sit amet, <nci-definition data-gloss-id="4536" data-gloss-dictionary="Cancer.gov" data-gloss-audience="Patient" data-gloss-lang="en">Anemia</nci-definition> consectetur adipiscing elit.</p>` +
       `<p>Lorem ipsum dolor sit amet, <nci-definition data-gloss-id="45360" data-gloss-dictionary="Cancer.gov" data-gloss-audience="Patient" data-gloss-lang="en">Test <em>with<strong>children</strong></em></nci-definition> consectetur adipiscing elit.</p>`;
-
+      `<p>Lorem ipsum dolor sit amet, <nci-definition data-gloss-id="45360" data-gloss-dictionary="Cancer.gov" data-gloss-audience="Patient" data-gloss-lang="en">Test '<em>with<strong>children</strong></em>'</nci-definition> consectetur adipiscing elit.</p>`;
+      `<p>Lorem ipsum dolor sit amet, <nci-definition data-gloss-id="45360" data-gloss-dictionary="Cancer.gov" data-gloss-audience="Patient" data-gloss-lang="en">Test "<em>with<strong>children</strong></em>"</nci-definition> consectetur adipiscing elit.</p>`;
     const output =
       `<p>Lorum ipsum dolor sit colon cancer, consectetur adipiscing elit.</p>` +
       `<p>Lorem ipsum dolor sit amet, <span rel="glossified" data-preexisting="true" data-gloss-lang="en" data-gloss-id="4536" data-gloss-dictionary="Cancer.gov" data-gloss-audience="Patient" data-html="" data-term="Anemia"></span> consectetur adipiscing elit.</p>` +
-      `<p>Lorem ipsum dolor sit amet, <span rel="glossified" data-preexisting="true" data-gloss-lang="en" data-gloss-id="45360" data-gloss-dictionary="Cancer.gov" data-gloss-audience="Patient" data-html="em,strong" data-term="Test withchildren"></span> consectetur adipiscing elit.</p>`;
-
+      `<p>Lorem ipsum dolor sit amet, <span rel="glossified" data-preexisting="true" data-gloss-lang="en" data-gloss-id="45360" data-gloss-dictionary="Cancer.gov" data-gloss-audience="Patient" data-html="Test%20%3Cem%3Ewith%3Cstrong%3Echildren%3C%2Fstrong%3E%3C%2Fem%3E" data-term="Test withchildren"></span> consectetur adipiscing elit.</p>`;
+      `<p>Lorem ipsum dolor sit amet, <span rel="glossified" data-preexisting="true" data-gloss-lang="en" data-gloss-id="45360" data-gloss-dictionary="Cancer.gov" data-gloss-audience="Patient" data-html="Test%20%27%3Cem%3Ewith%3Cstrong%3Echildren%3C%2Fstrong%3E%3C%2Fem%3E%27" data-term="Test withchildren"></span> consectetur adipiscing elit.</p>`;
+      `<p>Lorem ipsum dolor sit amet, <span rel="glossified" data-preexisting="true" data-gloss-lang="en" data-gloss-id="45360" data-gloss-dictionary="Cancer.gov" data-gloss-audience="Patient" data-html="Test%20%22%3Cem%3Ewith%3Cstrong%3Echildren%3C%2Fstrong%3E%3C%2Fem%3E%22" data-term="Test withchildren"></span> consectetur adipiscing elit.</p>`;
     expect(contentPrep.prepareEditorBodyForGlossificationRequest(input)).toBe(output);
   });
 
@@ -89,7 +78,7 @@ describe('prepareEditorBodyForGlossificationRequest', () => {
   // response.
   it('handles content with empty definition tags', () => {
     const input = `<p>Lorem ipsum dolor sit amet, <nci-definition data-gloss-id="45360" data-gloss-dictionary="Cancer.gov" data-gloss-audience="Patient" data-gloss-lang="en"> </nci-definition> consectetur adipiscing elit.</p>`;
-    const output = `<p>Lorem ipsum dolor sit amet, <span rel="glossified" data-preexisting="true" data-gloss-lang="en" data-gloss-id="45360" data-gloss-dictionary="Cancer.gov" data-gloss-audience="Patient" data-html="" data-term=" "></span> consectetur adipiscing elit.</p>`;
+    const output = `<p>Lorem ipsum dolor sit amet, <span rel="glossified" data-preexisting="true" data-gloss-lang="en" data-gloss-id="45360" data-gloss-dictionary="Cancer.gov" data-gloss-audience="Patient" data-html="%20" data-term=" "></span> consectetur adipiscing elit.</p>`;
     expect(contentPrep.prepareEditorBodyForGlossificationRequest(input)).toBe(output);
   });
 

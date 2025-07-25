@@ -1,5 +1,4 @@
-import { convertTagStringToHTML } from './content-preparation.js';
-import { glossifyTermFromLabel } from './suggestion-display.js';
+import { glossifyTermFromLabel, decodeHTML} from './suggestion-display.js';
 
 /**
  * Process the contents of the dialog to generate html for the
@@ -12,15 +11,17 @@ const processSelectedSuggestions = (dialogContents) => {
     const checkbox = label.querySelector('input');
     const isSelected = checkbox.checked;
     if(!isSelected) {
-      // Restore the term as basic text. No glossification.
-     const termHTML = label.dataset.html;
-     const isPreexisting = label.dataset.preexisting;
-     const originalText = label.textContent;
+      // Restore the term as basic formatted text. No glossification.
+      const isPreexisting = label.dataset.preexisting;
+      const originalText = label.textContent;
+      let decodedHTML = decodeHTML(label.dataset.html, originalText);
       if (isPreexisting === "true") {
-        let displayText = convertTagStringToHTML(originalText, termHTML);
-        const tempDoc = document.createElement('div');
-        tempDoc.innerHTML = displayText;
-        label.replaceWith(...tempDoc.childNodes);
+        if ((decodedHTML instanceof HTMLElement || decodedHTML instanceof NodeList)
+                  && decodedHTML.childNodes.length > 0) {
+          label.replaceWith(...decodedHTML.childNodes);
+        } else {
+        label.replaceWith(originalText);
+        }
       } else {
         label.replaceWith(originalText);
       }
