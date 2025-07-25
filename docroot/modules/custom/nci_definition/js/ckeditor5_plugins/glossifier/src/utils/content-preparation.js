@@ -27,33 +27,6 @@ const sanitizeChar = (c) => {
 }
 
 /**
- * Wraps a string in set of html tags that surrounded it before glossification
- *
- * @param {string} termText
- * @param {string} tagString
- * @returns {string}
- */
-export const convertTagStringToHTML = (termText, termHTML) => {
-  let displayText = termText;
-  // If we have termHTML tags, we need to wrap the originalText in them
-  if(termHTML && termHTML !== "") {
-    const tags = termHTML.split(',');
-    let textWithHTML = termText;
-    if(tags.length > 0) {
-      let openingTag = '';
-      let closingTag = '';
-      for (let i = 0; i < tags.length; i++) {
-        openingTag = '<' + tags[i] + '>';
-        closingTag = '</' + tags[i] + '>';
-        textWithHTML = openingTag + textWithHTML + closingTag;
-      }
-      displayText = textWithHTML;
-    }
-  }
-  return displayText;
-}
-
-/**
  * Before we can 'cache' the previously glossified terms during a request
  * we need to find them. Any glossified links that don't match this pattern
  * should be considered bad and handled with a manual content correction.
@@ -95,13 +68,23 @@ const removePreviouslyGlossifiedTerms = (body) => {
      */
     // We use getElementsByTagName so we can get a list for nested tag. (Hence the
     // above bug)
+    /* We loop through the child elements and replace any not in our preserve tag list
+    * with their textContent.
+    */
+    const preserveTagList = ['strong', 'em', 'span', 's', 'sup', 'sub'];
     const childArray = Array.from(definition.getElementsByTagName('*'));
-    const childTagList = childArray.map(element => element.tagName.toLowerCase());
-    const childTags = childTagList.join(',');
+    childArray.forEach(element => {
+        if (!preserveTagList.includes(element.tagName.toLowerCase())) {
+            const textContent = element.textContent;
+            element.replaceWith(textContent);
+        }
+    });
+    const definitionWithStrippedHTML = encodeURI(definition.innerHTML);
     const childTextContents = definition.textContent;
 
-    // Now set the properties to hold the tags list and contents.
-    replacementSpan.dataset.html = childTags;
+    // Now set the properties to hold the stripped html string and contents.
+    replacementSpan.dataset.html = definitionWithStrippedHTML;
+
     replacementSpan.dataset.term = childTextContents;
 
     // Ok, now we swap.

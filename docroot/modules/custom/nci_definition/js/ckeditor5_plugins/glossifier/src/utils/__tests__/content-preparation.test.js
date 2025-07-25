@@ -2,19 +2,6 @@
 // These are "as-is" tests based in the original code.
 import * as contentPrep from '../content-preparation';
 
-describe('convertTagStringToHTML', () => {
-  it('wraps text in single tag', () => {
-    expect(contentPrep.convertTagStringToHTML('foo', 'strong')).toBe('<strong>foo</strong>');
-  });
-  it('wraps text in multiple tags', () => {
-    // @bug The whole wrapping and unwrapping tags is a bug.
-    expect(contentPrep.convertTagStringToHTML('bar', 'em,strong')).toBe('<strong><em>bar</em></strong>');
-  });
-  it('returns text unchanged if tagString is empty', () => {
-    expect(contentPrep.convertTagStringToHTML('baz', '')).toBe('baz');
-  });
-});
-
 describe('prepareEditorBodyForGlossificationRequest', () => {
   // Note, this is a weird test. Previously this test took in html entities and
   // needed the "fixSpanish" to translate (some) to unicode chars. With our new

@@ -1,5 +1,3 @@
-import { convertTagStringToHTML } from './content-preparation';
-
 /**
  * Create a glossified term HTML element.
  *
@@ -10,21 +8,19 @@ import { convertTagStringToHTML } from './content-preparation';
  */
 export const glossifyTermFromLabel = (label) => {
   const originalText = label.textContent;
-  const termHTML = label.dataset.html;
+  const termHTML = decodeURI(label.dataset.html);
   const isPreexisting = label.dataset.preexisting;
   let displayText = originalText;
-  //If term was selected before and has html tags wrapping it, convert it from string to html wrapped in those tags
+  //If term was selected before and has html tags wrapping it, substitute that formatted html string
   if((isPreexisting === "true") && termHTML && (termHTML!=='')) {
-    displayText = convertTagStringToHTML(originalText, termHTML);
+    displayText = termHTML;
   }
-
   const definition = document.createElement('nci-definition');
   definition.dataset.glossId = label.dataset.glossId;
   definition.dataset.glossDictionary = label.dataset.glossDictionary;
   definition.dataset.glossAudience = label.dataset.glossAudience;
   definition.dataset.glossLang = label.dataset.glossLang;
 
-  // Why don't we get HTML from convertTagStringToHTML?
   // It might be nicer to appendChild.
   definition.innerHTML = displayText;
   label.replaceWith(definition);
@@ -69,7 +65,7 @@ const createGlossificationTermOptionElementString = (
   // also given how nested elements can get complicated, do we really
   // want to see the styling on the text in the label.
   if((isPreexisting === "true") && termHTML && (termHTML!=='')) {
-    textWithHTML = convertTagStringToHTML(termText, termHTML);
+    textWithHTML = decodeURI(termHTML);
   }
 
   const wrappedTerm =
