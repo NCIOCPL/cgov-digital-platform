@@ -48,6 +48,7 @@ services:
       - { name: path_processor_outbound, priority: 600 }
   cgov_core.config_overrider:
     class: Drupal\cgov_core\CgovConfigOverrider
+    arguments: [!service_closure '@entity_type.bundle.info']
     tags:
       - {name: config.factory.override, priority: 5}
   cgov_core.route_subscriber:

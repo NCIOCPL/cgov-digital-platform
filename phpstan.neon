@@ -16,9 +16,6 @@ parameters:
     ## The following paths should be removed as each module is remediated
     ### custom modules
     ### cgov_site Profile Modules
-    - docroot/profiles/custom/cgov_site/modules/custom/cgov_core/cgov_core.module
-    - docroot/profiles/custom/cgov_site/modules/custom/cgov_core/src/CgovConfigOverrider.php
-    - docroot/profiles/custom/cgov_site/modules/custom/cgov_core/src/CgovCoreTools.php
     - docroot/profiles/custom/cgov_site/modules/custom/cgov_core/src/Controller/CgovMediaController.php
     - docroot/profiles/custom/cgov_site/modules/custom/cgov_core/src/NavItem.php
     - docroot/profiles/custom/cgov_site/modules/custom/cgov_core/src/Plugin/Block/Breadcrumb.php
@@ -26,16 +23,13 @@ parameters:
     - docroot/profiles/custom/cgov_site/modules/custom/cgov_core/src/Plugin/Block/MainNav.php
     - docroot/profiles/custom/cgov_site/modules/custom/cgov_core/src/Plugin/Block/SectionNav.php
     - docroot/profiles/custom/cgov_site/modules/custom/cgov_core/src/Services/CgovNavigationManager.php
-    - docroot/profiles/custom/cgov_site/modules/custom/cgov_event/src/Controller/ICalendarController.php
     - docroot/profiles/custom/cgov_site/modules/custom/cgov_home_landing/cgov_home_landing.module
     - docroot/profiles/custom/cgov_site/modules/custom/cgov_image/cgov_image.module
     - docroot/profiles/custom/cgov_site/modules/custom/cgov_infographic/cgov_infographic.module
     - docroot/profiles/custom/cgov_site/modules/custom/cgov_list/cgov_list.module
-    - docroot/profiles/custom/cgov_site/modules/custom/cgov_mail/src/Controller/MailAPIController.php
     - docroot/profiles/custom/cgov_site/modules/custom/cgov_schema_org/cgov_schema_org.module
     - docroot/profiles/custom/cgov_site/modules/custom/cgov_schema_org/src/Plugin/Field/FieldType/CgovSchemaOrgFieldItem.php
     - docroot/profiles/custom/cgov_site/modules/custom/cgov_schema_org/src/Plugin/Field/FieldWidget/CgovSchemaOrgWidget.php
-    - docroot/profiles/custom/cgov_site/modules/custom/cgov_site_section/src/Controller/CgovMegaMenuController.php
       # To be remediated as part of https://github.com/nciocpl/cgov-digital-platform/issues/4815
     - docroot/profiles/custom/cgov_site/modules/custom/pdq_cancer_information_summary/src/OrphanCleanup.php
 
@@ -82,8 +76,15 @@ parameters:
       ## This ignore is for the deprecated CacheDecoratorInterface module.
       message: "#Usage of deprecated trait Symfony\\\\Component\\\\DependencyInjection\\\\ContainerAwareTrait in class#"
       reportUnmatched: false
+    -
+      # This ignore is for the specific weirdness in CgovVocabManagerForm.php where properties are set in
+      # loadTermsByStubs() that are not part of TermInterface.
+      message: "#Access to an undefined property Drupal\\\\taxonomy\\\\TermInterface::\\$(parents|depth)#"
+      reportUnmatched: false
+      paths:
+        - docroot/profiles/custom/cgov_site/modules/custom/cgov_vocab_manager/src/Form/CgovVocabManagerForm.php
 
-    ## With php 8.2+, various magic properties are reported as errors; that aren't reported with php 8.1.
+    ## With php 8.2+, some magic properties are reported as errors that aren't reported with php 8.1.
     ## phpstan complains when a line is marked to be ignored but doesn't cause an error, so we have
     ## to ignore them here and make appropriate changes when we get to php 8.4 / Drupal 11.
     -
@@ -92,14 +93,13 @@ parameters:
       paths:
         - docroot/modules/custom/app_module/src/AppPathManager.php
     -
-      message: "#Access to an undefined property Drupal\\\\node\\\\NodeInterface::\\$moderation_state.#"
+      message: "#Access to an undefined property Drupal\\\\node\\\\NodeInterface::\\$moderation_state#"
       reportUnmatched: false
       paths:
         - docroot/profiles/custom/cgov_site/modules/custom/pdq_core/src/Plugin/rest/resource/PDQResource.php
+        - docroot/profiles/custom/cgov_site/modules/custom/cgov_core/cgov_core.module
     -
-      # This is for the specific weirdness in CgovVocabManagerForm.php where properties are set in
-      # loadTermsByStubs() that are not part of TermInterface.
-      message: "#Access to an undefined property Drupal\\\\taxonomy\\\\TermInterface::\\$(parents|depth)#"
+      message: "#Access to an undefined property Drupal\\\\user\\\\UserInterface::\\$preferred_admin_langcode.#"
       reportUnmatched: false
       paths:
-        - docroot/profiles/custom/cgov_site/modules/custom/cgov_vocab_manager/src/Form/CgovVocabManagerForm.php
+        - docroot/profiles/custom/cgov_site/modules/custom/cgov_core/cgov_core.module
