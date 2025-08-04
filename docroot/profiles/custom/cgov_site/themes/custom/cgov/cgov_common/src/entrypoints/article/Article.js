@@ -1,1 +1,0 @@
-import './Article.scss';
