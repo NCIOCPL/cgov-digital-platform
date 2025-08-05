@@ -76,7 +76,7 @@ class CgovSiteTest extends BrowserTestBase {
     $this->assertSession()->elementContains('css', '.block-local-tasks-block', 'Settings');
 
     // Verify enabled themes.
-    $this->assertSession()->elementContains('css', '.system-themes-list--installed', 'CGov Common Base Theme');
+    $this->assertSession()->elementContains('css', '.system-themes-list--installed', 'NCIDS Transitional Theme');
     $this->assertSession()->elementContains('css', '.system-themes-list--installed', 'CGov Admin Theme');
     $this->assertSession()->elementContains('css', '.system-themes-list--installed', 'Claro');
 
