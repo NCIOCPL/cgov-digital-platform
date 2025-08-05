@@ -1,4 +1,33 @@
-import { convertTagStringToHTML } from './content-preparation';
+/**
+ * Decodes URIEncoded HTML string, returns HTML or simple text if no tags present
+ *
+ * @param {string} encodedHTML
+ * @param {string} originalText
+ *
+ * @returns {string|HTMLElement} decodedHTML
+ */
+export const decodeHTML = (encodedHTML, originalText) => {
+
+  if(!encodedHTML || typeof encodedHTML !== 'string') {
+    return originalText;
+  } else if(encodedHTML.length === 0) {
+    return originalText;
+  }
+  const termHTML = decodeURIComponent(encodedHTML);
+  const parser = new window.DOMParser();
+  const doc = parser.parseFromString(termHTML, 'text/html');
+  let decodedHTML;
+  if(doc.body.children.length === 0) {
+      // If the term HTML is empty, just use the label text.
+      decodedHTML = originalText;
+    }
+    else {
+      decodedHTML = doc.body;
+    }
+  return decodedHTML;
+}
+
+
 
 /**
  * Create a glossified term HTML element.
@@ -10,21 +39,26 @@ import { convertTagStringToHTML } from './content-preparation';
  */
 export const glossifyTermFromLabel = (label) => {
   const originalText = label.textContent;
-  const termHTML = label.dataset.html;
   const isPreexisting = label.dataset.preexisting;
-  let displayText = originalText;
-  //If term was selected before and has html tags wrapping it, convert it from string to html wrapped in those tags
-  if((isPreexisting === "true") && termHTML && (termHTML!=='')) {
-    displayText = convertTagStringToHTML(originalText, termHTML);
+  let decodedHTML = decodeHTML(label.dataset.html, originalText);
+  let formattedText = '';
+  if (typeof decodedHTML === 'string') {
+    formattedText = decodedHTML;
+  } else {
+    // If the term HTML is an HTMLElement or Nodelist, convert it to a string.
+   formattedText = decodedHTML.innerHTML;
   }
-
+  let displayText = originalText;
+  //If term was selected before and has html tags wrapping it, substitute that formatted html string
+  if((isPreexisting === "true") ) {
+    displayText = formattedText;
+  }
   const definition = document.createElement('nci-definition');
   definition.dataset.glossId = label.dataset.glossId;
   definition.dataset.glossDictionary = label.dataset.glossDictionary;
   definition.dataset.glossAudience = label.dataset.glossAudience;
   definition.dataset.glossLang = label.dataset.glossLang;
 
-  // Why don't we get HTML from convertTagStringToHTML?
   // It might be nicer to appendChild.
   definition.innerHTML = displayText;
   label.replaceWith(definition);
@@ -62,14 +96,20 @@ const createGlossificationTermOptionElementString = (
 
   const firstOccurenceClassName = isFirstOccurenceOfTerm ? "glossify-dialog__term--first" : "";
   const classlist = "glossify-dialog__term " + firstOccurenceClassName;
-  let textWithHTML = termText;
+  let formattedText = termText;
 
   //If term was selected before and has html tags wrapping it, convert it from string to html wrapped in those tags
   // The following code is inert because isPreexisting is never a string.
   // also given how nested elements can get complicated, do we really
   // want to see the styling on the text in the label.
   if((isPreexisting === "true") && termHTML && (termHTML!=='')) {
-    textWithHTML = convertTagStringToHTML(termText, termHTML);
+    let decodedHTML = decodeHTML(label.dataset.html, originalText);
+    if (typeof decodedHTML === 'string') {
+      formattedText = decodedHTML;
+    } else {
+        // If the term HTML is an HTMLElement or Nodelist, convert it to a string.
+      formattedText = decodedHTML.innerHTML;
+    }
   }
 
   const wrappedTerm =
@@ -82,7 +122,7 @@ const createGlossificationTermOptionElementString = (
        data-preexisting="${isPreexisting}"
        data-html="${termHTML}"
        data-glossify-label
-    >${textWithHTML}<input type="checkbox"/></label>`;
+    >${formattedText}<input type="checkbox"/></label>`;
   return wrappedTerm;
 };
 
