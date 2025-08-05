@@ -139,7 +139,7 @@ class MainNav extends BlockBase implements ContainerFactoryPluginInterface, Trus
         $filteredMegaNavRootItems[] = $child;
       }
     }
-    usort($filteredMegaNavRootItems, ['self', "sortItemsByWeight"]);
+    usort($filteredMegaNavRootItems, [MainNav::class, "sortItemsByWeight"]);
     $renderedMegaNavTrees = [];
     // Iterate over the top level of navigation items that would appear in the
     // Main Menu on the desktop site.
@@ -197,7 +197,7 @@ class MainNav extends BlockBase implements ContainerFactoryPluginInterface, Trus
     if (!$hasItemsToRender) {
       return "";
     }
-    usort($filteredMobileItemsToRender, ['self', "sortItemsByWeight"]);
+    usort($filteredMobileItemsToRender, [MainNav::class, "sortItemsByWeight"]);
     $renderedMobileItems = [];
     foreach ($filteredMobileItemsToRender as $mobileItem) {
       $href = $mobileItem->getHref();
