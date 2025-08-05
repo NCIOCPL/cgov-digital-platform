@@ -15,8 +15,8 @@ services:
       - ./web/runtime/licenses:/var/licenses
       ## Configs
       - ./web/runtime/apache2.conf:/etc/apache2/apache2.conf
-      - ./web/runtime/php_apache2.ini:/etc/php/8.1/apache2/php.ini
-      - ./web/runtime/php_cli.ini:/etc/php/8.1/cli/php.ini
+#      - ./web/runtime/php_apache2.ini:/etc/php/8.1/apache2/php.ini
+#      - ./web/runtime/php_cli.ini:/etc/php/8.1/cli/php.ini
       ## Block git repo management within the container
       - ./web/runtime/container-hooks:/var/www/scripts/hooks
       ## Npmrc for package installation.
@@ -34,8 +34,8 @@ services:
     env_file:
       - ./docker.env
     ports:
-      - "80:80"
-      - "443:443"
+      - "81:80"
+      - "441:443"
     networks:
       drupalvm:
         aliases:
@@ -51,7 +51,7 @@ services:
     env_file:
       - ./docker.env
     ports:
-      - "3306:3306"
+      - "3307:3306"
     networks:
       drupalvm:
 
