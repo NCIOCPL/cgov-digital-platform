@@ -40,7 +40,8 @@
     <!-- Example BROWSERTEST_OUTPUT_DIRECTORY value: /path/to/webroot/sites/simpletest/browser_output -->
     <env name="BROWSERTEST_OUTPUT_DIRECTORY" value=""/>
     <!-- See https://symfony.com/doc/current/components/phpunit_bridge.html for how to configure this. -->
-    <env name="SYMFONY_DEPRECATIONS_HELPER" value="disabled"/>
+    <!-- <env name="SYMFONY_DEPRECATIONS_HELPER" value="max[direct]=0&amp;max[indirect]=999999&amp;ignoreFile=/var/www/phpunit.ignore"/> -->
+    <env name="SYMFONY_DEPRECATIONS_HELPER" value="baselineFile=/var/www/tests/phpunit/deprecation-baseline.json"/>
     <!-- Example for changing the driver class for mink tests MINK_DRIVER_CLASS value: 'Drupal\FunctionalJavascriptTests\DrupalSelenium2Driver' -->
     <!-- Example for changing the driver args to mink tests MINK_DRIVER_ARGS value: '["http://127.0.0.1:8510"]' -->
     <!-- Example for changing the driver args to phantomjs tests MINK_DRIVER_ARGS_PHANTOMJS value: '["http://127.0.0.1:8510"]' -->
@@ -63,8 +64,6 @@
   <!-- The Symfony deprecation listener has to come after the Drupal listener COMMENT -->
   <listeners>
     <listener class="\Drupal\Tests\Listeners\DrupalListener">
-    </listener>
-    <listener class="Symfony\Bridge\PhpUnit\SymfonyTestsListener">
     </listener>
   </listeners>
   <!-- Filter for coverage reports. -->
