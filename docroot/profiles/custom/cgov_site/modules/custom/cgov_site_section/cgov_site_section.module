@@ -720,7 +720,7 @@ function _cgov_site_section_attempt_set_front_page(EntityInterface $site_section
 
   // Set the front page.
   $config = \Drupal::configFactory()->getEditable('system.site');
-  $front_page = "/node/${home_page_id}";
+  $front_page = "/node/{$home_page_id}";
   // Only save if we need to change it.
   if ($front_page !== $config->get('page.front')) {
     $config->set('page.front', $front_page)->save();
