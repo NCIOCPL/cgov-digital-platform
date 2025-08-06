@@ -1,1 +1,0 @@
-import "./Biography.scss";
