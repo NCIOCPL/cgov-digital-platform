@@ -8,7 +8,9 @@ namespace Drupal\cgov_mail\Controller;
  */
 
 use Drupal\Component\Utility\EmailValidatorInterface;
+use Drupal\Core\Config\Config;
 use Drupal\Core\Config\ConfigFactoryInterface;
+use Drupal\Core\Config\ImmutableConfig;
 use Drupal\Core\Controller\ControllerBase;
 use Drupal\Core\Mail\MailManagerInterface;
 use Drupal\Core\Messenger\MessengerTrait;
@@ -28,38 +30,28 @@ class MailAPIController extends ControllerBase {
 
   /**
    * The email validator service.
-   *
-   * @var \Drupal\Component\Utility\EmailValidatorInterface
    */
-  protected $emailValidator;
+  protected EmailValidatorInterface $emailValidator;
 
   /**
    * The mail manager service.
-   *
-   * @var \Drupal\Core\Mail\MailManagerInterface
    */
-  protected $mailManager;
+  protected MailManagerInterface $mailManager;
 
   /**
    * Configuration object for cgov_mail.settings.
-   *
-   * @var \Drupal\Core\Config\EditableConfigInterface
    */
-  protected $cgovMailConfig;
+  protected ImmutableConfig $cgovMailConfig;
 
   /**
    * The current user account.
-   *
-   * @var \Drupal\Core\Session\AccountInterface
    */
-  protected $account;
+  protected AccountInterface $account;
 
   /**
    * The mail plugin.
-   *
-   * @var \Drupal\Core\Config\EditableConfigInterface
    */
-  protected $mailPlugin;
+  protected Config $mailPlugin;
 
   /**
    * {@inheritdoc}
@@ -109,6 +101,7 @@ class MailAPIController extends ControllerBase {
     $error_p = FALSE;
 
     $data = $request->request->all();
+    $recaptchaResponseField = '';
     foreach ($data as $key => $value) {
       switch ($key) {
         case 'submit.x':

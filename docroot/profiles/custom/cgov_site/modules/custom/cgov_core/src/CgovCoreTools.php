@@ -199,11 +199,14 @@ class CgovCoreTools {
    *
    * See https://github.com/NCIOCPL/cgov-digital-platform/issues/127.
    */
-  public function attachMediaTypeToWorkflow($type_name, $workflow_name) {
+  public function attachMediaTypeToWorkflow(string $type_name, string $workflow_name) {
     $workflows = $this->entityTypeManager->getStorage('workflow')->loadMultiple();
     $workflow = $workflows[$workflow_name];
-    $workflow->getTypePlugin()->addEntityTypeAndBundle('media', $type_name);
-    $workflow->save(TRUE);
+    // Stupid "extra variable" hack to make phpstan happy.
+    /** @var \Drupal\content_moderation\Plugin\WorkflowType\ContentModerationInterface */
+    $type_plugin = $workflow->getTypePlugin();
+    $type_plugin->addEntityTypeAndBundle('media', $type_name);
+    $workflow->save();
   }
 
   /**
@@ -214,8 +217,11 @@ class CgovCoreTools {
   public function attachBlockContentTypeToWorkflow($type_name, $workflow_name) {
     $workflows = $this->entityTypeManager->getStorage('workflow')->loadMultiple();
     $workflow = $workflows[$workflow_name];
-    $workflow->getTypePlugin()->addEntityTypeAndBundle('block_content', $type_name);
-    $workflow->save(TRUE);
+    // Stupid "extra variable" hack to make phpstan happy.
+    /** @var \Drupal\content_moderation\Plugin\WorkflowType\ContentModerationInterface */
+    $type_plugin = $workflow->getTypePlugin();
+    $type_plugin->addEntityTypeAndBundle('block_content', $type_name);
+    $workflow->save();
   }
 
   /**
@@ -633,6 +639,7 @@ class CgovCoreTools {
     // Gets the dependant's AccessResult. This access check was lifted from
     // EntityReferenceFormatterBase, and is the same check call that would
     // hide the content item.
+    /** @var \Drupal\Core\Access\AccessResult */
     $access_result = $dependant->access('view', NULL, TRUE);
 
     if ($access_result->isAllowed()) {
@@ -675,8 +682,12 @@ class CgovCoreTools {
   public static function mediaFormSubmitter(array &$form, FormStateInterface $form_state) {
     if ($redirect = $form_state->getRedirect()) {
       if ($redirect->getRouteName() === 'entity.media.latest_version') {
+        // This could probably be declared as a MediaForm, but the lower-level
+        // interface seems the better practice.
+        /** @var \Drupal\Core\Entity\EntityFormInterface */
+        $form_object = $form_state->getFormObject();
         /** @var \Drupal\Core\Entity\ContentEntityInterface $entity */
-        $entity = $form_state->getFormObject()->getEntity();
+        $entity = $form_object->getEntity();
         $entity_type_id = $entity->getEntityTypeId();
         $form_state->setRedirect("entity.$entity_type_id.collection", [$entity_type_id => $entity->id()]);
       }

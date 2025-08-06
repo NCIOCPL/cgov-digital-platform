@@ -62,8 +62,8 @@ class CgovMegaMenuController extends ControllerBase {
   public function getMegaMenu(?TermInterface $taxonomy_term = NULL) {
     $field_yaml_content = [];
     // Make sure the field_ncids_mega_menu_contents is not empty.
-    if ($taxonomy_term->field_ncids_mega_menu_contents->target_id) {
-      $field_ncids_mega_menu_block_id = $taxonomy_term->field_ncids_mega_menu_contents->target_id;
+    if ($taxonomy_term->get('field_ncids_mega_menu_contents')->target_id) {
+      $field_ncids_mega_menu_block_id = $taxonomy_term->get('field_ncids_mega_menu_contents')->target_id;
       $field_ncids_mega_menu_block = $this->entityTypeManager->getStorage('block_content')->load($field_ncids_mega_menu_block_id);
 
       // Make sure the field_ncids_mega_menu_block is published.

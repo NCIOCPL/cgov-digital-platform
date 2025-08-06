@@ -98,14 +98,18 @@ class ICalendarController extends ControllerBase {
     $end_date = NULL;
 
     if ($node->hasField('field_event_start_date') && !empty($node->get('field_event_start_date')->first())) {
-      // Convert the date to the Timezone of the user requesting.
-      $start_date = $node->field_event_start_date->date->format(
+      // Retrieve date value and convert to the necessary format.
+      /** @var \Drupal\Core\TypedData\Plugin\DataType\DateTimeIso8601 */
+      $date_value = $node->get('field_event_start_date')->first()->get('value');
+      $start_date = $date_value->getDateTime()->format(
         'Y-m-d H:i:s'
       );
     }
 
     if ($node->hasField('field_event_end_date') && !empty($node->get('field_event_end_date')->first())) {
-      $end_date = $node->field_event_end_date->date->format(
+      /** @var \Drupal\Core\TypedData\Plugin\DataType\DateTimeIso8601 */
+      $date_value = $node->get('field_event_end_date')->first()->get('value');
+      $end_date = $date_value->getDateTime()->format(
         'Y-m-d H:i:s'
       );
     }
@@ -124,8 +128,8 @@ class ICalendarController extends ControllerBase {
       ->setDtStart(new \DateTime($start_date, new \DateTimeZone('UTC')))
       ->setDtEnd(new \DateTime($end_date, new \DateTimeZone('UTC')))
       ->setSummary($node->getTitle())
-      ->setLocation($node->field_city_state->value)
-      ->setDescription($node->field_page_description->value);
+      ->setLocation($node->get('field_city_state')->value)
+      ->setDescription($node->get('field_page_description')->value);
 
     // 4. Add Event to Calendar.
     $vCalendar->addComponent($vEvent);
