@@ -160,6 +160,8 @@ class Breadcrumb extends BlockBase implements ContainerFactoryPluginInterface {
       }
       return $formattedBreadcrumbs;
     }
+
+    return [];
   }
 
   /**
