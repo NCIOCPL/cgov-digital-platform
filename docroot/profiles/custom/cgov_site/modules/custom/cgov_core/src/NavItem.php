@@ -150,7 +150,7 @@ class NavItem {
 
     $this->href = $this->navMgr->getUrlForLanding($this->term);
 
-    $this->isBreadcrumbRoot = $this->term->field_breadcrumb_root->value;
+    $this->isBreadCrumbRoot = $this->term->field_breadcrumb_root->value;
     $this->isSectionNavRoot = $this->term->field_section_nav_root->value;
     $this->isMainNavRoot = $this->term->field_main_nav_root->value;
     $this->renderDepth = $this->term->field_levels_to_display->value;
