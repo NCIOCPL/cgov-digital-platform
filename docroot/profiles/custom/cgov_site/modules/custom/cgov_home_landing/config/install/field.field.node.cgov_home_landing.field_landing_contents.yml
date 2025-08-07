@@ -5,7 +5,6 @@ dependencies:
     - field.storage.node.field_landing_contents
     - node.type.cgov_home_landing
     - paragraphs.paragraphs_type.cgov_card_raw_html
-    - paragraphs.paragraphs_type.cgov_list
     - paragraphs.paragraphs_type.ncids_2_guide_card_row
     - paragraphs.paragraphs_type.ncids_3_feature_card_row
     - paragraphs.paragraphs_type.ncids_3_guide_card_row
@@ -31,7 +30,6 @@ settings:
   handler: 'default:paragraph'
   handler_settings:
     target_bundles:
-      cgov_list: cgov_list
       cgov_card_raw_html: cgov_card_raw_html
       ncids_inline_video: ncids_inline_video
       ncids_two_column_container: ncids_two_column_container
@@ -112,7 +110,7 @@ settings:
         enabled: false
       cgov_list:
         weight: 4
-        enabled: true
+        enabled: false
       cgov_media_link:
         weight: 53
         enabled: false
