@@ -120,6 +120,8 @@ class MainNav extends BlockBase implements ContainerFactoryPluginInterface, Trus
       $renderTree = self::renderMainNav($navRoot);
       return $renderTree;
     }
+
+    return [];
   }
 
   /**
