@@ -398,7 +398,7 @@ class NavItem {
       );
 
       // Sort them by the weight.
-      usort($filteredChildren, ['self', "sortItemsByWeight"]);
+      usort($filteredChildren, [NavItem::class, 'sortItemsByWeight']);
 
       // Map them to a nice pretty array.
       $children = array_map(
