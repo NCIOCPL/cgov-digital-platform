@@ -15,10 +15,7 @@ parameters:
     - */node_modules/*
     ## The following paths should be removed as each module is remediated
     ### custom modules
-    - docroot/modules/custom/json_data_field/src/Plugin/Field/FieldFormatter/JsonDataFieldFormatter.php
     ### cgov_site Profile Modules
-    - docroot/profiles/custom/cgov_site/modules/custom/cgov_application_page/cgov_application_page.module
-    - docroot/profiles/custom/cgov_site/modules/custom/cgov_cancer_research/cgov_cancer_research.module
     - docroot/profiles/custom/cgov_site/modules/custom/cgov_core/cgov_core.module
     - docroot/profiles/custom/cgov_site/modules/custom/cgov_core/src/CgovConfigOverrider.php
     - docroot/profiles/custom/cgov_site/modules/custom/cgov_core/src/CgovCoreTools.php
@@ -27,11 +24,10 @@ parameters:
     - docroot/profiles/custom/cgov_site/modules/custom/cgov_core/src/Plugin/Block/Breadcrumb.php
     - docroot/profiles/custom/cgov_site/modules/custom/cgov_core/src/Plugin/Block/DisqusComments.php
     - docroot/profiles/custom/cgov_site/modules/custom/cgov_core/src/Plugin/Block/MainNav.php
-    - docroot/profiles/custom/cgov_site/modules/custom/cgov_core/src/Plugin/Block/NcidsHeader.php
     - docroot/profiles/custom/cgov_site/modules/custom/cgov_core/src/Plugin/Block/SectionNav.php
     - docroot/profiles/custom/cgov_site/modules/custom/cgov_core/src/Services/CgovNavigationManager.php
-    - docroot/profiles/custom/cgov_site/modules/custom/cgov_core/tests/src/Traits/CGovWorkflowAttachmentTrait.php
-    - docroot/profiles/custom/cgov_site/modules/custom/cgov_embedded_block/cgov_embedded_block.module
+    - docroot/profiles/custom/cgov_site/modules/custom/cgov_event/src/Controller/ICalendarController.php
+    - docroot/profiles/custom/cgov_site/modules/custom/cgov_home_landing/cgov_home_landing.module
     - docroot/profiles/custom/cgov_site/modules/custom/cgov_image/cgov_image.module
     - docroot/profiles/custom/cgov_site/modules/custom/cgov_infographic/cgov_infographic.module
     - docroot/profiles/custom/cgov_site/modules/custom/cgov_list/cgov_list.module
@@ -39,32 +35,19 @@ parameters:
     - docroot/profiles/custom/cgov_site/modules/custom/cgov_schema_org/cgov_schema_org.module
     - docroot/profiles/custom/cgov_site/modules/custom/cgov_schema_org/src/Plugin/Field/FieldType/CgovSchemaOrgFieldItem.php
     - docroot/profiles/custom/cgov_site/modules/custom/cgov_schema_org/src/Plugin/Field/FieldWidget/CgovSchemaOrgWidget.php
-    - docroot/profiles/custom/cgov_site/modules/custom/cgov_site_section/cgov_site_section.install
     - docroot/profiles/custom/cgov_site/modules/custom/cgov_site_section/cgov_site_section.module
     - docroot/profiles/custom/cgov_site/modules/custom/cgov_site_section/cgov_site_section.tokens.inc
+    - docroot/profiles/custom/cgov_site/modules/custom/cgov_site_section/src/Controller/CgovMegaMenuController.php
     - docroot/profiles/custom/cgov_site/modules/custom/cgov_site_section/src/Controller/CgovNavTreeController.php
-    - docroot/profiles/custom/cgov_site/modules/custom/cgov_site_section/src/FixHomeUrlAliasOutboundPathProcessor.php
     - docroot/profiles/custom/cgov_site/modules/custom/cgov_vocab_manager/src/Form/CgovVocabManagerForm.php
     - docroot/profiles/custom/cgov_site/modules/custom/cgov_vocab_manager/src/Manager/CgovVocabManager.php
+      # To be remediated as part of https://github.com/nciocpl/cgov-digital-platform/issues/4815
     - docroot/profiles/custom/cgov_site/modules/custom/pdq_cancer_information_summary/src/OrphanCleanup.php
-    - docroot/profiles/custom/cgov_site/modules/custom/pdq_cancer_information_summary/src/Plugin/rest/resource/PDQResource.php
-    - docroot/profiles/custom/cgov_site/modules/custom/pdq_core/src/PDQConfigOverrider.php
-    - docroot/profiles/custom/cgov_site/modules/custom/pdq_core/src/RevisionPruner.php
-    - docroot/profiles/custom/cgov_site/modules/custom/pdq_core/tests/src/Kernel/CleanupTest.php
-    - docroot/profiles/custom/cgov_site/modules/custom/pdq_drug_information_summary/src/Plugin/rest/resource/PDQResource.php
-    - docroot/profiles/custom/cgov_site/modules/custom/pdq_glossifier/src/Plugin/rest/resource/PDQResource.php
+
   ignoreErrors:
     ## NOTE: Each rule needs reportUnmatched so that PHPStan does not report unmatched rules
     ## as an error. However we do want to flag when people do unessesary ignores in doc comments,
     ## so we will only report unmatched here.
-    -
-      ## See changelog https://www.drupal.org/node/3159012 for whatever mess you want to call
-      ## supporting multiple versions of Symfony. Basically our code is correct, it is just
-      ## that we need the new version of symfony to be correct, which means when we update to
-      ## D10, we should be able to remove this line. The odd thing is the problem is in
-      ## Symfony, and in Symfony 5.0 fixes the inheritance chain.
-      message: "#Call to deprecated method stopPropagation\\(\\) of class Symfony\\\\Component\\\\EventDispatcher\\\\Event#"
-      reportUnmatched: false
     -
       ## This is the Drupal pattern for creating instances of plugins
       message: "#Unsafe usage of new static\\(\\)#"
@@ -104,3 +87,17 @@ parameters:
       ## This ignore is for the deprecated CacheDecoratorInterface module.
       message: "#Usage of deprecated trait Symfony\\\\Component\\\\DependencyInjection\\\\ContainerAwareTrait in class#"
       reportUnmatched: false
+
+    ## With php 8.2+, various magic properties are reported as errors; this doesn't occur with php 8.1.
+    ## phpstan complains when a line is marked to be ignored but doesn't cause an error, so we have
+    ## to ignore them here and make appropriate changes when we get to php 8.4 / Drupal 11.
+    -
+      message: "#Access to an undefined property Drupal\\\\path_alias\\\\PathAliasInterface::\\$original.#"
+      reportUnmatched: false
+      paths:
+        - docroot/modules/custom/app_module/src/AppPathManager.php
+    -
+      message: "#Access to an undefined property Drupal\\\\node\\\\NodeInterface::\\$moderation_state.#"
+      reportUnmatched: false
+      paths:
+        - docroot/profiles/custom/cgov_site/modules/custom/pdq_core/src/Plugin/rest/resource/PDQResource.php

@@ -61,6 +61,8 @@ class RevisionPruner {
     }
     foreach ($vids as $vid) {
       $wanted = FALSE;
+      // The latest revision of a node is going to be ... a node!
+      /** @var \Drupal\node\Entity\Node */
       $revision = $storage->loadRevision($vid);
       foreach ($languages as $langcode) {
         if ($kept[$langcode] < $keep) {

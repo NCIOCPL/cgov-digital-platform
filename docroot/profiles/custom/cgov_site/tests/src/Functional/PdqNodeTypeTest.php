@@ -29,7 +29,7 @@ class PdqNodeTypeTest extends NodeTestBase {
    *
    * @var string
    */
-  protected $defaultTheme = 'cgov_common';
+  protected $defaultTheme = 'stark';
 
   /**
    * Modules to enable.

@@ -33,11 +33,15 @@ const appendChild = (parent: Node, child: Node | string) => {
 
 type EventListener = (this: HTMLElement, event: Event) => unknown;
 
+type DangerouslySetInnerHTML = {
+	__html: string;
+};
+
 /**
  * JSX Props
  */
 type JsxProps = {
-	[key: string]: string | EventListener;
+	[key: string]: string | EventListener | DangerouslySetInnerHTML;
 };
 
 /**
@@ -98,7 +102,9 @@ export const createElement = (
 		return tag(props, children);
 	}
 
-	const splitProps = splitHandlersFromAttrs(props);
+	const { dangerouslySetInnerHTML = null, ...otherProps } = props || {};
+
+	const splitProps = splitHandlersFromAttrs(otherProps);
 
 	const el = Object.assign(document.createElement(tag), splitProps.attrs);
 
@@ -110,8 +116,17 @@ export const createElement = (
 		);
 	});
 
-	for (const child of children) {
-		appendChild(el, child);
+	if (dangerouslySetInnerHTML !== null) {
+		const parser = new DOMParser();
+		const html = dangerouslySetInnerHTML as DangerouslySetInnerHTML;
+		const parsedHtml = parser.parseFromString(html.__html ?? '', 'text/html');
+		el.replaceChildren(...parsedHtml.body.childNodes);
+	} else {
+		for (const child of children) {
+			// Our JSX parser will return null when the conditional doesn't return a value
+			// e.g., {false && ()}
+			if (child) appendChild(el, child);
+		}
 	}
 	return el;
 };
