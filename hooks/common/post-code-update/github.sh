@@ -24,6 +24,12 @@ else
     exit 1
 fi
 
+# Exit if our hook is explicitly disabled
+if [[ "$DISABLE_HOOK" == "true" ]]; then
+    echo "GitHub / Teams hook is disabled"
+    exit 0
+fi
+
 # Generate a JWT for the GitHub App
 now=$(date +%s)
 iat=$((${now} - 60)) # Issues 60 seconds in the past
