@@ -8,9 +8,7 @@ use Drupal\Component\Uuid\Php as Uuid;
 use Drupal\Core\Config\Config;
 use Drupal\Core\Config\ConfigFactory;
 use Drush\Commands\DrushCommands;
-// WARNING!! This is deprecated, but drush still needs it, at the same time,
-// there is no replacement yet. See drush issue #4935.
-use Webmozart\PathUtil\Path;
+use Symfony\Component\Filesystem\Path;
 
 /**
  * A Drush command to load blocks related to YAML content.
@@ -56,7 +54,7 @@ class YamlContentCommands extends DrushCommands {
   public function loadDevBlocks() {
     $this->logger->notice('Loading development blocks from cgov_yaml_content/dev_blocks');
     // Set the path to blocks set to <module_root>/dev_blocks.
-    $config_path = Path::join([__DIR__, '..', '..', 'dev_blocks']);
+    $config_path = Path::join(__DIR__, '..', '..', 'dev_blocks');
 
     // Get the configs to load, only allowing .yml files.
     $configs_to_load = array_filter(
