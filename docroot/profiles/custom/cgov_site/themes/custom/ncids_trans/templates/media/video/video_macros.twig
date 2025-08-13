@@ -9,8 +9,12 @@
   {% set aria_label = "Play video"|t %}
   {% set hasCaption = content.field_caption|field_value %}
   {% set videoID = 'media--' ~ media.id()|clean_unique_id %}
+  {% set hasTitle = content.name %}
   <div class="cgdp-video">
     <figure class="cgdp-video__figure">
+      {% if hasTitle %}
+        <span class="cgdp-video__heading">{{ hasTitle }}</span>
+      {% endif %}
       <div class="cgdp-video__media">
         <div {% if hasCaption %} aria-labelledby="{{ videoID }}" {% endif %} id="ytplayer-jC8CUIID2HA" class="flex-video" data-video-url="{{ url }}" data-video-title="{{ name }}">
           <div class="video-preview__container" tabindex="0" role="button" aria-label="{{ aria_label }}">
