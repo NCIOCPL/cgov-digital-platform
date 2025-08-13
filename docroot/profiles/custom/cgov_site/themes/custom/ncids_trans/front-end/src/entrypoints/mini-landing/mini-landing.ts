@@ -2,6 +2,7 @@ import patternInjector from 'Core/libraries/patternInjector';
 import patternSettings from 'Core/libraries/patternInjector/configs/nciOrgPatternSettings.js';
 import './mini-landing.scss';
 import './mini-landing-legacy.scss';
+import cgdpEmbedVideoInit from '../../lib/components/wysiwyg/common/cgdp-embed-video';
 
 const onDOMContentLoaded = () => {
 	// We only want to run the pattern injector on the home page.
@@ -10,6 +11,7 @@ const onDOMContentLoaded = () => {
 	if (isNCIOrganizationPage) {
 		patternInjector(patternSettings);
 	}
+	cgdpEmbedVideoInit();
 };
 
 window.addEventListener('DOMContentLoaded', onDOMContentLoaded);
