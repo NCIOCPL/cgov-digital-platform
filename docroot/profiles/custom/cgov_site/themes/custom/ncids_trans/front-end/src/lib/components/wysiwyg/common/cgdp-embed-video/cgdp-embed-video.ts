@@ -20,6 +20,7 @@ const videoLinkClickHandler = (videoEl: Element) => () => {
 		location: 'Body',
 		componentType: 'Embedded Video',
 		mediaType: 'Video',
+		mediaTitle: getTitle(videoEl).slice(0, 50),
 		linkText: getTitle(videoEl),
 		linkType: 'play',
 	});
