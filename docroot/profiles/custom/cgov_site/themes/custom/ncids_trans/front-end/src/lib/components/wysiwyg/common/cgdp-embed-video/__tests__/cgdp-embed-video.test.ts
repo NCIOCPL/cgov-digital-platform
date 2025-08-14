@@ -61,6 +61,7 @@ describe('CGDP Embed Video', () => {
 				location: 'Body',
 				componentType: 'Embedded Video',
 				mediaType: 'Video',
+				mediaTitle: 'Test Video - No Caption',
 				linkText: 'Test Video - No Caption',
 				linkType: 'play',
 			}
@@ -87,6 +88,7 @@ describe('CGDP Embed Video', () => {
 				location: 'Body',
 				componentType: 'Embedded Video',
 				mediaType: 'Video',
+				mediaTitle: 'Not Defined',
 				linkText: 'Not Defined',
 				linkType: 'play',
 			}
@@ -116,6 +118,7 @@ describe('CGDP Embed Video', () => {
 				location: 'Body',
 				componentType: 'Embedded Video',
 				mediaType: 'Video',
+				mediaTitle: 'Test Video - No Caption',
 				linkText: 'Test Video - No Caption',
 				linkType: 'play',
 			}
@@ -131,6 +134,7 @@ describe('CGDP Embed Video', () => {
 				location: 'Body',
 				componentType: 'Embedded Video',
 				mediaType: 'Video',
+				mediaTitle: 'Test Video - No Caption & Audio Described Link',
 				linkText: 'Test Video - No Caption & Audio Described Link',
 				linkType: 'play',
 			}
