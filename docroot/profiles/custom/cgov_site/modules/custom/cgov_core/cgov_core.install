@@ -8,6 +8,7 @@
 use Drupal\block\Entity\Block;
 use Drupal\block_content\Entity\BlockContent;
 use Drupal\cgov_core\CgovCoreTools;
+use Drupal\editor\Entity\Editor;
 
 /**
  * Implements hook_install().
@@ -252,4 +253,18 @@ function cgov_core_update_10012() {
     ->fields(['field_intro_text_format' => 'ncids_streamlined_no_headings'])
     ->condition('bundle', $bundle)
     ->execute();
+}
+
+/**
+ * Enable nci_ckeditor5_cleanup module and set clean_styles to true.
+ */
+function cgov_core_update_10013() {
+  $installer = \Drupal::service('module_installer');
+  if (!\Drupal::moduleHandler()->moduleExists('nci_ckeditor5_cleanup')) {
+    $installer->install(['nci_ckeditor5_cleanup']);
+
+    $editor = Editor::load('full_html');
+    $editor->setThirdPartySetting('nci_ckeditor5_cleanup', 'clean_styles', TRUE);
+    $editor->save();
+  }
 }
