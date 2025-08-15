@@ -1,0 +1,167 @@
+<?php
+
+/**
+ * @file
+ * Contains nci_ckeditor5_cleanup.module.
+ */
+
+use Drupal\Core\Form\FormStateInterface;
+use Drupal\editor\Entity\Editor;
+use Drupal\filter\Entity\FilterFormat;
+
+/**
+ * Implements hook_form_editor_form_alter().
+ *
+ * Adds third-party settings to the editor configuration form.
+ */
+function nci_ckeditor5_cleanup_form_filter_format_form_alter(&$form, FormStateInterface $form_state) {
+  /** @var \Drupal\editor\EditorInterface $editor */
+  $editor = $form_state->get('editor');
+
+  /*
+   * So the filter format form is odd. It actually manages the config for the
+   * format, as well as the editor config. Our third-party settings are only
+   * for the editor, not the format. However, one does not know the editor
+   * when creating a new format/editor. It is only upon selecting the
+   * editor that the editor config is available. (You can also have None as
+   * and editor.) So without getting into too many details, there are things
+   * in ckeditor5 that mess around with how the editor config is displayed
+   * and it would be real annoying to try and work around that to dynamically
+   * add our TPS config. So I am just going to output it all the time, and
+   * the setting won't get set if the editor is not ckeditor5.
+   */
+
+  $form['third_party_settings']['nci_ckeditor5_cleanup'] = [
+    '#type' => 'details',
+    '#title' => t('NCI CKEditor5 Cleanup'),
+    '#open' => TRUE,
+  ];
+
+  $form['third_party_settings']['nci_ckeditor5_cleanup']['clean_styles'] = [
+    '#type' => 'checkbox',
+    '#title' => t('Clean Styles'),
+    '#description' => t('Clean up unwanted styles from content. ONLY WORKS ON CKEDITOR5.'),
+    '#default_value' => (
+      $editor !== NULL ?
+        $editor->getThirdPartySetting('nci_ckeditor5_cleanup', 'clean_styles', FALSE) :
+        FALSE
+    ),
+  ];
+
+  $form['#entity_builders'][] = 'nci_ckeditor5_cleanup_form_filter_format_form_builder';
+}
+
+/**
+ * Entity form builder for editor form for handling our third party settings.
+ *
+ * NOTE: form_filter_format_form is odd in that the entity represented is
+ * FilterFormat, but we care about the editor config entity. It seems like
+ * both are on the same form.
+ */
+function nci_ckeditor5_cleanup_form_filter_format_form_builder($entity_type, FilterFormat $type, &$form, FormStateInterface $form_state) {
+  /** @var \Drupal\editor\EditorInterface $editor */
+  $editor = $form_state->get('editor');
+
+  // I don't know all the possible ways the builder could get called, and when
+  // it would be called without an editor. However, we know that we can't do
+  // anything with third-party settings if we don't have an editor.
+  if ($editor === NULL) {
+    return;
+  }
+
+  $clean_styles = $form_state->getValue(['third_party_settings', 'nci_ckeditor5_cleanup', 'clean_styles']);
+  if ($editor->getEditor() === 'ckeditor5' && $clean_styles === 1) {
+    $editor->setThirdPartySetting('nci_ckeditor5_cleanup', 'clean_styles', TRUE);
+    return;
+  }
+
+  $editor->unsetThirdPartySetting('nci_ckeditor5_cleanup', 'clean_styles');
+}
+
+/**
+ * Implements hook_editor_js_settings_alter().
+ *
+ * Modifies the CKEditor5 configuration based on third-party settings.
+ */
+function nci_ckeditor5_cleanup_editor_js_settings_alter(array &$settings) {
+  // Most examples just loop. IDK what condition would be the case
+  // where there are multiple formats for the editor.
+  foreach ($settings['editor']['formats'] as $format_id => &$format_settings) {
+    $editor = Editor::load($format_id);
+
+    if (!$editor || $editor->getEditor() !== 'ckeditor5') {
+      continue;
+    }
+
+    // Get our third-party settings.
+    $cleanup_settings = $editor->getThirdPartySettings('nci_ckeditor5_cleanup');
+
+    if (!empty($cleanup_settings['clean_styles']) && $cleanup_settings['clean_styles']) {
+      _nci_ckeditor5_cleanup_constrain_wysiwyg_styles($format_settings);
+    }
+  }
+}
+
+/**
+ * Constrain WYSIWYG style attributes.
+ *
+ * This function disables styles for most things following our desired style
+ * rules for open-ended WYSIWYG configs (i.e. ones where we are not already
+ * limiting elements):
+ *   1. Style attributes should not really be used.
+ *   2. If a WYSIWYG plugin adds style attributes, then we should support
+ *      them. (e.g., th/td)
+ *
+ * @param array $format_settings
+ *   The WYSIWYG editor config settings.
+ */
+function _nci_ckeditor5_cleanup_constrain_wysiwyg_styles(array &$format_settings): void {
+
+  // I am going to just assume editorSettings, config, htmlSupport exist
+  // in the configs if it is one of our supported configs.
+  if (!isset($format_settings['editorSettings']['config']['htmlSupport'])) {
+    return;
+  }
+
+  $support_config = &$format_settings['editorSettings']['config']['htmlSupport'];
+
+  /* We need to iterate through the allow rules to target those that
+   * have styles. The structure of one of these rules that allows
+   * styles is:
+   * [
+   *   "name" => (either a tag name, or a regex to match),
+   *   "styles" => (either true for all, or a list of styles)
+   * ]
+   *
+   * For the timebeing, it appears that when you don't filter
+   * unallowed html, there is just has one htmlSupport allow that
+   * has a name/regex match of .*, and styles => true. IDK if
+   * this will always hold true.
+   */
+  if (
+    isset($support_config['allow']) &&
+    count($support_config['allow']) === 1 &&
+    $support_config['allow'][0]['name']['regexp']['pattern'] === "/.*/"
+  ) {
+    // Remove styles support for the * element wildcard allow.
+    // Copying over attributes and classes form the defautl rule
+    // just in case Drupal ever changes them.
+    unset($support_config['allow'][0]['styles']);
+
+    // Add in special support for table styles.
+    $support_config['allow'][] = [
+      'name' => [
+        'regexp' => [
+          'pattern' => "/table|thead|tbody|tr|th|td/",
+        ],
+      ],
+      'attributes' => $support_config['allow'][0]['attributes'],
+      'classes' => $support_config['allow'][0]['classes'],
+      'styles' => [
+        'background-color', 'border', 'border-color', 'border-style',
+        'border-width', 'height', 'padding', 'text-align', 'vertical-align',
+        'width',
+      ],
+    ];
+  }
+}
