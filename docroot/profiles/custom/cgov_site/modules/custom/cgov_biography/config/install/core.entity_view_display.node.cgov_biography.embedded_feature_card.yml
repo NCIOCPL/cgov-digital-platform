@@ -46,38 +46,38 @@ bundle: cgov_biography
 mode: embedded_feature_card
 content:
   field_browser_title:
-    weight: 3
+    type: string
     label: hidden
     settings:
       link_to_entity: false
     third_party_settings: {  }
-    type: string
+    weight: 3
     region: content
   field_card_title:
-    weight: 2
+    type: string
     label: hidden
     settings:
       link_to_entity: false
     third_party_settings: {  }
-    type: string
+    weight: 2
     region: content
   field_feature_card_description:
-    weight: 4
+    type: string
     label: hidden
     settings:
       link_to_entity: false
     third_party_settings: {  }
-    type: string
+    weight: 4
     region: content
   field_image_promotional:
     type: entity_reference_entity_view
-    weight: 0
-    region: content
     label: hidden
     settings:
-      view_mode: image_crop_featured
+      view_mode: ncids_image_display_feature
       link: false
     third_party_settings: {  }
+    weight: 0
+    region: content
 hidden:
   body: true
   content_moderation_control: true
