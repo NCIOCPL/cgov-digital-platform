@@ -1,21 +1,16 @@
-{# To be clear, this is the "standard" style. #}
-<div id="nvcgSlHeroHeader" class="row hero-slot">
-  {{ content.field_hero_banner }}
-</div>
-
-
-{# Title Row #}
-<div class="row">
-  <div class="large-7 columns" style="min-height: 61.031px">
-    {% set hr_attribs = create_attribute({}) %}
-    {% if is_front == TRUE %}
-      {% set hr_attribs = hr_attribs.addClass('show-for-sr') %}
-    {% endif %}
-    <h1 {{hr_attribs}}>{{ node.label }}</h1>
-
+<!-- Begin MAIN CONTENT AREA -->
+<main class="main-content type {{ page_type }}" id="main-content">
+  {# Title Row #}
+  <div class="usa-section usa-section--cgdp-no-top usa-section--cgdp-double-bottom">
+    <div class="grid-container cgdp-title-area">
+        {% set hr_attribs = create_attribute({}) %}
+        {# @TODO: Change this to the nci- page title class when it is made #}
+        <h1 {{hr_attribs.addClass('cgdp-title-area__page-title')}}>{{ node.label }}</h1>
+        {% if node.field_page_subheading.value %}
+          <span class="cgdp-title-area__subheading">{{ node.field_page_subheading.value }}</span>
+        {% endif %}
+    </div>
   </div>
-</div>
-{# End Title Row#}
-<div id="nvcgSlBodyLayout" class="nvcgSlBodyLayout">
+  {# End Title Row#}
   {{content.field_landing_contents}}
-</div>
+</main>
