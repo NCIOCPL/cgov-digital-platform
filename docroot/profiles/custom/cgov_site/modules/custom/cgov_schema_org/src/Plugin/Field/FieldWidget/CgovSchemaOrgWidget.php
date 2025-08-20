@@ -47,6 +47,7 @@ class CgovSchemaOrgWidget extends WidgetBase implements ContainerFactoryPluginIn
     $page_types = [
       'faq_page',
     ];
+    /** @var \Drupal\cgov_schema_org\Plugin\Field\FieldType\CgovSchemaOrgFieldItem */
     $item = $items[$delta];
     $open = in_array($item->page_itemtype, $page_types) ? 1 : 0;
     $element += [
