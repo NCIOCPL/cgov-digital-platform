@@ -1,0 +1,78 @@
+- entity: "node"
+  type: "cgov_mini_landing"
+  langcode: en
+  status: 1
+  moderation_state:
+    value: 'published'
+  title: "NCIDS Mini Landing Page Raw HTML Example"
+  field_page_description:
+    value: "Sample mini and landing page to test Raw HTML and usa-section."
+  field_browser_title:
+    value: "Mini Landing Page with Title"
+  field_pretty_url:
+    value: "raw-html-sample-page"
+  field_site_section:
+    - '#process':
+        callback: 'reference'
+        args:
+          - 'taxonomy_term'
+          - vid: 'cgov_site_sections'
+            computed_path: '/test'
+  field_mlp_page_style:
+    value: "ncids_default"
+  ### English Contents
+  field_landing_contents:
+  ######## Begin Feature Row ###########
+    - entity: "paragraph"
+      type: "cgov_card_raw_html"
+      field_raw_html:
+        - format: "raw_html"
+          value: |
+            <div class="usa-section" data-eddl-landing-row="">
+              <div class="usa-prose">
+                <h2 class="nci-heading-h3 nci-heading--label">Test for Raw HTML & Analytics</h2>
+                  <ul class="usa-list--unstyled">
+                    <li><a href="/news-events/media-resources" class="usa-link font-serif-lg text-bold" data-eddl-landing-rawhtml="" data-eddl-landing-rawhtml-title="Test for Raw HTML & Analytics" data-eddl-landing-rawhtml-component-variant="RawHTMLTest" data-eddl-landing-rawhtml-link-type="Internal" data-eddl-landing-rawhtml-link-area="Text">Resources &amp; Contacts</a></li>
+                    <li><a href="https://visualsonline.cancer.gov/" class="usa-link font-serif-lg text-bold" data-eddl-landing-rawhtml="" data-eddl-landing-rawhtml-title="Test for Raw HTML & Analytics" data-eddl-landing-rawhtml-component-variant="RawHTMLTest" data-eddl-landing-rawhtml-link-type="External" data-eddl-landing-rawhtml-link-area="Text">Images and B-roll</a></li>
+                    <li><a href="/about-nci/budget/fact-book" class="usa-link font-serif-lg text-bold" data-eddl-landing-rawhtml="" data-eddl-landing-rawhtml-title="Test for Raw HTML & Analytics" data-eddl-landing-rawhtml-component-variant="RawHTMLTest" data-eddl-landing-rawhtml-link-type="Internal" data-eddl-landing-rawhtml-link-area="Text">NCI Budget Data</a></li>
+                    <li><a href="/news-events/press-releases/2024" class="usa-link font-serif-lg text-bold" data-eddl-landing-rawhtml="" data-eddl-landing-rawhtml-title="Test for Raw HTML & Analytics" data-eddl-landing-rawhtml-component-variant="RawHTMLTest" data-eddl-landing-rawhtml-link-type="Internal" data-eddl-landing-rawhtml-link-area="Text">News Releases</a></li>
+                  </ul>
+                  <p>
+                    <a href="https://public.govdelivery.com/accounts/USNIHNCI/signup/39768" class="usa-button usa-button--nci-icon usa-button--nci-full-width" data-eddl-landing-rawhtml="" data-eddl-landing-rawhtml-title="Test for Raw HTML & Analytics" data-eddl-landing-rawhtml-component-variant="RawHTMLTest" data-eddl-landing-rawhtml-link-type="External" data-eddl-landing-rawhtml-link-area="Button">
+                      <svg viewBox="0 0 24 24" fill="none" width="24" height="24" class="usa-icon" role="img" aria-hidden="true" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M10 6 8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"></path>
+                      </svg>
+                      <span>Subscribe to NCI News Releases</span>
+                    </a>
+                  </p>
+                  <p>
+                    <a href="https://www.youtube.com/ncigov" class="usa-button usa-button--nci-icon usa-button--nci-full-width" data-eddl-landing-rawhtml="" data-eddl-landing-rawhtml-title="Test for Raw HTML & Analytics" data-eddl-landing-rawhtml-component-variant="RawHTMLTest" data-eddl-landing-rawhtml-link-type="External" data-eddl-landing-rawhtml-link-area="Button">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" class="usa-icon" role="img" aria-hidden="true">
+                        <path d="M19.816 5.389a2.469 2.469 0 0 1 1.766 1.746c.291 1.598.43 3.22.417 4.843a25.867 25.867 0 0 1-.417 4.794 2.468 2.468 0 0 1-1.766 1.795c-2.593.318-5.204.46-7.816.429a58.411 58.411 0 0 1-7.816-.429 2.469 2.469 0 0 1-1.766-1.746 25.879 25.879 0 0 1-.417-4.843 25.85 25.85 0 0 1 .417-4.793 2.468 2.468 0 0 1 1.766-1.796c2.594-.3 5.205-.427 7.816-.379a58.413 58.413 0 0 1 7.816.379ZM9.95 9.046v5.864l5.233-2.932L9.95 9.046Z"></path>
+                      </svg>
+                      <span>NCI YouTube</span>
+                    </a>
+                  </p>
+              </div>
+            </div>
+            <div class="usa-section" data-eddl-landing-row="">
+              <div class="shadow-2 padding-x-3 tablet-lg:padding-x-15 padding-top-4 padding-bottom-4 tablet-lg:padding-bottom-8 bg-white">
+                <div class="usa-prose">
+                  <h2>I am a header in a prose block</h2>
+                  <p class="font-body-lg">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed suscipit in nulla id elementum. Cras suscipit eu eros ut vestibulum. Sed non nisi id augue venenatis ullamcorper id nec ligula. Integer orci velit, tristique non sapien ac, aliquet bibendum elit. Nam luctus lorem non dui pulvinar, ut imperdiet erat porta. Ut at placerat lacus. Duis ultrices rutrum tortor, pharetra fermentum risus placerat in. Mauris congue tortor sit amet ipsum feugiat, vitae scelerisque massa faucibus. Phasellus rutrum ac purus gravida ornare. Aenean vehicula volutpat nisi et fermentum. Nulla maximus augue eget maximus ullamcorper.</p>
+                  <p class="font-body-lg">Morbi mi tellus, tristique vitae orci id, finibus faucibus felis. Sed non eleifend tortor. Donec in interdum sem. Ut luctus massa ac lobortis lobortis. Vestibulum elementum porttitor sapien id fermentum. Duis pellentesque in dolor in aliquet. In non augue fringilla, egestas mi eu, fringilla lorem. Sed et felis pulvinar, lobortis ex at, bibendum ante. Ut vehicula rutrum ex ac vestibulum. Nullam gravida ullamcorper elit sed maximus. Duis suscipit quis elit ut rutrum. Curabitur sollicitudin tincidunt urna ac rhoncus. Mauris sed porttitor arcu, in commodo lacus. Suspendisse rhoncus neque aliquam sapien vestibulum tristique. Integer luctus tincidunt ultrices. Quisque molestie orci vitae tellus sagittis, vitae euismod ipsum faucibus.</p>
+                  <p class="font-body-lg">
+                    Go to some
+                    <a href="https://www.google.com/" data-eddl-landing-rawhtml="" data-eddl-landing-rawhtml-title="I am a header in a prose block" data-eddl-landing-rawhtml-link-text="Go to some website for more information" data-eddl-landing-rawhtml-link-area="Prose Block" data-eddl-landing-rawhtml-link-type="Internal">
+                        website
+                    </a>
+                    for more info
+                  </p>
+                </div>
+              </div>
+            </div>
+            <div class="usa-section">
+              <div class="usa-prose usa-prose--cgdp-raw-html-fix">
+                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Magna ac placerat vestibulum lectus mauris ultrices eros in. Lectus vestibulum mattis ullamcorper velit sed ullamcorper morbi. Mattis vulputate enim nulla aliquet porttitor lacus luctus accumsan tortor. Habitasse platea dictumst quisque sagittis purus. Lectus urna duis convallis convallis tellus id interdum velit laoreet. Nunc scelerisque viverra mauris in aliquam sem fringilla. Sit amet aliquam id diam maecenas ultricies mi eget mauris. Nibh tortor id aliquet lectus. Ut tellus elementum sagittis vitae. Convallis tellus id interdum velit laoreet id donec ultrices tincidunt. Morbi tristique senectus et netus.</p>
+              </div>
+            </div>

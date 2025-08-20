@@ -1,0 +1,688 @@
+- entity: "node"
+  type: "cgov_mini_landing"
+  langcode: en
+  status: 1
+  moderation_state:
+    value: "published"
+  title: "The Adventures and Chronicles of the Quick Brown Fox Who Jumped Over the Lazy Dog and Their Friends the Tortoise and the Hare With Interludes from Alice in Wonderland"
+  title__ES:
+    value: "Las Aventuras y Crónicas del Veloz Zorro Marrón que Saltó Sobre el Perro Perezoso y Sus Amigas la Tortuga y la Liebre con Interludios de Alicia en el País de las Maravillas"
+  field_page_description:
+    value: "Sample mini and landing page to test NCIDS components."
+  field_page_description__ES:
+    value: "Sample mini and landing page in Spanish to test NCIDS components."
+  field_browser_title:
+    value: "Mini Landing Page"
+  field_browser_title__ES:
+    value: "Mini Landing Page - Spanish"
+  field_pretty_url:
+    value: "ncids-mini-landing-template"
+  field_site_section:
+    - "#process":
+        callback: "reference"
+        args:
+          - "taxonomy_term"
+          - vid: "cgov_site_sections"
+            computed_path: "/test"
+  field_site_section__ES:
+    - "#process":
+        callback: "reference"
+        args:
+          - "taxonomy_term"
+          - vid: "cgov_site_sections"
+            computed_path: "/test-es"
+  field_mlp_page_style:
+    value: "ncids_default"
+  ### English Contents
+  field_landing_contents:
+    ######## Begin Feature Row ###########
+    - entity: "paragraph"
+      type: "ncids_slim_hero"
+      field_slim_hero_image:
+        - "#process":
+            callback: "file"
+            args:
+              - "image"
+              - type: "module"
+                filename: "Slim-Hero-NCI-Education.png"
+          alt: "test image alt text"
+    - entity: "paragraph"
+      type: "ncids_content_block"
+      field_html_content:
+        - format: "ncids_streamlined"
+          value: |
+            <h2>Level 2 heading</h2>
+            <p><strong>More than 30 percent</strong> of all human cancers - <em>including 95 percent of pancreatic cancers and 45 percent of colorectal cancers</em> - are driven by <sup>mutations of the RAS</sup> family of genes. <sub>NCI established the RAS initiative in 2013 to explore</sub> innovative approaches for attacking the <s>proteins encoded by mutant forms of RAS genes</s> and to <strong><em>ultimately create effective, new therapies for RAS-related cancers.</em></strong></p>
+            <h3>This is an h3 test</h3>
+            <h4>Internal Link Testing</h4>
+            <!-- Make this a managed link in the WYSIWYG -->
+            <p>See <a
+                data-entity-substitution="canonical"
+                data-entity-type="node"
+                data-entity-uuid="#process"
+                data-cgov-yaml-query-type="cgov_home_landing"
+                data-cgov-yaml-query-title="About Cancer"
+              >About Cancer</a> managed internal link.</p>
+            <p>See <a href="/about-cancer">About Cancer</a> internal link.</p>
+            <h5>Media Link Testing</h5>
+            <p>See <a
+                data-entity-substitution="canonical"
+                data-entity-type="media"
+                data-entity-uuid="#process"
+                data-cgov-yaml-query-bundle="cgov_file"
+                data-cgov-yaml-query-name="Test PDF File name"
+              >Test File Download</a> managed media link.</p>
+            <h6>External Link Testing</h6>
+            <p>See <a href="https://www.google.com/">Google</a> for external link.</p>
+            <h6>Email Link Testing</h6>
+            <p><a href="mailto:jenny@example.org">Email Jenny</a></p>
+            <h6>Other link testing</h6>
+            <p><a href="tel:1-555-867-5309">Call Jenny</a></p>
+            <h2>List Testing</h2>
+            <ul>
+              <li>This is</li>
+              <li>an unordered</li>
+              <li>list of stuff</li>
+            </ul>
+            <ol>
+              <li>This is</li>
+              <li>>an ordered</li>
+              <li>list of stuff</li>
+            </ul>
+    - entity: "paragraph"
+      type: "ncids_content_block"
+      field_html_content:
+        - format: "ncids_streamlined"
+          value: |
+            This is a <a href="https://www.google.com">test link without a heading</a>.
+    - entity: "paragraph"
+      type: "ncids_3_feature_row_opt_head"
+      field_container_heading:
+        - value: "Test Links"
+      field_heading_visibility:
+        value: visible
+      field_row_cards:
+        - entity: 'paragraph'
+          type: "ncids_feature_card_internal"
+          field_featured_item:
+            - target_type: "node"
+              "#process":
+                callback: "reference"
+                args:
+                  - 'node'
+                  - type: 'cgov_home_landing'
+                    title: 'About Cancer'
+        - entity: 'paragraph'
+          type: "ncids_feature_card_external"
+          field_featured_url:
+            - uri: "https://www.google.com"
+          field_override_card_title:
+            - value: "External Card Title"
+          field_override_card_description:
+            - value: "External description"
+          field_override_image_promotional:
+            - target_type: "media"
+              "#process":
+                callback: "reference"
+                args:
+                  - 'media'
+                  - bundle: 'cgov_image'
+                    name: 'Override Placeholder'
+        - entity: 'paragraph'
+          type: "ncids_feature_card_multimedia"
+          field_featured_media:
+            - target_type: "media"
+              "#process":
+                callback: "reference"
+                args:
+                  - "media"
+                  - bundle: "cgov_infographic"
+                    name: "NCI at a Glance Infographic"
+    ######## Start Flag Card Group ###########
+    - entity: "paragraph"
+      type: "ncids_flag_card_group"
+      field_container_heading:
+        - value: "The Optional Flag Card Group Heading"
+      field_heading_visibility:
+        value: visible
+      field_row_cards_unlimited:
+        - entity: "paragraph"
+          type: "ncids_feature_card_internal"
+          field_featured_item:
+            - target_type: "node"
+              "#process":
+                callback: "reference"
+                args:
+                  - "node"
+                  - type: "cgov_home_landing"
+                    title: "About Cancer"
+          field_override_card_description:
+            - value: "This flag card is an internal link to About Cancer"
+        - entity: "paragraph"
+          type: "ncids_feature_card_external"
+          field_featured_url:
+            - uri: "https://www.google.com"
+          field_override_card_title:
+            - value: "External Card to Google"
+          field_override_card_description:
+            - value: "This is an extremely long description on an external card that will redirect the user to Google.com. Extra text in this card to test the behavior of a card when the text is very very long."
+          field_override_image_promotional:
+            - target_type: "media"
+              "#process":
+                callback: "reference"
+                args:
+                  - "media"
+                  - bundle: "cgov_image"
+                    name: "Override Placeholder"
+        - entity: "paragraph"
+          type: "ncids_feature_card_multimedia"
+          field_featured_media:
+            - target_type: "media"
+              "#process":
+                callback: "reference"
+                args:
+                  - "media"
+                  - bundle: "cgov_infographic"
+                    name: "NCI at a Glance Infographic"
+        - entity: "paragraph"
+          type: "ncids_feature_card_internal"
+          field_featured_item:
+            - target_type: "node"
+              "#process":
+                callback: "reference"
+                args:
+                  - "node"
+                  - type: "cgov_home_landing"
+                    title: "Cancer Types"
+          field_override_card_title:
+            - value: "Cancer Types"
+        - entity: "paragraph"
+          type: "ncids_feature_card_internal"
+          field_featured_item:
+            - target_type: "node"
+              "#process":
+                callback: "reference"
+                args:
+                  - "node"
+                  - type: "cgov_home_landing"
+                    title: "Cancer Research"
+          field_override_card_description:
+            - value: "This is one of the cards and should be on its own line when cards appear in the side-by-side orientation."
+    ######## End Flag Card Group ###########
+    - entity: "paragraph"
+      type: "cgov_list"
+      field_list_title:
+        value: "Title and Description"
+      field_list_item_style:
+        value: ncids_list_item_title_desc
+      field_list_items:
+        - entity: "paragraph"
+          type: "cgov_internal_link"
+          field_internal_link:
+            - target_type: "node"
+              "#process":
+                callback: "reference"
+                args:
+                  - "node"
+                  - type: "cgov_article"
+                    title: "RAS Research Team"
+          field_override_title:
+            value: "Override Title Test"
+          field_override_list_description:
+            value: "Override Description Test"
+        - entity: "paragraph"
+          type: "cgov_internal_link"
+          field_internal_link:
+            - target_type: "node"
+              "#process":
+                callback: "reference"
+                args:
+                  - "node"
+                  - type: "cgov_article"
+                    title: "[No IMG] Title"
+        - entity: "paragraph"
+          type: "cgov_internal_link"
+          field_internal_link:
+            - target_type: "node"
+              "#process":
+                callback: "reference"
+                args:
+                  - "node"
+                  - type: "cgov_article"
+                    title: "RAS Research Team"
+        - entity: "paragraph"
+          type: "cgov_external_link"
+          field_override_title:
+            - value: "External Link Test Title"
+          field_external_link:
+            - uri: "https://www.google.com"
+          field_override_list_description:
+            - value: "External Link Test Description"
+        - entity: "paragraph"
+          type: "cgov_media_link"
+          field_media_link:
+            - target_type: "media"
+              "#process":
+                callback: "reference"
+                args:
+                  - "media"
+                  - bundle: "cgov_video"
+                    name: "Colorectal Cancer Screening: What to Expect"
+          field_override_title:
+            - value: "Media Link Video Override Title"
+          field_override_list_description:
+            - value: "Media Link Video Override Description"
+        - entity: "paragraph"
+          type: "cgov_media_link"
+          field_media_link:
+            - target_type: "media"
+              "#process":
+                callback: "reference"
+                args:
+                  - "media"
+                  - bundle: "cgov_infographic"
+                    name: "NCI at a Glance Infographic"
+        - entity: "paragraph"
+          type: "cgov_media_link"
+          field_media_link:
+            - target_type: "media"
+              "#process":
+                callback: "reference"
+                args:
+                  - "media"
+                  - bundle: "cgov_video"
+                    name: "Nonspecific Immune Stimulation"
+    - entity: "paragraph"
+      type: "cgov_list"
+      field_list_title:
+        value: "Title, Description, and Image"
+      field_list_item_style:
+        value: ncids_list_item_title_desc_image
+      field_list_items:
+        - entity: "paragraph"
+          type: "cgov_internal_link"
+          field_internal_link:
+            - target_type: "node"
+              "#process":
+                callback: "reference"
+                args:
+                  - "node"
+                  - type: "cgov_article"
+                    title: "RAS Research Team"
+          field_override_title:
+            value: "Override Title Test"
+          field_override_list_description:
+            value: "Override Description Test"
+          field_override_image_promotional:
+            - target_type: "media"
+              "#process":
+                callback: "reference"
+                args:
+                  - "media"
+                  - bundle: "cgov_image"
+                    name: "Override Placeholder"
+        - entity: "paragraph"
+          type: "cgov_internal_link"
+          field_internal_link:
+            - target_type: "node"
+              "#process":
+                callback: "reference"
+                args:
+                  - "node"
+                  - type: "cgov_blog_post"
+                    title: "Blog post Lead Image with Override and No Promo"
+        - entity: "paragraph"
+          type: "cgov_internal_link"
+          field_internal_link:
+            - target_type: "node"
+              "#process":
+                callback: "reference"
+                args:
+                  - "node"
+                  - type: "cgov_article"
+                    title: "RAS Research Team"
+        - entity: "paragraph"
+          type: "cgov_internal_link"
+          field_internal_link:
+            - target_type: "node"
+              "#process":
+                callback: "reference"
+                args:
+                  - "node"
+                  - type: "cgov_article"
+                    title: "[Lead Promo IMG] Title"
+        - entity: "paragraph"
+          type: "cgov_internal_link"
+          field_internal_link:
+            - target_type: "node"
+              "#process":
+                callback: "reference"
+                args:
+                  - "node"
+                  - type: "cgov_article"
+                    title: "[Lead IMG] Title"
+        - entity: "paragraph"
+          type: "cgov_internal_link"
+          field_internal_link:
+            - target_type: "node"
+              "#process":
+                callback: "reference"
+                args:
+                  - "node"
+                  - type: "cgov_article"
+                    title: "[No IMG] Title"
+        - entity: "paragraph"
+          type: "cgov_external_link"
+          field_override_title:
+            - value: "External Link Test Title"
+          field_external_link:
+            - uri: "https://www.google.com"
+          field_override_list_description:
+            - value: "External Link Test Description"
+          field_override_image_promotional:
+            - target_type: "media"
+              "#process":
+                callback: "reference"
+                args:
+                  - "media"
+                  - bundle: "cgov_image"
+                    name: "Override Placeholder"
+        - entity: "paragraph"
+          type: "cgov_media_link"
+          field_media_link:
+            - target_type: "media"
+              "#process":
+                callback: "reference"
+                args:
+                  - "media"
+                  - bundle: "cgov_video"
+                    name: "Colorectal Cancer Screening: What to Expect"
+          field_override_title:
+            - value: "Media Link Video Override Title"
+          field_override_list_description:
+            - value: "Media Link Video Override Description"
+          field_override_image_promotional:
+            - target_type: "media"
+              "#process":
+                callback: "reference"
+                args:
+                  - "media"
+                  - bundle: "cgov_image"
+                    name: "Override Placeholder"
+        - entity: "paragraph"
+          type: "cgov_media_link"
+          field_media_link:
+            - target_type: "media"
+              "#process":
+                callback: "reference"
+                args:
+                  - "media"
+                  - bundle: "cgov_infographic"
+                    name: "NCI at a Glance Infographic"
+        - entity: "paragraph"
+          type: "cgov_media_link"
+          field_media_link:
+            - target_type: "media"
+              "#process":
+                callback: "reference"
+                args:
+                  - "media"
+                  - bundle: "cgov_video"
+                    name: "Nonspecific Immune Stimulation"
+          field_override_image_promotional:
+            - target_type: "media"
+              "#process":
+                callback: "reference"
+                args:
+                  - "media"
+                  - bundle: "cgov_image"
+                    name: "Override Placeholder"
+        - entity: "paragraph"
+          type: "cgov_media_link"
+          field_media_link:
+            - target_type: "media"
+              "#process":
+                callback: "reference"
+                args:
+                  - "media"
+                  - bundle: "cgov_video"
+                    name: "Colorectal Cancer Screening: What to Expect"
+    ### Wide Guide Card START ###
+    - entity: "paragraph"
+      type: "ncids_wide_guide_card"
+      field_image_guide_card:
+        - '#process':
+            callback: 'file'
+            args:
+              - 'image'
+              - type: 'module'
+                filename: 'wide-guide-card-image.png'
+      field_container_heading:
+        - value: "NCI Research Areas"
+      field_html_content:
+        - format: "simple"
+          value: |
+            More than 30 percent of all human cancers—including 95 percent of pancreatic cancers and 45 percent of colorectal cancers—are driven by mutations of the RAS family of genes. NCI established the RAS initiative in 2013 to explore innovative approaches for attacking the proteins encoded by mutant forms of RAS genes and to ultimately create effective, new therapies for RAS-related cancers.
+      field_three_link_buttons:
+      - entity: 'paragraph'
+        type: "ncids_link_button_external"
+        field_external_link:
+          - uri: 'https://www.google.com'
+        field_button_text:
+          - value: "Default External"
+        field_external_link_display:
+          - value: 'default'
+      - entity: 'paragraph'
+        type: "ncids_link_button_external"
+        field_external_link:
+          - uri: 'https://www.cancer.gov'
+        field_button_text:
+          - value: "Default Internal"
+        field_external_link_display:
+          - value: 'default'
+      - entity: 'paragraph'
+        type: "ncids_link_button_external"
+        field_external_link:
+          - uri: 'https://www.google.com'
+        field_button_text:
+          - value: "Force Display External"
+        field_external_link_display:
+          - value: 'force_display'
+    - entity: "paragraph"
+      type: "ncids_wide_guide_card"
+      field_image_guide_card:
+        - '#process':
+            callback: 'file'
+            args:
+              - 'image'
+              - type: 'module'
+                filename: 'wide-guide-card-image-2.png'
+      field_container_heading:
+        - value: "NCI Research Areas"
+      field_html_content:
+        - format: "simple"
+          value: |
+            More than 30 percent of all human cancers—including 95 percent of pancreatic cancers are bad.
+      field_three_link_buttons:
+      - entity: 'paragraph'
+        type: "ncids_link_button_external"
+        field_external_link:
+          - uri: 'https://www.cancer.gov'
+        field_button_text:
+          - value: "Force Display Internal"
+        field_external_link_display:
+          - value: 'force_display'
+      - entity: 'paragraph'
+        type: "ncids_link_button_external"
+        field_external_link:
+          - uri: 'https://www.google.com'
+        field_button_text:
+          - value: "Force Hide External"
+        field_external_link_display:
+          - value: 'do_not_display'
+      - entity: 'paragraph'
+        type: "ncids_link_button_external"
+        field_external_link:
+          - uri: 'https://www.cancer.gov'
+        field_button_text:
+          - value: "Force Hide Internal"
+        field_external_link_display:
+          - value: 'do_not_display'
+    - entity: "paragraph"
+      type: "ncids_wide_guide_card"
+      field_image_guide_card:
+        - '#process':
+            callback: 'file'
+            args:
+              - 'image'
+              - type: 'module'
+                filename: 'wide-guide-card-image.png'
+      field_container_heading:
+        - value: "NCI Research Areas"
+      field_html_content:
+        - format: "simple"
+          value: |
+            More than 30 percent of all human cancers—including 95 percent of pancreatic cancers and 45 percent of colorectal cancers—are driven by mutations of the RAS family of genes. NCI established the RAS initiative in 2013 to explore innovative approaches for attacking the proteins encoded by mutant forms of RAS genes and to ultimately create effective, new therapies for RAS-related cancers.
+      field_three_link_buttons:
+      - entity: "paragraph"
+        type: "ncids_link_button_external"
+        field_external_link:
+          - uri: "https://www.google.com"
+        field_button_text:
+          - value: "Learn More"
+      - entity: "paragraph"
+        type: "ncids_link_button_external"
+        field_external_link:
+          - uri: "https://www.google.com"
+        field_button_text:
+          - value: "Learn More 1"
+      - entity: "paragraph"
+        type: "ncids_link_button_external"
+        field_external_link:
+          - uri: "https://www.google.com"
+        field_button_text:
+          - value: "Learn More 2"
+    ### Wide Guide Card END ###
+  field_landing_contents__ES:
+    ## SPANISH CONTENTS HERE
+    - entity: "paragraph"
+      type: "ncids_slim_hero"
+      field_slim_hero_image:
+        - "#process":
+            callback: "file"
+            args:
+              - "image"
+              - type: "module"
+                filename: "Slim-Hero-NCI-Education.png"
+          alt: "test image alt text"
+    - entity: "paragraph"
+      type: "ncids_content_block"
+      field_html_content:
+        - format: "ncids_streamlined"
+          value: |
+            <p>This is a content block. This is a placeholder spanish page for when/if we want to test spanish content - DR</p>
+    - entity: "paragraph"
+      type: "ncids_3_feature_row_opt_head"
+      field_container_heading:
+        - value: "Test Links"
+      field_heading_visibility:
+        value: visible
+      field_row_cards:
+        - entity: 'paragraph'
+          type: "ncids_feature_card_internal"
+          field_featured_item:
+            - target_type: "node"
+              "#process":
+                callback: "reference"
+                args:
+                  - 'node'
+                  - type: 'cgov_home_landing'
+                    title: 'El cáncer'
+        - entity: 'paragraph'
+          type: "ncids_feature_card_external"
+          field_featured_url:
+            - uri: "https://www.google.com"
+          field_override_card_title:
+            - value: "Título de la tarjeta externa"
+          field_override_card_description:
+            - value: "Descripción externa"
+          field_override_image_promotional:
+            - target_type: "media"
+              "#process":
+                callback: "reference"
+                args:
+                  - 'media'
+                  - bundle: 'cgov_image'
+                    name: 'Override Placeholder'
+        - entity: 'paragraph'
+          type: "ncids_feature_card_multimedia"
+          field_featured_media:
+            - target_type: "media"
+              "#process":
+                callback: "reference"
+                args:
+                  - 'media'
+                  - bundle: 'cgov_infographic'
+                    name: 'Instituto Nacional del Cáncer Panorama'
+
+- entity: "node"
+  type: "cgov_mini_landing"
+  langcode: en
+  status: 1
+  moderation_state:
+    value: 'published'
+  title: "Test Page for Summary Box"
+  field_page_description:
+    value: "Sample mini and landing page to test NCIDS summary box."
+  field_browser_title:
+    value: "Mini Landing Page"
+  field_pretty_url:
+    value: "ncids-mini-landing-summary-box"
+  field_site_section:
+    - '#process':
+        callback: 'reference'
+        args:
+          - 'taxonomy_term'
+          - vid: 'cgov_site_sections'
+            computed_path: '/test'
+  field_mlp_page_style:
+    value: "ncids_default"
+  ### English Contents
+  field_landing_contents:
+  ######## Begin Feature Row ###########
+    - entity: "paragraph"
+      type: "ncids_summary_box"
+      field_container_heading_wysiwyg:
+        - format: "simple"
+          value: "This is an example of a very long heading using the optional heading field in the Content Management System that <em>will wrap with the usa-measure if implemented correctly</em>"
+      field_html_content:
+        - format: "ncids_streamlined_no_headings"
+          value: |
+            <p><strong>More than 30 percent</strong> of all human cancers - <em>including 95 percent of pancreatic cancers and 45 percent of colorectal cancers</em> - are driven by <sup>mutations of the RAS</sup> family of genes. <sub>NCI established the RAS initiative in 2013 to explore</sub> innovative approaches for attacking the <s>proteins encoded by mutant forms of RAS genes</s> and to <strong><em>ultimately create effective, new therapies for RAS-related cancers.</em></strong></p>
+            <p>See <a href="/about-cancer">About Cancer</a> managed internal link.</p>
+            <p>See <a href="/about-cancer">About Cancer</a> internal link.</p>
+            <p>See <a href="/research/progress/discovery/test-file-url">Test File Download</a> managed media link.</p>
+            <p>See <a href="https://www.google.com/">Google</a> for external link.</p>
+            <ul>
+              <li>This is</li>
+              <li>an unordered</li>
+              <li>list of stuff</li>
+            </ul>
+            <ol>
+              <li>This is</li>
+              <li>>an ordered</li>
+              <li>list of stuff</li>
+            </ul>
+    - entity: "paragraph"
+      type: "ncids_summary_box"
+      field_html_content:
+        - format: "ncids_streamlined_no_headings"
+          value: |
+            This is a summary box has no heading!!
+            Email Link Testing
+            <p><a href="mailto:jenny@example.org">Email Jenny</a></p>
+            Other link testing
+            <p><a href="tel:1-555-867-5309">Call Jenny</a></p>
+                  - "media"
+                  - bundle: "cgov_infographic"
+                    name: "Instituto Nacional del Cáncer Panorama"
