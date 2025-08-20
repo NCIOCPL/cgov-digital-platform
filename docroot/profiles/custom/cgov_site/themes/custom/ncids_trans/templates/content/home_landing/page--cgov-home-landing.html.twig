@@ -1,5 +1,5 @@
-{{ attach_library('ncids_trans/ncids-global') }}
-{{ attach_library('ncids_trans/home-landing') }}
+{{ attach_library('ncids_trans/ncids-minimal') }}
+{{ attach_library('ncids_trans/ncids-home-landing') }}
 
 {% set page_type = 'node--type-' ~ node.bundle|clean_class %}
 
@@ -8,13 +8,7 @@
 {{ page.ncids_header }}
 
 <div id="page">
-  <!-- Begin MAIN CONTENT AREA -->
-  <div class="main-content type {{ page_type }}" id="main-content">
-    <div class="cgdpl">
-      {{ page.content }}
-    </div>
-  </div>
-
+  {{ page.content }}
 </div>
 
 {{ page.ncids_footer }}
