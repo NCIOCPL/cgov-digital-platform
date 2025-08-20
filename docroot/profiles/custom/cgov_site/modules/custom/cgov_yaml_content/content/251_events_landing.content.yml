@@ -20,19 +20,12 @@
   field_page_description:
     value: 'future upcoming events landing page'
   field_landing_contents:
-    ######## Event View Block ############
     - entity: 'paragraph'
-      type: "cgov_dynamic_list"
-      field_list_title:
-          value: "Future NCI Events"
-      field_source_view:
-        - target_id: cgov_events
-          display_id: block_events_future
-          ### the options are serialized. So set this through the UI and find what it put in the database:
-          ### [paragraph__field_source_view]
-          data: >-
-            a:5:{s:5:"pager";s:4:"none";s:8:"argument";s:0:"";s:5:"limit";s:0:"";s:6:"offset";N;s:5:"title";i:0;}
-    ######## End Event View Block ##############
+      type: "cgov_card_raw_html"
+      field_raw_html:
+        - format: "raw_html"
+          value: |
+            <h2>This page intentionally left blank</h2>
 - entity: "node"
   type: "cgov_mini_landing"
   langcode: en
@@ -54,20 +47,12 @@
   field_page_description:
     value: 'past previous events landing page'
   field_landing_contents:
-    ######## Event View Block ############
     - entity: 'paragraph'
-      type: "cgov_dynamic_list"
-      field_list_title:
-          value: "Past NCI Events"
-      field_source_view:
-        - target_id: cgov_events
-          display_id: block_events_past
-          ### the options are serialized. So set this through the UI and find what it put in the database:
-          ### [paragraph__field_source_view]
-          data: >-
-            a:5:{s:5:"pager";s:4:"none";s:8:"argument";s:0:"";s:5:"limit";s:0:"";s:6:"offset";N;s:5:"title";i:0;}
-    ######## End Event View Block ##############
-
+      type: "cgov_card_raw_html"
+      field_raw_html:
+        - format: "raw_html"
+          value: |
+            <h2>This page intentionally left blank</h2>
 ## "Events" landing page
 - entity: "node"
   type: "cgov_mini_landing"
