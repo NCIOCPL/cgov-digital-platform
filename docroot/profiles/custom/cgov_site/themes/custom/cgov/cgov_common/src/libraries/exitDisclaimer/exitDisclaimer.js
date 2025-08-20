@@ -11,7 +11,8 @@ const legacyFilterSet = (_, el) => {
     && !$(el).hasClass('add_this_btn')
     && !$(el).hasClass('toolbar-item') // Drupal admin toolbar selector
     && !$(el).hasClass('no-exit-notification')
-    && !$(el).hasClass('usa-link');
+    && !$(el).hasClass('usa-link')
+    && $(el).hasClass('cgdp-embed-card'); // Don't add external icon for embedded cards, they have their own
 }
 
 const ncidsFilterSet = (_, el) => {

@@ -1,0 +1,13 @@
+{% if content.field_ncids_promo_art_16x9 and content.field_media_image %}
+  <picture class="nci-card__image">
+    {% if content.field_ncids_promo_art_16x9[0] %}
+      {{ content.field_ncids_promo_art_16x9 }}
+    {% elseif content.field_media_image[0] %}
+      {{ content.field_media_image }}
+    {% endif %}
+  </picture>
+{% else %}
+  <picture class="nci-card__image">
+			<img src="{{ get_placeholder_image('ncids_featured_16x9') }}" alt="No Image Placeholder">
+  </picture>
+{% endif %}
