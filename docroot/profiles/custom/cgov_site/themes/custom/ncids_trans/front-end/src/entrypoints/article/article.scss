@@ -19,25 +19,6 @@
 
 @use 'uswds-core' as *;
 
-// TODO: Move this to the new definition popup component once
-// NCIOCPL/cgov-digital-platform#3005 is implemented. It might
-// even be able to change to not be just cgdp-definition-link.
-//
-// Also temporary workaround for intro text links that have
-// not been converted to the new definition link format. This
-// can go away after we fully convert the HTML content.
-a.cgdp-definition-link,
-.cgdp-field-intro-text a.definition{
-	@include u-color($theme-text-color);
-	@include u-text('underline');
-	text-decoration-style: dotted;
-	text-underline-position: under;
-
-	&:hover, &:focus {
-		text-decoration-style: solid;
-	}
-}
-
 // TODO: When we move to the NCIDS Full WYSIWYG
 // We should remove this as we'll be apply
 // Measure throughout the page

@@ -52,3 +52,16 @@
 	@include u-display('inline-block');
 	@include u-text('bold');
 }
+
+a.cgdp-definition-link,
+.cgdp-field-intro-text a.definition{
+	@include u-color($theme-text-color);
+	@include u-text('underline');
+	text-decoration-style: dotted;
+	text-underline-position: under;
+
+	&:hover, &:focus {
+		text-decoration-style: solid;
+	}
+}
+
