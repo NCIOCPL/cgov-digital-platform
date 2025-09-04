@@ -1,0 +1,16 @@
+<?php
+
+/**
+ * @file
+ * Install update and uninstall functions for the NCIDS HTML Transformer module.
+ */
+
+/**
+ * Implements hook_update_N() for NCIDS HTML Transformer module.
+ */
+function ncids_html_transformer_update_10001() {
+  $installer = \Drupal::service('module_installer');
+  if (!\Drupal::moduleHandler()->moduleExists('ncids_html_transformer')) {
+    $installer->install(['ncids_html_transformer']);
+  }
+}
