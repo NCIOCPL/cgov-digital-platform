@@ -330,7 +330,7 @@
           {{- title -}}
         </a>
         {% if media_type == "Video" or media_type == "Infographic" %}
-           ({{ media_type }})
+           ({{ media_type|trans }})
         {% elseif media_type == "File" %}
           <span class="filetype {{file_type}}">
             {% if file_type != "unknown" %}
@@ -419,7 +419,7 @@
   {% endif %}
     <a class="usa-link" href='{{ url }}' data-list-item-type="{{ link_type }}">{{ title }}</a>
     {% if media_type == "Video" or media_type == "Infographic" %}
-      <span class="cgdp-media-link__mediatype">({{ media_type }})</span>
+      <span class="cgdp-media-link__mediatype">({{ media_type|trans }})</span>
     {% elseif media_type == "File" %}
       <span class="cgdp-media-link__filetype {{file_type}}">
         {% if file_type != "unknown" %}
