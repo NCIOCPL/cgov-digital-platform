@@ -19,6 +19,9 @@ use Drupal\Core\TypedData\DataDefinition;
  *     "page_itemtype"
  *   }
  * )
+ *
+ * @property string $page_itemtype
+ *   The Schema.org markup itemtype of the page.
  */
 class CgovSchemaOrgFieldItem extends FieldItemBase {
 
@@ -57,7 +60,7 @@ class CgovSchemaOrgFieldItem extends FieldItemBase {
    */
   public function isEmpty() {
     $page_itemtype = $this->get('page_itemtype');
-    return empty($page_itemtype);
+    return $page_itemtype === NULL || trim($page_itemtype->getString()) === '';
   }
 
 }

@@ -150,17 +150,17 @@ class NavItem {
 
     $this->href = $this->navMgr->getUrlForLanding($this->term);
 
-    $this->isBreadCrumbRoot = $this->term->field_breadcrumb_root->value;
-    $this->isSectionNavRoot = $this->term->field_section_nav_root->value;
-    $this->isMainNavRoot = $this->term->field_main_nav_root->value;
-    $this->renderDepth = $this->term->field_levels_to_display->value;
+    $this->isBreadCrumbRoot = $this->term->get('field_breadcrumb_root')->value;
+    $this->isSectionNavRoot = $this->term->get('field_section_nav_root')->value;
+    $this->isMainNavRoot = $this->term->get('field_main_nav_root')->value;
+    $this->renderDepth = $this->term->get('field_levels_to_display')->value;
 
-    $this->label = $this->term->field_navigation_label->value
-      ? $this->term->field_navigation_label->value
-      : $this->term->name->value;
+    $this->label = $this->term->get('field_navigation_label')->value
+      ? $this->term->get('field_navigation_label')->value
+      : $this->term->get('name')->value;
 
-    /** @var [['value' => string], ['value' => string]] */
-    $navigationDisplayRules = $this->term->field_navigation_display_options->getValue();
+    /** @var array[] */
+    $navigationDisplayRules = $this->term->get('field_navigation_display_options')->getValue();
     $navigationDisplayRules = count($navigationDisplayRules) ? $navigationDisplayRules : [];
     // Populate a lookup table for easier reference later.
     foreach ($navigationDisplayRules as $rule) {
@@ -215,10 +215,15 @@ class NavItem {
    *   Megamenu content block markup.
    */
   public function getMegamenuContent() {
-    $megamenuFieldEntityReference = $this->term->field_mega_menu_content;
+    $megamenuFieldEntityReference = $this->term->get('field_mega_menu_content');
     $referencedEntities = $megamenuFieldEntityReference->referencedEntities();
     $hasMegamenu = count($referencedEntities) > 0;
     if ($hasMegamenu) {
+      /* Based on the comment above, this method should go away once
+       * cgov_common is gone, so there's no point in changing it for phpstan
+       * when it's already not going to be called.
+       * @phpstan-ignore-next-line
+       */
       $megamenuMarkupEncoded = $megamenuFieldEntityReference->entity->get('field_raw_html')->value;
       $megamenuMarkupDecoded = Html::decodeEntities($megamenuMarkupEncoded);
       return $megamenuMarkupDecoded;
@@ -233,7 +238,7 @@ class NavItem {
    *   True if there is data, false if not.
    */
   public function hasNcidsMegaMenu() {
-    return !$this->term->field_ncids_mega_menu_contents->isEmpty();
+    return !$this->term->get('field_ncids_mega_menu_contents')->isEmpty();
   }
 
   /**
@@ -328,7 +333,7 @@ class NavItem {
    * Optional, pass an array of class properties
    * with boolean values to filter children against.
    *
-   * @return \Drupal\cgov_core\NavItemInterface[]
+   * @return \Drupal\cgov_core\NavItem[]
    *   Filtered array of direct descendents.
    */
   public function getChildren() {
