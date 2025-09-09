@@ -35,12 +35,7 @@ parameters:
     - docroot/profiles/custom/cgov_site/modules/custom/cgov_schema_org/cgov_schema_org.module
     - docroot/profiles/custom/cgov_site/modules/custom/cgov_schema_org/src/Plugin/Field/FieldType/CgovSchemaOrgFieldItem.php
     - docroot/profiles/custom/cgov_site/modules/custom/cgov_schema_org/src/Plugin/Field/FieldWidget/CgovSchemaOrgWidget.php
-    - docroot/profiles/custom/cgov_site/modules/custom/cgov_site_section/cgov_site_section.module
-    - docroot/profiles/custom/cgov_site/modules/custom/cgov_site_section/cgov_site_section.tokens.inc
     - docroot/profiles/custom/cgov_site/modules/custom/cgov_site_section/src/Controller/CgovMegaMenuController.php
-    - docroot/profiles/custom/cgov_site/modules/custom/cgov_site_section/src/Controller/CgovNavTreeController.php
-    - docroot/profiles/custom/cgov_site/modules/custom/cgov_vocab_manager/src/Form/CgovVocabManagerForm.php
-    - docroot/profiles/custom/cgov_site/modules/custom/cgov_vocab_manager/src/Manager/CgovVocabManager.php
       # To be remediated as part of https://github.com/nciocpl/cgov-digital-platform/issues/4815
     - docroot/profiles/custom/cgov_site/modules/custom/pdq_cancer_information_summary/src/OrphanCleanup.php
 
@@ -88,7 +83,7 @@ parameters:
       message: "#Usage of deprecated trait Symfony\\\\Component\\\\DependencyInjection\\\\ContainerAwareTrait in class#"
       reportUnmatched: false
 
-    ## With php 8.2+, various magic properties are reported as errors; this doesn't occur with php 8.1.
+    ## With php 8.2+, various magic properties are reported as errors; that aren't reported with php 8.1.
     ## phpstan complains when a line is marked to be ignored but doesn't cause an error, so we have
     ## to ignore them here and make appropriate changes when we get to php 8.4 / Drupal 11.
     -
@@ -101,3 +96,10 @@ parameters:
       reportUnmatched: false
       paths:
         - docroot/profiles/custom/cgov_site/modules/custom/pdq_core/src/Plugin/rest/resource/PDQResource.php
+    -
+      # This is for the specific weirdness in CgovVocabManagerForm.php where properties are set in
+      # loadTermsByStubs() that are not part of TermInterface.
+      message: "#Access to an undefined property Drupal\\\\taxonomy\\\\TermInterface::\\$(parents|depth)#"
+      reportUnmatched: false
+      paths:
+        - docroot/profiles/custom/cgov_site/modules/custom/cgov_vocab_manager/src/Form/CgovVocabManagerForm.php

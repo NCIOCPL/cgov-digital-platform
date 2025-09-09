@@ -47,25 +47,25 @@ RUN DEBIAN_FRONTEND=noninteractive \
   apt-get install -yq \
   apache2 \
   build-essential \
-  php8.1 \
-  libapache2-mod-php8.1 \
-  php8.1-bz2 \
-  php8.1-cli \
-  php8.1-common \
-  php8.1-curl \
-  php8.1-fpm \
-  php8.1-gd \
-  php8.1-mbstring \
-  php8.1-memcached \
-  php8.1-mysql \
-  php8.1-oauth \
-  php8.1-opcache \
-  php8.1-readline \
-  php8.1-sqlite3 \
-  php8.1-soap \
-  php8.1-xdebug \
-  php8.1-xml \
-  php8.1-zip \
+  php8.3 \
+  libapache2-mod-php8.3 \
+  php8.3-bz2 \
+  php8.3-cli \
+  php8.3-common \
+  php8.3-curl \
+  php8.3-fpm \
+  php8.3-gd \
+  php8.3-mbstring \
+  php8.3-memcached \
+  php8.3-mysql \
+  php8.3-oauth \
+  php8.3-opcache \
+  php8.3-readline \
+  php8.3-sqlite3 \
+  php8.3-soap \
+  php8.3-xdebug \
+  php8.3-xml \
+  php8.3-zip \
   mysql-client-8.0 \
   git \
   imagemagick \
@@ -87,7 +87,7 @@ RUN a2ensite default-ssl
 ## These are the PHP modules that are available to be
 ## loaded by the CLI & apache. This should be inline with
 ## the modules installed above.
-COPY ./build/php-conf /etc/php/8.1/mods-available
+COPY ./build/php-conf /etc/php/8.3/mods-available
 
 # Enable mod_rewrite 'cause we needs it.
 RUN a2enmod rewrite
