@@ -3,15 +3,11 @@ name: Test Ability to Deploy
 on:
   push:
     branches:
-      - master
-      - main
       - develop
       - 'hotfix/**'
       - 'release/**'
       - 'feature/**'
       - 'prototype/**'
-    tags:
-      - '*'
     paths:
       # IMPORTANT: Changes to these file specs must, Must, MUST  be reflected in the file specs
       # for pull_request and the check_for_past_run job.
@@ -62,7 +58,7 @@ jobs:
       - name: Checkout master branch from Github
         uses: actions/checkout@v3
         with:
-          ref: master
+            ref: ${{ github.event_name == 'pull_request' && github.base_ref || 'master' }}
 
       ## Setup PHP and Composer Caching
       - name: Setup PHP with tools
