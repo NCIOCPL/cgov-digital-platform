@@ -29,6 +29,7 @@ class CgovPurgeConfigInstaller {
     'acquia_purge' => '8813de186f',
     'akamai_tag' => 'bf950143a3',
     'akamai' => '08153881ce',
+    'cgov_dummy_purger' => '7b9c54ef95',
   ];
 
   /**
