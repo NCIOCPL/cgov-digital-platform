@@ -57,6 +57,13 @@ class SlevenCommands extends BltTasks {
     ];
 
     $this->invokeCommands($commands);
+
+    // Empty the purge queue at the end.
+    $task = $this->taskDrush()
+      ->drush('p-queue-empty')
+      ->printOutput(TRUE);
+    $result = $task->interactive(FALSE)->run();
+    return $result;
   }
 
   /**
