@@ -1,0 +1,7 @@
+services:
+  ncids_html_transformer.commands:
+    class: \Drupal\ncids_html_transformer\Commands\CgovMigrateToNcidsCommands
+    arguments:
+      - '@entity_type.manager'
+    tags:
+      - { name: drush.command }
