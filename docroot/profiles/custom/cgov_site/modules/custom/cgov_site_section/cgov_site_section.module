@@ -353,9 +353,6 @@ function _cgov_site_section_invalidate_section_cache_tag($section_id) {
       'nav_api_section_nav:' . $section_id,
     ];
     Cache::invalidateTags($section_cache_ids);
-    \Drupal::logger('cgov_site_section')
-      ->notice('Invalidated Cache Tag for Site Section with tid: ' .
-        $section_id);
   }
 }
 
@@ -372,9 +369,6 @@ function _cgov_site_section_invalidate_mobile_nav_cache_tag($section_id) {
       'nav_api_mobile_nav:' . $section_id,
     ];
     Cache::invalidateTags($section_cache_ids);
-    \Drupal::logger('cgov_site_section')
-      ->notice('Invalidated Cache Tag for mobile nav with tid: ' .
-        $section_id);
   }
 }
 
