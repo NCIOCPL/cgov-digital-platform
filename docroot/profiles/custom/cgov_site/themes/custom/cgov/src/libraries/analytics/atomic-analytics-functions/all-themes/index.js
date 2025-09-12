@@ -140,42 +140,6 @@ export default {
       },
     });
   },
-  //******************************************************************************************************
-  VideoCarouselClickSwipe: function (sender, value) {
-    legacyTrackOther('VideoCarouselClickSwipe', 'VideoCarouselClickSwipe', {
-      Props: {
-        66: value,
-      },
-      Events: [63],
-    });
-  },
-
-  //******************************************************************************************************
-  VideoCarouselComplete: function (sender, value) {
-    legacyTrackOther('VideoCarouselComplete', 'VideoCarouselComplete', {
-      Props: {
-        66: value,
-      },
-      Events: [64],
-    });
-  },
-
-  /* ********************************************************************** */
-  ImageCarouselClickSwipe: function (
-    sender,
-    title,
-    type,
-    direction,
-    imgNum,
-    pageName
-  ) {
-    legacyTrackOther('ImageCarouselClick', 'ImageCarouselClick', {
-      Props: {
-        66: 'imgcar_' + title + '_' + type + '_' + direction + '_' + imgNum,
-      },
-      Events: [62],
-    });
-  },
 
   //******************************************************************************************************
   Resize: function (sender, viewPort) {
