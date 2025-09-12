@@ -1,0 +1,23 @@
+<?php
+
+/**
+ * @file
+ * Contains cgov_dummy_purger.install.
+ */
+
+use Drupal\cgov_core\CgovPurgeConfigInstaller;
+
+/**
+ * Implements hook_install().
+ */
+function cgov_dummy_purger_install() {
+
+  // Uninstall the cdn modules as those have separate purge configs.
+  \Drupal::service('module_installer')->uninstall(['cgov_caching_cdn']);
+  \Drupal::service('module_installer')->uninstall(['cgov_caching_nocdn']);
+
+  // Set config.
+  $config_factory = \Drupal::service('config.factory');
+  $config_installer = new CgovPurgeConfigInstaller($config_factory);
+  $config_installer->installPurgeConfiguration(['cgov_dummy_purger']);
+}

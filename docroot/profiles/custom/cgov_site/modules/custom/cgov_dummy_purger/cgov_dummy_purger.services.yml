@@ -1,0 +1,5 @@
+services:
+  logger.channel.cgov_dummy_purger:
+    class: Drupal\Core\Logger\LoggerChannel
+    arguments: ['cgov_dummy_purger']
+    factory: ['@logger.factory', 'get']
