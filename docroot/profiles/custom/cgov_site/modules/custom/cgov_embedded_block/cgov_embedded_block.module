@@ -84,6 +84,7 @@ function template_preprocess_block_content(&$variables) {
   // Make the block_description optionally available as {{ block_description }}
   // in templates.
   $block = $variables['elements']['#block_content'];
+  $variables['block_content'] = $block;
   $block_description = $block->label();
   $variables['block_description'] = $block_description;
 

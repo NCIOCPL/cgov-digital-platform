@@ -1,4 +1,4 @@
-{% import '@ncids_trans/cards/card_macros.twig' as cardMacros %}
+{% import '@ncids_trans/cards/ncids_card_macros.twig' as cardMacros %}
 
 {# ###### Setup Title ####### #}
 {% if content.field_card_title|field_value %}
@@ -17,5 +17,10 @@
   {% set image = content.field_image_article|field_value %}
 {% endif %}
 
+{% set id = node.id()|clean_unique_id %}
 
-{{ cardMacros.featureCard(title, description, image, url) }}
+<div class="cgdp-embed-card">
+  <div class="nci-card">
+    {{ cardMacros.ncidsFeatureCard(title, description, image, url, directory, id, 'block_content', 'Internal') }}
+  </div>
+</div>
