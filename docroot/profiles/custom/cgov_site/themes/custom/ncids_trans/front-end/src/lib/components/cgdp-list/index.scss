@@ -1,6 +1,5 @@
 @use 'uswds-core' as *;
 @forward 'usa-collection';
-@import "~Styles/sprites/svg-sprite";
 
 .cgdp-list {
 	.cgdp-list__title {
@@ -17,62 +16,11 @@
 			}
 		}
 	}
-
 	& .usa-collection__img {
 		@include u-margin-bottom(1.5);
 		vertical-align: middle;
 	}
-
-}
-
-.filetype {
-	&.pdf {
-		@include svg-sprite(file-pdf-gray-o-thick);
-		@include u-height(2.5);
-		@include u-width(2);
-		@include u-margin-top(0);
-		@include u-margin-left(0.5);
-	}
-	&.ppt {
-		@include svg-sprite(file-ppt-gray);
-		@include u-height(2.5);
-		@include u-width(2.5);
-		@include u-margin-top(0);
-		@include u-margin-left(0.5);
-	}
-	&.excel {
-		@include svg-sprite(file-excel-gray);
-		@include u-height(2.5);
-		@include u-width(2.5);
-		@include u-margin-top(0);
-		@include u-margin-left(0.5);
-	}
-	&.word {
-		@include svg-sprite(file-word-gray);
-		@include u-height(2.5);
-		@include u-width(2.5);
-		@include u-margin-top(0);
-		@include u-margin-left(0.5);
-	}
-	&.txt {
-		@include svg-sprite(file-download-gray-o);
-		@include u-height(2.5);
-		@include u-width(2);
-		@include u-margin-top(0);
-		@include u-margin-left(0.5);
-	}
-	&.exe {
-		@include svg-sprite(file-download-gray-o);
-		@include u-height(2.5);
-		@include u-width(2);
-		@include u-margin-top(0);
-		@include u-margin-left(0.5);
-	}
-	&.ebook {
-		@include svg-sprite(file-ebook-gray);
-		@include u-height(2.5);
-		@include u-width(2);
-		@include u-margin-top(0);
-		@include u-margin-left(0.5);
+	.usa-collection__filetype {
+		@include u-text('uppercase');
 	}
 }

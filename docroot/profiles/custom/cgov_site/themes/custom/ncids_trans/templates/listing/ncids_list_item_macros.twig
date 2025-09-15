@@ -53,17 +53,12 @@
           {{- title -}}
         </a>
         {% if media_type == "Video" or media_type == "Infographic" %}
-           ({{ media_type }})
+           ({{ media_type|trans }})
         {% elseif media_type == "File" %}
-          <span class="filetype {{file_type}}">
-            {% if file_type != "unknown" %}
-              {# Note, the spanish should have the word order reversed... #}
-              <span class="usa-sr-only">{{ file_type }} {% trans %}file{% endtrans %}</span>
-            {% else %}
-              {{ file_ext }}<span class="usa-sr-only"> {% trans %}file{% endtrans %}</span>
-            {% endif %}
-          </span>
-          <span class="filesize">({{ file_size }})</span>
+          {% set filetype_text = (file_type != "unknown") ? file_type : file_ext %}
+            <span class="usa-collection__filetype">
+              [{{ filetype_text }}, {{ file_size }}]
+            </span>
         {% endif %}
       </h3>
       <p class="usa-collection__description">{{ description }}</p>
@@ -142,17 +137,13 @@
   {% endif %}
     <a class="usa-link" href='{{ url }}' data-list-item-type="{{ link_type }}">{{ title }}</a>
     {% if media_type == "Video" or media_type == "Infographic" %}
-      <span class="cgdp-media-link__mediatype">({{ media_type }})</span>
+      <span class="cgdp-media-link__mediatype">({{ media_type|trans }})</span>
     {% elseif media_type == "File" %}
-      <span class="cgdp-media-link__filetype {{file_type}}">
-        {% if file_type != "unknown" %}
-          {# Note, the spanish should have the word order reversed... #}
-          <span class="usa-sr-only">{{ file_type }} {% trans %}file{% endtrans %}</span>
-        {% else %}
-          {{ file_ext }}<span class="usa-sr-only"> {% trans %}file{% endtrans %}</span>
-        {% endif %}
+      {% set filetype_text = (file_type != "unknown") ? file_type : file_ext %}
+      <span class="usa-collection__filetype">
+        [{{ filetype_text }}, {{ file_size }}]
       </span>
-      <span class="cgdp-media-link__filesize">({{ file_size }})</span>
     {% endif %}
   </li>
 {% endmacro %}
+

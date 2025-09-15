@@ -1,7 +1,6 @@
 @forward 'usa-accordion';
 @forward 'usa-link';
 @use 'uswds-core' as *;
-@import '~Styles/sprites/svg-sprite';
 
 .cgdp-related-resources {
 	ul {
@@ -17,36 +16,9 @@
 				.cgdp-media-link__mediatype {
 					@include u-margin-left(0.5);
 				}
-				.cgdp-media-link__filetype {
-					@include u-height(2.5);
-					@include u-width(2);
-					@include u-margin-top(0);
-					@include u-margin-x(0.5);
-					vertical-align: middle;
-					&.pdf {
-						@include svg-sprite(file-pdf-gray-o-thick);
-					}
-					&.ppt {
-						@include svg-sprite(file-ppt-gray);
-						@include u-width(2.5);
-					}
-					&.excel {
-						@include svg-sprite(file-excel-gray);
-						@include u-width(2.5);
-					}
-					&.word {
-						@include svg-sprite(file-word-gray);
-						@include u-width(2.5);
-					}
-					&.txt {
-						@include svg-sprite(file-download-gray-o);
-					}
-					&.exe {
-						@include svg-sprite(file-download-gray-o);
-					}
-					&.ebook {
-						@include svg-sprite(file-ebook-gray);
-					}
+				.cgdp-media-link__filetype,
+				.usa-collection__filetype {
+					@include u-text('uppercase');
 				}
 			}
 		}
