@@ -73,3 +73,34 @@ export const cgdpListDom = `
   </div>
 </div>
 `;
+
+export const ncidsCgdpList = `
+<div class="usa-section" data-eddl-landing-row>
+  <div class="cgdp-list">
+    <h2 class="cgdp-list__title nci-heading--label">NCIDS List Item: Title Desc Image</h2>
+    <ul class="usa-collection">
+      <li class="usa-collection__item" data-list-component-variant="Title, Description, and Image">
+        <img loading="lazy" class="usa-collection__img" src="/sites/default/files/styles/ncids_collections_media_4x3/public/cgov_image/ncids_promo_art_4x3/2025-09/override-placeholder-4x3.png?itok=MPRzaUCY" width="160" height="120" alt="Override Placeholder">
+            <div class="usa-collection__body">
+              <h3 class="usa-collection__heading">
+              <a class="usa-link" href="/about-nci/organization/nci-at-a-glance" tabindex="-1">Media Link Infographic Override Title</a>
+                (Infographic)
+              </h3>
+          <p class="usa-collection__description">Media Link Infographic Override Description</p>
+        </div>
+      </li>
+      <li class="usa-collection__item" data-list-component-variant="Title, Description, and Image">
+        <div class="usa-collection__body">
+          <h3 class="usa-collection__heading">
+            <a class="usa-link" href="/research/progress/discovery/test-file-url" tabindex="-1">Test PDF File name</a>
+              <span class="usa-collection__filetype">
+                [PDF, 61 KB]
+              </span>
+            </h3>
+          <p class="usa-collection__description">File description. O, for a muse of fire that would ascend the brightest heaven of invention, a kingdom for a stage, princes to act, and monarchs to behold the swelling scene.</p>
+        </div>
+      </li>
+    </ul>
+  </div>
+</div>
+`;
