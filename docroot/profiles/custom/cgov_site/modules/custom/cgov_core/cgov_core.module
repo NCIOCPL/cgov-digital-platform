@@ -23,6 +23,7 @@ use Drupal\Core\Session\AccountInterface;
 use Drupal\Core\Site\Settings;
 use Drupal\Core\StringTranslation\TranslatableMarkup;
 use Drupal\Core\Url;
+use Drupal\editor\EditorInterface;
 use Drupal\field\Entity\FieldConfig;
 use Drupal\node\NodeInterface;
 use Drupal\path_alias\PathAliasInterface;
@@ -1105,6 +1106,24 @@ function cgov_core_entity_update(EntityInterface $entity) {
   }
   $url = $entity->toUrl('canonical', ['absolute' => FALSE])->toString();
   _cgov_core_invalidate_urls([$url]);
+}
+
+/**
+ * {@inheritDoc}
+ */
+function cgov_core_nci_ckeditor5_enhancements_editor_css_classes_alter(
+  array &$css_classes,
+  EditorInterface $editor,
+) {
+  $legacy_editors = ['full_html', 'streamlined', 'simple'];
+
+  if (in_array($editor->id(), $legacy_editors)) {
+    $css_classes[] = 'ck-content--legacy';
+  }
+  else {
+    $css_classes[] = 'ck-content--ncids';
+    $css_classes[] = 'usa-prose';
+  }
 }
 
 /**
