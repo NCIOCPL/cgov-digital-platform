@@ -14,3 +14,5 @@ popd
 pushd ../../../modules/custom/nci_definition
 npm run test
 popd
+
+# There are no tests for nci_ckeditor5_enhancements.

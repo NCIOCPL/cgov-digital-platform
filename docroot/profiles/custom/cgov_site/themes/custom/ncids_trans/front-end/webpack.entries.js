@@ -14,7 +14,17 @@ module.exports = {
 		__dirname,
 		'src/entrypoints/global/ncids-minimal.ts'
 	),
-	ckeditor: path.resolve(__dirname, 'src/entrypoints/ckeditor/ckeditor.js'),
+	// This is named old-wysiwyg instead of legacy to avoid prefixing
+	// with .cgdpl as the postcss.config.js is looking for *-legacy
+	// filename.
+	'ckeditor-old-wysiwyg': path.resolve(
+		__dirname,
+		'src/entrypoints/ckeditor/ckeditor-old-wysiwyg.js'
+	),
+	'ckeditor-ncids': path.resolve(
+		__dirname,
+		'src/entrypoints/ckeditor/ckeditor-ncids.js'
+	),
 	article: path.resolve(__dirname, 'src/entrypoints/article/article.ts'),
 	'home-landing': path.resolve(
 		__dirname,
