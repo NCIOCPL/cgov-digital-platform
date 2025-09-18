@@ -99,7 +99,9 @@ module.exports = (env, argv) => {
 							},
 						},
 						// Run postcss on the transformed files. This is mostly to add vendor prefixing
-						// to the generated CSS.
+						// to the generated CSS. We need to have multiple rules here to handle the
+						// different prefixes. It would be technically better to copy the whole test
+						// entry, but then we are duplicating a lot of stuff.
 						{
 							loader: 'postcss-loader',
 							options: {
@@ -116,10 +118,19 @@ module.exports = (env, argv) => {
 							loader: 'postcss-loader',
 							options: {
 								postcssOptions: {
-									// If we don't force a config here postcss seemingly trys to find the
-									// closest postcss config to the sass you are loading, and in cgov_common
-									// that is a bad thing.
-									config: path.resolve(__dirname, './ckeditor.config.js'),
+									config: path.resolve(
+										__dirname,
+										'./ckeditor-old-wysiwyg.config.js'
+									),
+								},
+								sourceMap: true,
+							},
+						},
+						{
+							loader: 'postcss-loader',
+							options: {
+								postcssOptions: {
+									config: path.resolve(__dirname, './ckeditor-ncids.config.js'),
 								},
 								sourceMap: true,
 							},

@@ -6,26 +6,21 @@ module.exports = {
 			// to prevent CKEditor styles from leaking into the rest of the admin
 			// site as CKEditor 5 no longer uses an iframe. It adds a prefix to all
 			// selectors for the WYSIWYG editor to ensure that the styles are only
-			// applied to elements within a .ck-content container.
+			// applied to elements within a .ck-content--ncids container.
 			'postcss-prefix-selector',
 			{
-				prefix: '.ck-content',
+				prefix: '.ck-content--ncids',
 				transform(prefix, selector, prefixedSelector, filepath) {
-					if (filepath.match(/ckeditor-ck-scope\.scss$/)) {
+					if (filepath.match(/ckeditor-ncids\.scss$/)) {
 						// Hack for ckeditor.
-						if (selector.startsWith('.ck-content')) {
+						if (selector.startsWith('.ck-content--ncids')) {
 							return selector;
-						} else if (selector.startsWith('.contentzone ')) {
-							return selector.replace(/^\.contentzone/, '.ck-content');
-						} else if (selector.startsWith('table.table-default')) {
+						} else if (selector.startsWith('.usa-prose')) {
+							// In our modules, usa-prose is on the same element as .ck-content--ncids,
+							// so we need to rewrite that selector to match both classes.
 							return selector.replace(
-								/^table\.table-default/,
-								'.ck-content .table table.table-default'
-							);
-						} else if (selector.startsWith('table[data-sortable]')) {
-							return selector.replace(
-								/table\[data-sortable\]/,
-								'.ck-content .table table[data-sortable]'
+								/^\.usa-prose/,
+								'.ck-content--ncids.usa-prose'
 							);
 						} else {
 							return prefixedSelector;
