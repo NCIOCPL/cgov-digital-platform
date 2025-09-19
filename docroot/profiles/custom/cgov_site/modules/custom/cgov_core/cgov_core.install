@@ -268,3 +268,13 @@ function cgov_core_update_10013() {
     $editor->save();
   }
 }
+
+/**
+ * Enable nci_ckeditor5_cleanup module and set clean_styles to true.
+ */
+function cgov_core_update_10014() {
+  $installer = \Drupal::service('module_installer');
+  if (!\Drupal::moduleHandler()->moduleExists('nci_ckeditor5_enhancements')) {
+    $installer->install(['nci_ckeditor5_enhancements']);
+  }
+}

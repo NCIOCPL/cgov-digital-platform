@@ -1,0 +1,103 @@
+/******************************************************************************
+ * This file is for any CSS that must be prefixed, and is overriding ckeditor
+ * style issues.
+ *****************************************************************************/
+
+@use 'uswds-core' as *;
+
+// Overrides found necessary for CKEditor upgrade
+.ck-content {
+	@include u-font('body', $theme-body-font-size)
+}
+
+// media items inside ck-editor
+figure {
+	overflow: unset;
+}
+
+// video embed in ck-editor5
+.flex-video {
+	margin-bottom: 0;
+	position: relative;
+	padding-bottom: 56.25%;
+	padding-top: 0px;
+	overflow: hidden;
+}
+.video-preview--container .field--type-image>img {
+	height: auto;
+	left: 0;
+	margin-top: -9.4%;
+	position: absolute;
+	top: 0;
+	width: 100%;
+}
+
+// CKEditor injects a <style> tag onto the page with a bunch
+// of .ck-content class definitions, some of which are
+// .ck-content ol, .ck-content ol ol, ...
+// This specificity blows away our ol definition in _mainContent.
+// There are concerns using !important here as rendered components
+// may have nested ols, and we do not want to affect them, but
+// that should be few and far between.
+ol ol,
+ol ol ol,
+ol ol ol ol,
+ol ol ol ol ol,
+ol ol ol ol ol ol,
+ol ol ol ol ol ol ol,
+ol ol ol ol ol ol ol ol {
+	list-style-type: decimal !important;
+}
+
+// Fixup widths for embedded things. Width percents as they are
+// defined in the source mixin are not working correctly in
+// CKEditor 5. So we are doing the math for it.
+.embedded-entity[data-entity-embed-display*=_feature_card] {
+	width: 252px !important;
+}
+
+.embedded-entity[data-entity-embed-display*=_small] {
+	width: 189px !important;
+}
+
+.embedded-entity[data-entity-embed-display*=_medium] {
+	width: 303px !important;
+}
+
+.embedded-entity[data-entity-embed-display*=_large] {
+	width: 568px !important;
+}
+
+.embedded-entity[data-entity-embed-display*="infographic_display_article_large"] {
+	width: 994px !important;
+}
+.embedded-entity[data-entity-embed-display*="infographic_display_article_medium"] {
+	width: 303px !important;
+}
+
+.embedded-entity[data-entity-embed-display*="video"] {
+	&[data-entity-embed-display*="_small"] {
+		width: 343px !important;
+	}
+
+	&[data-entity-embed-display*="_medium"] {
+		width: 534px !important;
+	}
+
+	&[data-entity-embed-display*="_large"] {
+		width: 994px !important;
+	}
+}
+
+// Approximates a margin for left or right if floating.
+.ck-content .embedded-entity {
+	margin-bottom: 0 !important;
+}
+
+figure.drupal-entity.align-right.ck-widget {
+	margin-left: 8px !important;
+}
+
+figure.drupal-entity.align-left.ck-widget {
+	margin-right: 8px !important;
+}
