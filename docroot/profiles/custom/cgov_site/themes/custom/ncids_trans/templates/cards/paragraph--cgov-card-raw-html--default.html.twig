@@ -1,8 +1,1 @@
-{% set page_style = getHomeLandingStyle() %}
-{% if (page_style == "ncids_without_title") or (page_style == "ncids_with_title") or (page_style == "ncids_default") %}
-  {{- content -}}
-{% else %}
-  <div class="rawHtml">
-    {{ content }}
-  </div>
-{% endif %}
+{{- content -}}
