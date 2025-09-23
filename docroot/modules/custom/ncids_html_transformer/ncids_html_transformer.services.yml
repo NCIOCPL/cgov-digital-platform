@@ -31,3 +31,7 @@ services:
     class: Drupal\ncids_html_transformer\Services\NcidsTempEmbeddedEntitiesTransformer
     tags:
       - { name: ncids_html_transformer.ncids_html_transform, priority: 3 }
+  ncids_html_transformer.disallowed_attributes_transformer:
+    class: Drupal\ncids_html_transformer\Services\NcidsDisallowedAttributesTransformer
+    tags:
+      - { name: ncids_html_transformer.ncids_html_transform, priority: 8 }
