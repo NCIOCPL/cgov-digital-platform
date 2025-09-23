@@ -14,4 +14,11 @@ class NcidsTempTableTransformer extends NcidsHtmlTransformerBase {
     'complex-table',
   ];
 
+  /**
+   * {@inheritdoc}
+   */
+  protected static $preprocessElements = [
+    'table',
+  ];
+
 }
