@@ -21,9 +21,11 @@ docroot/modules/contrib
 docroot/themes/contrib
 docroot/profiles/contrib
 docroot/libraries
+
+# Keep *our* drush commands, but ignore those installed by composer.
 drush/Commands/*
 !drush/Commands/cgov
-!drush/Commands/.gitignore
+!drush/Commands/PolicyCommands.php
 
 # Ignore custom theme build artifacts
 node_modules
