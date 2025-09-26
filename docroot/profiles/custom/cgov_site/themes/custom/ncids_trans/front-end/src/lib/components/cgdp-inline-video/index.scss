@@ -8,8 +8,7 @@
 	// removed for audio described link
 	// overflow:hidden
 	@include u-padding-top(0);
-	// Legacy css - we shoulnt use percents
-	// todo - clean up to use tokens
+	/* 16:9 Aspect Ratio (divide 9 by 16 = 0.5625) x width 100% */
 	padding-bottom: 56.25%;
   background-color: color($theme-color-accent-cool-darker);
 
@@ -25,8 +24,9 @@
 	}
 
 	&__audio_described	{
-		// Legacy css - we shoulnt use percents
-	  // todo - clean up to use tokens
+
+	/* 16:9 Aspect Ratio (divide 9 by 16 = 0.5625) x width 100% */
+	/* plus the extra height for audio described */
 		padding-bottom: calc(56.25% + 48px);
 	}
 
@@ -75,6 +75,7 @@
 		@include u-margin-bottom(0);
 		overflow: hidden;
 		@include u-padding-top(0);
+		/* 16:9 Aspect Ratio (divide 9 by 16 = 0.5625) x width 100% */
 		padding-bottom: 56.25%;
 		background-color: color($theme-color-accent-cool-darker);
 
