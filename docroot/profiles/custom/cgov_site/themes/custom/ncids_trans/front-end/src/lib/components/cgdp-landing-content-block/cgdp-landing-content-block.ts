@@ -13,6 +13,8 @@ enum LinkTypes {
 	Email = 'Email',
 	/** For internal links (managed and unmanaged) */
 	Internal = 'Internal',
+	/** For glossified links */
+	Glossified = 'Glossified',
 	/** For managed media links */
 	Media = 'Media',
 	/** For any other link with a protocol */
@@ -54,6 +56,10 @@ const getNearestHeadingText = (el: HTMLElement | null): string => {
  * @returns the type
  */
 const getLinkType = (link: HTMLAnchorElement): LinkTypes => {
+	if (link.classList.contains('cgdp-definition-link')) {
+		return LinkTypes.Glossified;
+	}
+
 	switch (link.protocol) {
 		case 'http:':
 		case 'https:': {

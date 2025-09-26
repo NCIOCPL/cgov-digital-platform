@@ -6,7 +6,7 @@ import { fireEvent, screen } from '@testing-library/dom';
 import * as eddlUtil from '../../../core/analytics/eddl-util';
 
 import cgdpListInit from '../cgdp-list';
-import { cgdpListDom } from './cgdp-list.dom';
+import { cgdpListDom, ncidsCgdpList } from './cgdp-list.dom';
 import { cgdpListBadDom } from './cgdp-list.bad.dom';
 
 jest.mock('../../../core/analytics/eddl-util');
@@ -186,5 +186,91 @@ describe('NCIDS List', () => {
 		cgdpListInit();
 
 		expect(spy).not.toHaveBeenCalled();
+	});
+
+	it('sends proper anylitics for infographic', async () => {
+		// Lets make a spy to ensure that trackOther is called correctly
+		const spy = jest.spyOn(eddlUtil, 'trackOther');
+
+		// Inject the HTML into the dom.
+		document.body.insertAdjacentHTML('beforeend', ncidsCgdpList);
+
+		// Create the JS
+		cgdpListInit();
+
+		// Get links
+		const links = screen.getAllByRole('link');
+
+		// Click the link
+		fireEvent.click(links[0]);
+
+		expect(spy).toHaveBeenCalledWith(
+			'MLP:List:LinkClick',
+			'MLP:List:LinkClick',
+			{
+				location: 'Body',
+				pageType: 'cgvMiniLanding',
+				pageTemplate: 'ncids_default',
+				pageRowVariant: 'Not Defined',
+				pageRows: 1,
+				pageRowIndex: 1,
+				pageRowCols: 0,
+				pageRowColIndex: 0,
+				containerItems: 1,
+				containerItemIndex: 1,
+				componentType: 'List',
+				componentTheme: 'Not Defined',
+				componentVariant: 'Title, Description, and Image',
+				title: 'NCIDS List Item: Title Desc Image',
+				linkType: 'Internal',
+				linkText: 'Media Link Infographic Override Title',
+				linkArea: 'Title',
+				totalLinks: 2,
+				linkPosition: 1,
+			}
+		);
+	});
+
+	it('sends proper anylitics for filetype', async () => {
+		// Lets make a spy to ensure that trackOther is called correctly
+		const spy = jest.spyOn(eddlUtil, 'trackOther');
+
+		// Inject the HTML into the dom.
+		document.body.insertAdjacentHTML('beforeend', ncidsCgdpList);
+
+		// Create the JS
+		cgdpListInit();
+
+		// Get links
+		const links = screen.getAllByRole('link');
+
+		// Click the link
+		fireEvent.click(links[1]);
+
+		expect(spy).toHaveBeenCalledWith(
+			'MLP:List:LinkClick',
+			'MLP:List:LinkClick',
+			{
+				location: 'Body',
+				pageType: 'cgvMiniLanding',
+				pageTemplate: 'ncids_default',
+				pageRowVariant: 'Not Defined',
+				pageRows: 1,
+				pageRowIndex: 1,
+				pageRowCols: 0,
+				pageRowColIndex: 0,
+				containerItems: 1,
+				containerItemIndex: 1,
+				componentType: 'List',
+				componentTheme: 'Not Defined',
+				componentVariant: 'Title, Description, and Image',
+				title: 'NCIDS List Item: Title Desc Image',
+				linkType: 'Internal',
+				linkText: 'Test PDF File name',
+				linkArea: 'Title',
+				totalLinks: 2,
+				linkPosition: 2,
+			}
+		);
 	});
 });

@@ -9,6 +9,9 @@ use Drupal\Core\Entity\Display\EntityViewDisplayInterface;
 use Drupal\Core\Entity\EntityInterface;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Render\Element;
+use Drupal\views\Plugin\views\query\QueryPluginBase;
+use Drupal\views\Plugin\views\query\Sql;
+use Drupal\views\ViewExecutable;
 
 /*--------------------------------------------------
  * Add theming hints to block_content entities.
@@ -29,6 +32,19 @@ use Drupal\Core\Render\Element;
  */
 function cgov_embedded_block_form_alter(&$form, FormStateInterface $form_state, $form_id) {
 
+  if ($form['#id'] === 'views-exposed-form-block-content-browser-entity-browser-1') {
+    // Target the specific exposed filter field.
+    $filter_field_name = 'type';
+    if (isset($form[$filter_field_name])) {
+      if (isset($form[$filter_field_name]['#options'])) {
+        // Define the options you want to remove.
+        $options_to_remove = ['cgov_image_carousel', 'cgov_video_carousel'];
+        foreach ($options_to_remove as $value) {
+          unset($form[$filter_field_name]['#options'][$value]);
+        }
+      }
+    }
+  }
   // Test that this is a block content form.
   if (!str_starts_with($form_id, 'block_content_')) {
     return;
@@ -84,6 +100,7 @@ function template_preprocess_block_content(&$variables) {
   // Make the block_description optionally available as {{ block_description }}
   // in templates.
   $block = $variables['elements']['#block_content'];
+  $variables['block_content'] = $block;
   $block_description = $block->label();
   $variables['block_description'] = $block_description;
 
@@ -108,4 +125,18 @@ function cgov_embedded_block_theme_suggestions_block_content(array $variables) {
   $suggestions[] = 'block_content__' . $block_content->id();
 
   return $suggestions;
+}
+
+/**
+ * Implements hook_views_query_alter().
+ */
+function cgov_embedded_block_views_query_alter(ViewExecutable $view, QueryPluginBase $query) {
+  // Check that we are altering the correct view.
+  if ($view->id() == 'block_content_browser') {
+    if ($query instanceof Sql) {
+      $field_name = 'block_content_field_data.type';
+      $excluded_values = ['cgov_image_carousel', 'cgov_video_carousel'];
+      $query->addWhere(0, $field_name, $excluded_values, 'NOT IN');
+    }
+  }
 }

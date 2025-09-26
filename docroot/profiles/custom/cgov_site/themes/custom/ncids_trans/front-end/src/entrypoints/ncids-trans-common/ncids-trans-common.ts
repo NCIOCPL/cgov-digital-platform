@@ -83,9 +83,6 @@ import sortablejs from 'Core/libraries/sortableTables';
 
 import DeepLinkPatch from 'Core/libraries/deepLinkPatch/deepLinkPatch';
 import linkAudioPlayer from 'Core/libraries/linkAudioPlayer/linkAudioPlayer';
-import videoCarousel from 'Core/libraries/videoCarousel/video-carousel';
-import { GoogleAPIKey } from 'Core/libraries/nciConfig/NCI.config';
-import imageCarousel from 'Core/libraries/imageCarousel/image-carousel';
 import charts from 'Libraries/charts';
 
 // HACK for R4.1 Reorging
@@ -136,8 +133,6 @@ const onDOMContentLoaded = () => {
 	 * This enables the embedding of YouTube videos and playlists as iframes.
 	 ***/
 	flexVideo();
-
-	videoCarousel.apiInit(GoogleAPIKey);
 
 	/*** BEGIN form controls ***/
 	formControls();
@@ -194,8 +189,6 @@ const onDOMContentLoaded = () => {
 	initLiveHelp();
 
 	cgdpDefinitionInit();
-
-	imageCarousel();
 
 	charts();
 

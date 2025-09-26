@@ -14,10 +14,9 @@ export const cgdpRelatedResourcesDom = `
 
 		<li class="cgdp-media-link">
 			<a class="usa-link" href="/research/progress/discovery/test-file-url" data-list-item-type="cgov_media_link">Test PDF File name</a>
-			<span class="cgdp-media-link__filetype pdf">
-				<span class="usa-sr-only">pdf file</span>
+			<span class="cgdp-media-link__filetype">
+				PDF, (61 KB)
 			</span>
-			<span class="cgdp-media-link__filesize">(61 KB)</span>
 		</li>
 	</ul>
 </aside>
@@ -51,10 +50,9 @@ export const cgdpRelatedResourcesAccordionDom = `
       </li>
 			<li class="cgdp-media-link">
       	<a class="usa-link" href="/research/progress/discovery/test-file-url" data-list-item-type="cgov_media_link">Test PDF File name</a>
-        <span class="cgdp-media-link__filetype pdf">
-        	<span class="usa-sr-only">pdf file</span>
-        </span>
-      	<span class="cgdp-media-link__filesize">(61 KB)</span>
+        <span class="cgdp-media-link__filetype">
+					PDF, (61 KB)
+				</span>
       </li>
 		</ul>
 	</div>
@@ -79,10 +77,9 @@ export const cgdpRelatedResourcesBadAccordionDom = `
       </li>
 			<li class="cgdp-media-link">
       	<a class="usa-link" href="/research/progress/discovery/test-file-url" data-list-item-type="cgov_media_link">Test PDF File name</a>
-        <span class="cgdp-media-link__filetype pdf">
-        	<span class="usa-sr-only">pdf file</span>
-        </span>
-      	<span class="cgdp-media-link__filesize">(61 KB)</span>
+        <span class="cgdp-media-link__filetype">
+					PDF, (61 KB)
+				</span>
       </li>
 		</ul>
 	</div>

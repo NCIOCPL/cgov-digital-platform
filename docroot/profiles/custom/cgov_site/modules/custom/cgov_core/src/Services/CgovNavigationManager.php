@@ -41,7 +41,7 @@ class CgovNavigationManager {
   /**
    * Interface Language.
    *
-   * @var string
+   * @var \Drupal\Core\Language\LanguageInterface
    */
   protected $interfaceLanguage;
 
@@ -286,6 +286,8 @@ class CgovNavigationManager {
       /** @var \Drupal\taxonomy\TermInterface */
       return $parents[array_keys($parents)[0]];
     }
+
+    return NULL;
   }
 
   /**
@@ -352,7 +354,7 @@ class CgovNavigationManager {
       if (($idxRoot - 1) >= 0) {
         // Make sure the child is not set as display in main nav false.
         $activeChild = $this->fullAncestry[$idxRoot - 1];
-        $displayRules = $activeChild->field_navigation_display_options->getValue();
+        $displayRules = $activeChild->get('field_navigation_display_options')->getValue();
 
         if (
           array_search('hide_in_main_nav', $displayRules) === FALSE &&
@@ -393,6 +395,8 @@ class CgovNavigationManager {
         }
       }
     }
+
+    return NULL;
   }
 
   /**
@@ -413,6 +417,7 @@ class CgovNavigationManager {
     if ($rootTerm) {
       return $this->newNavItem($rootTerm);
     }
+    return NULL;
   }
 
   /**
@@ -445,7 +450,7 @@ class CgovNavigationManager {
       return [];
     }
 
-    $menu_type = $closest_root->field_main_nav_root->value ? 'mobile-nav' : 'section-nav';
+    $menu_type = $closest_root->get('field_main_nav_root')->value ? 'mobile-nav' : 'section-nav';
 
     $initial_menu_info = [
       'id' => $closest_root->id(),
@@ -576,7 +581,7 @@ class CgovNavigationManager {
 
     foreach ($this->fullAncestry as $parent_term) {
       // Must be a nav root.
-      $isNavRoot = ($parent_term->field_main_nav_root->value || $parent_term->field_section_nav_root->value);
+      $isNavRoot = ($parent_term->get('field_main_nav_root')->value || $parent_term->get('field_section_nav_root')->value);
       if (!$isNavRoot) {
         continue;
       }
@@ -590,7 +595,7 @@ class CgovNavigationManager {
       // to make to the Backend. With 1 level of children we should be
       // able to tell if we are good or not. Main nav and section nav
       // are handled differently.
-      if ($parent_term->field_main_nav_root->value) {
+      if ($parent_term->get('field_main_nav_root')->value) {
         // For a mobile nav, the root is the start. So if we only should show 1
         // level, then we need the depth to be 2 to show any children.
         $depth = (theme_get_setting('mobile_levels_to_display', 'cgov_common') ?? 4) + 1;
@@ -670,7 +675,7 @@ class CgovNavigationManager {
    * @param \Drupal\taxonomy\TermInterface $term
    *   Base Term to wrap.
    *
-   * @return \Drupal\cgov_core\NavItemInterface
+   * @return \Drupal\cgov_core\NavItem
    *   Nav Item wrapping given Term.
    */
   public function newNavItem(TermInterface $term) {
@@ -753,7 +758,7 @@ class CgovNavigationManager {
    */
   public function isCurrentSiteSectionLandingPage() {
     $this->initialize();
-    return $this->closestSiteSection->computed_path->value === $this->currentPathAlias;
+    return $this->closestSiteSection->get('computed_path')->value === $this->currentPathAlias;
   }
 
   /**
@@ -811,7 +816,8 @@ class CgovNavigationManager {
    */
   public function getUrlForLanding(TermInterface $term) {
 
-    $landingPage = $term->field_landing_page->entity;
+    /** @var \Drupal\node\Entity\Node */
+    $landingPage = $term->get('field_landing_page')->entity;
     if ($landingPage) {
       // Set the entity in the correct language for display.
       if ($this->isTranslatableInterface($landingPage)) {

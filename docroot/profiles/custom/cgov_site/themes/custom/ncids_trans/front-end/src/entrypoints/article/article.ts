@@ -6,6 +6,8 @@ import cgdpRelatedResourcesInit from '../../lib/components/cgdp-related-resource
 import cgdpOnThisPageInit from '../../lib/components/cgdp-on-this-page';
 import cgdpCitationInit from '../../lib/components/cgdp-article-footer-citation';
 import cgdpInfographicInit from '../../lib/components/cgdp-infographic';
+import cgdpEmbedVideoInit from '../../lib/components/wysiwyg/common/cgdp-embed-video';
+import cgdpEmbedCardInit from '../../lib/components/wysiwyg/common/cgdp-embed-card';
 
 //DOM Ready event
 const onDOMContentLoaded = () => {
@@ -14,6 +16,8 @@ const onDOMContentLoaded = () => {
 	cgdpOnThisPageInit();
 	cgdpCitationInit();
 	cgdpInfographicInit();
+	cgdpEmbedVideoInit();
+	cgdpEmbedCardInit();
 };
 
 document.addEventListener('DOMContentLoaded', onDOMContentLoaded);
