@@ -90,7 +90,7 @@ class ResponseCacheSubscriber implements EventSubscriberInterface {
       case 301:
         // Note: 301s do actually pass back cache headers right now...
         // https://www.drupal.org/project/drupal/issues/3054821.
-        return "1800";
+        return "16588800";
 
       default:
         // If this is not one of these statuses, don't touch.
