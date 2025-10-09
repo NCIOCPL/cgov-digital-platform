@@ -1,0 +1,254 @@
+/******************************************************************************
+ * This file is for any CSS that must be prefixed with the NCIDS-specific
+ * ckeditor preview container, .ck-content--legacy. (For legacy WYSIWYG)
+ *****************************************************************************/
+
+ @charset "utf-8";
+
+ // This contains the NCIDS Settings and required items. Nothing in this
+ // file should generate markup.
+ @forward '../cgdp-required';
+ // Expose USWDS variables and mixins to our imports.
+ @use 'uswds-core' as *;
+
+ /** Legacy mixin things **/
+ @import "~Core/styles/environments/percussion";
+ @import "../../legacy/styles/variables";
+ @import "~Core/styles/mixins";
+ @import "~Core/styles/fonts";
+ @import '../../legacy/styles/breakpoint-mixins';
+ @import "~Core/styles/placeholders";
+ @import "~Styles/sprites/svg-sprite"; //sprites are sometimes used in *_overrides files
+
+
+ // The comments in here will map to about the same order as the old common.scss
+ // file. Many things got moved up and out of the legacy wrapper, and the
+ // comments below should not that. If it says it has been "moved up" that means
+ // it is in ncids-common.css.
+
+ // Removing reset as the normalizer above should handle it.
+ // Moved equalheights to outside of legacy
+
+ // We moved foundation to outside of legacy. There are some class generation that is
+ // too general. In these case you need to:
+ // 1. Copy the foundation partial into legacy/styles/foundation/components
+ // 2. Update nci-foundation to reference that path AND set the variable that generates
+ //    the classes to false.
+ // 3. Update the nci-foundation-legacy-classes to pull in that partial AND set the
+ //    variable that generates classes to false.
+ //
+ @import "../../legacy/transition-hacks/nci-foundation-legacy-classes";
+
+ // Removed foundation_overrides as it only was for breadcrumb, and more disconcerning the
+ // following global rule for nested lists, which we cannot even see where foundation would
+ // have created the rule. Adding it here until we sort things out. Also removed the stupidly
+ // duplicated selector.
+ ul li ul {
+   margin-left: 0;
+ }
+
+ // This appears to be the "vendor" css for slick carousel.
+ // There is one errant other nci-sites thing in here, but it looks like it is the
+ // base styles. We will treat it this way. The dots for the DOC carousel on the
+ // home page require .cgdpl or else the ul/li classes compte with them. We can
+ // chalk this up to something to clean up when we rebuild the carousel as these
+ // dots are only for the carousel.
+ @import "~Core/libraries/carousel/slick";
+
+ // Moved jQuery UI to outside of legacy. Those names seemed to be specific
+ // enough they will not conflict with ncids. The overrides on the other
+ // hand are problemattic. Since we now added .cgdpl in front of selectors
+ // we now have a case where the specificity of `p` is now `.cgdpl p`, this
+ // conflicts with the overrides specificity.
+ // TODO: We really should look through the classes and move this to the
+ // appropriate scss file.
+ @import "../../legacy/styles/jqueryui_overrides";
+
+ // The following used to be in the jquery_override, it was wrapping blocks, but
+ // it looks like it is the CSS for the accordions on desktop.
+ .desktop {
+   clear: both;
+
+   .toggle {
+	 right: 0;
+	 top: 0;
+	 margin-top: 0;
+	 font-size: 2em;
+	 height: 100%;
+	 width: 50px;
+
+	 &:after {
+	   position: absolute;
+	   top: 50%;
+	   margin-top: -0.5em;
+	 }
+   }
+ }
+
+ /****************** NCI COMPONENTS SECTION ********************/
+ // these styles override and extend Foundation SASS partials
+ // NOTE: we removed the map_canvas rules in globabl as they did not appear
+ // to be used anymore. This
+ @import "../../legacy/styles/components/global";
+
+ @import "~Core/styles/components/buttons";
+ @import "~Core/styles/components/forms";
+ @import "~Core/styles/components/icons";
+ /****************** END NCI COMPONENTS SECTION ********************/
+
+ /******************************************************************
+   * General is a hot mess of general and, oddly, very specific
+   * rules. There are also pull quotes and callout boxes in here.
+   *****************************************************************/
+ // The local general was not correctly referenced and this was affecting
+ // our ability to fix sub/sup. For now we are going to set a var to remove
+ // the sub/sup element styling and keep it backwards compatible with
+ // what is in cgov now. This all needs to be fixed in the future.
+ // The bad local general file has been deleted, but it is located at
+ // https://github.com/NCIOCPL/cgov-digital-platform/blob/b0ed8f443cb5a067602525b1ef4493acfb7c5985/docroot/profiles/custom/cgov_site/themes/custom/ncids_trans/front-end/src/legacy/styles/_general.scss
+ // for the future.
+ $generate-sub-sup-element-styles: false;
+ @import "~Core/styles/general";
+
+ // NOTE: We deleted the .cgh-staff. It looks like it was previously used, but
+ // the site has been updated to remove that content.
+
+ // NOTE: There was some stuff for .bcrumbs, which looks like for breadcrumbs,
+ // but that all was removed cause we have ncids breadcrumbs now.
+
+ // Removed a style for .guide-title that had been in general. This got moved
+ // to home-landing entrypoint.
+
+ // TODO: This should be moved out for the mini-landing page story.
+ // Also we modified the SASS to nest, so it should be checked.
+
+ /******************************************************************
+   * END GENERAL
+   *****************************************************************/
+
+ // removed header -- ncids header will replace
+ // removed language_bar as it is moving to ncids_banner
+ // removed utilitynav as it is gone in redesign
+ // removed search -- this is the search box, but also has some dictionary items.
+ //    so there may be a need to look deeper at search.scss.
+ // removed footer -- ncids replaces it
+
+ /******************************************************************
+   * Maincontent is a hot mess of stuff. It had some layout, it was
+   * responsible for the old drop shadow and molecule around the
+   * center area. It also has random press release stuff and other
+   * things that should not be global.
+   *****************************************************************/
+ // TODO: Do a further review of the mess that is in here.
+ @import "../../legacy/styles/mainContent";
+
+ /******************************************************************
+   * END MAINCONTENT
+   *****************************************************************/
+
+ @import "~Core/styles/images";
+
+ // Removed backToTop -- Replaced by NCIDS
+ // Removed font_resizer -- Removed functionality in new page options
+
+ // This is for stuff added through the WYSIWYG editor, and for the
+ // lead image for an article, press release, and some others. It should
+ // really be in common. Also it using some of the Drupal attributes
+ // which is the only way we know what the editor selected.
+ @import "~Core/styles/embedded-entity";
+
+ // Removed banners -- replaced by ncids Site Notification
+
+ // NOTE: we removed the reference to _bodybanner.scss and just put the
+ // content here. This is most likely only for mini-landing pages.
+ // Example URL: https://www.cancer.gov/about-nci/organization/cgh
+ // TODO: Move to minilanding entry point.
+ .body-banner {
+   max-width: 100%;
+   padding-left: 0;
+   padding-right: 0;
+ }
+
+ // This file includes the styling for content accordions which can
+ // appear anywhere on the site just by making <div class="accordion"> and
+ // following the structure rules. THAT BEING SAID, this file has a bit of
+ // CTHP stylings in it, as well as some outdated factsheet template stuff.
+ //TODO: Clean this up and remove old cruft. (Like factsheet)
+ @import "~Core/libraries/accordion/accordion";
+
+ @import "~Core/styles/tables";
+ // Hack around ckeditor default table styles.
+ .ck-content {
+	figure.table {
+		figcaption,
+		.emptyCaptionShim,
+		table.table-default caption
+		{
+			background-color: transparent;
+			font-family: Montserrat,Avant Garde,Arial,sans-serif;
+			color: #606060;
+			font-size: 1.375em;
+		}
+	}
+ }
+ @import "~Core/libraries/modal/modal";
+
+ @import "~Core/styles/contentTemplate";
+
+
+ // TODO: Determine where news should go.
+ // So IDK if this is the news home and landing or pressrelease stuff.
+ @import "~Core/styles/news";
+ @import "~Core/styles/onthispage";
+
+ @import "~Core/styles/ebookButtons";
+ @import "~Core/styles/materials_to_share";
+ @import "~Core/styles/lists";
+ @import "~Core/styles/managed-lists";
+
+ @import "~Core/styles/topicFeature";
+
+ @import "~Core/libraries/tooltips/referenceTooltip";
+
+ /** Why is errorPage here and not in the 404 template??? **/
+ @import "~Core/styles/errorPage";
+ @import "~Core/styles/contact";
+
+ // Removed nav. It is replaced by a number of NCIDS items.
+ @import "~Core/styles/pagination";
+
+ @import "~Core/styles/image-video-carousel";
+ @import "~Core/styles/flexVideoPreview";
+
+ @import "~Core/styles/arrowLinks";
+
+
+ @import "~Core/styles/popups";
+ @import '~Core/styles/tableSort';
+
+
+ /****************** NCI ENHANCEMENTS SECTION ********************/
+ @import '../../legacy/libraries/live-help-popup/popup-partial';
+ /****************** END NCI ENHANCEMENTS SECTION ********************/
+
+ /* !-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!  END RESPONSIVE STYLES SECTION  !-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-! */
+
+ /****************** NCI WYSIWYG SECTION ********************/
+ // Needed for the enlarge icon for embedded images.
+ @import 'usa-icon';
+ @import '../../lib/components/wysiwyg/common/cgdp-embed-image/';
+ @import '../../lib/components/wysiwyg/common/cgdp-embed-infographic/';
+ @import '../../lib/components/wysiwyg/common/cgdp-embed-video/';
+ @import '../../lib/components/wysiwyg/common/cgdp-embed-card/';
+ /****************** END NCI WYSIWYG SECTION ********************/
+
+ /* PRINT STYLES --------------------------------- */
+ @import "~Core/styles/print";
+ /* END PRINT STYLES ----------------------------- */
+
+ /* HACK STYLES */
+ @import "~Core/styles/hacks";
+ /* END HACK STYLES */
+
+// This is where the old ol ol ol etc list style fix went. Moved to common.
+@import "./common/ckeditor-fixes.scss";

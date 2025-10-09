@@ -14,3 +14,8 @@ popd
 pushd ../../../modules/custom/nci_definition
 npm ci
 popd
+
+## Install nci_ckeditor5_enhancements packages
+pushd ../../../modules/custom/nci_ckeditor5_enhancements
+npm ci
+popd

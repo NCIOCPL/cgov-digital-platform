@@ -5,6 +5,8 @@
  * Contains cgov_home_landing.install.
  */
 
+use Drupal\node\Entity\Node;
+
 /**
  * Implements hook_install().
  *
@@ -26,7 +28,160 @@ function cgov_home_landing_install() {
 }
 
 /**
- * Latest update hook.
+ * Helper function for cgov_home_landing_update_10003() and 10004().
+ *
+ * Removes the old key from existing field.
+ *
+ * @param string $existing_field
+ *   The field name to update.
+ * @param string $old_key
+ *   The old list key to remove.
  */
-function cgov_home_landing_update_10001() {
+function _cgov_home_landing_remove_existing_field_list_value($existing_field, $old_key) {
+  $node_existing_field = 'node.' . $existing_field;
+  $field_storage_config = \Drupal::entityTypeManager()->getStorage('field_storage_config')->load($node_existing_field);
+  if ($field_storage_config) {
+    $allowed_values = $field_storage_config->getSetting('allowed_values');
+    if ($allowed_values[$old_key] ?? NULL) {
+      unset($allowed_values[$old_key]);
+    }
+    $field_storage_config->setSetting('allowed_values', $allowed_values);
+    $field_storage_config->save();
+  }
+}
+
+/**
+ * Helper function for cgov_home_landing_update_10003() and 10004().
+ *
+ * Sets the $existing_field values for $node
+ * from $old_value to $new_value.
+ *
+ * @param \Drupal\node\Entity\Node $node
+ *   The node entity.
+ * @param string $existing_field
+ *   The field name to update.
+ * @param string $old_value
+ *   The old value to replace.
+ * @param string $new_value
+ *   The new value to set.
+ */
+function _cgov_home_landing_set_existing_field($node, $existing_field, $old_value, $new_value) {
+  if ($node->hasField($existing_field) && !$node->get($existing_field)->isEmpty() && $node->get($existing_field)->value === $old_value) {
+    $node->set($existing_field, $new_value);
+    \Drupal::logger($existing_field)->notice("Node ID:  " . $node->id() . ", " . $node->getTitle() . " updated. Field '$existing_field' set to '$new_value'.");
+    // We have to ensure the node is published before saving,
+    // or proscribed values of $existing_field
+    // will persist in the database and make
+    // updating $existing_field impossible.
+    if (!$node->isPublished()) {
+      $node->setPublished();
+    }
+    $node->save();
+    return 1;
+  }
+  else {
+    return 0;
+  }
+}
+
+/**
+ * Helper function for cgov_home_landing_update_10003() and 10004().
+ *
+ * Sets the $existing_field values for $node
+ * from $old_value to $new_value.
+ *
+ * @param \Drupal\node\Entity\Node $node
+ *   The node entity.
+ * @param string $existing_field
+ *   The field name to update.
+ * @param string $old_value
+ *   The old value to replace.
+ * @param string $new_value
+ *   The new value to set.
+ */
+function _cgov_home_landing_set_existing_field_with_translations($node, $existing_field, $old_value, $new_value) {
+  $changedIds = 0;
+  $changedIds += _cgov_home_landing_set_existing_field($node, $existing_field, $old_value, $new_value);
+  if ($node->hasTranslation('es')) {
+    // Get the Spanish translation.
+    $translated_node = $node->getTranslation('es');
+    $changedIds += _cgov_home_landing_set_existing_field($translated_node, $existing_field, $old_value, $new_value);
+  }
+  return $changedIds;
+}
+
+/**
+ * Implements hook_update_N().
+ *
+ * Changes field values for nodes of type 'cgov_home_landing' for
+ * field 'field_page_style'; sets all values of 'standard', 'special_report' or
+ * 'dceg_connect' to 'ncids_with_title'.
+ */
+function cgov_home_landing_update_10003() {
+  // Load all nodes of type cgov_home_landing.
+  $nids = \Drupal::entityTypeManager()->getStorage('node')->getQuery()
+    ->condition('type', 'cgov_home_landing')
+  // Disable access check for batch processing.
+    ->accessCheck(FALSE)
+  // Get the latest revision of each node.
+    ->latestRevision()
+    ->execute();
+  $nodes = Node::loadMultiple($nids);
+  // ... (code to change field values) ...
+  // Loop through each node and change the field values of field
+  // 'field_page_style' to 'ncids_with_title' if
+  // it is 'standard' or 'special_report'.
+  $changedIds = 0;
+  foreach ($nodes as $node) {
+    $changedIds += _cgov_home_landing_set_existing_field_with_translations($node, 'field_page_style', 'standard', 'ncids_with_title');
+    $changedIds += _cgov_home_landing_set_existing_field_with_translations($node, 'field_page_style', 'special_report', 'ncids_with_title');
+    $changedIds += _cgov_home_landing_set_existing_field_with_translations($node, 'field_page_style', 'dceg_connect', 'ncids_with_title');
+  }
+  // If nothing found, log that no entities were found to update.
+  if ($changedIds === 0) {
+    \Drupal::logger("cgov_home_landing")->notice("No nodes of type 'cgov_home_landing' found to update.");
+  }
+  else {
+    \Drupal::logger("cgov_home_landing")->notice("Entities updated: " . $changedIds);
+  }
+  drupal_flush_all_caches();
+  _cgov_home_landing_remove_existing_field_list_value('field_page_style', 'standard');
+  _cgov_home_landing_remove_existing_field_list_value('field_page_style', 'special_report');
+  _cgov_home_landing_remove_existing_field_list_value('field_page_style', 'dceg_connect');
+}
+
+/**
+ * Implements hook_update_N().
+ *
+ * Changes field values for nodes of type 'cgov_mini_landing' for
+ * 'field_mlp_page_style'; sets all values of 'standard'
+ * to 'ncids_default'.
+ */
+function cgov_home_landing_update_10004() {
+  // Load all nodes of type cgov_mini_landing.
+  $nids = \Drupal::entityTypeManager()->getStorage('node')->getQuery()
+    ->condition('type', 'cgov_mini_landing')
+  // Disable access check for batch processing.
+    ->accessCheck(FALSE)
+  // Get the latest revision of each node.
+    ->latestRevision()
+    ->execute();
+  $nodes = Node::loadMultiple($nids);
+  // ... (code to change field values) ...
+  // Loop through each node and change the field values of
+  // 'field_mlp_page_style' to 'ncids_default' if
+  // it is 'standard'.
+  $changedIds = 0;
+  foreach ($nodes as $node) {
+    $changedIds += _cgov_home_landing_set_existing_field_with_translations($node, 'field_mlp_page_style', 'standard', 'ncids_default');
+  }
+  // If nothing found, log that no entities were found to update.
+  if ($changedIds === 0) {
+    \Drupal::logger("cgov_mini_landing")->notice("No nodes of type 'cgov_mini_landing' found to update.");
+  }
+  else {
+    \Drupal::logger("cgov_mini_landing")->notice("Entities updated: " . $changedIds);
+  }
+  drupal_flush_all_caches();
+  _cgov_home_landing_remove_existing_field_list_value('field_mlp_page_style', 'standard');
 }
