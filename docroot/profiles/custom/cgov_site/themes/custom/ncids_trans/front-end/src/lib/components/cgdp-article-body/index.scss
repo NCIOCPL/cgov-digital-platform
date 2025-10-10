@@ -1,9 +1,28 @@
 @forward 'usa-accordion';
+@forward 'nci-heading';
 @use 'uswds-core' as *;
 
 .cgdp-article-body {
 	@include u-margin-top(3);
 	@include at-media('tablet') {
 		@include u-margin-top(4);
+	}
+
+	&__section {
+		@include u-margin-top(2);
+	}
+
+	&__heading:not(.usa-accordion__heading) {
+		clear: none;
+		@extend .nci-heading-h2;
+		@include u-margin-top(0);
+		@include at-media('tablet') {
+			@include u-margin-top($theme-heading-margin-top);
+			@include u-margin-bottom(2);
+		}
+		& > p {
+			@include u-margin-top(0);
+			@include u-margin-bottom(0);
+		}
 	}
 }

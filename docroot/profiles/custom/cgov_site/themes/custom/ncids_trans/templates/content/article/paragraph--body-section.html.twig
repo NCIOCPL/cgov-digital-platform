@@ -10,6 +10,7 @@
 #}
 {# Setup attribs if schema org is enabled #}
 {% set section_attribs = create_attribute() %}
+
 {% if schema_org_type %}
   {% set section_attribs = create_attribute({
     'itemscope': '',
@@ -18,27 +19,45 @@
   }) %}
 {% endif %}
 
+{% set section_attribs = section_attribs.addClass('cgdp-article-body__section') %}
+
+{% if content.field_body_section_heading['#items'].getValue() is not empty %}
+  {% set heading_id = content.field_body_section_heading['#items'][0].value | striptags | nci_transliterate | clean_id  %}
+  {% set section_attribs = section_attribs.setAttribute('aria-labelledby', heading_id) %}
+{% endif %}
+
+
 {# TODO: What is the merit of actually using sections instead of divs? #}
 {# Is it for SEO, is it for accessibility? If it is for A11Y, are they labeled #}
-<section {{ section_attribs }}>
-  {% if content.field_body_section_heading['#items'].getValue() %}
+{% if heading_id is not empty %}
+  <section {{ section_attribs }}>
+{% else %}
+  <div {{ section_attribs }}>
+{% endif %}
+  {% if heading_id is not empty %}
     {# TODO: Determine how to deal with headings that are H3s #}
     {# Set the id to a clean version of the section heading for OTP links. #}
     {% if schema_org_type %}
-      <h2 id="{{ content.field_body_section_heading['#items'][0].value | striptags | nci_transliterate | clean_id }}" itemprop="name">
+      <h2 class="cgdp-article-body__heading" id="{{ heading_id }}" itemprop="name">
     {% else %}
-      <h2 id="{{ content.field_body_section_heading['#items'][0].value | striptags | nci_transliterate | clean_id }}">
+      <h2 class="cgdp-article-body__heading" id="{{ heading_id }}">
     {% endif %}
       {{- content.field_body_section_heading -}}
     </h2>
   {% endif %}
+  {% set content_attribs = create_attribute().addClass('usa-prose usa-prose--ncids-full-html') %}
   {% if schema_org_type %}
     <div itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer">
-      <div itemprop="text">
+    {% set content_attribs = content_attribs.setAttribute('itemprop', "text") %}
   {% endif %}
-  {{ content.field_body_section_content }}
+  <div {{ content_attribs }}>
+    {{ content.field_body_section_content }}
+  </div>
   {% if schema_org_type %}
-      </div>
     </div>
   {% endif %}
-</section>
+{% if heading_id is not empty %}
+  </section>
+{% else %}
+  </div>
+{% endif %}

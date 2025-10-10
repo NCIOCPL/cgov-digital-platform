@@ -14,20 +14,13 @@
 @forward '../../lib/components/wysiwyg/common/cgdp-embed-infographic/';
 @forward '../../lib/components/wysiwyg/common/cgdp-embed-video';
 @forward '../../lib/components/wysiwyg/common/cgdp-embed-card/';
+@forward '../../lib/components/wysiwyg/editors/ncids-full-html';
 
 @forward '../../lib/components/cgdp-on-this-page';
 @forward '../../lib/components/cgdp-article-body';
 
 @use 'uswds-core' as *;
 
-// TODO: When we move to the NCIDS Full WYSIWYG
-// We should remove this as we'll be apply
-// Measure throughout the page
-.cgdp-field-intro-text {
-	.usa-prose > p {
-		@include u-measure('none');
-	}
-}
 
 // Margin between accordion sections (8px)
 .cgdp-article-body.usa-accordion {

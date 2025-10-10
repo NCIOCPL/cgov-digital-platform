@@ -21,6 +21,13 @@ ncids-minimal:
   js:
     dist/js/ncids-minimal.js: { preprocess: false }
 
+ncids-inner-minimal:
+  css:
+    theme:
+      dist/css/ncids-inner-minimal.css: { preprocess: false }
+  js:
+    dist/js/ncids-inner-minimal.js: { preprocess: false }
+
 ## New inner page common css/js which will be used until
 ## we finish building the WYSIWYG
 ncids-trans-common:
@@ -44,7 +51,7 @@ article:
   js:
     dist/js/article.js: { preprocess: false }
   dependencies:
-    - ncids_trans/ncids-trans-common
+    - ncids_trans/ncids-inner-minimal
 
 home-landing:
   css:
