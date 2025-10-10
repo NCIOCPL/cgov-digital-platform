@@ -1,13 +1,8 @@
-/******************************************************************************
- * This file is for any CSS that must be prefixed with the NCIDS-specific
- * ckeditor preview container, .ck-content--ncids.
- *****************************************************************************/
-
 @charset "utf-8";
 
 // This contains the NCIDS Settings and required items. Nothing in this
 // file should generate markup.
-@use '../cgdp-required';
+@use '../cgdp-required.scss';
 
 // Style all "naked" <a> elements with the correct colors. This overrides
 // the uswds setting used by uswds-global just for this entry point.
@@ -15,6 +10,22 @@
 uswds-core.$theme-global-link-styles: true;
 
 @forward 'uswds-global';
+
+@forward 'usa-layout-grid';
+@forward 'nci-no-print'; //print styling
+
+// The specific Component imports. Nothing in this list SHOULD reference
+// NCIDS or USWDS. It should come from ../../lib/components.
+@forward 'usa-skipnav';
+@forward '../../lib/components/usa-banner';
+@forward '../../lib/components/usa-site-alert';
+@forward '../../lib/components/usa-breadcrumb';
+@forward '../../lib/components/usa-sidenav';
+@forward '../../lib/components/cgdp-page-options';
+@forward '../../lib/components/usa-footer';
+
+// TODO Keep as last import for now, there is a ordering bug
+@forward '../../lib/components/nci-header';
 
 // This is global typography and body content styling. The following imports
 // are from the uswds-typography package, however we will comment out the
@@ -33,10 +44,4 @@ uswds-core.$theme-global-link-styles: true;
 @forward "usa-prose";
 @forward "nci-heading";
 
-@forward "./common/ckeditor-fixes.scss";
-
-// Really we just need the definition link, not the rest of the styling.
-@forward "../../lib/components/cgdp-definition/styles/cgdp-definition-link";
-
-// TODO: Add new ncids-wysiwyg classes after here.
-@forward "../../lib/components/wysiwyg/editors/ncids-full-html";
+@use 'uswds-core' as *;

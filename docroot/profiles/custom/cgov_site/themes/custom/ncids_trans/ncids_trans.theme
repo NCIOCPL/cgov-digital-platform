@@ -27,10 +27,20 @@ function ncids_trans_theme_suggestions_page_alter(array &$suggestions, array $va
   // determine which types should get a suggestion of
   // page--ncids-inner-page.html.twig.
   $ncids_inner_page_types = [
-    'cgov_article', 'cgov_biography', 'cgov_cancer_center',
-    'cgov_cancer_research', 'cgov_event', 'cgov_press_release',
-    'cgov_infographic', 'cgov_video',
+    'cgov_biography',
+    'cgov_cancer_center',
+    'cgov_cancer_research',
+    'cgov_event',
+    'cgov_press_release',
+    'cgov_infographic',
+    'cgov_video',
   ];
+
+  // As we continue to migrate legacy inner pages to use ncids,
+  // we should be moving the node type out of the array above and into
+  // the migrated inner page types array so that they use the updated
+  // twig template.
+  $ncids_inner_page_types_migrated = ['cgov_article'];
 
   if ($node = \Drupal::routeMatch()->getParameter('node')) {
 
@@ -44,6 +54,9 @@ function ncids_trans_theme_suggestions_page_alter(array &$suggestions, array $va
     $content_type = $node->bundle();
     if (in_array($content_type, $ncids_inner_page_types)) {
       $suggestions[] = 'page__ncids_inner_page';
+    }
+    elseif (in_array($content_type, $ncids_inner_page_types_migrated)) {
+      $suggestions[] = 'page__ncids_inner_page__migrated';
     }
 
     // Add theme suggestion of 'page__article', 'page__biography', etc.
@@ -68,6 +81,9 @@ function ncids_trans_theme_suggestions_page_alter(array &$suggestions, array $va
 
     if (in_array($content_type, $ncids_inner_page_types)) {
       $suggestions[] = 'page__ncids_inner_page';
+    }
+    elseif (in_array($content_type, $ncids_inner_page_types_migrated)) {
+      $suggestions[] = 'page__ncids_inner_page__migrated';
     }
 
     $suggestions[] = 'page__' . $content_type;

@@ -1123,6 +1123,7 @@ function cgov_core_nci_ckeditor5_enhancements_editor_css_classes_alter(
   else {
     $css_classes[] = 'ck-content--ncids';
     $css_classes[] = 'usa-prose';
+    $css_classes[] = 'usa-prose--' . str_replace('_', '-', $editor->id());
   }
 }
 
