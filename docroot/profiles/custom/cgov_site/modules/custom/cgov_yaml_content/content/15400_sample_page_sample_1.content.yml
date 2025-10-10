@@ -1,7 +1,7 @@
 - entity: "media"
-  bundle: "cgov_image" 
-  name: "Sample Page External Feature Card Image" 
-  langcode: en 
+  bundle: "cgov_image"
+  name: "Sample Page External Feature Card Image"
+  langcode: en
   status: 1
   moderation_state:
     value: 'published'
@@ -13,59 +13,59 @@
           - type: 'module'
             filename: 'External-Feature-Card_Tablet-16x9.jpg'
       alt: 'Sample Page External Feature Card Podcast 16x9 Override'
-      image_crop: 
-        crop_wrapper: 
-          freeform: 
+      image_crop:
+        crop_wrapper:
+          freeform:
             crop_container:
-              values: 
+              values:
                 crop_applied: 1
                 x: 0
                 y: 0
                 width: 608
                 height: 342
-          thumbnail: 
+          thumbnail:
             crop_container:
-              values: 
+              values:
                 crop_applied: 1
                 x: 76
                 y: 0
                 width: 456
                 height: 342
-          4x3: 
+          4x3:
             crop_container:
-              values: 
+              values:
                 crop_applied: 1
                 x: 76
                 y: 0
                 width: 456
                 height: 342
-          3x4: 
+          3x4:
             crop_container:
-              values: 
+              values:
                 crop_applied: 1
                 x: 92
                 y: 0
                 width: 256
                 height: 342
-          1x1: 
+          1x1:
             crop_container:
-              values: 
+              values:
                 crop_applied: 1
                 x: 20
                 y: 0
                 width: 342
                 height: 342
-          16x9: 
+          16x9:
             crop_container:
-              values: 
+              values:
                 crop_applied: 1
                 x: 0
                 y: 1
                 width: 608
                 height: 342
-          9x16: 
+          9x16:
             crop_container:
-              values: 
+              values:
                 crop_applied: 1
                 x: 16
                 y: 0
@@ -127,7 +127,7 @@
     - entity: 'paragraph'
       type: "body_section"
       field_body_section_content:
-        - format: "full_html"
+        - format: "ncids_full_html"
           value: |
             <p>This page is a placeholder to represent all of the <strong>NCI Research Areas</strong> pages:</p>
             <ul>
@@ -146,9 +146,9 @@
     - entity: 'paragraph'
       type: "body_section"
       field_body_section_content:
-        - format: "full_html"
+        - format: "ncids_full_html"
           value: |
-            <p>This page is a placeholder to represent all of the <strong>Áreas de investigación</strong> pages:</p>
+            <p>This page is a placeholder to represent all of the Áreas de investigación pages:</p>
             <ul>
               <li>Investigación sobre la biología del cáncer</li>
               <li>Investigación de la genómica del cáncer</li>
@@ -209,9 +209,9 @@
     - entity: 'paragraph'
       type: "body_section"
       field_body_section_content:
-        - format: "full_html"
+        - format: "ncids_full_html"
           value: |
-            <p>This page is a placeholder to represent all of the <strong>NCI''s Role in Cancer Research</strong> pages:</p>
+            <p>This page is a placeholder to represent all of the NCI''s Role in Cancer Research pages:</p>
             <ul>
               <li>Intramural Research</li>
               <li>Extramural Research</li>
@@ -222,9 +222,9 @@
     - entity: 'paragraph'
       type: "body_section"
       field_body_section_content:
-        - format: "full_html"
+        - format: "ncids_full_html"
           value: |
-            <p>This page is a placeholder to represent the <strong>El papel que desempeña el NCI en la investigación del cáncer</strong> page.</p>
+            <p>This page is a placeholder to represent the El papel que desempeña el NCI en la investigación del cáncer page.</p>
   field_date_posted:
     value: "2015-03-13"
   field_date_reviewed:
@@ -302,10 +302,10 @@
           field_override_image_promotional:
             - target_type: 'media'
               '#process':
-                callback: 'reference' 
+                callback: 'reference'
                 args:
-                  - 'media' 
-                  - bundle: 'cgov_image' 
+                  - 'media'
+                  - bundle: 'cgov_image'
                     name: 'Sample Page External Feature Card Image'
         - entity: 'paragraph'
           type: "ncids_feature_card_internal"
@@ -322,7 +322,7 @@
       field_ncids_theme:
         - value: "dark"
       field_image_position_promo:
-        - value: "left" 
+        - value: "left"
       field_featured_item:
         - target_type: 'node'
           '#process':
@@ -334,7 +334,7 @@
       field_button_text:
         - value: 'Learn More'
       field_button_alt:
-        - value: 'Learn More about Relaxation Techniques for Coping with Cancer'  
+        - value: 'Learn More about Relaxation Techniques for Coping with Cancer'
     - entity: 'paragraph'
       type: "ncids_2_guide_card_row"
       field_image_desc_guide_cards:
@@ -420,7 +420,7 @@
               - value: "Cancer Treatment Research"
             field_button_alt:
               - value: "Internal Button Alt Text"
-          - entity: 'paragraph' 
+          - entity: 'paragraph'
             type: "ncids_link_button_external"
             field_external_link:
               - uri: 'https://nationalcancerplan.cancer.gov/'
@@ -511,10 +511,10 @@
           field_override_image_promotional:
             - target_type: 'media'
               '#process':
-                callback: 'reference' 
+                callback: 'reference'
                 args:
-                  - 'media' 
-                  - bundle: 'cgov_image' 
+                  - 'media'
+                  - bundle: 'cgov_image'
                     name: 'Sample Page External Feature Card Image'
         - entity: 'paragraph'
           type: "ncids_feature_card_internal"
@@ -531,7 +531,7 @@
       field_ncids_theme:
         - value: "dark"
       field_image_position_promo:
-        - value: "left" 
+        - value: "left"
       field_featured_item:
         - target_type: 'node'
           '#process':
@@ -543,7 +543,7 @@
       field_button_text:
         - value: 'Learn More'
       field_button_alt:
-        - value: 'Learn More about Relaxation Techniques for Coping with Cancer'  
+        - value: 'Learn More about Relaxation Techniques for Coping with Cancer'
     - entity: 'paragraph'
       type: "ncids_2_guide_card_row"
       field_image_desc_guide_cards:
@@ -671,11 +671,11 @@
               - value: "El programa externo tratamiento del cáncer"
             field_button_alt:
               - value: "Internal Button Alt Text"
-          - entity: 'paragraph' 
+          - entity: 'paragraph'
             type: "ncids_link_button_external"
             field_external_link:
               - uri: 'https://nationalcancerplan.cancer.gov/'
             field_button_text:
               - value: "National Cancer Plan"
-  
+
     ######## End Placeholder ############

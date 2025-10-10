@@ -1,0 +1,56 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - filter.format.ncids_full_html
+  module:
+    - ckeditor5
+    - nci_ckeditor5_cleanup
+third_party_settings:
+  nci_ckeditor5_cleanup:
+    clean_styles: true
+format: ncids_full_html
+editor: ckeditor5
+settings:
+  toolbar:
+    items:
+      - undo
+      - redo
+      - '|'
+      - heading
+      - bold
+      - italic
+      - strikethrough
+      - superscript
+      - subscript
+      - numberedList
+      - bulletedList
+      - removeFormat
+      - '|'
+      - link
+      - '|'
+      - insertTable
+      - '|'
+      - indent
+      - outdent
+      - sourceEditing
+  plugins:
+    ckeditor5_heading:
+      enabled_headings:
+        - heading2
+        - heading3
+        - heading4
+        - heading5
+        - heading6
+    ckeditor5_list:
+      properties:
+        reversed: false
+        startIndex: true
+      multiBlock: true
+    ckeditor5_sourceEditing:
+      allowed_tags: {  }
+    linkit_extension:
+      linkit_enabled: true
+      linkit_profile: cgov_inline_links
+image_upload:
+  status: false
