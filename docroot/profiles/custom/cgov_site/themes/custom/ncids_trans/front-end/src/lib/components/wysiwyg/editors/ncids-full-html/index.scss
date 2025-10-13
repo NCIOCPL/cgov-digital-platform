@@ -1,19 +1,17 @@
+@forward '../../common/cgdp-embed-image';
+@forward '../../common/cgdp-embed-infographic';
+@forward '../../common/cgdp-embed-video';
+@forward '../../common/cgdp-embed-card';
+
 @use 'uswds-core' as *;
 
-// Embed Styles Stylesheet
-// This stylesheet consolidates all embed-related styles (images, videos, infographics, cards).
-//
-// CURRENT STATE:
-// - Embed styles are currently in article.scss
-// - Embeds work on both legacy and NCIDS pages (backwards compatible)
-//
-// FUTURE REFACTORING:
-// - When adding embed buttons to NCIDS Full HTML WYSIWYG, move the embed styles
-//   from article.scss to this dedicated stylesheet
-// - Import this stylesheet into article.scss to maintain functionality
-// - This separates concerns and makes embed styles more maintainable
 .usa-prose--ncids-full-html {
 	h2, h3, h4, h5, h6 {
 		clear: none;
 	}
+}
+
+.cgdp-embed-media-wrapper {
+	max-width: measure($theme-text-measure);
+	margin-top: 0;
 }

@@ -1,8 +1,15 @@
 @forward 'nci-card';
-@use 'uswds-core' as *;
 
-.nci-card {
-	&:last-child {
+@use 'uswds-core' as *;
+@use '../../embedded-entity-mixins' as embedded;
+
+.cgdp-embed-feature-card {
+	// embedded-entity : $width-tablet-up
+	@include embedded.embedded-entity(4);
+	.nci-card {
 		@include u-margin-bottom(0);
+		&:last-child {
+			@include u-margin-bottom(0);
+		}
 	}
 }

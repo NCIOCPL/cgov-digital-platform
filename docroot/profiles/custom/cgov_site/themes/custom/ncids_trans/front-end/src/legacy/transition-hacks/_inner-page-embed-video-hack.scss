@@ -2,17 +2,22 @@
 	height: 83.5%;
 }
 
-.cgdp-embed-video {
-	@include u-margin-bottom(3, !important);
-	@include at-media('tablet') {
-		@include u-margin-bottom(4, !important);
-	}
-}
-
 .cgdp-video figure{
 	@include u-margin-bottom(0);
 }
 
-.cgdp-video__heading {
-	@include typeset-h3;
+.embedded-entity.cgdp-embed-video {
+	@include u-margin-x(0);
+	@include u-margin-bottom(3, !important);
+	@include u-margin-top(0);
+	@include at-media('tablet') {
+		@include u-margin-top(0);
+		@include u-margin-bottom(4, !important);
+	}
+	&.align-center {
+		margin-top: 0;
+		@include at-media('tablet') {
+			margin-top: 2.5em;
+		}
+	}
 }
