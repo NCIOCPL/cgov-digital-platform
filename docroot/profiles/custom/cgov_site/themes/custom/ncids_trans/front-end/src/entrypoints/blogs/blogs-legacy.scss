@@ -216,3 +216,79 @@ $include-html-type-classes: false;
 @import '../../legacy/transition-hacks/inner-page-embed-image-hack';
 @import '../../legacy/transition-hacks/inner-page-embed-video-hack';
 @import '../../legacy/transition-hacks/inner-page-embed-feature-card-hack';
+@import '../../legacy/transition-hacks/inner-page-embed-entity-hack';
+@import '../../legacy/transition-hacks/inner-page-embed-infographic-hack';
+
+.embedded-entity.cgdp-embed-infographic {
+	&.cgdp-embed-infographic--large  {
+		margin: 0;
+		width:100%;
+		@include at-media('tablet') {
+				margin: 2em auto 2.5em auto;
+			}
+		&.align-right {
+			margin: 0 0 2.5em 0;
+			@include at-media('tablet') {
+				margin: 0 0 2.5em 2.5em
+			}
+		}
+		&.align-left {
+			margin: 0 2.5em 2.5em 0;
+			@include at-media('tablet') {
+				margin: 0 2.5em 2.5em 0
+			}
+		}
+		&.align-center {
+			margin: 2.5em 0;
+			@include at-media('tablet') {
+				margin: 2.5em 0;
+			}
+		}
+	}
+
+	&.cgdp-embed-infographic--medium {
+		margin: 0;
+		width: 100%;
+		@include at-media('tablet') {
+			margin: 2em auto 2.5em auto;
+		}
+		@media only screen and (min-width: 769px) {
+			width: 40%;
+		}
+		&.align-right {
+			margin: 0 0 2.5em 0;
+			@include at-media('tablet') {
+				margin: 0 0 2.5em 2.5em;
+			}
+		}
+		&.align-left {
+			margin: 0 2.5em 2.5em 0;
+			@include at-media('tablet') {
+				margin: 0 2.5em 2.5em 0;
+			}
+		}
+		&.align-center {
+			margin: 2.5em auto;
+			@include at-media('tablet') {
+				margin: 2.5em auto;
+			}
+		}
+	}
+}
+
+.embedded-entity.cgdp-embed-video {
+	width:100%;
+	&.align-right {
+		@include at-media('tablet') {
+		}
+	}
+	&.align-left {
+		@include at-media('tablet') {
+		}
+	}
+	&.align-center {
+		margin: 2.5em auto;
+		@include at-media('tablet') {
+		}
+	}
+}

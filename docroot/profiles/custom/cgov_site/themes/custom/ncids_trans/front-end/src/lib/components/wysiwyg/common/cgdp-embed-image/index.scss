@@ -1,3 +1,23 @@
-@use 'uswds-core' as *;
-
 @forward '../../../cgdp-image';
+
+@use 'uswds-core' as *;
+@use '../../embedded-entity-mixins' as embedded;
+
+.cgdp-embed-image {
+	&.cgdp-embed-image--full{
+		// embedded-entity : $width-tablet-up
+		@include embedded.embedded-entity(12);
+	}
+
+	&.cgdp-embed-image--large {
+		@include embedded.embedded-entity(9);
+	}
+
+	&.cgdp-embed-image--medium {
+		@include embedded.embedded-entity(5);
+	}
+
+	&.cgdp-embed-image--small {
+		@include embedded.embedded-entity(3);
+	}
+}

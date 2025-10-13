@@ -1,11 +1,21 @@
-.embedded-entity {
+@use 'uswds-core' as *;
+@use '../styles/breakpoint-mixins' as breakpoints;
 
-  &[data-entity-embed-display] {
+.cgdp-embed-media-wrapper {
+	max-width: unset;
+	margin-top: unset;
+}
+
+.embedded-entity:not(.cgdp-embed-infographic),
+.embedded-entity.cgdp-embed-feature-card {
+		&[data-entity-embed-display*="image"]:not[data-entity-embed-display*='_feature_card'] {
     width: 100%;
   }
+	margin-top: 0;
+  @include breakpoints.break(medium) {
+    margin-top: 0;
+		margin-bottom: 2.5em;
 
-  @include break(medium) {
-    margin-bottom: 2.5em;
 
     &.align-right {
       margin: 0 0 2.5em 2.5em;
@@ -38,7 +48,7 @@
   }
   &[data-entity-embed-display*="infographic_display_article_medium"] {
     width: 100%;
-    @include break(tablet-ls){
+    @include breakpoints.break(tablet-ls){
       width: 40%;
     }
   }
@@ -47,11 +57,11 @@
   This file should be refactored to scope all embedded entitiy rules to only the
   appropriate entity types. Like so. */
   &[data-entity-embed-display*="video"] {
-    @include break(medium) {
+    @include breakpoints.break(medium) {
       width: 100%;
     }
 
-    @include break(large) {
+    @include breakpoints.break(large) {
       &[data-entity-embed-display*="_small"] {
         width: 45%;
       }

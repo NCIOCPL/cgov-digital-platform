@@ -1,11 +1,16 @@
-.embedded-entity[data-entity-embed-display*='_feature_card'] {
+.embedded-entity[data-entity-embed-display*='_feature_card'].cgdp-embed-feature-card {
 	&.align-center,
 	&.align-left,
 	&.align-right {
 		margin: 1.25em 0;
 	}
+	margin-right: 0;
+	margin-left: 0;
+	margin-bottom: 0;
+	width: 100%;
 
 	@include at-media('tablet') {
+		margin-bottom: 2.5em;
 		width: 33.333%;
 
 		&.align-right {
@@ -23,6 +28,9 @@
 
 	border: 0;
 	.nci-card {
+		&:last-child {
+			@include u-margin-bottom(0);
+		}
 		a {
 			@include u-padding(0);
 			p {

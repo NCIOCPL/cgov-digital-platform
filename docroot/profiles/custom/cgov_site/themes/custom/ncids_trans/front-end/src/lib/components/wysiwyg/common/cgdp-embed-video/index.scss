@@ -1,3 +1,20 @@
-@use 'uswds-core' as *;
-
 @forward '../../../cgdp-video';
+
+@use 'uswds-core' as *;
+@use '../../embedded-entity-mixins' as embedded;
+
+.cgdp-embed-video {
+	&.cgdp-embed-video--large {
+		// embedded-entity : $width-tablet-up
+		@include embedded.embedded-entity(12);
+	}
+
+	&.cgdp-embed-video--medium {
+		@include embedded.embedded-entity(8);
+	}
+
+	&.cgdp-embed-video--small {
+		@include embedded.embedded-entity(5);
+	}
+}
+
