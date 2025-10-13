@@ -1,0 +1,52 @@
+@use 'uswds-core' as *;
+
+@mixin embedded-entity(
+$width-tablet-up: 12
+) {
+	$width-mobile: 12;
+	$margin-x: auto;
+	$margin-right: 4;
+	$margin-left: 4;
+	$margin-y: 3;
+	$margin-top: 4;
+	$margin-bottom: 4;
+	$margin-top-floating: 2;
+	$margin-bottom-floating: 4;
+	@if($width-tablet-up < 12) {
+		$margin-bottom-floating: 2;
+	}
+	@include u-text('center');
+	@include u-margin-x($margin-x);
+	@include u-margin-y($margin-y);
+	@include grid-col($width-mobile);
+	text-align:left;
+	&.align-left > div, &.align-right >div {
+			@include u-display('block');
+			@include u-flex('align-start');
+			text-align:left;
+		}
+	&.align-left {
+		@include u-text('left');
+		@include u-margin-top($margin-top-floating);
+		@include u-margin-bottom($margin-bottom-floating);
+		@include at-media('tablet') {
+			@include u-margin-right($margin-right);
+			@include u-margin-bottom($margin-bottom-floating);
+		}
+	}
+	&.align-right {
+		@include u-text('right');
+		text-align:left;
+		@include u-margin-top($margin-top-floating);
+		@include u-margin-bottom($margin-bottom-floating);
+		@include at-media('tablet') {
+			@include u-margin-left($margin-left);
+			@include u-margin-bottom($margin-bottom-floating);
+			}
+	}
+	@include at-media('tablet') {
+		@include grid-col($width-tablet-up);
+		@include u-margin-bottom($margin-bottom);
+		@include u-margin-top($margin-top);
+	}
+}

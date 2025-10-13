@@ -1,61 +1,14 @@
-@use 'uswds-core' as *;
-
 @forward '../../../cgdp-infographic';
 
+@use 'uswds-core' as *;
+@use '../../embedded-entity-mixins' as embedded;
+
 .cgdp-embed-infographic {
-	@include u-text('center');
-	@include u-margin-y(4);
-	@include u-margin-x('auto');
-
-	&[data-entity-embed-display*=infographic_display_article_large] {
-		@include grid-col(12);
-		&.align-left {
-			.cgdp-infographic {
-				@include u-display('block');
-				@include u-flex('align-start');
-			}
-
-			@include u-text('left');
-			@include at-media('tablet') {
-				@include u-margin-right(4);
-			}
-			@include u-margin-bottom(4);
-			@include u-margin-top(2);
-		}
+	&.cgdp-embed-infographic--large {
+		// embedded-entity : $width-tablet-up
+		@include embedded.embedded-entity(12);
 	}
-
-	&[data-entity-embed-display*=infographic_display_article_medium] {
-		@include grid-col(12);
-		@include at-media('tablet') {
-			@include grid-col(5);
-		}
-
-		&.align-right {
-			.cgdp-infographic {
-				@include u-display('block');
-				@include u-flex('align-start');
-			}
-
-			@include u-text('right');
-			@include at-media('tablet') {
-				@include u-margin-left(4);
-			}
-			@include u-margin-bottom(4);
-			@include u-margin-top(2);
-		}
-
-		&.align-left {
-			.cgdp-infographic {
-				@include u-display('block');
-				@include u-flex('align-start');
-			}
-
-			@include u-text('left');
-			@include at-media('tablet') {
-				@include u-margin-right(4);
-			}
-			@include u-margin-bottom(4);
-			@include u-margin-top(2);
-		}
+	&.cgdp-embed-infographic--medium {
+		@include embedded.embedded-entity(5);
 	}
 }

@@ -6,4 +6,7 @@
  * to get the assosiated styles.
  */
 #}
-<div{{ attributes.addClass('cgdp-embed-infographic') }}>{{ children }}</div>
+{% set infographic_wrapper_classes = ['cgdp-embed-infographic','cgdp-embed-infographic--medium'] %}
+<div class="cgdp-embed-media-wrapper">
+  <div{{ attributes.addClass(infographic_wrapper_classes) }}>{{ children }}</div>
+</div>

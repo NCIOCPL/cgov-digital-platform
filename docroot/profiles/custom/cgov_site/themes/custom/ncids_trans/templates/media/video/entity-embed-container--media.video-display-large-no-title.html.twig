@@ -6,4 +6,7 @@
  * to get the assosiated styles.
  */
 #}
-<div{{ attributes.addClass('cgdp-embed-video') }}>{{ children }}</div>
+{% set video_wrapper_classes = ['cgdp-embed-video','cgdp-embed-video--large'] %}
+<div class="cgdp-embed-media-wrapper">
+  <div{{ attributes.addClass(video_wrapper_classes) }}>{{ children }}</div>
+</div>
