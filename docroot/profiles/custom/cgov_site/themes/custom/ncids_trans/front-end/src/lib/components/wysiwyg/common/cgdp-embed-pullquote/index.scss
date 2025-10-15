@@ -1,0 +1,14 @@
+@forward '../../../cgdp-pullquote';
+
+@use 'uswds-core' as *;
+@use '../../embedded-entity-mixins' as embedded;
+
+.cgdp-embed-pullquote {
+	&.cgdp-embed-pullquote--full {
+		@include embedded.embedded-entity(12);
+	}
+
+	&.cgdp-embed-pullquote--small {
+		@include embedded.embedded-entity(5);
+	}
+}
