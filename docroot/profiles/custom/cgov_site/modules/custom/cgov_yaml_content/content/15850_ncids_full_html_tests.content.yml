@@ -530,3 +530,257 @@
     value: '2019-06-19'
   field_date_display_mode:
     value: 'reviewed'
+
+- entity: 'node'
+  type: 'cgov_article'
+  langcode: en
+  status: 1
+  moderation_state:
+    value: 'published'
+  title: 'NCIDS Full HTML - Summary Box'
+  field_page_description:
+    value: 'An article page to test the summary box on ncids_full_html'
+  field_browser_title:
+    value: 'NCIDS Full HTML - Summary Box'
+  field_site_section:
+    - '#process':
+        callback: 'reference'
+        args:
+          - 'taxonomy_term'
+          - vid: 'cgov_site_sections'
+            computed_path: '/test'
+  field_pretty_url:
+    value: 'article-body-summary-box'
+  field_intro_text:
+    - format: "ncids_streamlined_no_headings"
+      value: |
+        Testing WYSIWYG for Article Body Section
+  field_article_body:
+    ### Data attributes / custom links
+    - entity: 'paragraph'
+      type: 'body_section'
+      field_body_section_heading:
+        - format: 'simple'
+          value: 'Full - No Alignment'
+      field_body_section_content:
+        - format: 'ncids_full_html'
+          value: |
+            <p>The National Cancer Institute (NCI) leads the cancer research community toward accelerating the rate of scientific discovery and reducing the burden of cancer in the United States and around the world. NCI is the federal government's principal agency for cancer research and training. Our scope of work spans a wide range of research disciplines—from basic science to epidemiology to clinical trials. Most of NCI’s budget is used to fund research at universities and research centers across the country.</p>
+            <p>Explore the NCI at a Glance infographic to learn more about who we are and what we do.</p>
+            <div class="cgdp-embed-media-wrapper">
+              <div class="embedded-entity cgdp-embed-summary-box cgdp-embed-summary-box--full">
+                <div class="usa-summary-box">
+                  <div class="usa-summary-box__body">
+                    <div class="usa-summary-box__heading">
+                      Resources
+                    </div>
+                    <div class="usa-prose usa-summary-box__text">
+                      <ul>
+                        <li>See NCI's <a href="https://www.cancer.gov/publications/patient-education">patient education </a>publications and evidence-based <a href="https://www.cancer.gov/publications/pdq/information-summaries/supportive-care">PDQ® summaries</a> about supportive and palliative care topics.</li>
+                        <li>Young people with cancer may find the <a data-entity-substitution="canonical" data-entity-type="node" data-entity-uuid="6ef42fb0-ba68-4b27-9f36-0124c4f4ad84" href="/types/aya/support">Emotional Support and Care for Young People with Cancer</a> page helpful.</li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+    - entity: 'paragraph'
+      type: 'body_section'
+      field_body_section_heading:
+        - format: 'simple'
+          value: 'Full - Align Center'
+      field_body_section_content:
+        - format: 'ncids_full_html'
+          value: |
+            <p>The National Cancer Institute (NCI) leads the cancer research community toward accelerating the rate of scientific discovery and reducing the burden of cancer in the United States and around the world. NCI is the federal government's principal agency for cancer research and training. Our scope of work spans a wide range of research disciplines—from basic science to epidemiology to clinical trials. Most of NCI’s budget is used to fund research at universities and research centers across the country.</p>
+            <p>Explore the NCI at a Glance infographic to learn more about who we are and what we do.</p>
+            <div class="cgdp-embed-media-wrapper">
+              <div class="align-center embedded-entity cgdp-embed-summary-box cgdp-embed-summary-box--full">
+                <div class="usa-summary-box">
+                  <div class="usa-summary-box__body">
+                    <div class="usa-summary-box__heading">
+                      Resources
+                    </div>
+                    <div class="usa-prose usa-summary-box__text">
+                      <ul>
+                        <li>See NCI's <a href="https://www.cancer.gov/publications/patient-education">patient education </a>publications and evidence-based <a href="https://www.cancer.gov/publications/pdq/information-summaries/supportive-care">PDQ® summaries</a> about supportive and palliative care topics.</li>
+                        <li>Young people with cancer may find the <a data-entity-substitution="canonical" data-entity-type="node" data-entity-uuid="6ef42fb0-ba68-4b27-9f36-0124c4f4ad84" href="/types/aya/support">Emotional Support and Care for Young People with Cancer</a> page helpful.</li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+    - entity: 'paragraph'
+      type: 'body_section'
+      field_body_section_heading:
+        - format: 'simple'
+          value: 'Full - Align Left'
+      field_body_section_content:
+        - format: 'ncids_full_html'
+          value: |
+            <p>The National Cancer Institute (NCI) leads the cancer research community toward accelerating the rate of scientific discovery and reducing the burden of cancer in the United States and around the world. NCI is the federal government's principal agency for cancer research and training. Our scope of work spans a wide range of research disciplines—from basic science to epidemiology to clinical trials. Most of NCI’s budget is used to fund research at universities and research centers across the country.</p>
+            <div class="cgdp-embed-media-wrapper">
+              <div class="align-left embedded-entity cgdp-embed-summary-box cgdp-embed-summary-box--full">
+                <div class="usa-summary-box">
+                  <div class="usa-summary-box__body">
+                    <div class="usa-summary-box__heading">
+                      Resources
+                    </div>
+                    <div class="usa-prose usa-summary-box__text">
+                      <ul>
+                        <li>See NCI's <a href="https://www.cancer.gov/publications/patient-education">patient education </a>publications and evidence-based <a href="https://www.cancer.gov/publications/pdq/information-summaries/supportive-care">PDQ® summaries</a> about supportive and palliative care topics.</li>
+                        <li>Young people with cancer may find the <a data-entity-substitution="canonical" data-entity-type="node" data-entity-uuid="6ef42fb0-ba68-4b27-9f36-0124c4f4ad84" href="/types/aya/support">Emotional Support and Care for Young People with Cancer</a> page helpful.</li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <p>The National Cancer Institute (NCI) leads the cancer research community toward accelerating the rate of scientific discovery and reducing the burden of cancer in the United States and around the world. NCI is the federal government's principal agency for cancer research and training. Our scope of work spans a wide range of research disciplines—from basic science to epidemiology to clinical trials. Most of NCI’s budget is used to fund research at universities and research centers across the country.</p>
+    - entity: 'paragraph'
+      type: 'body_section'
+      field_body_section_heading:
+        - format: 'simple'
+          value: 'Full - Align Right'
+      field_body_section_content:
+        - format: 'ncids_full_html'
+          value: |
+            <p>The National Cancer Institute (NCI) leads the cancer research community toward accelerating the rate of scientific discovery and reducing the burden of cancer in the United States and around the world. NCI is the federal government's principal agency for cancer research and training. Our scope of work spans a wide range of research disciplines—from basic science to epidemiology to clinical trials. Most of NCI’s budget is used to fund research at universities and research centers across the country.</p>
+            <div class="cgdp-embed-media-wrapper">
+              <div class="align-right embedded-entity cgdp-embed-summary-box cgdp-embed-summary-box--full">
+                <div class="usa-summary-box">
+                  <div class="usa-summary-box__body">
+                    <div class="usa-summary-box__heading">
+                      Resources
+                    </div>
+                    <div class="usa-prose usa-summary-box__text">
+                      <ul>
+                        <li>See NCI's <a href="https://www.cancer.gov/publications/patient-education">patient education </a>publications and evidence-based <a href="https://www.cancer.gov/publications/pdq/information-summaries/supportive-care">PDQ® summaries</a> about supportive and palliative care topics.</li>
+                        <li>Young people with cancer may find the <a data-entity-substitution="canonical" data-entity-type="node" data-entity-uuid="6ef42fb0-ba68-4b27-9f36-0124c4f4ad84" href="/types/aya/support">Emotional Support and Care for Young People with Cancer</a> page helpful.</li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+    - entity: 'paragraph'
+      type: 'body_section'
+      field_body_section_heading:
+        - format: 'simple'
+          value: 'Small - No Alignment'
+      field_body_section_content:
+        - format: 'ncids_full_html'
+          value: |
+            <p>The National Cancer Institute (NCI) leads the cancer research community toward accelerating the rate of scientific discovery and reducing the burden of cancer in the United States and around the world. NCI is the federal government's principal agency for cancer research and training. Our scope of work spans a wide range of research disciplines—from basic science to epidemiology to clinical trials. Most of NCI’s budget is used to fund research at universities and research centers across the country.</p>
+            <div class="cgdp-embed-media-wrapper">
+              <div class="embedded-entity cgdp-embed-summary-box cgdp-embed-summary-box--small">
+                <div class="usa-summary-box">
+                  <div class="usa-summary-box__body">
+                    <div class="usa-summary-box__heading">
+                      Resources
+                    </div>
+                    <div class="usa-prose usa-summary-box__text">
+                      <ul>
+                        <li>See NCI's <a href="https://www.cancer.gov/publications/patient-education">patient education </a>publications and evidence-based <a href="https://www.cancer.gov/publications/pdq/information-summaries/supportive-care">PDQ® summaries</a> about supportive and palliative care topics.</li>
+                        <li>Young people with cancer may find the <a data-entity-substitution="canonical" data-entity-type="node" data-entity-uuid="6ef42fb0-ba68-4b27-9f36-0124c4f4ad84" href="/types/aya/support">Emotional Support and Care for Young People with Cancer</a> page helpful.</li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+    - entity: 'paragraph'
+      type: 'body_section'
+      field_body_section_heading:
+        - format: 'simple'
+          value: 'Small - Align Center'
+      field_body_section_content:
+        - format: 'ncids_full_html'
+          value: |
+            <p>The National Cancer Institute (NCI) leads the cancer research community toward accelerating the rate of scientific discovery and reducing the burden of cancer in the United States and around the world. NCI is the federal government's principal agency for cancer research and training. Our scope of work spans a wide range of research disciplines—from basic science to epidemiology to clinical trials. Most of NCI’s budget is used to fund research at universities and research centers across the country.</p>
+            <div class="cgdp-embed-media-wrapper">
+              <div class="align-center embedded-entity cgdp-embed-summary-box cgdp-embed-summary-box--small">
+                <div class="usa-summary-box">
+                  <div class="usa-summary-box__body">
+                    <div class="usa-summary-box__heading">
+                      Resources
+                    </div>
+                    <div class="usa-prose usa-summary-box__text">
+                      <ul>
+                        <li>See NCI's <a href="https://www.cancer.gov/publications/patient-education">patient education </a>publications and evidence-based <a href="https://www.cancer.gov/publications/pdq/information-summaries/supportive-care">PDQ® summaries</a> about supportive and palliative care topics.</li>
+                        <li>Young people with cancer may find the <a data-entity-substitution="canonical" data-entity-type="node" data-entity-uuid="6ef42fb0-ba68-4b27-9f36-0124c4f4ad84" href="/types/aya/support">Emotional Support and Care for Young People with Cancer</a> page helpful.</li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+    - entity: 'paragraph'
+      type: 'body_section'
+      field_body_section_heading:
+        - format: 'simple'
+          value: 'Small - Align Left'
+      field_body_section_content:
+        - format: 'ncids_full_html'
+          value: |
+            <p>The National Cancer Institute (NCI) leads the cancer research community toward accelerating the rate of scientific discovery and reducing the burden of cancer in the United States and around the world. NCI is the federal government's principal agency for cancer research and training. Our scope of work spans a wide range of research disciplines—from basic science to epidemiology to clinical trials. Most of NCI’s budget is used to fund research at universities and research centers across the country.</p>
+            <p>Explore the NCI at a Glance infographic to learn more about who we are and what we do.</p>
+            <p>The National Cancer Institute (NCI) leads the cancer research community toward accelerating the rate of scientific discovery and reducing the burden of cancer in the United States and around the world. NCI is the federal government's principal agency for cancer research and training. Our scope of work spans a wide range of research disciplines—from basic science to epidemiology to clinical trials. Most of NCI’s budget is used to fund research at universities and research centers across the country.</p>
+            <div class="cgdp-embed-media-wrapper">
+              <div class="align-left embedded-entity cgdp-embed-summary-box cgdp-embed-summary-box--small">
+                <div class="usa-summary-box">
+                  <div class="usa-summary-box__body">
+                    <div class="usa-summary-box__heading">
+                      Resources
+                    </div>
+                    <div class="usa-prose usa-summary-box__text">
+                      <ul>
+                        <li>See NCI's <a href="https://www.cancer.gov/publications/patient-education">patient education </a>publications and evidence-based <a href="https://www.cancer.gov/publications/pdq/information-summaries/supportive-care">PDQ® summaries</a> about supportive and palliative care topics.</li>
+                        <li>Young people with cancer may find the <a data-entity-substitution="canonical" data-entity-type="node" data-entity-uuid="6ef42fb0-ba68-4b27-9f36-0124c4f4ad84" href="/types/aya/support">Emotional Support and Care for Young People with Cancer</a> page helpful.</li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <p>The National Cancer Institute (NCI) leads the cancer research community toward accelerating the rate of scientific discovery and reducing the burden of cancer in the United States and around the world. NCI is the federal government's principal agency for cancer research and training. Our scope of work spans a wide range of research disciplines—from basic science to epidemiology to clinical trials. Most of NCI’s budget is used to fund research at universities and research centers across the country.</p>
+            <p>Explore the NCI at a Glance infographic to learn more about who we are and what we do.</p>
+    - entity: 'paragraph'
+      type: 'body_section'
+      field_body_section_heading:
+        - format: 'simple'
+          value: 'Small - Align Right'
+      field_body_section_content:
+        - format: 'ncids_full_html'
+          value: |
+            <p>The National Cancer Institute (NCI) leads the cancer research community toward accelerating the rate of scientific discovery and reducing the burden of cancer in the United States and around the world. NCI is the federal government's principal agency for cancer research and training. Our scope of work spans a wide range of research disciplines—from basic science to epidemiology to clinical trials. Most of NCI’s budget is used to fund research at universities and research centers across the country.</p>
+            <p>Explore the NCI at a Glance infographic to learn more about who we are and what we do.</p>
+            <p>The National Cancer Institute (NCI) leads the cancer research community toward accelerating the rate of scientific discovery and reducing the burden of cancer in the United States and around the world. NCI is the federal government's principal agency for cancer research and training. Our scope of work spans a wide range of research disciplines—from basic science to epidemiology to clinical trials. Most of NCI’s budget is used to fund research at universities and research centers across the country.</p>
+            <div class="cgdp-embed-media-wrapper">
+              <div class="align-right embedded-entity cgdp-embed-summary-box cgdp-embed-summary-box--small">
+                <div class="usa-summary-box">
+                  <div class="usa-summary-box__body">
+                    <div class="usa-summary-box__heading">
+                      Resources
+                    </div>
+                    <div class="usa-prose usa-summary-box__text">
+                      <ul>
+                        <li>See NCI's <a href="https://www.cancer.gov/publications/patient-education">patient education </a>publications and evidence-based <a href="https://www.cancer.gov/publications/pdq/information-summaries/supportive-care">PDQ® summaries</a> about supportive and palliative care topics.</li>
+                        <li>Young people with cancer may find the <a data-entity-substitution="canonical" data-entity-type="node" data-entity-uuid="6ef42fb0-ba68-4b27-9f36-0124c4f4ad84" href="/types/aya/support">Emotional Support and Care for Young People with Cancer</a> page helpful.</li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <p>The National Cancer Institute (NCI) leads the cancer research community toward accelerating the rate of scientific discovery and reducing the burden of cancer in the United States and around the world. NCI is the federal government's principal agency for cancer research and training. Our scope of work spans a wide range of research disciplines—from basic science to epidemiology to clinical trials. Most of NCI’s budget is used to fund research at universities and research centers across the country.</p>
+            <p>Explore the NCI at a Glance infographic to learn more about who we are and what we do.</p>
+  field_date_posted:
+    value: '2025-10-15'
+  field_date_reviewed:
+    value: '2025-10-15'
+  field_date_updated:
+    value: '2025-10-15'
+  field_date_display_mode:
+    value: 'reviewed'
