@@ -1,0 +1,13 @@
+@use 'uswds-core' as *;
+@forward 'usa-table';
+
+// Add styles for all header cells in tables
+// to match uswds rules from v3.10 onwards for sortable tables
+// (specifically, adding background color to all header cells
+// INCLUDING headers in the body of the table)
+.usa-prose > table th,
+.usa-table > thead th,
+.usa-table > tbody th {
+	background-color: color($theme-table-header-background-color);
+	font-weight: 600;
+}
