@@ -1,0 +1,413 @@
+- entity: "node"
+  type: "cgov_article"
+  langcode: en
+  status: 1
+  moderation_state:
+    value: "published"
+  title: "Article Body Section - NCIDS Full HTML with Tables"
+  field_page_description:
+    value: "An article page to test tables with usa-prose and usa-tables styles"
+  field_browser_title:
+    value: "Article Body Section - NCIDS Full HTML with Tables"
+  field_site_section:
+    - "#process":
+        callback: "reference"
+        args:
+          - "taxonomy_term"
+          - vid: "cgov_site_sections"
+            computed_path: "/test"
+  field_pretty_url:
+    value: "article-body-section-ncids-tables"
+  field_intro_text:
+    - format: "ncids_streamlined_no_headings"
+      value: |
+        Testing NCIDS Tables
+  field_article_body:
+    - entity: "paragraph"
+      type: "body_section"
+      field_body_section_heading:
+        value: "Table without usa-table and the first row is table headers"
+      field_body_section_content:
+        - format: "ncids_full_html"
+          value: |
+            <table>
+              <thead>
+                <tr>
+                  <th scope="col">Time</th>
+                  <th scope="col">Presentation Topic</th>
+                  <th scope="col">Presenter</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>11:00 am - 11:05 am</td>
+                  <td>Call to Order and Opening Remarks</td>
+                  <td>Dr. Vose</td>
+                </tr>
+                <tr>
+                  <td>11:05 am - 11:25 am</td>
+                  <td>NCI Principal Deputy Director's Remarks</td>
+                  <td>Dr. Lowy</td>
+                </tr>
+                <tr>
+                  <td>11:25 am - 11:30 am</td>
+                  <td>Strategic Planning Initiatives Overview</td>
+                  <td>Dr. Doroshow</td>
+                </tr>
+                <tr>
+                  <td>11:30 am - 12:00 pm</td>
+                  <td>Friends of Cancer Research: External Control Arm Pilot Project</td>
+                  <td>Dr. Allen</td>
+                </tr>
+                <tr>
+                  <td>12:00 pm - 12:50 pm</td>
+                  <td colspan="2">
+                    <p>Streamlining Clinical Trials Implementation Update</p>
+                    <ul>
+                      <li>
+                        Auditing of NCTN Late-Phase Clinical Trials: Opportunities for
+                        Streamlining (12:00 pm - 12:25 pm, Dr. Doroshow)
+                      </li>
+                      <li>
+                        Decentralized Clinical Trial Elements (12:25 pm - 12:35 pm, Ms.
+                        Denicoff)
+                      </li>
+                      <li>
+                        Streamlining Clinical Trial Data Collection (12:35 pm - 12:50 pm,
+                        Ms. Denicoff, Dr. Mandrekar)
+                      </li>
+                    </ul>
+                  </td>
+                </tr>
+                <tr>
+                  <td>12:50 pm - 1:15 pm</td>
+                  <td>
+                    <p>New Business</p>
+                    <ul>
+                      <li>Streamlining Data Collection Working Group</li>
+                      <li>Clinical Trials Innovation Working Group</li>
+                      <li>Patient Perspectives in Cancer Research Subcommittee</li>
+                    </ul>
+                  </td>
+                  <td>Dr. Vose, Dr. Prindiville</td>
+                </tr>
+                <tr>
+                  <td>1:15 pm</td>
+                  <td colspan="2">
+                    <p>Adjourn</p>
+                    <p><strong>Confirmed Future Meeting Dates</strong></p>
+                    <ul>
+                      <li>Wednesday, November 19, 2025</li>
+                      <li>Wednesday, March 11, 2026</li>
+                      <li>Wednesday, July 15, 2026</li>
+                      <li>Wednesday, November 18, 2026</li>
+                      <li>Wednesday, March 10, 2027</li>
+                      <li>Wednesday, July 14, 2027</li>
+                      <li>Wednesday, November 17, 2027</li>
+                    </ul>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+    - entity: "paragraph"
+      type: "body_section"
+      field_body_section_heading:
+        value: "Table without usa-table without table headers row"
+      field_body_section_content:
+        - format: "ncids_full_html"
+          value: |
+            <table>
+              <tbody>
+                <tr>
+                  <th style="text-align: left" scope="row">Citizenship</th>
+                  <td>
+                    <p>At the time of the award, the candidate must be:</p>
+                    <ul>
+                      <li>a United States citizen,</li>
+                      <li>or a non-citizen national,</li>
+                      <li>
+                        or must have been lawfully admitted for permanent residence and
+                        possess an Alien Registration Receipt Card (1-151 or 1-551) or some
+                        other verification of legal admission as a permanent resident.
+                      </li>
+                    </ul>
+                    <p>
+                      The candidate does not need citizenship or a green card to apply.
+                      Citizenship or green card is needed at the time of award issuance.
+                    </p>
+                  </td>
+                </tr>
+                <tr>
+                  <th style="text-align: left" scope="row">
+                    Foreign Nationals with Student Visas
+                  </th>
+                  <td>Not eligible for this award</td>
+                </tr>
+                <tr>
+                  <th style="text-align: left" scope="row">Degree/Academic Appointment</th>
+                  <td>Predoctoral Fellows</td>
+                </tr>
+                <tr>
+                  <th style="text-align: left" scope="row">Geographic Location</th>
+                  <td>
+                    F31 Fellows may request support for training abroad; clear scientific
+                    justification is required, including the reasons why the facilities, the
+                    sponsor, and/or other aspects of the proposed experience are more
+                    appropriate than training in a domestic setting.
+                  </td>
+                </tr>
+                <tr>
+                  <th style="text-align: left" scope="row">Effort Level/ Commitment</th>
+                  <td>
+                    At least 40 hours per week, full-time effort, to the training program
+                  </td>
+                </tr>
+                <tr>
+                  <th style="text-align: left" scope="row">Duration of the Award</th>
+                  <td>
+                    Up to 5 years; individual fellowship awards are generally not renewable;
+                    consult NIH staff to obtain advice regarding submission of a renewal
+                    application for additional fellowship support
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+    - entity: "paragraph"
+      type: "body_section"
+      field_body_section_heading:
+        value: "Table without usa-table with headers in the first row AND column"
+      field_body_section_content:
+        - format: "ncids_full_html"
+          value: |
+            <table>
+              <thead>
+                <tr>
+                  <th scope="col">Receipt Cycle</th>
+                  <th scope="col">&nbsp;Receipt Date: New, Resubmission</th>
+                  <th scope="col">Initial Review Date</th>
+                  <th scope="col">Council Review Date</th>
+                  <th scope="col">Earliest Possible Start Date*</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <th style="text-align: left" scope="row">1</th>
+                  <td>April 8</td>
+                  <td>June/July</td>
+                  <td>September/October</td>
+                  <td>December</td>
+                </tr>
+                <tr>
+                  <th style="text-align: left" scope="row">2</th>
+                  <td>August 8</td>
+                  <td>October/November</td>
+                  <td>January/February</td>
+                  <td>April</td>
+                </tr>
+                <tr>
+                  <th style="text-align: left" scope="row">3</th>
+                  <td>December 8</td>
+                  <td>February/March</td>
+                  <td>May/June</td>
+                  <td>July</td>
+                </tr>
+              </tbody>
+            </table>
+    - entity: "paragraph"
+      type: "body_section"
+      field_body_section_heading:
+        value: "USA Table and the first row is table headers"
+      field_body_section_content:
+        - format: "ncids_full_html"
+          value: |
+            <table class="usa-table">
+              <thead>
+                <tr>
+                  <th scope="col">Time</th>
+                  <th scope="col">Presentation Topic</th>
+                  <th scope="col">Presenter</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>11:00 am - 11:05 am</td>
+                  <td>Call to Order and Opening Remarks</td>
+                  <td>Dr. Vose</td>
+                </tr>
+                <tr>
+                  <td>11:05 am - 11:25 am</td>
+                  <td>NCI Principal Deputy Director's Remarks</td>
+                  <td>Dr. Lowy</td>
+                </tr>
+                <tr>
+                  <td>11:25 am - 11:30 am</td>
+                  <td>Strategic Planning Initiatives Overview</td>
+                  <td>Dr. Doroshow</td>
+                </tr>
+                <tr>
+                  <td>11:30 am - 12:00 pm</td>
+                  <td>Friends of Cancer Research: External Control Arm Pilot Project</td>
+                  <td>Dr. Allen</td>
+                </tr>
+                <tr>
+                  <td>12:00 pm - 12:50 pm</td>
+                  <td colspan="2">
+                    <p>Streamlining Clinical Trials Implementation Update</p>
+                    <ul>
+                      <li>
+                        Auditing of NCTN Late-Phase Clinical Trials: Opportunities for
+                        Streamlining (12:00 pm - 12:25 pm, Dr. Doroshow)
+                      </li>
+                      <li>
+                        Decentralized Clinical Trial Elements (12:25 pm - 12:35 pm, Ms.
+                        Denicoff)
+                      </li>
+                      <li>
+                        Streamlining Clinical Trial Data Collection (12:35 pm - 12:50 pm,
+                        Ms. Denicoff, Dr. Mandrekar)
+                      </li>
+                    </ul>
+                  </td>
+                </tr>
+                <tr>
+                  <td>12:50 pm - 1:15 pm</td>
+                  <td>
+                    <p>New Business</p>
+                    <ul>
+                      <li>Streamlining Data Collection Working Group</li>
+                      <li>Clinical Trials Innovation Working Group</li>
+                      <li>Patient Perspectives in Cancer Research Subcommittee</li>
+                    </ul>
+                  </td>
+                  <td>Dr. Vose, Dr. Prindiville</td>
+                </tr>
+                <tr>
+                  <td>1:15 pm</td>
+                  <td colspan="2">
+                    <p>Adjourn</p>
+                    <p><strong>Confirmed Future Meeting Dates</strong></p>
+                    <ul>
+                      <li>Wednesday, November 19, 2025</li>
+                      <li>Wednesday, March 11, 2026</li>
+                      <li>Wednesday, July 15, 2026</li>
+                      <li>Wednesday, November 18, 2026</li>
+                      <li>Wednesday, March 10, 2027</li>
+                      <li>Wednesday, July 14, 2027</li>
+                      <li>Wednesday, November 17, 2027</li>
+                    </ul>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+    - entity: "paragraph"
+      type: "body_section"
+      field_body_section_heading:
+        value: "USA Table example without table headers row"
+      field_body_section_content:
+        - format: "ncids_full_html"
+          value: |
+            <table class="usa-table">
+              <tbody>
+                <tr>
+                  <th style="text-align: left" scope="row">Citizenship</th>
+                  <td>
+                    <p>At the time of the award, the candidate must be:</p>
+                    <ul>
+                      <li>a United States citizen,</li>
+                      <li>or a non-citizen national,</li>
+                      <li>
+                        or must have been lawfully admitted for permanent residence and
+                        possess an Alien Registration Receipt Card (1-151 or 1-551) or some
+                        other verification of legal admission as a permanent resident.
+                      </li>
+                    </ul>
+                    <p>
+                      The candidate does not need citizenship or a green card to apply.
+                      Citizenship or green card is needed at the time of award issuance.
+                    </p>
+                  </td>
+                </tr>
+                <tr>
+                  <th style="text-align: left" scope="row">
+                    Foreign Nationals with Student Visas
+                  </th>
+                  <td>Not eligible for this award</td>
+                </tr>
+                <tr>
+                  <th style="text-align: left" scope="row">Degree/Academic Appointment</th>
+                  <td>Predoctoral Fellows</td>
+                </tr>
+                <tr>
+                  <th style="text-align: left" scope="row">Geographic Location</th>
+                  <td>
+                    F31 Fellows may request support for training abroad; clear scientific
+                    justification is required, including the reasons why the facilities, the
+                    sponsor, and/or other aspects of the proposed experience are more
+                    appropriate than training in a domestic setting.
+                  </td>
+                </tr>
+                <tr>
+                  <th style="text-align: left" scope="row">Effort Level/ Commitment</th>
+                  <td>
+                    At least 40 hours per week, full-time effort, to the training program
+                  </td>
+                </tr>
+                <tr>
+                  <th style="text-align: left" scope="row">Duration of the Award</th>
+                  <td>
+                    Up to 5 years; individual fellowship awards are generally not renewable;
+                    consult NIH staff to obtain advice regarding submission of a renewal
+                    application for additional fellowship support
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+    - entity: "paragraph"
+      type: "body_section"
+      field_body_section_heading:
+        value: "USA Table example with headers in the first row AND column"
+      field_body_section_content:
+        - format: "ncids_full_html"
+          value: |
+            <table class="usa-table">
+              <thead>
+                <tr>
+                  <th scope="col">Receipt Cycle</th>
+                  <th scope="col">&nbsp;Receipt Date: New, Resubmission</th>
+                  <th scope="col">Initial Review Date</th>
+                  <th scope="col">Council Review Date</th>
+                  <th scope="col">Earliest Possible Start Date*</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <th style="text-align: left" scope="row">1</th>
+                  <td>April 8</td>
+                  <td>June/July</td>
+                  <td>September/October</td>
+                  <td>December</td>
+                </tr>
+                <tr>
+                  <th style="text-align: left" scope="row">2</th>
+                  <td>August 8</td>
+                  <td>October/November</td>
+                  <td>January/February</td>
+                  <td>April</td>
+                </tr>
+                <tr>
+                  <th style="text-align: left" scope="row">3</th>
+                  <td>December 8</td>
+                  <td>February/March</td>
+                  <td>May/June</td>
+                  <td>July</td>
+                </tr>
+              </tbody>
+            </table>
+  field_date_posted:
+    value: "2019-06-19"
+  field_date_reviewed:
+    value: "2019-06-19"
+  field_date_updated:
+    value: "2019-06-19"
+  field_date_display_mode:
+    value: "reviewed"

@@ -19,24 +19,54 @@ uswds-core.$theme-global-link-styles: true;
 // This is global typography and body content styling. The following imports
 // are from the uswds-typography package, however we will comment out the
 // ones we do not thing should be global.
-@forward "usa-content";
-@forward "usa-dark-background";
-@forward "usa-display";
+@forward 'usa-content';
+@forward 'usa-dark-background';
+@forward 'usa-display';
 // The intro styling seems silly here as we only use into on articles and
 // blogs posts for the most part.
 //@forward "usa-intro";
-@forward "usa-link";
+@forward 'usa-link';
 // List is actually already included with footer, however, we include it
 // here in the event it is removed from the footer some day.
-@forward "usa-list";
-@forward "usa-paragraph";
-@forward "usa-prose";
-@forward "nci-heading";
+@forward 'usa-list';
+@forward 'usa-paragraph';
+@forward 'usa-prose';
+@forward 'nci-heading';
 
-@forward "./common/ckeditor-fixes.scss";
+@forward './common/ckeditor-fixes.scss';
 
 // Really we just need the definition link, not the rest of the styling.
-@forward "../../lib/components/cgdp-definition/styles/cgdp-definition-link";
+@forward '../../lib/components/cgdp-definition/styles/cgdp-definition-link';
 
 // TODO: Add new ncids-wysiwyg classes after here.
-@forward "../../lib/components/wysiwyg/editors/ncids-full-html";
+@forward '../../lib/components/wysiwyg/editors/ncids-full-html';
+
+// Need to override ck editor table styles for sortable tables
+.ck-content--ncids table.usa-table[data-sortable] {
+	th {
+		background-color: uswds-core.color(
+			uswds-core.$theme-table-header-background-color
+		);
+		font-weight: 600;
+	}
+	thead th {
+		padding: 0.5rem 1rem;
+		// Add sort icon after header text
+		// when the column isn't fixed
+		&:not([data-fixed]) {
+			$svg-size: 30;
+			@include uswds-core.place-icon(
+				(
+					'name': 'sort_arrow',
+					'svg-height': $svg-size,
+					'svg-width': $svg-size,
+					'height': 2ex,
+					'color': 'black',
+				),
+				'after',
+				'1px',
+				middle
+			);
+		}
+	}
+}
