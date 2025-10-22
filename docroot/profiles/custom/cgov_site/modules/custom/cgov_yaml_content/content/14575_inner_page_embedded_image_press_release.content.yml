@@ -1,0 +1,287 @@
+- entity: "node"
+  type: "cgov_press_release"
+  title: "Embedded Image Content Press Release Test Page - NCIDS Styles"
+  langcode: en
+  status: 1
+  field_site_section:
+    - '#process':
+        callback: 'reference'
+        args:
+          - 'taxonomy_term'
+          - vid: 'cgov_site_sections'
+            computed_path: '/test'
+  field_pretty_url:
+    value: 'press-release-image-embed-test-page'
+  moderation_state:
+    value: 'published'
+  field_browser_title:
+    value: "Embedded Image Content Press Release Test Page - NCIDS Styles"
+  field_feature_card_description:
+    value: "This is a feature card description"
+  field_card_title:
+    value: "Press Release Title English"
+  field_press_release_type:
+    value: 'NCI Press Release'
+  field_date_display_mode:
+    - value: 'posted'
+  field_list_description:
+    value: "List Description overriding meta description"
+  field_page_description:
+    value: "This is the Meta Description AKA Page Description"
+  field_date_posted:
+    value: "2025-10-22"
+  field_date_reviewed:
+    value: "2025-10-22"
+  field_date_updated:
+    value: "2025-10-22"
+  field_image_article:
+    - target_type: 'media'
+      '#process':
+        callback: 'reference'
+        args:
+          - 'media'
+          - bundle: 'cgov_image'
+            name: 'Porcupine Test Image - with Caption & Enlarge Button'
+  body:
+    - format: "full_html"
+      value: |
+        <h2 id="left-small-credit-caption-enlarge">Left, Small, w/ Credit, w/ Caption, w/ Enlarge</h2>
+        <p>Lorem ipsum dolor sit amet. Hic quaerat molestiae ex enim quae est eaque quod et omnis eligendi. Aut tempore distinctio aut iste perspiciatis qui saepe odio qui tempora eveniet ex aperiam totam non sint inventore.</p>
+        <p>Ut sunt minima ut cupiditate sunt quo enim explicabo sed dolor eveniet 33 repellat galisum. Et voluptas porro est distinctio debitis sed molestias maxime ut laboriosam magnam ad expedita voluptates et cupiditate magni quo repellendus officiis.</p>
+        <drupal-entity
+          data-align="left"
+          data-caption=""
+          data-embed-button="media_entity_embed"
+          data-entity-embed-display="view_mode:media.image_display_article_small"
+          data-entity-type="media"
+          data-entity-uuid="#process"
+          data-cgov-yaml-query-bundle="cgov_image"
+          data-cgov-yaml-query-name="RAS Tools Resources - Image"
+        ></drupal-entity>
+        <p>Ut minus quia et unde harum non voluptatum reiciendis eum quas illum qui molestiae voluptatem et voluptatem ipsum aut numquam aperiam. Ut unde sequi qui illo velit in eligendi alias sed vero assumenda. Et earum voluptas aut dolore neque non eligendi quia sit explicabo ipsum eum sequi corporis! Id praesentium saepe cum voluptatibus eaque et dicta tempore non neque rerum est ipsum eligendi sit asperiores quaerat et sequi Quis.</p>
+        <p>Ut quia repudiandae qui facere assumenda et sunt praesentium? Et quas corporis a iure nesciunt aut ipsam sunt et tempore totam id beatae nisi sed velit atque ut quasi laboriosam. Sed asperiores animi ut laudantium exercitationem qui nobis dolores est tempora dolorem non galisum consequatur eos rerum possimus. Ut aliquam amet et ipsam obcaecati et incidunt ipsum est voluptas ullam et sapiente alias!</p>
+        <h2 id="left-medium-caption-enlarge">Left, Medium, w/ Caption, w/ Enlarge</h2>
+        <p>Lorem ipsum dolor sit amet. Hic quaerat molestiae ex enim quae est eaque quod et omnis eligendi. Aut tempore distinctio aut iste perspiciatis qui saepe odio qui tempora eveniet ex aperiam totam non sint inventore.</p>
+        <p>Ut sunt minima ut cupiditate sunt quo enim explicabo sed dolor eveniet 33 repellat galisum. Et voluptas porro est distinctio debitis sed molestias maxime ut laboriosam magnam ad expedita voluptates et cupiditate magni quo repellendus officiis.</p>
+        <drupal-entity
+          data-align="left"
+          data-caption=""
+          data-embed-button="media_entity_embed"
+          data-entity-embed-display="view_mode:media.image_display_article_medium"
+          data-entity-type="media"
+          data-entity-uuid="#process"
+          data-cgov-yaml-query-bundle="cgov_image"
+          data-cgov-yaml-query-name="Porcupine Test Image - with Caption & Enlarge Button"
+        ></drupal-entity>
+        <p>Ut minus quia et unde harum non voluptatum reiciendis eum quas illum qui molestiae voluptatem et voluptatem ipsum aut numquam aperiam. Ut unde sequi qui illo velit in eligendi alias sed vero assumenda. Et earum voluptas aut dolore neque non eligendi quia sit explicabo ipsum eum sequi corporis! Id praesentium saepe cum voluptatibus eaque et dicta tempore non neque rerum est ipsum eligendi sit asperiores quaerat et sequi Quis.</p>
+        <p>Ut quia repudiandae qui facere assumenda et sunt praesentium? Et quas corporis a iure nesciunt aut ipsam sunt et tempore totam id beatae nisi sed velit atque ut quasi laboriosam. Sed asperiores animi ut laudantium exercitationem qui nobis dolores est tempora dolorem non galisum consequatur eos rerum possimus. Ut aliquam amet et ipsam obcaecati et incidunt ipsum est voluptas ullam et sapiente alias!</p>
+        <h2 id="left-large-enlarge">Left, Large, w/ Enlarge</h2>
+        <p>Lorem ipsum dolor sit amet. Hic quaerat molestiae ex enim quae est eaque quod et omnis eligendi. Aut tempore distinctio aut iste perspiciatis qui saepe odio qui tempora eveniet ex aperiam totam non sint inventore.</p>
+        <p>Ut sunt minima ut cupiditate sunt quo enim explicabo sed dolor eveniet 33 repellat galisum. Et voluptas porro est distinctio debitis sed molestias maxime ut laboriosam magnam ad expedita voluptates et cupiditate magni quo repellendus officiis.</p>
+        <drupal-entity
+          data-align="left"
+          data-caption=""
+          data-embed-button="media_entity_embed"
+          data-entity-embed-display="view_mode:media.image_display_article_large"
+          data-entity-type="media"
+          data-entity-uuid="#process"
+          data-cgov-yaml-query-bundle="cgov_image"
+          data-cgov-yaml-query-name="Porcupine Test Image - with Enlarge Button"
+        ></drupal-entity>
+        <p>Ut minus quia et unde harum non voluptatum reiciendis eum quas illum qui molestiae voluptatem et voluptatem ipsum aut numquam aperiam. Ut unde sequi qui illo velit in eligendi alias sed vero assumenda. Et earum voluptas aut dolore neque non eligendi quia sit explicabo ipsum eum sequi corporis! Id praesentium saepe cum voluptatibus eaque et dicta tempore non neque rerum est ipsum eligendi sit asperiores quaerat et sequi Quis.</p>
+        <p>Ut quia repudiandae qui facere assumenda et sunt praesentium? Et quas corporis a iure nesciunt aut ipsam sunt et tempore totam id beatae nisi sed velit atque ut quasi laboriosam. Sed asperiores animi ut laudantium exercitationem qui nobis dolores est tempora dolorem non galisum consequatur eos rerum possimus. Ut aliquam amet et ipsam obcaecati et incidunt ipsum est voluptas ullam et sapiente alias!</p>
+        <h2 id="left-full">Left, Full</h2>
+        <p>Lorem ipsum dolor sit amet. Hic quaerat molestiae ex enim quae est eaque quod et omnis eligendi. Aut tempore distinctio aut iste perspiciatis qui saepe odio qui tempora eveniet ex aperiam totam non sint inventore.</p>
+        <p>Ut sunt minima ut cupiditate sunt quo enim explicabo sed dolor eveniet 33 repellat galisum. Et voluptas porro est distinctio debitis sed molestias maxime ut laboriosam magnam ad expedita voluptates et cupiditate magni quo repellendus officiis.</p>
+        <drupal-entity
+          data-align="left"
+          data-caption=""
+          data-embed-button="media_entity_embed"
+          data-entity-embed-display="view_mode:media.image_display_article_large"
+          data-entity-type="media"
+          data-entity-uuid="#process"
+          data-cgov-yaml-query-bundle="cgov_image"
+          data-cgov-yaml-query-name="Promo Placeholder"
+        ></drupal-entity>
+        <p>Ut minus quia et unde harum non voluptatum reiciendis eum quas illum qui molestiae voluptatem et voluptatem ipsum aut numquam aperiam. Ut unde sequi qui illo velit in eligendi alias sed vero assumenda. Et earum voluptas aut dolore neque non eligendi quia sit explicabo ipsum eum sequi corporis! Id praesentium saepe cum voluptatibus eaque et dicta tempore non neque rerum est ipsum eligendi sit asperiores quaerat et sequi Quis.</p>
+        <p>Ut quia repudiandae qui facere assumenda et sunt praesentium? Et quas corporis a iure nesciunt aut ipsam sunt et tempore totam id beatae nisi sed velit atque ut quasi laboriosam. Sed asperiores animi ut laudantium exercitationem qui nobis dolores est tempora dolorem non galisum consequatur eos rerum possimus. Ut aliquam amet et ipsam obcaecati et incidunt ipsum est voluptas ullam et sapiente alias!</p>
+        <h2 id="right-small-credit-caption-enlarge">Right, Small, w/ Credit, w/ Caption, w/ Enlarge</h2>
+        <p>Lorem ipsum dolor sit amet. Hic quaerat molestiae ex enim quae est eaque quod et omnis eligendi. Aut tempore distinctio aut iste perspiciatis qui saepe odio qui tempora eveniet ex aperiam totam non sint inventore.</p>
+        <p>Ut sunt minima ut cupiditate sunt quo enim explicabo sed dolor eveniet 33 repellat galisum. Et voluptas porro est distinctio debitis sed molestias maxime ut laboriosam magnam ad expedita voluptates et cupiditate magni quo repellendus officiis.</p>
+        <drupal-entity
+          data-align="right"
+          data-caption=""
+          data-embed-button="media_entity_embed"
+          data-entity-embed-display="view_mode:media.image_display_article_small"
+          data-entity-type="media"
+          data-entity-uuid="#process"
+          data-cgov-yaml-query-bundle="cgov_image"
+          data-cgov-yaml-query-name="RAS Tools Resources - Image"
+        ></drupal-entity>
+        <p>Ut minus quia et unde harum non voluptatum reiciendis eum quas illum qui molestiae voluptatem et voluptatem ipsum aut numquam aperiam. Ut unde sequi qui illo velit in eligendi alias sed vero assumenda. Et earum voluptas aut dolore neque non eligendi quia sit explicabo ipsum eum sequi corporis! Id praesentium saepe cum voluptatibus eaque et dicta tempore non neque rerum est ipsum eligendi sit asperiores quaerat et sequi Quis.</p>
+        <p>Ut quia repudiandae qui facere assumenda et sunt praesentium? Et quas corporis a iure nesciunt aut ipsam sunt et tempore totam id beatae nisi sed velit atque ut quasi laboriosam. Sed asperiores animi ut laudantium exercitationem qui nobis dolores est tempora dolorem non galisum consequatur eos rerum possimus. Ut aliquam amet et ipsam obcaecati et incidunt ipsum est voluptas ullam et sapiente alias!</p>
+        <h2 id="right-medium-caption-enlarge">Right, Medium, w/ Caption, w/ Enlarge</h2>
+        <p>Lorem ipsum dolor sit amet. Hic quaerat molestiae ex enim quae est eaque quod et omnis eligendi. Aut tempore distinctio aut iste perspiciatis qui saepe odio qui tempora eveniet ex aperiam totam non sint inventore.</p>
+        <p>Ut sunt minima ut cupiditate sunt quo enim explicabo sed dolor eveniet 33 repellat galisum. Et voluptas porro est distinctio debitis sed molestias maxime ut laboriosam magnam ad expedita voluptates et cupiditate magni quo repellendus officiis.</p>
+        <drupal-entity
+          data-align="right"
+          data-caption=""
+          data-embed-button="media_entity_embed"
+          data-entity-embed-display="view_mode:media.image_display_article_medium"
+          data-entity-type="media"
+          data-entity-uuid="#process"
+          data-cgov-yaml-query-bundle="cgov_image"
+          data-cgov-yaml-query-name="Porcupine Test Image - with Caption & Enlarge Button"
+        ></drupal-entity>
+        <p>Ut minus quia et unde harum non voluptatum reiciendis eum quas illum qui molestiae voluptatem et voluptatem ipsum aut numquam aperiam. Ut unde sequi qui illo velit in eligendi alias sed vero assumenda. Et earum voluptas aut dolore neque non eligendi quia sit explicabo ipsum eum sequi corporis! Id praesentium saepe cum voluptatibus eaque et dicta tempore non neque rerum est ipsum eligendi sit asperiores quaerat et sequi Quis.</p>
+        <p>Ut quia repudiandae qui facere assumenda et sunt praesentium? Et quas corporis a iure nesciunt aut ipsam sunt et tempore totam id beatae nisi sed velit atque ut quasi laboriosam. Sed asperiores animi ut laudantium exercitationem qui nobis dolores est tempora dolorem non galisum consequatur eos rerum possimus. Ut aliquam amet et ipsam obcaecati et incidunt ipsum est voluptas ullam et sapiente alias!</p>
+        <h2 id="right-large-enlarge">Right, Large, w/ Enlarge</h2>
+        <p>Lorem ipsum dolor sit amet. Hic quaerat molestiae ex enim quae est eaque quod et omnis eligendi. Aut tempore distinctio aut iste perspiciatis qui saepe odio qui tempora eveniet ex aperiam totam non sint inventore.</p>
+        <p>Ut sunt minima ut cupiditate sunt quo enim explicabo sed dolor eveniet 33 repellat galisum. Et voluptas porro est distinctio debitis sed molestias maxime ut laboriosam magnam ad expedita voluptates et cupiditate magni quo repellendus officiis.</p>
+        <drupal-entity
+          data-align="right"
+          data-caption=""
+          data-embed-button="media_entity_embed"
+          data-entity-embed-display="view_mode:media.image_display_article_large"
+          data-entity-type="media"
+          data-entity-uuid="#process"
+          data-cgov-yaml-query-bundle="cgov_image"
+          data-cgov-yaml-query-name="Porcupine Test Image - with Enlarge Button"
+        ></drupal-entity>
+        <p>Ut minus quia et unde harum non voluptatum reiciendis eum quas illum qui molestiae voluptatem et voluptatem ipsum aut numquam aperiam. Ut unde sequi qui illo velit in eligendi alias sed vero assumenda. Et earum voluptas aut dolore neque non eligendi quia sit explicabo ipsum eum sequi corporis! Id praesentium saepe cum voluptatibus eaque et dicta tempore non neque rerum est ipsum eligendi sit asperiores quaerat et sequi Quis.</p>
+        <p>Ut quia repudiandae qui facere assumenda et sunt praesentium? Et quas corporis a iure nesciunt aut ipsam sunt et tempore totam id beatae nisi sed velit atque ut quasi laboriosam. Sed asperiores animi ut laudantium exercitationem qui nobis dolores est tempora dolorem non galisum consequatur eos rerum possimus. Ut aliquam amet et ipsam obcaecati et incidunt ipsum est voluptas ullam et sapiente alias!</p>
+        <h2 id="right-full">Right, Full</h2>
+        <p>Lorem ipsum dolor sit amet. Hic quaerat molestiae ex enim quae est eaque quod et omnis eligendi. Aut tempore distinctio aut iste perspiciatis qui saepe odio qui tempora eveniet ex aperiam totam non sint inventore.</p>
+        <p>Ut sunt minima ut cupiditate sunt quo enim explicabo sed dolor eveniet 33 repellat galisum. Et voluptas porro est distinctio debitis sed molestias maxime ut laboriosam magnam ad expedita voluptates et cupiditate magni quo repellendus officiis.</p>
+        <drupal-entity
+          data-align="right"
+          data-caption=""
+          data-embed-button="media_entity_embed"
+          data-entity-embed-display="view_mode:media.image_display_article_large"
+          data-entity-type="media"
+          data-entity-uuid="#process"
+          data-cgov-yaml-query-bundle="cgov_image"
+          data-cgov-yaml-query-name="Promo Placeholder"
+        ></drupal-entity>
+        <p>Ut minus quia et unde harum non voluptatum reiciendis eum quas illum qui molestiae voluptatem et voluptatem ipsum aut numquam aperiam. Ut unde sequi qui illo velit in eligendi alias sed vero assumenda. Et earum voluptas aut dolore neque non eligendi quia sit explicabo ipsum eum sequi corporis! Id praesentium saepe cum voluptatibus eaque et dicta tempore non neque rerum est ipsum eligendi sit asperiores quaerat et sequi Quis.</p>
+        <p>Ut quia repudiandae qui facere assumenda et sunt praesentium? Et quas corporis a iure nesciunt aut ipsam sunt et tempore totam id beatae nisi sed velit atque ut quasi laboriosam. Sed asperiores animi ut laudantium exercitationem qui nobis dolores est tempora dolorem non galisum consequatur eos rerum possimus. Ut aliquam amet et ipsam obcaecati et incidunt ipsum est voluptas ullam et sapiente alias!</p>
+        <h2 id="center-small-credit-caption-enlarge">Center, Small, w/ Credit, w/ Caption, w/ Enlarge</h2>
+        <p>Lorem ipsum dolor sit amet. Hic quaerat molestiae ex enim quae est eaque quod et omnis eligendi. Aut tempore distinctio aut iste perspiciatis qui saepe odio qui tempora eveniet ex aperiam totam non sint inventore.</p>
+        <p>Ut sunt minima ut cupiditate sunt quo enim explicabo sed dolor eveniet 33 repellat galisum. Et voluptas porro est distinctio debitis sed molestias maxime ut laboriosam magnam ad expedita voluptates et cupiditate magni quo repellendus officiis.</p>
+        <drupal-entity
+          data-align="center"
+          data-caption=""
+          data-embed-button="media_entity_embed"
+          data-entity-embed-display="view_mode:media.image_display_article_small"
+          data-entity-type="media"
+          data-entity-uuid="#process"
+          data-cgov-yaml-query-bundle="cgov_image"
+          data-cgov-yaml-query-name="RAS Tools Resources - Image"
+        ></drupal-entity>
+        <p>Ut minus quia et unde harum non voluptatum reiciendis eum quas illum qui molestiae voluptatem et voluptatem ipsum aut numquam aperiam. Ut unde sequi qui illo velit in eligendi alias sed vero assumenda. Et earum voluptas aut dolore neque non eligendi quia sit explicabo ipsum eum sequi corporis! Id praesentium saepe cum voluptatibus eaque et dicta tempore non neque rerum est ipsum eligendi sit asperiores quaerat et sequi Quis.</p>
+        <p>Ut quia repudiandae qui facere assumenda et sunt praesentium? Et quas corporis a iure nesciunt aut ipsam sunt et tempore totam id beatae nisi sed velit atque ut quasi laboriosam. Sed asperiores animi ut laudantium exercitationem qui nobis dolores est tempora dolorem non galisum consequatur eos rerum possimus. Ut aliquam amet et ipsam obcaecati et incidunt ipsum est voluptas ullam et sapiente alias!</p>
+        <h2 id="center-medium-caption-enlarge">Center, Medium, w/ Caption, w/ Enlarge</h2>
+        <p>Lorem ipsum dolor sit amet. Hic quaerat molestiae ex enim quae est eaque quod et omnis eligendi. Aut tempore distinctio aut iste perspiciatis qui saepe odio qui tempora eveniet ex aperiam totam non sint inventore.</p>
+        <p>Ut sunt minima ut cupiditate sunt quo enim explicabo sed dolor eveniet 33 repellat galisum. Et voluptas porro est distinctio debitis sed molestias maxime ut laboriosam magnam ad expedita voluptates et cupiditate magni quo repellendus officiis.</p>
+        <drupal-entity
+          data-align="center"
+          data-caption=""
+          data-embed-button="media_entity_embed"
+          data-entity-embed-display="view_mode:media.image_display_article_medium"
+          data-entity-type="media"
+          data-entity-uuid="#process"
+          data-cgov-yaml-query-bundle="cgov_image"
+          data-cgov-yaml-query-name="Porcupine Test Image - with Caption & Enlarge Button"
+        ></drupal-entity>
+        <p>Ut minus quia et unde harum non voluptatum reiciendis eum quas illum qui molestiae voluptatem et voluptatem ipsum aut numquam aperiam. Ut unde sequi qui illo velit in eligendi alias sed vero assumenda. Et earum voluptas aut dolore neque non eligendi quia sit explicabo ipsum eum sequi corporis! Id praesentium saepe cum voluptatibus eaque et dicta tempore non neque rerum est ipsum eligendi sit asperiores quaerat et sequi Quis.</p>
+        <p>Ut quia repudiandae qui facere assumenda et sunt praesentium? Et quas corporis a iure nesciunt aut ipsam sunt et tempore totam id beatae nisi sed velit atque ut quasi laboriosam. Sed asperiores animi ut laudantium exercitationem qui nobis dolores est tempora dolorem non galisum consequatur eos rerum possimus. Ut aliquam amet et ipsam obcaecati et incidunt ipsum est voluptas ullam et sapiente alias!</p>
+        <h2 id="center-large-enlarge">Center, Large, w/ Enlarge</h2>
+        <p>Lorem ipsum dolor sit amet. Hic quaerat molestiae ex enim quae est eaque quod et omnis eligendi. Aut tempore distinctio aut iste perspiciatis qui saepe odio qui tempora eveniet ex aperiam totam non sint inventore.</p>
+        <p>Ut sunt minima ut cupiditate sunt quo enim explicabo sed dolor eveniet 33 repellat galisum. Et voluptas porro est distinctio debitis sed molestias maxime ut laboriosam magnam ad expedita voluptates et cupiditate magni quo repellendus officiis.</p>
+        <drupal-entity
+          data-align="center"
+          data-caption=""
+          data-embed-button="media_entity_embed"
+          data-entity-embed-display="view_mode:media.image_display_article_large"
+          data-entity-type="media"
+          data-entity-uuid="#process"
+          data-cgov-yaml-query-bundle="cgov_image"
+          data-cgov-yaml-query-name="Porcupine Test Image - with Enlarge Button"
+        ></drupal-entity>
+        <p>Ut minus quia et unde harum non voluptatum reiciendis eum quas illum qui molestiae voluptatem et voluptatem ipsum aut numquam aperiam. Ut unde sequi qui illo velit in eligendi alias sed vero assumenda. Et earum voluptas aut dolore neque non eligendi quia sit explicabo ipsum eum sequi corporis! Id praesentium saepe cum voluptatibus eaque et dicta tempore non neque rerum est ipsum eligendi sit asperiores quaerat et sequi Quis.</p>
+        <p>Ut quia repudiandae qui facere assumenda et sunt praesentium? Et quas corporis a iure nesciunt aut ipsam sunt et tempore totam id beatae nisi sed velit atque ut quasi laboriosam. Sed asperiores animi ut laudantium exercitationem qui nobis dolores est tempora dolorem non galisum consequatur eos rerum possimus. Ut aliquam amet et ipsam obcaecati et incidunt ipsum est voluptas ullam et sapiente alias!</p>
+        <h2 id="center-full">Center, Full</h2>
+        <p>Lorem ipsum dolor sit amet. Hic quaerat molestiae ex enim quae est eaque quod et omnis eligendi. Aut tempore distinctio aut iste perspiciatis qui saepe odio qui tempora eveniet ex aperiam totam non sint inventore.</p>
+        <p>Ut sunt minima ut cupiditate sunt quo enim explicabo sed dolor eveniet 33 repellat galisum. Et voluptas porro est distinctio debitis sed molestias maxime ut laboriosam magnam ad expedita voluptates et cupiditate magni quo repellendus officiis.</p>
+        <drupal-entity
+          data-align="center"
+          data-caption=""
+          data-embed-button="media_entity_embed"
+          data-entity-embed-display="view_mode:media.image_display_article_large"
+          data-entity-type="media"
+          data-entity-uuid="#process"
+          data-cgov-yaml-query-bundle="cgov_image"
+          data-cgov-yaml-query-name="Promo Placeholder"
+        ></drupal-entity>
+        <p>Ut minus quia et unde harum non voluptatum reiciendis eum quas illum qui molestiae voluptatem et voluptatem ipsum aut numquam aperiam. Ut unde sequi qui illo velit in eligendi alias sed vero assumenda. Et earum voluptas aut dolore neque non eligendi quia sit explicabo ipsum eum sequi corporis! Id praesentium saepe cum voluptatibus eaque et dicta tempore non neque rerum est ipsum eligendi sit asperiores quaerat et sequi Quis.</p>
+        <p>Ut quia repudiandae qui facere assumenda et sunt praesentium? Et quas corporis a iure nesciunt aut ipsam sunt et tempore totam id beatae nisi sed velit atque ut quasi laboriosam. Sed asperiores animi ut laudantium exercitationem qui nobis dolores est tempora dolorem non galisum consequatur eos rerum possimus. Ut aliquam amet et ipsam obcaecati et incidunt ipsum est voluptas ullam et sapiente alias!</p>
+        <h2 id="none-small-credit-caption-enlarge">None, Small, w/ Credit, w/ Caption, w/ Enlarge</h2>
+        <p>Lorem ipsum dolor sit amet. Hic quaerat molestiae ex enim quae est eaque quod et omnis eligendi. Aut tempore distinctio aut iste perspiciatis qui saepe odio qui tempora eveniet ex aperiam totam non sint inventore.</p>
+        <p>Ut sunt minima ut cupiditate sunt quo enim explicabo sed dolor eveniet 33 repellat galisum. Et voluptas porro est distinctio debitis sed molestias maxime ut laboriosam magnam ad expedita voluptates et cupiditate magni quo repellendus officiis.</p>
+        <drupal-entity
+          data-align=""
+          data-caption=""
+          data-embed-button="media_entity_embed"
+          data-entity-embed-display="view_mode:media.image_display_article_small"
+          data-entity-type="media"
+          data-entity-uuid="#process"
+          data-cgov-yaml-query-bundle="cgov_image"
+          data-cgov-yaml-query-name="RAS Tools Resources - Image"
+        ></drupal-entity>
+        <p>Ut minus quia et unde harum non voluptatum reiciendis eum quas illum qui molestiae voluptatem et voluptatem ipsum aut numquam aperiam. Ut unde sequi qui illo velit in eligendi alias sed vero assumenda. Et earum voluptas aut dolore neque non eligendi quia sit explicabo ipsum eum sequi corporis! Id praesentium saepe cum voluptatibus eaque et dicta tempore non neque rerum est ipsum eligendi sit asperiores quaerat et sequi Quis.</p>
+        <p>Ut quia repudiandae qui facere assumenda et sunt praesentium? Et quas corporis a iure nesciunt aut ipsam sunt et tempore totam id beatae nisi sed velit atque ut quasi laboriosam. Sed asperiores animi ut laudantium exercitationem qui nobis dolores est tempora dolorem non galisum consequatur eos rerum possimus. Ut aliquam amet et ipsam obcaecati et incidunt ipsum est voluptas ullam et sapiente alias!</p>
+        <h2 id="none-medium-caption-enlarge">None, Medium, w/ Caption, w/ Enlarge</h2>
+        <p>Lorem ipsum dolor sit amet. Hic quaerat molestiae ex enim quae est eaque quod et omnis eligendi. Aut tempore distinctio aut iste perspiciatis qui saepe odio qui tempora eveniet ex aperiam totam non sint inventore.</p>
+        <p>Ut sunt minima ut cupiditate sunt quo enim explicabo sed dolor eveniet 33 repellat galisum. Et voluptas porro est distinctio debitis sed molestias maxime ut laboriosam magnam ad expedita voluptates et cupiditate magni quo repellendus officiis.</p>
+        <drupal-entity
+          data-align=""
+          data-caption=""
+          data-embed-button="media_entity_embed"
+          data-entity-embed-display="view_mode:media.image_display_article_medium"
+          data-entity-type="media"
+          data-entity-uuid="#process"
+          data-cgov-yaml-query-bundle="cgov_image"
+          data-cgov-yaml-query-name="Porcupine Test Image - with Caption & Enlarge Button"
+        ></drupal-entity>
+        <p>Ut minus quia et unde harum non voluptatum reiciendis eum quas illum qui molestiae voluptatem et voluptatem ipsum aut numquam aperiam. Ut unde sequi qui illo velit in eligendi alias sed vero assumenda. Et earum voluptas aut dolore neque non eligendi quia sit explicabo ipsum eum sequi corporis! Id praesentium saepe cum voluptatibus eaque et dicta tempore non neque rerum est ipsum eligendi sit asperiores quaerat et sequi Quis.</p>
+        <p>Ut quia repudiandae qui facere assumenda et sunt praesentium? Et quas corporis a iure nesciunt aut ipsam sunt et tempore totam id beatae nisi sed velit atque ut quasi laboriosam. Sed asperiores animi ut laudantium exercitationem qui nobis dolores est tempora dolorem non galisum consequatur eos rerum possimus. Ut aliquam amet et ipsam obcaecati et incidunt ipsum est voluptas ullam et sapiente alias!</p>
+        <h2 id="none-large-enlarge">None, Large, w/ Enlarge</h2>
+        <p>Lorem ipsum dolor sit amet. Hic quaerat molestiae ex enim quae est eaque quod et omnis eligendi. Aut tempore distinctio aut iste perspiciatis qui saepe odio qui tempora eveniet ex aperiam totam non sint inventore.</p>
+        <p>Ut sunt minima ut cupiditate sunt quo enim explicabo sed dolor eveniet 33 repellat galisum. Et voluptas porro est distinctio debitis sed molestias maxime ut laboriosam magnam ad expedita voluptates et cupiditate magni quo repellendus officiis.</p>
+        <drupal-entity
+          data-align=""
+          data-caption=""
+          data-embed-button="media_entity_embed"
+          data-entity-embed-display="view_mode:media.image_display_article_large"
+          data-entity-type="media"
+          data-entity-uuid="#process"
+          data-cgov-yaml-query-bundle="cgov_image"
+          data-cgov-yaml-query-name="Porcupine Test Image - with Enlarge Button"
+        ></drupal-entity>
+        <p>Ut minus quia et unde harum non voluptatum reiciendis eum quas illum qui molestiae voluptatem et voluptatem ipsum aut numquam aperiam. Ut unde sequi qui illo velit in eligendi alias sed vero assumenda. Et earum voluptas aut dolore neque non eligendi quia sit explicabo ipsum eum sequi corporis! Id praesentium saepe cum voluptatibus eaque et dicta tempore non neque rerum est ipsum eligendi sit asperiores quaerat et sequi Quis.</p>
+        <p>Ut quia repudiandae qui facere assumenda et sunt praesentium? Et quas corporis a iure nesciunt aut ipsam sunt et tempore totam id beatae nisi sed velit atque ut quasi laboriosam. Sed asperiores animi ut laudantium exercitationem qui nobis dolores est tempora dolorem non galisum consequatur eos rerum possimus. Ut aliquam amet et ipsam obcaecati et incidunt ipsum est voluptas ullam et sapiente alias!</p>
+        <h2 id="none-full">None, Full</h2>
+        <p>Lorem ipsum dolor sit amet. Hic quaerat molestiae ex enim quae est eaque quod et omnis eligendi. Aut tempore distinctio aut iste perspiciatis qui saepe odio qui tempora eveniet ex aperiam totam non sint inventore.</p>
+        <p>Ut sunt minima ut cupiditate sunt quo enim explicabo sed dolor eveniet 33 repellat galisum. Et voluptas porro est distinctio debitis sed molestias maxime ut laboriosam magnam ad expedita voluptates et cupiditate magni quo repellendus officiis.</p>
+        <drupal-entity
+          data-align=""
+          data-caption=""
+          data-embed-button="media_entity_embed"
+          data-entity-embed-display="view_mode:media.image_display_article_large"
+          data-entity-type="media"
+          data-entity-uuid="#process"
+          data-cgov-yaml-query-bundle="cgov_image"
+          data-cgov-yaml-query-name="Promo Placeholder"
+        ></drupal-entity>
+        <p>Ut minus quia et unde harum non voluptatum reiciendis eum quas illum qui molestiae voluptatem et voluptatem ipsum aut numquam aperiam. Ut unde sequi qui illo velit in eligendi alias sed vero assumenda. Et earum voluptas aut dolore neque non eligendi quia sit explicabo ipsum eum sequi corporis! Id praesentium saepe cum voluptatibus eaque et dicta tempore non neque rerum est ipsum eligendi sit asperiores quaerat et sequi Quis.</p>
+        <p>Ut quia repudiandae qui facere assumenda et sunt praesentium? Et quas corporis a iure nesciunt aut ipsam sunt et tempore totam id beatae nisi sed velit atque ut quasi laboriosam. Sed asperiores animi ut laudantium exercitationem qui nobis dolores est tempora dolorem non galisum consequatur eos rerum possimus. Ut aliquam amet et ipsam obcaecati et incidunt ipsum est voluptas ullam et sapiente alias!</p>
