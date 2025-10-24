@@ -1,13 +1,8 @@
 #!/bin/bash
 #
-# Factory Hook: db-update
+# This file is aimed to be invoked by Acquia Hosting's post-code-deploy hook.
 #
-# The existence of one or more executable files in the
-# /factory-hooks/db-update directory will prompt them to be run *instead of* the
-# regular database update (drush updatedb) command. So that update command will
-# normally be part of the commands executed below.
-#
-# Usage: db-update.sh sitegroup env db-role domain custom-arg
+# Usage: site-post-code-deploy.sh sitegroup env db-role domain
 
 # Exit immediately on error and enable verbose log output.
 set -ev
@@ -30,15 +25,18 @@ uri=`/usr/bin/env php /mnt/www/html/$sitegroup.$env/hooks/acquia/uri.php $sitegr
 # To get only the site name in ${name[0]}:
 IFS='.' read -a name <<< "${uri}"
 
-# BLT executable:
-blt="/mnt/www/html/$sitegroup.$env/vendor/acquia/blt/bin/blt"
+# Source BLT environment helper
+source "/mnt/www/html/$sitegroup.$env/scripts/blt/blt-env-helper.sh"
+
+# Set up BLT executable and environment mapping
+setup_blt_environment "$sitegroup" "$env"
 
 echo "Running BLT deploy tasks on $uri domain in $env environment on the $sitegroup subscription."
 
 # Run blt drupal:update tasks. The trailing slash behind the domain works
 # around a bug in Drush < 9.6 for path based domains: "domain.com/subpath/" is
 # considered a valid URI but "domain.com/subpath" is not.
-$blt drupal:update --environment=$env --site=${name[0]} --define drush.uri=$domain/ --verbose --no-interaction
+$blt_executable drupal:update --environment=$blt_environment --site=${name[0]} --define drush.uri=$domain/ --verbose --no-interaction
 
 # Clean up the drush cache directory.
 echo "Removing temporary drush cache files."

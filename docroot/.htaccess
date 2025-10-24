@@ -118,11 +118,12 @@ AddEncoding gzip svgz
   RewriteCond %{HTTP:X-Forwarded-Proto} !https
   RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
 
-  # Return Status 403 (Forbidden) on non-ODE server access in the
+  # Return Status 403 (Forbidden) on non-ODE/MEO server access in the
   # Acquia cloud.
   RewriteCond %{ENV:AH_SITE_ENVIRONMENT} ^(.)+$
   RewriteCond %{HTTP_HOST} ^(.)+\.acquia-sites\.com$ [NC]
   RewriteCond %{ENV:AH_SITE_ENVIRONMENT} !^ode[0-9]+$ [NC]
+  RewriteCond %{ENV:AH_ENVIRONMENT_TYPE} !^meo$ [NC]
   RewriteRule .* - [R=403]
 
   # Redirect common PHP files to their new locations.

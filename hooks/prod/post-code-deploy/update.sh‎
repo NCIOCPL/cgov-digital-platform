@@ -1,0 +1,89 @@
+#!/bin/sh
+#
+# Cloud Hook: post-code-deploy
+#
+# The post-code-deploy hook is run whenever you deploy new code to an environment.
+# It is triggered even if the code being deployed is same branch or tag than
+# the one already in the environment.
+#
+# Usage: post-code-deploy site-group env source-branch deployed-tag repo-url
+#
+
+## If this is MEO then exit.
+if [[ $AH_SITE_GROUP == "ncigovmeo" ]]; then
+  exit;
+fi;
+
+export SITE_GROUP="$1"
+export ENV="$2"
+
+export HOT_FIX_DEPLOYMENT=${HOT_FIX_DEPLOYMENT:-0}
+if [ "$HOT_FIX_DEPLOYMENT" -eq 1 ]; then
+  echo "Hot-fix deployment mode: skipping post-code-deploy hook."
+  exit 0
+fi
+
+export MAX_PROCS=${PARALLEL_PROCS:-10}
+export DELAY_STEP=${SITE_DELAY_STEP:-5}
+SCRIPT_PATH=$(readlink -f "${BASH_SOURCE:-$0}")
+export SCRIPT_DIR=$(dirname "$SCRIPT_PATH")
+
+site_and_domain_list=$(drush sfl --fields=domains | awk '
+  function print_site() {
+    if (site_name != "") {
+      print site_name, chosen_domain
+    }
+  }
+
+  # If the line does not start with a new space, it a new site.
+  /^[[:alnum:]]/ {
+    print_site()
+    site_name = $1
+    chosen_domain = ""
+  }
+
+  # If the line contains "0:", we take this domain as a possible choice.
+  /0:/ {
+    chosen_domain = $2
+  }
+
+  # If the line contains "1:", we override the chosen domain with this one.
+  /1:/ {
+    chosen_domain = $2
+  }
+
+  END {
+    print_site()
+  }
+')
+
+if [ -z "$site_and_domain_list" ]; then
+  echo "Error: Impossible to get the list of sites and domains."
+  exit 1
+fi
+
+export TOTAL_SITES=$(echo "$site_and_domain_list" | wc -l)
+
+echo "$site_and_domain_list" | nl | \
+  xargs -P "$MAX_PROCS" -n 3 -- \
+  bash -c '
+    process_index=$0
+    name=$1
+    domain=$2
+
+    if [ "$DELAY_STEP" -gt 0 ] && [ "$TOTAL_SITES" -gt 1 ]; then
+
+      if [ "$MAX_PROCS" -eq 0 ]; then
+        calc_procs=$TOTAL_SITES
+      else
+        calc_procs=$MAX_PROCS
+      fi
+
+      slot_index=$(( (process_index - 1) % calc_procs ))
+      delay_to_wait=$((slot_index * DELAY_STEP))
+
+      sleep "$delay_to_wait"
+    fi
+
+    . "${SCRIPT_DIR}/../../../scripts/site-post-code-deploy.sh" "$SITE_GROUP" "$ENV" "$name" "$domain"
+'

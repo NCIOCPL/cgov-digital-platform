@@ -63,19 +63,31 @@ class CGovSettingsUtil {
   public static function getDomain() {
     // Default our domain to PROD.
     $domain = 'www.cancer.gov';
-    // Check if this is an ACSF site first.
-    if (self::isACSF()) {
-      $domains = gardens_data_get_sites_from_file($GLOBALS['gardens_site_settings']['conf']['acsf_db_name']);
+    // Check if this is an MEO site first.
+    if ($_ENV['AH_ENVIRONMENT_TYPE'] === 'meo') {
+      // Load MEO multisite configuration.
+      $meo_site_php_path = DRUPAL_ROOT . '/sites/sites.php';
+      if (!is_file($meo_site_php_path)) {
+        throw new \RuntimeException("Cannot find $meo_site_php_path");
+      }
+
+      require $meo_site_php_path;
+
+      if (!isset($sites) || !is_array($sites)) {
+        throw new \RuntimeException("Multi-site not defined in $meo_site_php_path");
+      }
       // You should always add the public domain first domain when creating a site,
       // but just in case we will set to the default first.
-      $domain = array_keys($domains)[0];
-      foreach ($domains as $site_name => $site_info) {
-        if (!empty($site_info['flags']['preferred_domain'])) {
-          $domain = $site_name;
+      foreach ($sites as $site_domain => $site_name) {
+        // @todo Improve this to check for preferred domain flag.
+        // because the sites.php file does not have that info.
+        if (!empty($site_name['flags']['preferred_domain'])) {
+          $domain = $site_domain;
         }
       }
-    // For non-ACSF sites, the domain depends on the environment name.
-    } else {
+      // For non-ACSF sites, the domain depends on the environment name.
+    }
+    else {
       $env = self::getEnvironmentName();
       switch ($env) {
         case 'local':

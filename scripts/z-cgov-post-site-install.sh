@@ -37,7 +37,7 @@ blt="/mnt/www/html/$sitegroup.$env/vendor/acquia/blt/bin/blt"
 ###       Differences from db-update start here.       ###
 ##########################################################
 
-$blt cgov:acsf:post-install --environment=$env --site=${name[0]} --define drush.uri=$internal_domain  --verbose --no-interaction -D drush.ansi=false
+$blt cgov:meo:post-install --environment=$env --site=${name[0]} --define drush.uri=$internal_domain  --verbose --no-interaction -D drush.ansi=false
 result=$?
 
 if [[ $result != 0 ]]; then

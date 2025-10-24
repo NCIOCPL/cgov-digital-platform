@@ -51,12 +51,11 @@ class CgovCoreTools {
   ];
 
   const PROD_AH_SITE_ENVS = [
-    '01live',
     'prod',
   ];
 
   const TEST_AH_SITE_ENVS = [
-    '01test',
+    'stage',
     'test',
   ];
 

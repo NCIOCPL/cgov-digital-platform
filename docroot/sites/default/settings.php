@@ -1,19 +1,22 @@
 <?php
 
-// @codingStandardsIgnoreFile
-
-/**
- * Include our ACSF settings if we are on an ACSF environment.
- */
-if (!empty($_ENV['AH_SITE_ENVIRONMENT']) &&
-  function_exists('gardens_site_data_get_filepath')) {
-  // ===== Added by acsf-init, please do not delete. Section start. =====
-$_acsf_infrastructure = include dirname(__FILE__) . '/acsf.settings.php';
-if ($_acsf_infrastructure === 'acsf-infrastructure') {
+if (isset($_ENV['AH_SITE_NAME']) && isset($_ENV['AH_SITE_ENVIRONMENT'])) {
+  $settingsFiles = [
+    DRUPAL_ROOT . '/sites/settings/pre_includes.php',
+    DRUPAL_ROOT . '/sites/settings/post_includes.php',
+    DRUPAL_ROOT . '/sites/settings/post_memcache.php',
+    DRUPAL_ROOT . '/sites/settings/post_new_relic.php'
+  ];
+  foreach ($settingsFiles as $settingsFile) {
+    if (file_exists($settingsFile)) {
+      // phpcs:ignore
+      require $settingsFile;
+    }
+  }
   return;
 }
-// ===== Added by acsf-init, please do not delete. Section end. =====
-}
+
+// @codingStandardsIgnoreFile
 
 /**
  * @file
