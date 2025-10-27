@@ -8,8 +8,8 @@
 use Drupal\Component\Assertion\Handle;
 
 $db_name = '${drupal.db.database}';
-if (isset($_acsf_site_name)) {
-  $db_name .= '_' . $_acsf_site_name;
+if (isset($_meo_site_name)) {
+  $db_name .= '_' . $_meo_site_name;
 }
 
 /**
@@ -162,9 +162,9 @@ $config['system.file']['path']['temporary'] = '/tmp';
  * Private file path.
  */
 $settings['file_private_path'] = $dir . '/files-private';
-if (isset($_acsf_site_name)) {
-  $settings['file_public_path'] = "sites/default/files/$_acsf_site_name";
-  $settings['file_private_path'] = "$repo_root/files-private/$_acsf_site_name";
+if (isset($_meo_site_name)) {
+  $settings['file_public_path'] = "sites/default/files/$_meo_site_name";
+  $settings['file_private_path'] = "$repo_root/files-private/$_meo_site_name";
 }
 
 /**

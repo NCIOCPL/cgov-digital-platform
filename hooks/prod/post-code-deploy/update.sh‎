@@ -9,8 +9,8 @@
 # Usage: post-code-deploy site-group env source-branch deployed-tag repo-url
 #
 
-## If this is MEO then exit.
-if [[ $AH_SITE_GROUP == "ncigovmeo" ]]; then
+## Only run on MEO environments (ncigovmeo). Exit if not MEO.
+if [ "$AH_SITE_GROUP" != "ncigovmeo" ]; then
   exit;
 fi;
 

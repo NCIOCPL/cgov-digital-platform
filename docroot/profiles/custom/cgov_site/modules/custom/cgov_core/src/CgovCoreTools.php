@@ -567,7 +567,7 @@ class CgovCoreTools {
 
     // Check if site_env matches a prod environment name...
     if (in_array($site_env, self::PROD_AH_SITE_ENVS) ||
-      preg_match('/^.*(www-prod-acsf|www-cms).*$/', $site_env)) {
+      preg_match('/^.*(\.prod\.acquia-sites\.com|www-cms).*$/', $site_env)) {
       return CgovEnvironments::PROD;
     }
     // Otherwise, check if site_env matches a test environment name...

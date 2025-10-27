@@ -18,22 +18,10 @@ class CGovSettingsUtil {
    * Determines whether we are on an Acquia environment.
    *
    * @return bool
-   *   True if this is an Acquia environment (ACSF or AC)
+   *   True if this is an Acquia environment (MEO or ACE)
    */
   public static function isAcquia() {
     return (file_exists('/var/www/site-php') && isset($_ENV['AH_SITE_ENVIRONMENT']));
-  }
-
-  /**
-   * Determines whether we are on an ACSF environment.
-   *
-   * @return bool
-   *   True if this is an ACSF environment
-   */
-  public static function isACSF() {
-    $is_acsf_env = EnvironmentDetector::isAcsfEnv();
-    $acsf_db_name = EnvironmentDetector::getAcsfDbName();
-    return ($is_acsf_env && $acsf_db_name);
   }
 
   /**
@@ -85,7 +73,7 @@ class CGovSettingsUtil {
           $domain = $site_domain;
         }
       }
-      // For non-ACSF sites, the domain depends on the environment name.
+      // For non-MEO sites, the domain depends on the environment name.
     }
     else {
       $env = self::getEnvironmentName();

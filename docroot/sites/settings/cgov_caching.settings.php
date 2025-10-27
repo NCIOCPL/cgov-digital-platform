@@ -2,7 +2,7 @@
 
 /**
  * @file
- * Implementation of cache settings for ACE + ACSF.
+ * Implementation of cache settings for ACE + MEO.
  *
  * @see https://docs.acquia.com/site-factory/tiers/paas/workflow/hooks
  */

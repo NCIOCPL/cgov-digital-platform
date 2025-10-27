@@ -48,11 +48,7 @@ if ($_ENV['AH_ENVIRONMENT_TYPE'] === 'meo') {
   foreach ($meo_domains as $domain_value) {
     if (preg_match('/\.acquia-sites\.com$/', $domain_value)) {
       // Parse domain format: ccg-ncigovmeoprod.prod.acquia-sites.com.
-      // Extract site name from the first part before the dash.
-      $temp = explode('.', $domain_value);
-      $site_and_name = $temp[0];
-      $site_parts = explode('-', $site_and_name, 2);
-      $site_name = $site_parts[0];
+      $site_name = $_ENV['AH_DRUPAL_SITE_NAME'];
       // Use AH_SITE_ENVIRONMENT for the actual environment.
       $domain_env = $site_name . '-' . $_ENV['AH_SITE_ENVIRONMENT'];
       break;
