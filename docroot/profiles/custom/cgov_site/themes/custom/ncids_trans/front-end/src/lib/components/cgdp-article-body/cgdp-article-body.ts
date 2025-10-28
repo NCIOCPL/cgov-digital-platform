@@ -4,6 +4,11 @@ import {
 	accordionAnalyticsHandler,
 } from '../../core/util/accordionize-for-mobile';
 
+import { bodyLinkAnalyticsHelper } from '../../core/analytics/inner-page-analytics-tracker';
+
+// Track if wysiwygBodyLinkTrackin has been initialize before
+let articleBodyLinkTrackingHasInit = false;
+
 // Track the accordion instance so we do not repeatedly create/destroy it.
 let accordionInstance: USAAccordion | null = null;
 
@@ -33,6 +38,22 @@ export const accordionClickHandler =
  * Initialize USA Accordion
  */
 const initialize = (): void => {
+	/**
+	 * WYSIWYG Body Link Analytics
+	 */
+	if (articleBodyLinkTrackingHasInit == false) {
+		const articleBodySections = document.querySelectorAll(
+			'.cgdp-article-body__section'
+		) as NodeListOf<HTMLElement>;
+		if (articleBodySections) {
+			articleBodySections.forEach((sections, index) => {
+				const articleBody = sections as HTMLElement;
+				bodyLinkAnalyticsHelper(articleBody, index);
+			});
+			articleBodyLinkTrackingHasInit = true;
+		}
+	}
+
 	accordionInstance = accordionizeForMobile(
 		'.cgdp-article-body--multiple',
 		accordionInstance
