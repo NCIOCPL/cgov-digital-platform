@@ -1,0 +1,190 @@
+
+## Create Test Content to be Used in Lists
+- entity: "node"
+  type: "cgov_article"
+  langcode: en
+  status: 1
+  moderation_state:
+    value: 'published'
+  title: "Test WYSIWYG Anayltics Links"
+  title__ES:
+      value: "Test WYSIWYG Anayltics Links - ES"
+  field_page_description:
+    value: "Test page for WYSIWYG Anayltics Links"
+  field_page_description__ES:
+    value: "Test page for WYSIWYG Anayltics Links - ES"
+  field_browser_title:
+    value: "Test WYSIWYG Anayltics Links"
+  field_browser_title_ES:
+    value: "Test WYSIWYG Anayltics Links - ES"
+  field_site_section:
+    - '#process':
+        callback: 'reference'
+        args:
+          - 'taxonomy_term'
+          - vid: 'cgov_site_sections'
+            computed_path: '/test'
+  field_pretty_url:
+    value: "test-wysiwyg-analytics"
+  field_site_section__ES:
+    - '#process':
+        callback: 'reference'
+        args:
+          - 'taxonomy_term'
+          - vid: 'cgov_site_sections'
+            computed_path: '/test-es'
+  field_pretty_url__ES:
+    value: "test-wysiwyg-analytics"
+  field_intro_text:
+    - format: "ncids_streamlined_no_headings"
+      value: |
+        <p> Certain medical procedures, such as <nci-definition data-gloss-id="304687" data-gloss-dictionary="Cancer.gov" data-gloss-audience="Patient" data-gloss-lang="en">chest x-rays</nci-definition>, <nci-definition data-gloss-id="45560" data-gloss-dictionary="Cancer.gov" data-gloss-audience="Patient" data-gloss-lang="en">computed tomography (CT) scans</nci-definition>, <nci-definition data-gloss-id="46218" data-gloss-dictionary="Cancer.gov" data-gloss-audience="Patient" data-gloss-lang="en">positron emission tomography (PET) scans</nci-definition>, and radiation therapy can also cause cell damage that leads to cancer. However, the risks of cancer from these medical procedures are very small, and the benefit from having them is almost always greater than the risks.</p>
+        Telephone: <a href="tel:+1–800–555–1212+">1–800–555–1212</a>,<br/>
+        E-mail: <a href="mailto:test@example.org">test@example.org</a>,<br/>
+        External: <a href="http://www.google.com">http://www.google.com</a>,<br/>
+        Internal: <a data-entity-substitution="canonical" data-entity-type="node" data-entity-uuid="#process" data-cgov-yaml-query-type="cgov_home_landing" data-cgov-yaml-query-title="About Cancer">content link</a>,<br/>
+        Media: <a data-entity-substitution="canonical" data-entity-type="media" data-entity-uuid="#process" data-cgov-yaml-query-bundle="cgov_file" data-cgov-yaml-query-name="Test PDF File name">media link</a>
+  field_date_posted:
+    value: "2023-03-20"
+  field_date_reviewed:
+    value: "2022-03-20"
+  field_date_updated:
+    value: "2021-03-20"
+  field_date_display_mode:
+    - value: 'updated'
+  field_article_body:
+    - entity: 'paragraph'
+      type: "body_section"
+      field_body_section_heading:
+        - format: "simple"
+          value: "Test Links in Body Container"
+      field_body_section_content:
+        - format: "ncids_full_html"
+          value: |
+              <drupal-entity
+                  data-caption=""
+                  data-embed-button="cgov_video_button"
+                  data-entity-embed-display="view_mode:media.video_display_large_no_title"
+                  data-entity-type="media"
+                  data-entity-uuid="#process"
+                  data-cgov-yaml-query-bundle="cgov_video"
+                  data-cgov-yaml-query-name="Colorectal Cancer Screening: What to Expect"
+                  data-align="center"
+                ></drupal-entity>
+                <table border="0" cellpadding="4">
+                  <tbody>
+                    <tr>
+                      <th align="left" scope="row" valign="top"><strong>Telephone:</strong></th>
+                      <td><a href="tel:+1–800–555–1212+">1–800–555–1212</a></td>
+                    </tr>
+                    <tr>
+                      <th align="left" scope="row" valign="top"><strong>E-mail:</strong></th>
+                      <td><a href="mailto:test@example.org">test@example.org</a></td>
+                    </tr>
+                    <tr>
+                      <th align="left" scope="row" valign="top"><strong>External:</strong></th>
+                      <td><a href="http://www.google.com">http://www.google.com</a></td>
+                    </tr>
+                    <tr>
+                      <th align="left" scope="row" valign="top"><strong>Internal:</strong></th>
+                      <td><a data-entity-substitution="canonical" data-entity-type="node" data-entity-uuid="#process" data-cgov-yaml-query-type="cgov_home_landing" data-cgov-yaml-query-title="About Cancer">content link</a></td>
+                    </tr>
+                    <tr>
+                      <th align="left" scope="row" valign="top"><strong>Media:</strong></th>
+                      <td><a data-entity-substitution="canonical" data-entity-type="media" data-entity-uuid="#process" data-cgov-yaml-query-bundle="cgov_file" data-cgov-yaml-query-name="Test PDF File name">media link</a></td>
+                    </tr>
+                  </tbody>
+                </table>
+                <p>If you feel guilty, know that many people with cancer feel this way. You may blame yourself for upsetting the people you love, or worry that you're a burden in some way. Or, you may envy other people's good health and be ashamed of this feeling. You might even blame yourself for lifestyle choices that you think could have led to your cancer.</p>
+                <p>These feelings are all very common. It may help you to share them with someone. Let your doctor know if you would like to talk with a counselor or go to a support group.</p>
+                <drupal-entity
+                  data-align="right"
+                  data-embed-button="insert_block_content"
+                  data-entity-embed-display="view_mode:block_content.embedded_feature_card"
+                  data-entity-type="block_content"
+                  data-entity-uuid="#process"
+                  data-cgov-yaml-query-type="cgov_external_link_block"
+                  data-cgov-yaml-query-info="External link block description"
+                ></drupal-entity>
+                <p>If you feel guilty, know that many people with cancer feel this way. You may blame yourself for upsetting the people you love, or worry that you're a burden in some way. Or, you may envy other people's good health and be ashamed of this feeling. You might even blame yourself for lifestyle choices that you think could have led to your cancer.</p>
+                <p>These feelings are all very common. It may help you to share them with someone. Let your doctor know if you would like to talk with a counselor or go to a support group.</p>
+                <p>If you feel guilty, know that many people with cancer feel this way. You may blame yourself for upsetting the people you love, or worry that you're a burden in some way. Or, you may envy other people's good health and be ashamed of this feeling. You might even blame yourself for lifestyle choices that you think could have led to your cancer.</p>
+                <p>These feelings are all very common. It may help you to share them with someone. Let your doctor know if you would like to talk with a counselor or go to a support group.</p>
+    - entity: 'paragraph'
+      type: "body_section"
+      field_body_section_heading:
+        - format: "simple"
+          value: "Test Links in Second Body Container"
+      field_body_section_content:
+        - format: "ncids_full_html"
+          value: |
+                <p>If you feel guilty, know that many people with cancer feel this way. You may blame yourself for upsetting the people you love, or worry that you're a burden in some way. Or, you may envy other people's good health and be ashamed of this feeling. You might even blame yourself for lifestyle choices that you think could have led to your cancer.</p>
+                <p>These feelings are all very common. It may help you to share them with someone. Let your doctor know if you would like to talk with a counselor or go to a support group.</p>
+                <table border="0" cellpadding="4">
+                  <tbody>
+                    <tr>
+                      <th align="left" scope="row" valign="top"><strong>Telephone:</strong></th>
+                      <td><a href="tel:+1–800–555–1212+">1–800–555–1212</a></td>
+                    </tr>
+                    <tr>
+                      <th align="left" scope="row" valign="top"><strong>E-mail:</strong></th>
+                      <td><a href="mailto:test@example.org">test@example.org</a></td>
+                    </tr>
+                    <tr>
+                      <th align="left" scope="row" valign="top"><strong>External:</strong></th>
+                      <td><a href="http://www.google.com">http://www.google.com</a></td>
+                    </tr>
+                    <tr>
+                      <th align="left" scope="row" valign="top"><strong>Internal:</strong></th>
+                      <td><a data-entity-substitution="canonical" data-entity-type="node" data-entity-uuid="#process" data-cgov-yaml-query-type="cgov_home_landing" data-cgov-yaml-query-title="About Cancer">content link</a></td>
+                    </tr>
+                    <tr>
+                      <th align="left" scope="row" valign="top"><strong>Media:</strong></th>
+                      <td><a data-entity-substitution="canonical" data-entity-type="media" data-entity-uuid="#process" data-cgov-yaml-query-bundle="cgov_file" data-cgov-yaml-query-name="Test PDF File name">media link</a></td>
+                    </tr>
+                  </tbody>
+                </table>
+                <p>If you feel guilty, know that many people with cancer feel this way. You may blame yourself for upsetting the people you love, or worry that you're a burden in some way. Or, you may envy other people's good health and be ashamed of this feeling. You might even blame yourself for lifestyle choices that you think could have led to your cancer.</p>
+                <p>These feelings are all very common. It may help you to share them with someone. Let your doctor know if you would like to talk with a counselor or go to a support group.</p>
+                <p>If you feel guilty, know that many people with cancer feel this way. You may blame yourself for upsetting the people you love, or worry that you're a burden in some way. Or, you may envy other people's good health and be ashamed of this feeling. You might even blame yourself for lifestyle choices that you think could have led to your cancer.</p>
+                <p>These feelings are all very common. It may help you to share them with someone. Let your doctor know if you would like to talk with a counselor or go to a support group.</p>
+                <drupal-entity
+                  data-align="right"
+                  data-embed-button="insert_block_content"
+                  data-entity-embed-display="view_mode:block_content.embedded_feature_card"
+                  data-entity-type="block_content"
+                  data-entity-uuid="#process"
+                  data-cgov-yaml-query-type="cgov_external_link_block"
+                  data-cgov-yaml-query-info="External link block description"
+                ></drupal-entity>
+                <drupal-entity
+                  data-align="left"
+                  data-caption=""
+                  data-embed-button="media_entity_embed"
+                  data-entity-embed-display="view_mode:media.image_display_article_small"
+                  data-entity-type="media"
+                  data-entity-uuid="#process"
+                  data-cgov-yaml-query-bundle="cgov_image"
+                  data-cgov-yaml-query-name="RAS Tools Resources - Image"
+                ></drupal-entity><p>If you feel guilty, know that many people with cancer feel this way. You may blame yourself for upsetting the people you love, or worry that you're a burden in some way. Or, you may envy other people's good health and be ashamed of this feeling. You might even blame yourself for lifestyle choices that you think could have led to your cancer.</p>
+                <p>These feelings are all very common. It may help you to share them with someone. Let your doctor know if you would like to talk with a counselor or go to a support group.</p>
+                <p>If you feel guilty, know that many people with cancer feel this way. You may blame yourself for upsetting the people you love, or worry that you're a burden in some way. Or, you may envy other people's good health and be ashamed of this feeling. You might even blame yourself for lifestyle choices that you think could have led to your cancer.</p>
+    - entity: 'paragraph'
+      type: "body_section"
+      field_body_section_heading:
+        - format: "simple"
+          value: "Other Embeded Items"
+      field_body_section_content:
+        - format: "ncids_full_html"
+          value: |
+                <drupal-entity
+                  data-align="center"
+                  data-caption=""
+                  data-embed-button="cgov_infographic_button"
+                  data-entity-embed-display="view_mode:media.infographic_display_article_large"
+                  data-entity-type="media"
+                  data-entity-uuid="#process"
+                  data-cgov-yaml-query-bundle="cgov_infographic"
+                  data-cgov-yaml-query-name="Pediatric Infographic NCI"
+                ></drupal-entity>
+
