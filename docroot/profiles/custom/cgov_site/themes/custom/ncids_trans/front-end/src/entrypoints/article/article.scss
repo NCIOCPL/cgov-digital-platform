@@ -15,8 +15,12 @@
 @forward '../../lib/components/cgdp-on-this-page';
 @forward '../../lib/components/cgdp-article-body';
 
-@use 'uswds-core' as *;
+// CGDP Definition link styles
+// We would include this file in NCIDS full html except that it is
+// used in the CKEditor as well and we don't want the modal CSS included there.
+@forward '../../lib/components/cgdp-definition';
 
+@use 'uswds-core' as *;
 
 // Margin between accordion sections (8px)
 .cgdp-article-body.usa-accordion {
