@@ -1,0 +1,25 @@
+From 071528ba74603c06006babd67d93c0e4c0aec1b5 Mon Sep 17 00:00:00 2001
+From: Blair Learn <68514-blairlearn@users.noreply.drupalcode.org>
+Date: Fri, 31 Oct 2025 14:46:23 -0400
+Subject: [PATCH] Remove "everything" type from purger types.
+
+---
+ src/Plugin/Purge/Purger/AkamaiPurger.php | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/src/Plugin/Purge/Purger/AkamaiPurger.php b/src/Plugin/Purge/Purger/AkamaiPurger.php
+index a70cbdb..852bdb3 100644
+--- a/src/Plugin/Purge/Purger/AkamaiPurger.php
++++ b/src/Plugin/Purge/Purger/AkamaiPurger.php
+@@ -17,7 +17,7 @@ use Symfony\Component\EventDispatcher\EventDispatcherInterface;
+  *   id = "akamai",
+  *   label = @Translation("Akamai Purger"),
+  *   description = @Translation("Provides a Purge service for Akamai CCU."),
+- *   types = {"path", "url", "everything"},
++ *   types = {"path", "url"},
+  *   configform = "Drupal\akamai\Form\ConfigForm",
+  * )
+  */
+-- 
+GitLab
+
