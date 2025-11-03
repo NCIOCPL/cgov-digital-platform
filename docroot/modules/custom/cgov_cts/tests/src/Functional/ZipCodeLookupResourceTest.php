@@ -5,12 +5,9 @@ namespace Drupal\Tests\cgov_cts\Functional;
 use Drupal\Tests\BrowserTestBase;
 
 /**
- * Test the Config Entity Example module.
+ * Test the CTS Zip Code Lookup module.
  *
- * @group config_entity_example
- * @group examples
- *
- * @ingroup config_entity_example
+ * @group cgov_cts
  */
 class ZipCodeLookupResourceTest extends BrowserTestBase {
 

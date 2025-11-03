@@ -8,6 +8,8 @@ use Drush\TestTraits\DrushTestTrait;
 
 /**
  * Kernel tests for CgovImporterService.
+ *
+ * @group cgov_redirect_manager
  */
 class CgovImporterServiceTest extends BrowserTestBase {
 

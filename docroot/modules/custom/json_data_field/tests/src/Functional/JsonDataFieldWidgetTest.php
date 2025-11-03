@@ -5,11 +5,13 @@ namespace Drupal\Tests\json_data_field\Functional;
 use Drupal\Component\Render\FormattableMarkup;
 
 /**
- * Test the basic funtionality of the JsonDataFieldWidget.
+ * Test the basic functionality of the JsonDataFieldWidget.
  *
  * Create a content type with a json_data_field field, configure
  * it with the yaml_textarea, create a node and check for
  * correct values.
+ *
+ * @group json_data_field
  */
 class JsonDataFieldWidgetTest extends JsonDataFieldBrowserTestBase {
 

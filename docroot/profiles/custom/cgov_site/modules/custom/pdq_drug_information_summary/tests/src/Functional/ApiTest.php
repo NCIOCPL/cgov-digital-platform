@@ -8,6 +8,8 @@ use Drupal\Tests\BrowserTestBase;
 
 /**
  * Verify publication of PDQ Drug Information Summaries.
+ *
+ * @group pdq_drug_information_summary
  */
 class ApiTest extends BrowserTestBase {
 

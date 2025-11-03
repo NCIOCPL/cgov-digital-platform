@@ -10,6 +10,8 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 /**
  * Tests for the Zip Code Lookup Rest Endpoint.
+ *
+ * @group cgov_cts
  */
 class ZipCodeLookupResourceTest extends UnitTestCase {
 

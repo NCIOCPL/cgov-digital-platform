@@ -7,12 +7,9 @@ use Drupal\Core\Url;
 use Drupal\Tests\BrowserTestBase;
 
 /**
- * Test the Config Entity Example module.
+ * Test the App Module Entity.
  *
- * @group config_entity_example
- * @group examples
- *
- * @ingroup config_entity_example
+ * @group app_module
  */
 class AppModuleEntityTest extends BrowserTestBase {
 

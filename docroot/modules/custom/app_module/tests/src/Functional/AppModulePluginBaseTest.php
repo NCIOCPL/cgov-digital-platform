@@ -6,12 +6,9 @@ use Drupal\app_module\Entity\AppModule;
 use Drupal\Tests\BrowserTestBase;
 
 /**
- * Test the Config Entity Example module.
+ * Test the App Module Plugin Base.
  *
- * @group config_entity_example
- * @group examples
- *
- * @ingroup config_entity_example
+ * @group app_module
  */
 class AppModulePluginBaseTest extends BrowserTestBase {
 

@@ -5,7 +5,7 @@ namespace Drupal\Tests\app_module\Functional;
 use Drupal\Component\Render\FormattableMarkup;
 
 /**
- * Test the basic funtionality of the AppModuleReferenceSelectWidget.
+ * Test the basic functionality of the AppModuleReferenceSelectWidget.
  *
  * Create a content type with a field_application_module field, configure
  * it with the app_module_reference_select, create a node and check for
@@ -15,6 +15,8 @@ use Drupal\Component\Render\FormattableMarkup;
  * the future when we have settings plugins, this should test the ability
  * to select an app module. Change its settings. Change the app module and
  * make sure the the previous settings were cleared out. Etc.
+ *
+ * @group app_module
  */
 class AppModuleReferenceSelectWidgetTest extends AppModuleFieldBrowserTestBase {
 

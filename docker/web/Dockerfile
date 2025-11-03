@@ -76,7 +76,8 @@ RUN DEBIAN_FRONTEND=noninteractive \
   chromium-browser \
   chromium-chromedriver \
   xvfb \
-  libgtk-3-0
+  libgtk-3-0 \
+  sqllite
 
 # Copy up the available sites config. The startup script
 # manipulates this file based on env vars.

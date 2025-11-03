@@ -1,18 +1,19 @@
 <?php
 
-namespace Drupal\Tests\node\Functional;
+namespace Drupal\Tests\cgov_site\Functional;
 
 use CgovPlatform\Tests\CgovSchemaExclusions;
 use Drupal\node\Entity\NodeType;
+use Drupal\Tests\BrowserTestBase;
 use Drupal\Tests\system\Functional\Cache\AssertPageCacheContextsAndTagsTrait;
 use Drupal\Tests\system\Functional\Menu\AssertBreadcrumbTrait;
 
 /**
  * Ensures the PDQ content types are correctly configured.
  *
- * @group node
+ * @group cgov_site
  */
-class PdqNodeTypeTest extends NodeTestBase {
+class PdqNodeTypeTest extends BrowserTestBase {
 
   use AssertBreadcrumbTrait;
   use AssertPageCacheContextsAndTagsTrait;

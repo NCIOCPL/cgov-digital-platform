@@ -1,6 +1,6 @@
 <?php
 
-namespace Drupal\Tests\ncids_html_transformer\tests\src\Unit;
+namespace Drupal\Tests\ncids_html_transformer\Unit;
 
 use Drupal\ncids_html_transformer\Services\NcidsDisallowedClassesTransformer;
 use Drupal\ncids_html_transformer\Services\NcidsDisallowedStylesTransformer;
@@ -14,6 +14,7 @@ use Drupal\Tests\UnitTestCase;
 /**
  * Tests Basic Migration Transformer Service.
  *
+ * @coversDefaultClass \Drupal\ncids_html_transformer\Services\NcidsHtmlTransformerManager
  * @group ncids_html_transformer
  */
 class BasicMigrationTransformerTest extends UnitTestCase {
@@ -54,7 +55,7 @@ class BasicMigrationTransformerTest extends UnitTestCase {
   /**
    * Tests a simple callout box with invalid class - should NOT be transformed.
    *
-   * @Covers::transform
+   * @covers ::transformAll
    */
   public function testCalloutBoxWithInvalidClass(): void {
     $input = '<div class="callout-box invalid-class">Content</div>';
@@ -66,7 +67,7 @@ class BasicMigrationTransformerTest extends UnitTestCase {
   /**
    * Tests nested invalid classes with preserved structure - callout-box.
    *
-   * @Covers::transform
+   * @covers ::transformAll
    */
   public function testNestedInvalidClasses(): void {
     $input = '<div class="callout-box"><div class="invalid1"><p class="invalid2">Text</p></div></div>';
@@ -78,7 +79,7 @@ class BasicMigrationTransformerTest extends UnitTestCase {
   /**
    * Tests no-bullets transformation - should NOT be transformed.
    *
-   * @Covers::transform
+   * @covers ::transformAll
    */
   public function testNoBulletsTransformation(): void {
     $input = '<ul class="no-bullets extra-class">List items</ul>';
@@ -90,7 +91,7 @@ class BasicMigrationTransformerTest extends UnitTestCase {
   /**
    * Tests complex table with allowed styles - should NOT be transformed.
    *
-   * @Covers::transform
+   * @covers ::transformAll
    */
   public function testTableWithAllowedStyles(): void {
     $input = '<table class="complex-table" style="width: 100%; background-color: #fff; margin: 10px; invalid-prop: value;"><tr style="text-align: center; invalid: prop;"><td>Content</td></tr></table>';
@@ -102,7 +103,7 @@ class BasicMigrationTransformerTest extends UnitTestCase {
   /**
    * Tests summary box component structure - should be transformed.
    *
-   * @Covers::transform
+   * @covers ::transformAll
    */
   public function testSummaryBoxStructure(): void {
     $input = '<div class="usa-summary-box invalid-class"><h3 class="usa-summary-box__heading wrong-class">Title</h3><div class="usa-summary-box__text invalid">Content</div></div>';
@@ -114,7 +115,7 @@ class BasicMigrationTransformerTest extends UnitTestCase {
   /**
    * Tests grid system classes - should be transformed (no special class).
    *
-   * @Covers::transform
+   * @covers ::transformAll
    */
   public function testGridSystemClasses(): void {
     $input = '<div class="grid-container invalid"><div class="grid-row wrong-class"><div class="grid-col-6 tablet:grid-col-4 invalid">Content</div></div></div>';
@@ -126,7 +127,7 @@ class BasicMigrationTransformerTest extends UnitTestCase {
   /**
    * Tests button classes with combinations - should be transformed.
    *
-   * @Covers::transform
+   * @covers ::transformAll
    */
   public function testButtonClassCombinations(): void {
     $input = '<a class="usa-button usa-button--outline invalid-class extra">Click me</a>';
@@ -138,7 +139,7 @@ class BasicMigrationTransformerTest extends UnitTestCase {
   /**
    * Tests callout box variations - should be transformed (no special class).
    *
-   * @Covers::transform
+   * @covers ::transformAll
    */
   public function testCalloutBoxVariations(): void {
     $input = '<div class="callout-box-center invalid"><aside class="callout-box-right wrong">Right Box</aside></div>';
@@ -150,7 +151,7 @@ class BasicMigrationTransformerTest extends UnitTestCase {
   /**
    * Tests mixed content with text nodes - callout-box.
    *
-   * @Covers::transform
+   * @covers ::transformAll
    */
   public function testMixedContentWithTextNodes(): void {
     $input = '<div class="callout-box">Text <span class="invalid">More</span> <p class="wrong">Text</p></div>';
@@ -162,7 +163,7 @@ class BasicMigrationTransformerTest extends UnitTestCase {
   /**
    * Tests table cell alignment classes - should be transformed.
    *
-   * @Covers::transform
+   * @covers ::transformAll
    */
   public function testTableCellAlignment(): void {
     $input = '<table class="table-default"><tr><td class="text-left invalid">Content</td><td class="wrong text-left">More</td></tr></table>';
@@ -174,7 +175,7 @@ class BasicMigrationTransformerTest extends UnitTestCase {
   /**
    * Tests complex nested structure with multiple elements - complex-table.
    *
-   * @Covers::transform
+   * @covers ::transformAll
    */
   public function testComplexNestedStructure(): void {
     $input = '<div class="grid-container invalid"><div class="grid-row wrong"><div class="grid-col-6 bad"><table class="complex-table invalid"><tr class="wrong"><td class="text-left bad" style="text-align: center; invalid: prop;">Content</td></tr></table></div></div></div>';
@@ -185,6 +186,8 @@ class BasicMigrationTransformerTest extends UnitTestCase {
 
   /**
    * Tests pullquote element - should NOT be transformed.
+   *
+   * @covers ::transformAll
    */
   public function testPullquotePreservation(): void {
     $input = '<blockquote class="pullquote invalid-class">Quote content</blockquote>';
@@ -195,6 +198,8 @@ class BasicMigrationTransformerTest extends UnitTestCase {
 
   /**
    * Tests no-description element - should NOT be transformed.
+   *
+   * @covers ::transformAll
    */
   public function testNoDescriptionPreservation(): void {
     $input = '<div class="no-description invalid-class">Description content</div>';
@@ -206,7 +211,7 @@ class BasicMigrationTransformerTest extends UnitTestCase {
   /**
    * Tests style removal from non-table elements and filtering of table styles.
    *
-   * @Covers::transform
+   * @covers ::transformAll
    */
   public function testStyleTransformation(): void {
     $input = '<div style="color: red; margin: 10px;">Container<span style="font-size: small; color: blue;">Text</span><table style="width: 100%; background-color: #fff; margin: 10px; invalid-prop: value;"><tr style="text-align: center; color: red;"><td style="padding: 5px; font-size: large;">Cell Content</td></tr></table></div>';
@@ -218,7 +223,7 @@ class BasicMigrationTransformerTest extends UnitTestCase {
   /**
    * Tests complete style removal when table elements have no allowed styles.
    *
-   * @Covers::transform
+   * @covers ::transformAll
    */
   public function testTableStyleCompleteRemoval(): void {
     $input = '<table style="color: red; margin: 10px; font-size: large;"><tbody style="display: block;"><tr style="cursor: pointer;"><th style="color: blue;">Header</th><td style="font-family: Arial;">Data</td></tr></tbody></table>';
@@ -230,7 +235,7 @@ class BasicMigrationTransformerTest extends UnitTestCase {
   /**
    * Tests mixed allowed and disallowed styles on table elements.
    *
-   * @Covers::transform
+   * @covers ::transformAll
    */
   public function testTableMixedStyles(): void {
     $input = '<table style="width: 100%; color: red; border: 1px solid black; font-size: 12px;"><tr style="height: 50px; background-color: #f0f0f0; display: flex;"><td style="text-align: left; color: blue; padding: 10px; margin: 5px;">Content</td></tr></table>';

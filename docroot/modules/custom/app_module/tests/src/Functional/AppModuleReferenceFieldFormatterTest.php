@@ -5,11 +5,13 @@ namespace Drupal\Tests\app_module\Functional;
 use Drupal\Component\Render\FormattableMarkup;
 
 /**
- * Test the basic funtionality of the AppModuleReferenceFieldFormatter.
+ * Test the basic functionality of the AppModuleReferenceFieldFormatter.
  *
  * Create a content type with a field_application_module field, configure
  * it with the app_module_reference_select widget, and create a node and check
  * for correct values on the rendered page.
+ *
+ * @group app_module
  */
 class AppModuleReferenceFieldFormatterTest extends AppModuleFieldBrowserTestBase {
 

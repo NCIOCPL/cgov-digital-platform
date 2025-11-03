@@ -7,6 +7,8 @@ use Drupal\Tests\UnitTestCase;
 
 /**
  * Tests for the PathProcessorAppModule.
+ *
+ * @group cgov_js_app_module
  */
 class JsOnlyAppModulePluginTest extends UnitTestCase {
 

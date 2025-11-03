@@ -149,6 +149,20 @@ jobs:
       - name: Reset weights
         run: |
               git restore --worktree $(find ./tests/cypress/cypress/e2e/ -name parallel-weights.json)
+      # - name: PHP Unit Tests
+      #   timeout-minutes: 120
+      #   run: |
+      #     ## Setup Simpletest info for kernel & functional tests
+      #     export SIMPLETEST_BASE_URL=http://127.0.0.1:8888
+      #     ## This URI should be good until GitHub changes to use IPV6 or something stupid.
+      #     export SIMPLETEST_DB=mysql://simpletest:simpletest@127.0.0.1:3306/simpletest
+
+      #     ## PHP Unit tests do not start the server
+      #     ## drush rs is equivelent to blt tests:server:start, except it allows us to bind to all ips on the box.
+      #     ## blt was not letting us bind to those IPs we wanted.
+      #     drush rs 0.0.0.0:8888 &
+      #     blt custom:paratest  --define drush.alias='${drush.aliases.ci}' --environment=ci --define tests.run-server=true -D behat.web-driver=chrome --ansi --verbose
+      #     blt tests:server:kill --define drush.alias='${drush.aliases.ci}' --environment=ci --define tests.run-server=true -D behat.web-driver=chrome --ansi --verbose
       - name: PHP Unit Tests
         timeout-minutes: 120
         run: |
@@ -157,12 +171,8 @@ jobs:
           ## This URI should be good until GitHub changes to use IPV6 or something stupid.
           export SIMPLETEST_DB=mysql://simpletest:simpletest@127.0.0.1:3306/simpletest
 
-          ## PHP Unit tests do not start the server
-          ## drush rs is equivelent to blt tests:server:start, except it allows us to bind to all ips on the box.
-          ## blt was not letting us bind to those IPs we wanted.
-          drush rs 0.0.0.0:8888 &
-          blt custom:paratest  --define drush.alias='${drush.aliases.ci}' --environment=ci --define tests.run-server=true -D behat.web-driver=chrome --ansi --verbose
-          blt tests:server:kill --define drush.alias='${drush.aliases.ci}' --environment=ci --define tests.run-server=true -D behat.web-driver=chrome --ansi --verbose
+          blt tests:drupal:run --define drush.alias='${drush.aliases.ci}' --environment=ci --ansi --verbose
+
       - name: Build Artifact
         env:
           NEW_BUILD_DIR: ${{ format('{0}{1}', runner.temp, '/artifact') }}
