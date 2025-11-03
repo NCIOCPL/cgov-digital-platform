@@ -264,9 +264,10 @@ tests:
     sudo-run-tests: false
     simpletest-base-url: 'http://simpletest'
     simpletest-db: 'mysql://drupal:drupal@db/simpletest'
+    concurrency: 8
     drupal-tests:
       -
-        concurrency: 8
+        concurrency: '${tests.drupal.concurrency}'
         types:
           - 'PHPUnit-Unit'
           - 'PHPUnit-Kernel'
@@ -276,7 +277,7 @@ tests:
         url: '${tests.drupal.simpletest-base-url}'
         sqlite: '${tests.drupal.sqlite}'
       -
-        concurrency: 8
+        concurrency: '${tests.drupal.concurrency}'
         types:
           - 'PHPUnit-Unit'
           - 'PHPUnit-Kernel'
