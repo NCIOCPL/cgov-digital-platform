@@ -166,11 +166,6 @@ jobs:
       - name: PHP Unit Tests
         timeout-minutes: 120
         run: |
-          ## Setup Simpletest info for kernel & functional tests
-          export SIMPLETEST_BASE_URL=http://127.0.0.1:8888
-          ## This URI should be good until GitHub changes to use IPV6 or something stupid.
-          export SIMPLETEST_DB=mysql://simpletest:simpletest@127.0.0.1:3306/simpletest
-
           blt tests:drupal:run --define drush.alias='${drush.aliases.ci}' --environment=ci --ansi --verbose
 
       - name: Build Artifact
