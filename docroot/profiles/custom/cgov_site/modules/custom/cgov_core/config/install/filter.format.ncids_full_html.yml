@@ -2,51 +2,59 @@ langcode: en
 status: true
 dependencies:
   module:
+    - cgov_core
     - editor
     - entity_embed
     - linkit
     - media
+    - nci_ckeditor5_cleanup
     - nci_definition
     - token_filter
 name: 'NCIDS Full HTML'
 format: ncids_full_html
 weight: 0
 filters:
+  cgov_table_class_filter:
+    id: cgov_table_class_filter
+    provider: cgov_core
+    status: true
+    weight: -45
+    settings: {  }
   editor_file_reference:
     id: editor_file_reference
     provider: editor
     status: false
-    weight: -45
-    settings: {}
+    weight: -41
+    settings: {  }
   entity_embed:
     id: entity_embed
     provider: entity_embed
     status: true
-    weight: -38
-    settings: {}
+    weight: -46
+    settings: {  }
   filter_align:
     id: filter_align
     provider: filter
     status: true
-    weight: -44
-    settings: {}
+    weight: -47
+    settings: {  }
   filter_autop:
     id: filter_autop
     provider: filter
     status: false
-    weight: -43
-    settings: {}
+    weight: -40
+    settings: {  }
   filter_caption:
     id: filter_caption
     provider: filter
     status: false
-    weight: -42
-    settings: {}
+    weight: -39
+    settings: {  }
   filter_html:
     id: filter_html
     provider: filter
     status: false
-    weight: -47
+    weight: -43
     settings:
       allowed_html: ''
       filter_html_help: true
@@ -55,31 +63,31 @@ filters:
     id: filter_html_escape
     provider: filter
     status: false
-    weight: -46
-    settings: {}
+    weight: -42
+    settings: {  }
   filter_html_image_secure:
     id: filter_html_image_secure
     provider: filter
     status: false
-    weight: -40
-    settings: {}
+    weight: -37
+    settings: {  }
   filter_htmlcorrector:
     id: filter_htmlcorrector
     provider: filter
     status: true
     weight: -49
-    settings: {}
+    settings: {  }
   filter_image_lazy_load:
     id: filter_image_lazy_load
     provider: filter
     status: false
-    weight: -39
-    settings: {}
+    weight: -36
+    settings: {  }
   filter_url:
     id: filter_url
     provider: filter
     status: false
-    weight: -41
+    weight: -38
     settings:
       filter_url_length: 72
   linkit:
@@ -93,16 +101,16 @@ filters:
     id: media_embed
     provider: media
     status: false
-    weight: -37
+    weight: -35
     settings:
       default_view_mode: default
-      allowed_view_modes: {}
-      allowed_media_types: {}
+      allowed_view_modes: {  }
+      allowed_media_types: {  }
   nci_definition:
     id: nci_definition
     provider: nci_definition
     status: true
-    weight: 0
+    weight: -44
     settings:
       definition_classes: cgdp-definition-link
   token_filter:
