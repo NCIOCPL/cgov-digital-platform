@@ -2,7 +2,7 @@ diff --git docroot/.htaccess docroot/.htaccess
 index b2a1a29..0247fb0 100644
 --- docroot/.htaccess
 +++ docroot/.htaccess
-@@ -122,6 +122,18 @@ AddEncoding gzip svgz
+@@ -122,6 +122,19 @@ AddEncoding gzip svgz
    # uncomment the following line:
    # RewriteBase /
 
@@ -11,11 +11,12 @@ index b2a1a29..0247fb0 100644
 +  RewriteCond %{HTTP:X-Forwarded-Proto} !https
 +  RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
 +
-+  # Return Status 403 (Forbidden) on non-ODE server access in the
++  # Return Status 403 (Forbidden) on non-ODE/MEO server access in the
 +  # Acquia cloud.
 +  RewriteCond %{ENV:AH_SITE_ENVIRONMENT} ^(.)+$
 +  RewriteCond %{HTTP_HOST} ^(.)+\.acquia-sites\.com$ [NC]
 +  RewriteCond %{ENV:AH_SITE_ENVIRONMENT} !^ode[0-9]+$ [NC]
++  RewriteCond %{ENV:AH_ENVIRONMENT_TYPE} !^meo$ [NC]
 +  RewriteRule .* - [R=403]
 +
    # Redirect common PHP files to their new locations.
