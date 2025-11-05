@@ -5,18 +5,18 @@ namespace Cgov\Blt\Plugin\Commands;
 use Acquia\Blt\Robo\BltTasks;
 
 /**
- * Commands for use in the ACSF Environments.
+ * Commands for use in the MEO Environments.
  *
- * Some of the Factory Hooks are a pain to run multiple commands. (I am
+ * Some of the MEO deployment tasks require specific handling. (I am
  * looking at you post-install) So for consistency, we will define all
- * cgov factory hook methods here.
+ * cgov MEO hook methods here.
  */
-class CgovAcsfCommands extends BltTasks {
+class CgovMeoCommands extends BltTasks {
 
   /**
-   * Post Install Support for ACSF.
+   * Post Install Support for MEO.
    *
-   * @command cgov:acsf:post-install
+   * @command cgov:meo:post-install
    *
    * @validateDrushConfig
    * @executeInVm
@@ -31,9 +31,9 @@ class CgovAcsfCommands extends BltTasks {
   }
 
   /**
-   * DB Update Support for ACSF.
+   * DB Update Support for MEO.
    *
-   * @command cgov:acsf:db-update
+   * @command cgov:meo:db-update
    *
    * @validateDrushConfig
    * @executeInVm
@@ -47,9 +47,9 @@ class CgovAcsfCommands extends BltTasks {
   }
 
   /**
-   * Post staging deploy support for ACSF.
+   * Post staging deploy support for MEO.
    *
-   * @command cgov:acsf:post-staging-deploy
+   * @command cgov:meo:post-staging-deploy
    *
    * @validateDrushConfig
    * @executeInVm
@@ -63,7 +63,7 @@ class CgovAcsfCommands extends BltTasks {
   /**
    * Blocks the admin user from being able to login.
    *
-   * @command cgov:acsf:block-admin
+   * @command cgov:meo:block-admin
    */
   public function blockAdminUser() {
     $task = $this->taskDrush()

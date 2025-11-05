@@ -1,6 +1,6 @@
 #!/bin/bash
 #
-# Factory Hook: post-site-install
+# Hook: post-site-install
 #
 # This is necessary so that blt drupal:install tasks are invoked automatically
 # when a site is created on ACSF.
@@ -26,17 +26,22 @@ internal_domain="$4"
 # To get only the site name in ${name[0]}:
 IFS='.' read -a name <<< $internal_domain
 
-# BLT executable:
-blt="/mnt/www/html/$sitegroup.$env/vendor/acquia/blt/bin/blt"
+# Source BLT environment helper
+source "/mnt/www/html/$sitegroup.$env/scripts/blt/blt-env-helper.sh"
+
+# Set up BLT executable and environment mapping
+setup_blt_environment "$sitegroup" "$env"
 
 # Execute the updates.
-$blt drupal:update --environment=$env --site=${name[0]} --define drush.uri=$internal_domain --verbose --no-interaction
+$blt_executable drupal:update --environment=$blt_environment --site=${name[0]} --define drush.uri=$internal_domain --verbose --no-interaction -D drush.ansi=false
+$blt_executable cgov:meo:post-install --environment=$blt_environment --site=${name[0]} --define drush.uri=$internal_domain  --verbose --no-interaction -D drush.ansi=false
+
 result=$?
 
 set +v
 
 # Exit with the status of the BLT commmand. If the exit status is non-zero,
-# Site Factory will send a notification of a partiolly failed install and will
+# MEO will send a notification of a partially failed install and will
 # stop executing any further post-site-install hook scripts that would be in
 # this directory (and get executed in alphabetical order).
 exit $result
