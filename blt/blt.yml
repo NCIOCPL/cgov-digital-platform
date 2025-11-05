@@ -126,13 +126,12 @@ modules:
         akamai
       ]
   ## We have no prod in ACE.
-  01dev:
+  meodev:
     enable:
       [
         dblog,
         cgov_syslog,
         acquia_connector,
-        acsf,
         shield,
         cgov_https_config,
         cgov_caching_cdn,
@@ -140,15 +139,15 @@ modules:
       ]
     uninstall:
       [
-        cgov_caching_nocdn
+        acsf,
+        cgov_caching_nocdn,
       ]
-  01test:
+  meostage:
     enable:
       [
         dblog,
         cgov_syslog,
         acquia_connector,
-        acsf,
         shield,
         cgov_https_config,
         cgov_caching_cdn,
@@ -156,14 +155,14 @@ modules:
       ]
     uninstall:
       [
-        cgov_caching_nocdn
+        acsf,
+        cgov_caching_nocdn,
       ]
-  01live:
+  meoprod:
     enable:
       [
         cgov_syslog,
         acquia_connector,
-        acsf,
         shield,
         cgov_https_config,
         cgov_caching_cdn,
@@ -171,8 +170,9 @@ modules:
       ]
     uninstall:
       [
+        acsf,
         dblog,
-        cgov_caching_nocdn
+        cgov_caching_nocdn,
       ]
 ## If this is not set, blt drupal:install will iterate through the sites in the sites folder.
 ## For now we set it to default, so it does not try installing simpletest, or god forbid "g".
@@ -224,11 +224,10 @@ command-hooks:
     command: null
 
 cgov:
-  ## Defaulting users to the repo file was a bad idea, and we will just
-  ## set this to the path ACE environments use so that we do not need
-  ## as many blt overrides. This will avoid any misconfigured environments
-  ## loading the defaults from the repo.
-  drupal_users_file: '/home/ncigovcd/cgov-drupal-users.yml'
+  ## All Acquia environment will use the drupal_users_file path below.
+  ## Only local will use its own path; CI does not load users at this
+  ## time.
+  drupal_users_file: '/mnt/files/${env.AH_SITE_GROUP}.${env.AH_SITE_ENVIRONMENT}/cgdp/cgov-drupal-users.yml'
   front_end_globals_file: '${repo.root}/FrontendGlobals.json'
   pdq_load_glossifier_file: '${repo.root}/glossifier_refresh.json'
 
