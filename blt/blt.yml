@@ -132,7 +132,6 @@ modules:
         dblog,
         cgov_syslog,
         acquia_connector,
-        acsf,
         shield,
         cgov_https_config,
         cgov_caching_cdn,
@@ -140,7 +139,8 @@ modules:
       ]
     uninstall:
       [
-        cgov_caching_nocdn
+        acsf,
+        cgov_caching_nocdn,
       ]
   meostage:
     enable:
@@ -148,7 +148,6 @@ modules:
         dblog,
         cgov_syslog,
         acquia_connector,
-        acsf,
         shield,
         cgov_https_config,
         cgov_caching_cdn,
@@ -156,14 +155,14 @@ modules:
       ]
     uninstall:
       [
-        cgov_caching_nocdn
+        acsf,
+        cgov_caching_nocdn,
       ]
   meoprod:
     enable:
       [
         cgov_syslog,
         acquia_connector,
-        acsf,
         shield,
         cgov_https_config,
         cgov_caching_cdn,
@@ -171,8 +170,9 @@ modules:
       ]
     uninstall:
       [
+        acsf,
         dblog,
-        cgov_caching_nocdn
+        cgov_caching_nocdn,
       ]
 ## If this is not set, blt drupal:install will iterate through the sites in the sites folder.
 ## For now we set it to default, so it does not try installing simpletest, or god forbid "g".
