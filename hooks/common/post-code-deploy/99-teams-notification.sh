@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
 set -o pipefail
 
-## If this is ACSF then exit.
-if [[ $AH_SITE_GROUP == "ncigov" ]]; then
+## If this is MEO then exit.
+if [[ $AH_SITE_GROUP == "ncigovmeo" ]]; then
   exit;
 fi;
 

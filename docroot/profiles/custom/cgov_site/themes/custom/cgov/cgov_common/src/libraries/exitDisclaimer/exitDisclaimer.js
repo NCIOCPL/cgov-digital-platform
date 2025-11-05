@@ -6,7 +6,6 @@ const legacyFilterSet = (_, el) => {
     /^https?\:\/\/([a-zA-Z0-9\-]+\.)+/i.test(el.href) &&
     !/^https?\:\/\/([a-zA-Z0-9\-]+\.)+gov/i.test(el.href) &&
     !/^https?\:\/\/([a-zA-Z0-9\-]+\.)+acquia-sites\.com/i.test(el.href) &&
-    !/^https?\:\/\/([a-zA-Z0-9\-]+\.)+acsitefactory\.com/i.test(el.href) &&
     el.href !== "" &&
     el.href.indexOf(location.protocol + "//" + location.hostname) !== 0 &&
     !$(el).hasClass("add_this_btn") &&
