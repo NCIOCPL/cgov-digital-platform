@@ -58,6 +58,7 @@ class NcidsDisallowedClassesTransformer extends NcidsHtmlTransformerBase {
       ['tablet:grid-col-7'],
       ['tablet:grid-col-8'],
       ['tablet:grid-col-9'],
+      ['tablet:grid-col-fill'],
       ['usa-summary-box'],
       ['usa-summary-box__body'],
       ['usa-summary-box__text'],
