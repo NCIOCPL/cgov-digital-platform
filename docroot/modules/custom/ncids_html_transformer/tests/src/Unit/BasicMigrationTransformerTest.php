@@ -239,4 +239,16 @@ class BasicMigrationTransformerTest extends UnitTestCase {
     $this->assertEquals($expected, $output, 'Should preserve only allowed styles on table elements and remove disallowed ones');
   }
 
+  /**
+   * Tests mixed allowed and disallowed styles on table elements.
+   *
+   * @Covers::transform
+   */
+  public function testGridColFill(): void {
+    $input = '<div class="tablet:grid-col-fill invalid-class">content</div>';
+    $output = $this->transformerManager->transformAll($input);
+    $expected = '<div class="tablet:grid-col-fill">content</div>';
+    $this->assertEquals($expected, $output, 'Should preserve tablet:grid-col-fill and remove invalid classes');
+  }
+
 }
