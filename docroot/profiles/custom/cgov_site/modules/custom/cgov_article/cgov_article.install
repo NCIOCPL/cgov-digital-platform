@@ -34,3 +34,26 @@ function cgov_article_update_8003() {
     $installer->install(['cgov_schema_org']);
   }
 }
+
+/**
+ * Update body section content to use ncids_full_html format.
+ */
+function cgov_article_update_8004() {
+  $database = \Drupal::database();
+
+  /* Update the format in paragraph__field_body_section_content table */
+  $database->update('paragraph__field_body_section_content')
+    ->fields([
+      'field_body_section_content_format' => 'ncids_full_html',
+    ])
+    ->condition('field_body_section_content_format', 'full_html')
+    ->execute();
+
+  /* Also update the revision table */
+  $database->update('paragraph_revision__field_body_section_content')
+    ->fields([
+      'field_body_section_content_format' => 'ncids_full_html',
+    ])
+    ->condition('field_body_section_content_format', 'full_html')
+    ->execute();
+}
