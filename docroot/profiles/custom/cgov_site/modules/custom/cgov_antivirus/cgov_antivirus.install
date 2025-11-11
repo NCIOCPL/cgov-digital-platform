@@ -1,0 +1,22 @@
+<?php
+
+/**
+ * @file
+ * Install, update and uninstall functions for the cgov_antivirus module.
+ */
+
+/**
+ * Implements hook_install().
+ */
+function cgov_antivirus_install() {
+  $config = \Drupal::configFactory()->getEditable('clamav.settings');
+  $config->set('enabled', TRUE);
+  $config->set('outage_action', 1);
+  $config->set('scan_mode', 1);
+  $config->set('verbosity', 1);
+  $config->set('mode_executable', [
+    'executable_path' => '/usr/bin/clamscan',
+    'executable_parameters' => '',
+  ]);
+  $config->save();
+}
