@@ -278,3 +278,30 @@ function cgov_core_update_10014() {
     $installer->install(['nci_ckeditor5_enhancements']);
   }
 }
+
+/**
+ * Update for Clam AV. (Issue #3755)
+ */
+function cgov_core_update_10015() {
+  // Enable clam_av, but only on MEO.
+  if (!\Drupal::moduleHandler()->moduleExists('clamav') && getenv('AH_ENVIRONMENT_TYPE') === "meo") {
+    $installer = \Drupal::service('module_installer');
+    $installer->install(['clamav']);
+
+    // Make extra sure all our settings are in place.
+    $config = \Drupal::configFactory()->getEditable('clamav.settings');
+    // Specifically enable clamscan scanning only via update hook.
+    // This prevents scanning from running on lower-tier environments
+    // at the moment until they are on Acquia Cloud Next.
+    $config->set('enabled', TRUE);
+    $config->set('outage_action', 1);
+    $config->set('scan_mode', 1);
+    $config->set('verbosity', 0);
+    $config->set('mode_executable', [
+      'executable_path' => '/usr/bin/clamscan',
+      'executable_parameters' => '',
+    ]);
+    $config->save();
+
+  }
+}
