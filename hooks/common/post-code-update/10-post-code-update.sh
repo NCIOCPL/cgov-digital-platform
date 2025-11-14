@@ -32,7 +32,7 @@ repo_root="/var/www/html/$site.$target_env"
 export PATH=$repo_root/vendor/bin:$PATH
 cd $repo_root
 
-users_file="$HOME/cgov-drupal-users.yml"
+users_file="$HOME/cgdp/cgov-drupal-users.yml"
 
 ## If this is an ODE we would like things like toggle:modules to work. So we will
 ## pass in the target env as 'ode'. Then in blt.yml we can have an "ode" environment.
