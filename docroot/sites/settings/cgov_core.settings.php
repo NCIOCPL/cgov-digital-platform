@@ -62,12 +62,10 @@ $settings['disallow_routes'] = [
 ];
 
 // Get the license dir from our current environment.
-$licenseDir = '/var/licenses';
+$licenseFilename = '/var/licenses/licenses.php';
 if (CGovSettingsUtil::isAcquia()) {
-  $licenseDir = "/mnt/files/{$_ENV['AH_SITE_GROUP']}.{$_ENV['AH_SITE_ENVIRONMENT']}/licenses";
+  $licenseFilename = "/mnt/files/{$_ENV['AH_SITE_GROUP']}.{$_ENV['AH_SITE_ENVIRONMENT']}/cgdp/licenses.php";
 }
-
-$licenseFilename = sprintf('%s/licenses.php', $licenseDir);
 if (file_exists($licenseFilename)) {
 
   // Load the license keys file.
