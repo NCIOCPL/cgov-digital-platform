@@ -30,7 +30,7 @@ if (CGovSettingsUtil::isAcquia()) {
   if ($env != 'ode') {
     // Setup proper .edgerc path for Akamai module.
     $ah_group = isset($_ENV['AH_SITE_GROUP']) ? $_ENV['AH_SITE_GROUP'] : NULL;
-    $config['akamai.settings']['edgerc_path'] = "/mnt/gfs/home/$ah_group/common/.edgerc";
+    $config['akamai.settings']['edgerc_path'] = "/mnt/files/{$_ENV['AH_SITE_GROUP']}.{$_ENV['AH_SITE_ENVIRONMENT']}/cgdp/edgerc";
     $config['akamai.settings']['basepath'] = 'https://' . $domain;
   }
 }
