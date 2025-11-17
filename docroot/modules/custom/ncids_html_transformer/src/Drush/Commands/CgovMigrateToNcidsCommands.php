@@ -145,7 +145,6 @@ class CgovMigrateToNcidsCommands extends DrushCommands {
         continue;
       }
       $original_content = $field_data[0]['value'];
-      $format = $field_data[0]['format'];
 
       /* Only process if content exists */
       if (empty($original_content)) {
@@ -154,11 +153,11 @@ class CgovMigrateToNcidsCommands extends DrushCommands {
 
       $transformed_content = $transformer->transformAll($original_content);
 
-      /* Only save if content actually changed */
+      // Always set format to ncids_full_html.
       if ($transformed_content !== $original_content) {
         $paragraph->set('field_body_section_content', [
           'value' => $transformed_content,
-          'format' => $format,
+          'format' => 'ncids_full_html',
         ]);
         $paragraph->save();
         $updated = TRUE;
