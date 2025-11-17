@@ -65,7 +65,7 @@ jobs:
       ## content and then Drupal update hooks prevent the removal of configs
       ## because they are in use.
       - name: Checkout target or main branch from Github
-        uses: actions/checkout@v3
+        uses: actions/checkout@v5
         with:
             ref: ${{ github.event_name == 'pull_request' && github.base_ref || 'master' }}
 
@@ -73,7 +73,7 @@ jobs:
       - name: Setup PHP with tools
         uses: shivammathur/setup-php@v2
         with:
-          php-version: '8.1'
+          php-version: '8.3'
           ## This list of extensions matches those we install with our docker file, then I removed
           ## cli, common, fpm cause they would not install, then I removed xdebug cause why?
           extensions: bz2, curl, gd, mbstring, memcached, mysql, oauth, opcache, readline, sqlite3, soap, xml
@@ -84,7 +84,7 @@ jobs:
         run: |
           echo "dir=$(composer config cache-files-dir)" >> $GITHUB_OUTPUT
 
-      - uses: actions/cache@v3
+      - uses: actions/cache@v4
         with:
           path: ${{ steps.composer-cache.outputs.dir }}
           key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}
@@ -116,7 +116,7 @@ jobs:
           blt cgov:reinstall --define drush.alias='${drush.aliases.ci}' --environment=ci --no-interaction --ansi --verbose
 
       - name: Switch to the branch from the pull request.
-        uses: actions/checkout@v3
+        uses: actions/checkout@v5
 
       - name: Install new code and run update.
         run: |
@@ -139,7 +139,7 @@ jobs:
     steps:
       ## Checks out the branch being tested.
       - name: Checkout branch from Github
-        uses: actions/checkout@v3
+        uses: actions/checkout@v5
 
       - name: Generate install files hash
         id: install_files_hash
@@ -147,7 +147,7 @@ jobs:
           echo "key=${{ runner.os }}-install-hash-$(find . -type f \( -path "*/modules/custom/*/*.install" -o -path "*/config/install/*.yml" -o -path ./.github/workflows/test-deployability.yml -o -path "blt/*" \) -exec md5sum {} + | sort | awk '{print $NF}' | tr -d '\n' | md5sum)" >> "$GITHUB_OUTPUT"
 
       - name: Locate Cache
-        uses: actions/cache/restore@v3
+        uses: actions/cache/restore@v4
         id: retrieve_files_hash
         with:
           path: dummy.txt
@@ -171,7 +171,7 @@ jobs:
           touch dummy.txt
 
       - name: Save install files cache
-        uses: actions/cache/save@v3
+        uses: actions/cache/save@v4
         with:
           path: dummy.txt
           key: ${{ needs.check_for_past_run.outputs.key }}
