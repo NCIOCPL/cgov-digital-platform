@@ -11,23 +11,23 @@ services:
     class: Drupal\ncids_html_transformer\Services\NcidsDisallowedStylesTransformer
     tags:
       - { name: ncids_html_transformer.ncids_html_transform, priority: 7 }
-  ncids_html_transformer.callout_box_transformer:
+  ncids_html_transformer.temp_callout_box_transformer:
     class: Drupal\ncids_html_transformer\Services\NcidsTempCalloutBoxTransformer
     tags:
       - { name: ncids_html_transformer.ncids_html_transform, priority: 5 }
-  ncids_html_transformer.table_transformer:
+  ncids_html_transformer.temp_table_transformer:
     class: Drupal\ncids_html_transformer\Services\NcidsTempTableTransformer
     tags:
       - { name: ncids_html_transformer.ncids_html_transform, priority: 4 }
-  ncids_html_transformer.list_transformer:
+  ncids_html_transformer.temp_list_transformer:
     class: Drupal\ncids_html_transformer\Services\NcidsTempListTransformer
     tags:
       - { name: ncids_html_transformer.ncids_html_transform, priority: 2 }
-  ncids_html_transformer.pullquote_transformer:
+  ncids_html_transformer.temp_pullquote_transformer:
     class: Drupal\ncids_html_transformer\Services\NcidsTempPullquoteTransformer
     tags:
       - { name: ncids_html_transformer.ncids_html_transform, priority: 1 }
-  ncids_html_transformer.embedded_entity_transformer:
+  ncids_html_transformer.temp_embedded_entity_transformer:
     class: Drupal\ncids_html_transformer\Services\NcidsTempEmbeddedEntitiesTransformer
     tags:
       - { name: ncids_html_transformer.ncids_html_transform, priority: 3 }
@@ -35,3 +35,8 @@ services:
     class: Drupal\ncids_html_transformer\Services\NcidsDisallowedAttributesTransformer
     tags:
       - { name: ncids_html_transformer.ncids_html_transform, priority: 8 }
+  ncids_html_transformer.callout_box_transformer:
+    class: Drupal\ncids_html_transformer\Services\NcidsCalloutBoxTransformer
+    arguments: ['@ncids_html_transformer.html_transformer_manager']
+    tags:
+      - { name: ncids_html_transformer.ncids_html_transform, priority: 9 }

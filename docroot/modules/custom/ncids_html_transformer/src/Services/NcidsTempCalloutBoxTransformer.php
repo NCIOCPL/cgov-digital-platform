@@ -17,6 +17,7 @@ class NcidsTempCalloutBoxTransformer extends NcidsHtmlTransformerBase {
     'callout-box-left',
     'callout-box-right',
     'callout-box-center',
+    'callout-box-full',
   ];
 
 }
