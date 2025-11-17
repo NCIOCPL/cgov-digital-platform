@@ -65,6 +65,10 @@ class NcidsHtmlTransformerManager implements ContainerInjectionInterface {
       $html = $transformer->transform($html);
     }
 
+    foreach ($this->transformers as $transformer) {
+      $html = $transformer->postProcessHtml($html);
+    }
+
     return $html;
   }
 

@@ -89,19 +89,20 @@ class CgovMigrateToNcidsCommands extends DrushCommands {
       }
 
       if (!$node->isPublished()) {
+        \Drupal::logger('cgov_article')->info('Node is unpublished nid: @nid', ['@nid' => $nid]);
         return;
       }
 
       $transformer_manager = \Drupal::service('ncids_html_transformer.html_transformer_manager');
 
       /* Process main language content */
-      $updated = self::processNodeContent($node, $transformer_manager);
+      $updated = self::processNode($node, $transformer_manager);
 
       /* Process all available translations */
       foreach ($node->getTranslationLanguages() as $langcode => $language) {
         if ($langcode !== $node->language()->getId()) {
           $translated_node = $node->getTranslation($langcode);
-          $updated = self::processNodeContent($translated_node, $transformer_manager) || $updated;
+          $updated = self::processNode($translated_node, $transformer_manager) || $updated;
         }
       }
 
@@ -128,20 +129,22 @@ class CgovMigrateToNcidsCommands extends DrushCommands {
    * @return bool
    *   TRUE if content was updated, FALSE otherwise.
    */
-  private static function processNodeContent(Node $node, $transformer): bool {
+  private static function processNode(Node $node, $transformer): bool {
     $article_body = $node->get('field_article_body')->getValue();
     $updated = FALSE;
+    $new_paragraphs = [];
 
+    /** @var \Drupal\Core\Entity\RevisionableStorageInterface $paragraph_storage */
+    $paragraph_storage = \Drupal::entityTypeManager()->getStorage('paragraph');
     foreach ($article_body as $paragraph_reference) {
-      $paragraph = Paragraph::load($paragraph_reference['target_id']);
+      /** @var \Drupal\paragraphs\Entity\Paragraph $old_paragraph */
+      $old_paragraph = $paragraph_storage->loadRevision($paragraph_reference['target_revision_id']);
 
-      if (!$paragraph || $paragraph->getType() !== 'body_section') {
-        continue;
-      }
-
-      $field_data = $paragraph->get('field_body_section_content')->getValue();
-      /* Only process values exist */
+      // $old_paragraph = Paragraph::load($paragraph_reference['target_id']);.
+      $field_data = $old_paragraph->get('field_body_section_content')->getValue();
+      /* Only process if values exist */
       if (empty($field_data[0])) {
+        $new_paragraphs[] = $paragraph_reference;
         continue;
       }
       $original_content = $field_data[0]['value'];
@@ -149,21 +152,55 @@ class CgovMigrateToNcidsCommands extends DrushCommands {
 
       /* Only process if content exists */
       if (empty($original_content)) {
+        $new_paragraphs[] = $paragraph_reference;
         continue;
       }
 
       $transformed_content = $transformer->transformAll($original_content);
 
-      /* Only save if content actually changed */
+      /* Check if transformation occurred */
       if ($transformed_content !== $original_content) {
-        $paragraph->set('field_body_section_content', [
-          'value' => $transformed_content,
-          'format' => $format,
-        ]);
-        $paragraph->save();
         $updated = TRUE;
       }
+
+      /* Create a new paragraph with the transformed content */
+      if (empty($old_paragraph->get('field_body_section_heading')->value) || is_null($old_paragraph->get('field_body_section_heading')->value)) {
+        $new_paragraph = Paragraph::create([
+          'type' => 'body_section',
+          'field_body_section_content' => [
+            'value' => $transformed_content,
+            'format' => $format,
+          ],
+        ]);
+      }
+      else {
+        $new_paragraph = Paragraph::create([
+          'type' => 'body_section',
+          'field_body_section_content' => [
+            'value' => $transformed_content,
+            'format' => $format,
+          ],
+          'field_body_section_heading' => [
+            'value' => $old_paragraph->get('field_body_section_heading')->value,
+            'format' => 'simple',
+          ],
+        ]);
+      }
+      $new_paragraph->save();
+
+      /* Add the new paragraph to the array */
+      $new_paragraphs[] = [
+        'target_id' => $new_paragraph->id(),
+        'target_revision_id' => $new_paragraph->getRevisionId(),
+      ];
     }
+
+    /* Always save the new paragraphs to the node to ensure format is updated */
+    $node->set('field_article_body', $new_paragraphs);
+    $node->set('moderation_state', 'published');
+    $node->setNewRevision(TRUE);
+    $node->setRevisionLogMessage('Migrated content to NCIDS format');
+    $node->save();
 
     return $updated;
   }
