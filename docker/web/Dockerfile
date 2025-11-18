@@ -68,6 +68,7 @@ RUN DEBIAN_FRONTEND=noninteractive \
   php8.3-zip \
   mysql-client-8.0 \
   git \
+  clamav \
   imagemagick \
   vim \
   zip \
@@ -77,6 +78,9 @@ RUN DEBIAN_FRONTEND=noninteractive \
   chromium-chromedriver \
   xvfb \
   libgtk-3-0
+
+# Update ClamAV
+RUN freshclam
 
 # Copy up the available sites config. The startup script
 # manipulates this file based on env vars.
