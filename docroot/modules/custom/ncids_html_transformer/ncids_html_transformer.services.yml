@@ -40,3 +40,8 @@ services:
     arguments: ['@ncids_html_transformer.html_transformer_manager']
     tags:
       - { name: ncids_html_transformer.ncids_html_transform, priority: 9 }
+  ncids_html_transformer.pullquote_transformer:
+    class: Drupal\ncids_html_transformer\Services\NcidsPullquoteTransformer
+    arguments: ['@ncids_html_transformer.html_transformer_manager']
+    tags:
+      - { name: ncids_html_transformer.ncids_html_transform, priority: 10 }
