@@ -22,4 +22,27 @@ function cgov_external_link_block_install() {
     // Add content type permissions.
     $tools->addBlockContentTypePermissions($block_type, ['advanced_editor']);
   }
+
+  $perms = [
+    'admin_ui' => [
+      'access embedded_external_link_browser entity browser pages',
+    ],
+  ];
+
+  $tools->addRolePermissions($perms);
+}
+
+/**
+ * The most recent update hook.
+ */
+function cgov_external_link_update_10001() {
+  // Get our helper.
+  $siteHelper = \Drupal::service('cgov_core.tools');
+  $perms = [
+    'admin_ui' => [
+      'access embedded_external_link_browser entity browser pages',
+    ],
+  ];
+
+  $siteHelper->addRolePermissions($perms);
 }
