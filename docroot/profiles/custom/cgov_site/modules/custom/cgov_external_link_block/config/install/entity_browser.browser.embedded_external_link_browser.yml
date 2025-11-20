@@ -1,0 +1,30 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - views.view.block_content_browser
+  module:
+    - views
+name: embedded_external_link_browser
+label: 'Embedded External Link Browser'
+display: iframe
+display_configuration:
+  width: 100%
+  height: '500'
+  link_text: 'Select entities'
+  auto_open: true
+selection_display: no_display
+selection_display_configuration: {  }
+widget_selector: single
+widget_selector_configuration: {  }
+widgets:
+  1751a6e7-5dc2-4061-b77e-821b506ff923:
+    id: view
+    uuid: 1751a6e7-5dc2-4061-b77e-821b506ff923
+    label: 'Select external link block to embed'
+    weight: 1
+    settings:
+      submit_text: 'Select external link block'
+      auto_select: false
+      view: block_content_browser
+      view_display: external_link_browser
