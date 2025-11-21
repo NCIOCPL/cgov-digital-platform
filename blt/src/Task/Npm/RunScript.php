@@ -7,7 +7,7 @@ use Robo\Exception\TaskException;
 use Robo\Task\Npm\Base;
 
 /**
- * Implementation of the missing 'npm run-script' command..
+ * Implementation of the missing 'npm run-script' command.
  *
  * @package Cgov\Task\Npm
  */
