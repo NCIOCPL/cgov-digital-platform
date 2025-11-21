@@ -456,6 +456,9 @@ function _cgov_site_section_will_trigger_cache_tag_invalidation(EntityInterface 
     // Construct the new alias.
     $section_tid = (int) $updated_entity->get('field_site_section')->target_id;
     $term = Term::load($section_tid);
+    if ($term === NULL) {
+      return FALSE;
+    }
     $computed_path = $term->get('computed_path')->value;
     $pretty_url = $updated_entity->get('field_pretty_url')->value;
 

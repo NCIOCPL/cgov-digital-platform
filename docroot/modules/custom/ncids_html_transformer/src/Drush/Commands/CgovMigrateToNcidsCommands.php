@@ -83,12 +83,27 @@ class CgovMigrateToNcidsCommands extends DrushCommands {
 
     try {
       $node = Node::load($nid);
+      \Drupal::logger('cgov_article')->info('Starting transformation of nid: @nid, language: @lang', [
+        '@nid' => $nid,
+        '@lang' => $node->language()->getId(),
+      ]);
       if (!$node) {
         $context['results']['errors'][] = "Node $nid could not be loaded.";
         return;
       }
 
-      if (!$node->isPublished()) {
+      // Check moderation state.
+      if ($node->hasField('moderation_state')) {
+        $moderation_state = $node->get('moderation_state')->value;
+        if ($moderation_state !== 'published') {
+          \Drupal::logger('cgov_article')->info('Skipping node @nid - not published (state: @state)', [
+            '@nid' => $nid,
+            '@state' => $moderation_state,
+          ]);
+          return;
+        }
+      }
+      elseif (!$node->isPublished()) {
         \Drupal::logger('cgov_article')->info('Node is unpublished nid: @nid', ['@nid' => $nid]);
         return;
       }
