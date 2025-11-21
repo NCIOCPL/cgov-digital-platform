@@ -148,7 +148,7 @@ class CgovMigrateToNcidsCommands extends DrushCommands {
         continue;
       }
       $original_content = $field_data[0]['value'];
-      $format = $field_data[0]['format'];
+      $format = 'ncids_full_html';
 
       /* Only process if content exists */
       if (empty($original_content)) {
