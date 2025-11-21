@@ -49,8 +49,8 @@
         "drupal/akamai": "^5.0@RC",
         "drupal/autologout": "^1.4",
         "drupal/config_perms": "^2.1",
-        "drupal/core-composer-scaffold": "~10.4.5",
-        "drupal/core-recommended": "~10.4.5",
+        "drupal/core-composer-scaffold": "~10.5.6",
+        "drupal/core-recommended": "~10.5.6",
         "drupal/crop": "^2.3.0",
         "drupal/ctools": "^4.0.0",
         "drupal/devel": "^5.1.2",
@@ -63,7 +63,7 @@
         "drupal/file_mdm": "^2.6.0",
         "drupal/image_widget_crop": "^2.4.0",
         "drupal/imagemagick": "^3.4.0",
-        "drupal/linkit": "^6.0",
+        "drupal/linkit": "^7.0",
         "drupal/memcache": "^2.5.0",
         "drupal/metatag": "^1.26",
         "drupal/moderation_sidebar": "^1.7",
@@ -97,7 +97,7 @@
         "webflo/drupal-finder": "^1.0.0"
     },
     "require-dev": {
-        "drupal/core-dev": "~10.4.5",
+        "drupal/core-dev": "~10.5.6",
         "jangregor/phpstan-prophecy": "^1.0",
         "mglaman/phpstan-drupal": "^1.1",
         "phpspec/prophecy-phpunit": "^2",
@@ -239,6 +239,9 @@
                 "1308152 : Add stream wrappers to access extension files (https://www.drupal.org/project/drupal/issues/1308152#comment-15653396, comment 404)": "patches/drupal/core/1308152-404-stream-wrapper.patch",
                 "2971390 : Make exposure of translation meta fields conditional (https://www.drupal.org/project/drupal/issues/2971390#comment-15882642, comment 105)" : "patches/drupal/core/2971390-105-translation-meta-field-conditional-exposure.patch",
                 "3207813 : ModuleHandler skips all hook implementations when invoked before the module files have been loaded (https://www.drupal.org/project/drupal/issues/3207813#comment-14962228, comment #27)": "patches/drupal/core/3207813-27-workaround.patch"
+            },
+            "drupal/entity_embed": {
+                "3531672 : Drupal 10.5/11.2 compatability (tooltip broken, cannot edit embedded entities) (https://www.drupal.org/project/entity_embed/issues/3531672#comment-16222297, comment 29)" : "patches/drupal/entity_embed/3531672.patch"
             },
             "drupal/features": {
                 "2834130 : Updates Features Diff to Include Alters (https://www.drupal.org/project/features/issues/2834130#comment-13139174, comment 4)": "patches/drupal/features/2834130-4-D8-features-detect-overrides-update.patch"
