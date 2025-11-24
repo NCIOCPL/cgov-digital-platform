@@ -251,4 +251,25 @@ class BasicMigrationTransformerTest extends UnitTestCase {
     $this->assertEquals($expected, $output, 'Should preserve tablet:grid-col-fill and remove invalid classes');
   }
 
+  /**
+   * Tests transformAll with empty string input.
+   *
+   * @Covers::transformAll
+   */
+  public function testTransformAllWithEmptyString(): void {
+    $output = $this->transformerManager->transformAll('');
+    $this->assertEquals('', $output, 'Should return empty string when input is empty string');
+  }
+
+  /**
+   * Tests transformAll with only multiple spaces.
+   *
+   * @Covers::transformAll
+   */
+  public function testTransformAllWithMultipleSpaces(): void {
+    $output1 = $this->transformerManager->transformAll('   ');
+
+    $this->assertEquals('   ', $output1, 'Should return spaces when input is only spaces');
+  }
+
 }
