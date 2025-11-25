@@ -29,4 +29,15 @@ interface NcidsHtmlTransformerInterface {
    */
   public function preProcessHtml(string $html): string;
 
+  /**
+   * Post-process HTML after transformation to remove data tags.
+   *
+   * @param string $html
+   *   The HTML to post-process.
+   *
+   * @return string
+   *   The post-processed HTML.
+   */
+  public function postProcessHtml(string $html): string;
+
 }
