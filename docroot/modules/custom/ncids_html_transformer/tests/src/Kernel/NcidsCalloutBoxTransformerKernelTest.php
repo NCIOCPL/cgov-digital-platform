@@ -2,6 +2,8 @@
 
 namespace Drupal\Tests\ncids_html_transformer\Kernel;
 
+use PHPUnit\Framework\ExpectationFailedException;
+
 /**
  * Kernel tests for the NCIDS HTML transformer manager service.
  *
@@ -25,10 +27,31 @@ class NcidsCalloutBoxTransformerKernelTest extends NcidsTransformerKernelTestBas
    *
    * @covers ::transformAll
    */
-  public function testTransformers(): void {
-    $this->checkNestedInvalidClasses();
-    $this->checkCalloutBoxVariations();
-    $this->checkMixedContentWithTextNodes();
+  public function testTransformers() {
+    $failures = [];
+    try {
+      $this->checkNestedInvalidClasses();
+    }
+    catch (ExpectationFailedException $e) {
+      $failures[] = $e->getMessage() . $e->getComparisonFailure()->getDiff();
+    }
+    try {
+      $this->checkCalloutBoxVariations();
+    }
+    catch (ExpectationFailedException $e) {
+      $failures[] = $e->getMessage() . $e->getComparisonFailure()->getDiff();
+    }
+    try {
+      $this->checkMixedContentWithTextNodes();
+    }
+    catch (ExpectationFailedException $e) {
+      $failures[] = $e->getMessage() . $e->getComparisonFailure()->getDiff();
+    }
+    if (!empty($failures)) {
+      throw new ExpectationFailedException(
+        count($failures) . " assertions failed:\n\t" . implode("\n\t", $failures)
+      );
+    }
   }
 
   /**
@@ -37,8 +60,12 @@ class NcidsCalloutBoxTransformerKernelTest extends NcidsTransformerKernelTestBas
   public function checkNestedInvalidClasses(): void {
     $input = '<div class="callout-box"><div class="invalid1"><p class="invalid2">Text</p></div></div>';
     $output = $this->transformerManager->transformAll($input);
-    $expected = '<div class="callout-box"><div class="invalid1"><p class="invalid2">Text</p></div></div>';
-    $this->assertEquals($expected, $output, 'Should add data tag and NOT transform nested content within callout-box');
+    $expected = '<div class="cgdp-embed-media-wrapper">' .
+    '<div class="align-center embedded-entity cgdp-embed-summary-box cgdp-embed-summary-box--small">' .
+    '<div class="usa-summary-box"><div class="usa-summary-box__body">' .
+    '<div class="usa-prose usa-summary-box__text">' .
+    '<div><p>Text</p></div></div></div></div></div></div>';
+    $this->assertEquals($expected, $output, 'Should transform the callout box while removing invalid class from nested elements.');
   }
 
   /**
@@ -47,8 +74,20 @@ class NcidsCalloutBoxTransformerKernelTest extends NcidsTransformerKernelTestBas
   public function checkCalloutBoxVariations(): void {
     $input = '<div class="callout-box-center invalid"><aside class="callout-box-right wrong">Right Box</aside></div>';
     $output = $this->transformerManager->transformAll($input);
-    $expected = '<div class="callout-box-center invalid"><aside class="callout-box-right wrong">Right Box</aside></div>';
-    $this->assertEquals($expected, $output, 'Should preserve allowed callout box variations and remove invalid classes (no data tag added)');
+    // phpcs:disable Drupal.Strings.UnnecessaryStringConcat
+    $expected = '<div class="cgdp-embed-media-wrapper">' .
+    '<div class="align-center embedded-entity cgdp-embed-summary-box cgdp-embed-summary-box--full">' .
+    '<div class="usa-summary-box">' .
+    '<div class="usa-summary-box__body">' .
+    '<div class="usa-prose usa-summary-box__text">' .
+    '<div class="cgdp-embed-media-wrapper">' .
+    '<div class="align-right embedded-entity cgdp-embed-summary-box cgdp-embed-summary-box--small">' .
+    '<aside class="usa-summary-box">' .
+    '<div class="usa-summary-box__body">' .
+    '<div class="usa-prose usa-summary-box__text">Right Box</div>' .
+    '</div></aside></div></div></div></div></div></div></div>';
+    // phpcs:enable Drupal.Strings.UnnecessaryStringConcat
+    $this->assertEquals($expected, $output, 'Should transform the callout box while also transforming the nested callout box as well.');
   }
 
   /**
@@ -57,8 +96,15 @@ class NcidsCalloutBoxTransformerKernelTest extends NcidsTransformerKernelTestBas
   public function checkMixedContentWithTextNodes(): void {
     $input = '<div class="callout-box">Text <span class="invalid">More</span> <p class="wrong">Text</p></div>';
     $output = $this->transformerManager->transformAll($input);
-    $expected = '<div class="callout-box">Text <span class="invalid">More</span> <p class="wrong">Text</p></div>';
-    $this->assertEquals($expected, $output, 'Should add data tag and NOT transform callout-box content, preserving all child elements');
+    // phpcs:disable Drupal.Strings.UnnecessaryStringConcat
+    $expected = '<div class="cgdp-embed-media-wrapper">' .
+    '<div class="align-center embedded-entity cgdp-embed-summary-box cgdp-embed-summary-box--small">' .
+    '<div class="usa-summary-box">' .
+    '<div class="usa-summary-box__body">' .
+    '<div class="usa-prose usa-summary-box__text">Text <span>More</span> <p>Text</p>' .
+    '</div></div></div></div></div>';
+    // phpcs:enable Drupal.Strings.UnnecessaryStringConcat
+    $this->assertEquals($expected, $output, 'Transform the callout box while retaining the text elements in its content.');
   }
 
   /**
