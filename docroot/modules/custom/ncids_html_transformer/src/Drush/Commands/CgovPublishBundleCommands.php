@@ -168,12 +168,6 @@ class CgovPublishBundleCommands extends DrushCommands {
    *   Throws exception on errors during publishing.
    */
   private static function publishTranslation(string $langcode, Node $node): bool {
-
-    \Drupal::logger('publish_bundle')->info('Processing nid: @nid, language: @lang', [
-      '@nid' => $node->id(),
-      '@lang' => $langcode,
-    ]);
-
     /** @var \Drupal\node\NodeStorage $node_storage */
     $node_storage = \Drupal::entityTypeManager()->getStorage('node');
 
@@ -209,7 +203,11 @@ class CgovPublishBundleCommands extends DrushCommands {
 
     if ($state === 'archived' && $translated_node->isPublished()) {
       // Archived content that is published should not be published again.
-      $translated_node->status->value = "0";
+      \Drupal::logger('publish_bundle')->notice('Processing Archived/Status 1 nid: @nid, language: @lang', [
+        '@nid' => $node->id(),
+        '@lang' => $langcode,
+      ]);
+      $translated_node->setUnpublished();
     }
     elseif ($state === 'published' && !$translated_node->isPublished()) {
       // This one is an odd case, the moderation state is published, but the
@@ -222,7 +220,12 @@ class CgovPublishBundleCommands extends DrushCommands {
       $translated_node->setPublished();
     }
     else {
-      $translated_node->status->value = "1";
+      \Drupal::logger('publish_bundle')->notice('Publishing nid: @nid, language: @lang', [
+        '@nid' => $node->id(),
+        '@lang' => $langcode,
+      ]);
+
+      $translated_node->setPublished();
       $translated_node->set('moderation_state', 'published');
     }
 

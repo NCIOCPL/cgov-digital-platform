@@ -87,6 +87,25 @@ abstract class NcidsHtmlTransformerBase implements NcidsHtmlTransformerInterface
   /**
    * {@inheritdoc}
    */
+  public function postProcessHtml(string $html): string {
+    if (empty($html)) {
+      return $html;
+    }
+
+    $dom = Html::load($html);
+    $xpath = new \DOMXpath($dom);
+    $elements = $xpath->query('//*[@data-html-transformer]');
+    foreach ($elements as $element) {
+      if ($element instanceof \DOMElement) {
+        $element->removeAttribute('data-html-transformer');
+      }
+    }
+    return Html::serialize($dom);
+  }
+
+  /**
+   * {@inheritdoc}
+   */
   public function transform(string $html): string {
     return $html;
   }
