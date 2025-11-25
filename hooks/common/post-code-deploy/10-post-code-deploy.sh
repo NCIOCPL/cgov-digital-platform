@@ -12,8 +12,8 @@
 
 set -ev
 
-## If this is ACSF then exit.
-if [[ $AH_SITE_GROUP == "ncigov" ]]; then
+## If this is MEO then exit.
+if [[ $AH_SITE_GROUP == "ncigovmeo" ]]; then
   exit;
 fi;
 
@@ -28,8 +28,6 @@ repo_type="$6"
 repo_root="/var/www/html/$site.$target_env"
 export PATH=$repo_root/vendor/bin:$PATH
 cd $repo_root
-
-users_file="$HOME/cgov-drupal-users.yml"
 
 ## If this is an ODE we would like things like toggle:modules to work. So we will
 ## pass in the target env as 'ode'. Then in blt.yml we can have an "ode" environment.
@@ -56,7 +54,7 @@ else
   drush cgov:destroy-cache
 
   ## Perform a fresh install.
-  blt cgov:reinstall --environment=$target_env -D cgov.drupal_users_file=$users_file -v --no-interaction -D drush.ansi=false
+  blt cgov:reinstall --environment=$target_env -v --no-interaction -D drush.ansi=false
 
   ## Uninstall cgov_yaml_content once done to turn off entity presave hack for supporting
   ## drupal-entity.

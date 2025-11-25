@@ -35,7 +35,7 @@ class UsersCommands extends BltTasks {
 
     $commands = [];
     $blocked_admin = [
-      'cgov:acsf:block-admin' => [],
+      'cgov:meo:block-admin' => [],
     ];
     if (array_key_exists('admin', $userConfig)) {
       if ($this->isAdminBlockValid($userConfig['admin'])) {

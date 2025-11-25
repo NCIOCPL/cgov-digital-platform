@@ -2,7 +2,7 @@
 
 /**
  * @file
- * Implementation of cache settings for ACE + ACSF.
+ * Implementation of cache settings for ACE + MEO.
  *
  * @see https://docs.acquia.com/site-factory/tiers/paas/workflow/hooks
  */
@@ -23,24 +23,14 @@ if (CGovSettingsUtil::isAcquia()) {
   $config['system.performance']['js']['preprocess'] = TRUE;
   $config['system.performance']['js']['gzip'] = TRUE;
 
-  switch ($env) {
-    case 'dev':
-    case '01dev':
-    case 'int':
-    case '01test':
-    case 'test':
-    case '01live':
-    case 'ode':
-      // Cache settings.
-      $config['system.performance']['cache']['page']['max_age'] = 16588800;
-      break;
-  }
+  // All Acquia environments should have the same max cache age of 192 days.
+  $config['system.performance']['cache']['page']['max_age'] = 16588800;
 
   // ODEs are not behind Akamai, but everything else conceivably could be.
   if ($env != 'ode') {
-    // Setup proper .edgerc path for Akamai module
+    // Setup proper .edgerc path for Akamai module.
     $ah_group = isset($_ENV['AH_SITE_GROUP']) ? $_ENV['AH_SITE_GROUP'] : NULL;
-    $config['akamai.settings']['edgerc_path'] = "/mnt/gfs/home/$ah_group/common/.edgerc";
+    $config['akamai.settings']['edgerc_path'] = "/mnt/files/{$_ENV['AH_SITE_GROUP']}.{$_ENV['AH_SITE_ENVIRONMENT']}/cgdp/edgerc";
     $config['akamai.settings']['basepath'] = 'https://' . $domain;
   }
 }
