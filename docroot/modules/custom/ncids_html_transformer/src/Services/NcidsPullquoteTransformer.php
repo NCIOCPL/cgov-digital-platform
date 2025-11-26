@@ -3,9 +3,9 @@
 namespace Drupal\ncids_html_transformer\Services;
 
 /**
- * Preprocessing-only transformer for pullquotes.
+ * Transformer for pullquotes.
  */
-class NcidsTempPullquoteTransformer extends NcidsHtmlTransformerBase {
+class NcidsPullquoteTransformer extends NcidsHtmlTransformerBase {
 
   /**
    * {@inheritdoc}
