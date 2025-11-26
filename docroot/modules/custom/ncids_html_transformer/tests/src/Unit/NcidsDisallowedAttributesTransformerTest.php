@@ -6,11 +6,12 @@ use Drupal\ncids_html_transformer\Services\NcidsDisallowedAttributesTransformer;
 use Drupal\Tests\UnitTestCase;
 
 /**
- * Tests Basic Migration Transformer Service.
+ * Tests Ncids Disallowed Attributes Transformer Service.
  *
  * @group ncids_html_transformer
+ * @coversDefaultClass \Drupal\ncids_html_transformer\Services\NcidsDisallowedAttributesTransformer
  */
-class AttributesMigrationTransformerTest extends UnitTestCase {
+class NcidsDisallowedAttributesTransformerTest extends UnitTestCase {
 
   /**
    * The disallowed attributes transformer.
@@ -32,7 +33,7 @@ class AttributesMigrationTransformerTest extends UnitTestCase {
   /**
    * Tests ID attribute preservation on all elements.
    *
-   * @Covers::transform
+   * @covers ::transform
    */
   public function testIdAttributePreservation(): void {
     $input = '<div id="test-div" data-custom="remove">Content <span id="inner-span">Text</span> <p id="paragraph" onclick="alert()">Para</p></div>';
@@ -44,7 +45,7 @@ class AttributesMigrationTransformerTest extends UnitTestCase {
   /**
    * Tests anchor target attribute preservation.
    *
-   * @Covers::transform
+   * @covers ::transform
    */
   public function testAnchorTargetAttribute(): void {
     $input = '<a href="#" target="_blank" onclick="alert()" data-custom="remove" id="link">Link</a>';
@@ -56,7 +57,7 @@ class AttributesMigrationTransformerTest extends UnitTestCase {
   /**
    * Tests iframe attribute preservation.
    *
-   * @Covers::transform
+   * @covers ::transform
    */
   public function testIframeAttributes(): void {
     $input = '<iframe src="https://example.com" width="500" height="300" allowfullscreen frameborder="0" title="Example" onclick="alert()" data-custom="remove" id="video">Content</iframe>';
@@ -68,7 +69,7 @@ class AttributesMigrationTransformerTest extends UnitTestCase {
   /**
    * Tests nci-definition custom element attributes.
    *
-   * @Covers::transform
+   * @covers ::transform
    */
   public function testNciDefinitionAttributes(): void {
     $input = '<nci-definition data-gloss-id="123" data-gloss-audience="patient" data-gloss-dictionary="cancer" data-gloss-lang="en" onclick="alert()" data-custom="remove" id="definition">Term</nci-definition>';
@@ -80,7 +81,7 @@ class AttributesMigrationTransformerTest extends UnitTestCase {
   /**
    * Tests ordered list start and type attributes.
    *
-   * @Covers::transform
+   * @covers ::transform
    */
   public function testOrderedListAttributes(): void {
     $input = '<ol start="5" type="I" data-custom="remove" id="list"><li>Item 1</li><li>Item 2</li></ol>';
@@ -92,7 +93,7 @@ class AttributesMigrationTransformerTest extends UnitTestCase {
   /**
    * Tests script element attributes.
    *
-   * @Covers::transform
+   * @covers ::transform
    */
   public function testScriptAttributes(): void {
     $input = '<script src="script.js" type="text/javascript" data-custom="remove" onclick="alert()" id="my-script">console.log("test");</script>';
@@ -104,7 +105,7 @@ class AttributesMigrationTransformerTest extends UnitTestCase {
   /**
    * Tests time element datetime attribute.
    *
-   * @Covers::transform
+   * @covers ::transform
    */
   public function testTimeAttributes(): void {
     $input = '<time datetime="2024-01-15T10:30:00Z" data-custom="remove" id="timestamp">January 15, 2024</time>';
@@ -116,7 +117,7 @@ class AttributesMigrationTransformerTest extends UnitTestCase {
   /**
    * Tests elements not in allowed list get only id attribute.
    *
-   * @Covers::transform
+   * @covers ::transform
    */
   public function testUnlistedElementsOnlyKeepId(): void {
     $input = '<section data-custom="remove" onclick="alert()" id="section">Content <article data-test="remove" id="article">Article</article></section>';
@@ -128,7 +129,7 @@ class AttributesMigrationTransformerTest extends UnitTestCase {
   /**
    * Tests empty attributes are properly removed.
    *
-   * @Covers::transform
+   * @covers ::transform
    */
   public function testEmptyAttributeRemoval(): void {
     $input = '<div data-empty="" id="test" onclick="">Content</div>';
@@ -140,7 +141,7 @@ class AttributesMigrationTransformerTest extends UnitTestCase {
   /**
    * Tests complex nested structure with mixed allowed/disallowed attributes.
    *
-   * @Covers::transform
+   * @covers ::transform
    */
   public function testComplexNestedAttributeStructure(): void {
     $input = '<div id="container" class="grid-container">
@@ -168,7 +169,7 @@ class AttributesMigrationTransformerTest extends UnitTestCase {
   /**
    * Tests data-html-transformer attribute prevents processing.
    *
-   * @Covers::transform
+   * @covers ::transform
    */
   public function testDataHtmlTransformerSkipping(): void {
     $input = '<div data-html-transformer="skip" class="invalid" style="color: red;" onclick="alert()">
@@ -186,7 +187,7 @@ class AttributesMigrationTransformerTest extends UnitTestCase {
   /**
    * Tests all iframe attributes are preserved.
    *
-   * @Covers::transform
+   * @covers ::transform
    */
   public function testAllIframeAttributes(): void {
     $input = '<iframe
@@ -218,7 +219,7 @@ class AttributesMigrationTransformerTest extends UnitTestCase {
   /**
    * Tests anchor tag attributes.
    *
-   * @Covers::transform
+   * @covers ::transform
    */
   public function testAnchorTagAttributes(): void {
     $input = '<a href="#" target="_blank" data-entity-type="good" data-entity-uuid="good" data-entity-substitution="good" data-test-attribute="bad">testing</a>';
@@ -230,7 +231,7 @@ class AttributesMigrationTransformerTest extends UnitTestCase {
   /**
    * Tests img tag attributes.
    *
-   * @Covers::transform
+   * @covers ::transform
    */
   public function testImgTagAttributes(): void {
     $input = '<img loading="lazy" src="/sites/default/files/oembed_thumbnails/Lm2zgXog0O-iIvL1prniHay9UfMfF-6WT8uO4bEgUSM.jpg" width="480" height="360" alt="">';
@@ -242,7 +243,7 @@ class AttributesMigrationTransformerTest extends UnitTestCase {
   /**
    * Tests div tags.
    *
-   * @Covers::transform
+   * @covers ::transform
    */
   public function testDivTagAttributes(): void {
     $input = '<div xmlns:o="urn:www.microsoft.com/office" xmlns:st1="urn:www.microsoft.com/smarttags" xmlns:st2="urn:www.microsoft.com/smarttags2" xmlns:w="urn:www.microsoft.com/word" xmlns:x="urn:www.microsoft.com/excel">
@@ -270,7 +271,7 @@ class AttributesMigrationTransformerTest extends UnitTestCase {
   /**
    * Tests img tag attributes.
    *
-   * @Covers::transform
+   * @covers ::transform
    */
   public function testRandomAttributes(): void {
     $input = '<p><strong>Acerca de los Institutos Nacionales de la Salud:</strong>&nbsp;Los Institutos Nacionales de la Salud (NIH) son el organismo nacional de investigación médica, integrado por 27 institutos y centros, y es un componente del Departamento de Salud y Servicios Humanos de los Estados Unidos (HHS). Los NIH son el organismo federal principal que lleva a cabo y apoya la investigación básica, clínica y médica aplicada e investiga las causas, los tratamientos y las curas de enfermedades comunes y raras. Para obtener más información sobre los NIH y sus programas, visite <a href="https://salud.nih.gov/">salud.nih.gov</a>.<w:sdtpr></w:sdtpr><w:sdt id="1213311133" sdttag="goog_rdk_31"></w:sdt></p>';
