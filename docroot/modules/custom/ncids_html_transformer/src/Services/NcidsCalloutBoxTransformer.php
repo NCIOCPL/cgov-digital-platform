@@ -5,9 +5,9 @@ declare(strict_types=1);
 namespace Drupal\ncids_html_transformer\Services;
 
 /**
- * Preprocessing-only transformer for callout boxes.
+ * Transformer for callout boxes.
  */
-class NcidsTempCalloutBoxTransformer extends NcidsHtmlTransformerBase {
+class NcidsCalloutBoxTransformer extends NcidsHtmlTransformerBase {
 
   /**
    * {@inheritdoc}
@@ -17,6 +17,7 @@ class NcidsTempCalloutBoxTransformer extends NcidsHtmlTransformerBase {
     'callout-box-left',
     'callout-box-right',
     'callout-box-center',
+    'callout-box-full',
   ];
 
 }

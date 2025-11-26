@@ -12,23 +12,23 @@ services:
     tags:
       - { name: ncids_html_transformer.ncids_html_transform, priority: 7 }
   ncids_html_transformer.callout_box_transformer:
-    class: Drupal\ncids_html_transformer\Services\NcidsTempCalloutBoxTransformer
+    class: Drupal\ncids_html_transformer\Services\NcidsCalloutBoxTransformer
     tags:
       - { name: ncids_html_transformer.ncids_html_transform, priority: 5 }
   ncids_html_transformer.table_transformer:
-    class: Drupal\ncids_html_transformer\Services\NcidsTempTableTransformer
+    class: Drupal\ncids_html_transformer\Services\NcidsTableTransformer
     tags:
       - { name: ncids_html_transformer.ncids_html_transform, priority: 4 }
   ncids_html_transformer.list_transformer:
-    class: Drupal\ncids_html_transformer\Services\NcidsTempListTransformer
+    class: Drupal\ncids_html_transformer\Services\NcidsListTransformer
     tags:
       - { name: ncids_html_transformer.ncids_html_transform, priority: 2 }
   ncids_html_transformer.pullquote_transformer:
-    class: Drupal\ncids_html_transformer\Services\NcidsTempPullquoteTransformer
+    class: Drupal\ncids_html_transformer\Services\NcidsPullquoteTransformer
     tags:
       - { name: ncids_html_transformer.ncids_html_transform, priority: 1 }
   ncids_html_transformer.embedded_entity_transformer:
-    class: Drupal\ncids_html_transformer\Services\NcidsTempEmbeddedEntitiesTransformer
+    class: Drupal\ncids_html_transformer\Services\NcidsEmbeddedEntitiesTransformer
     tags:
       - { name: ncids_html_transformer.ncids_html_transform, priority: 3 }
   ncids_html_transformer.disallowed_attributes_transformer:
