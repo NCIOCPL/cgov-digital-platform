@@ -3,9 +3,9 @@
 namespace Drupal\ncids_html_transformer\Services;
 
 /**
- * Preprocessing-only transformer for lists.
+ * Transformer for lists.
  */
-class NcidsTempListTransformer extends NcidsHtmlTransformerBase {
+class NcidsListTransformer extends NcidsHtmlTransformerBase {
   /**
    * {@inheritdoc}
    */
