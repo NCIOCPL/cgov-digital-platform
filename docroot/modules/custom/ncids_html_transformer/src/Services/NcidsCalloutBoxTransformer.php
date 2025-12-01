@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Drupal\ncids_html_transformer\Services;
 
+use Drupal\Component\Utility\Html;
+
 /**
  * Transformer for callout boxes.
  */

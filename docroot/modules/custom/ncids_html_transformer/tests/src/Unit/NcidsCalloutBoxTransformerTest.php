@@ -3,6 +3,7 @@
 namespace Drupal\Tests\ncids_html_transformer\Unit;
 
 use Drupal\ncids_html_transformer\Services\NcidsCalloutBoxTransformer;
+use Drupal\ncids_html_transformer\Services\NcidsHtmlTransformerManager;
 use Drupal\Tests\UnitTestCase;
 
 /**
@@ -21,11 +22,19 @@ class NcidsCalloutBoxTransformerTest extends UnitTestCase {
   protected $transformer;
 
   /**
+   * The transformer manager.
+   *
+   * @var \Drupal\ncids_html_transformer\Services\NcidsHtmlTransformerManager
+   */
+  protected $transfomerManager;
+
+  /**
    * {@inheritdoc}
    */
   protected function setUp(): void {
     parent::setUp();
-    $this->transformer = new NcidsCalloutBoxTransformer();
+    $this->transfomerManager = new NcidsHtmlTransformerManager();
+    $this->transformer = new NcidsCalloutBoxTransformer($this->transfomerManager);
   }
 
   /**
