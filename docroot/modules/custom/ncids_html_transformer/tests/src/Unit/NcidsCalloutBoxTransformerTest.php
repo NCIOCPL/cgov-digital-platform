@@ -138,7 +138,7 @@ class NcidsCalloutBoxTransformerTest extends UnitTestCase {
         </a><strong> from the July 30, 2024 Collaborative pre-application webinar.&nbsp;</strong>
       </p>
     </aside>';
-    $expected = '<aside class="cgdp-embed-media-wrapper"><div class="embedded-entity cgdp-embed-summary-box cgdp-embed-summary-box--full"><div class="usa-summary-box"><div class="usa-summary-box__body"><div class="usa-prose usa-summary-box__text"><p><strong>PRE-APPLICATION WEBINAR RECORDING AND SLIDES</strong></p>
+    $expected = '<div class="cgdp-embed-media-wrapper"><div class="embedded-entity cgdp-embed-summary-box cgdp-embed-summary-box--full"><aside class="usa-summary-box"><div class="usa-summary-box__body"><div class="usa-prose usa-summary-box__text"><p><strong>PRE-APPLICATION WEBINAR RECORDING AND SLIDES</strong></p>
       <p>
         <a href="https://cbiit.webex.com/cbiit/ldr.php?RCID=fd790ee0e85c3428c6b68a88b459d99d">
           <strong>Watch the recording</strong>
@@ -150,7 +150,7 @@ class NcidsCalloutBoxTransformerTest extends UnitTestCase {
         <a href="/about-nci/organization/crchd/disparities-research/collaborative-web-slides" data-entity-type="media" data-entity-uuid="a0b161bb-ae73-41bf-be21-8a07ff0c59b8" data-entity-substitution="canonical">
           <strong>access the slides</strong>
         </a><strong> from the July 30, 2024 Collaborative pre-application webinar.&nbsp;</strong>
-      </p></div></div></div></div></aside>';
+      </p></div></div></aside></div></div>';
 
     // Simulate full transformation process.
     $pre_processed = $this->transformer->preProcessHtml($input);
@@ -166,20 +166,19 @@ class NcidsCalloutBoxTransformerTest extends UnitTestCase {
    */
   public function testCalloutBox2(): void {
     $input = '<aside class="callout-box-full">
-      <h3>What\'s in a CAR T-cell?</h3>
+    <h3>What\'s in a CAR T-cell?</h3>
       <p>Although there are important differences between each of the approved CAR T-cell therapies that can affect how they function in patients, they share similar&nbsp;<span style="font-weight:400;">components and designs.</span></p>
       <ul>
         <li>Each CAR on an individual T cell spans the cell membrane, with part of the receptor sitting outside the cell and part within the cell.</li>
         <li>The external part of the CAR is composed of fragments, or domains, of lab-made <a data-gloss-id="44918" data-gloss-dictionary="Cancer.gov" data-gloss-audience="Patient" data-gloss-lang="en" href="/publications/dictionaries/cancer-terms/def/44918" class="definition">antibodies</a>. Which domains are used affects the receptor\'s ability to recognize or bind to its target antigen on tumor cells.</li>
         <li>The internal part of each CAR has "signaling" and "co-stimulatory" domains. After the receptor binds to an antigen on a tumor cell, these domains transmit signals inside the T cells that help them multiply further in the body.</li>
-      </ul>
-    </aside>';
-    $expected = '<aside class="cgdp-embed-media-wrapper"><div class="embedded-entity cgdp-embed-summary-box cgdp-embed-summary-box--full"><div class="usa-summary-box"><div class="usa-summary-box__body"><div class="usa-summary-box__heading">What\'s in a CAR T-cell?</div><div class="usa-prose usa-summary-box__text"><p>Although there are important differences between each of the approved CAR T-cell therapies that can affect how they function in patients, they share similar&nbsp;<span style="font-weight:400;">components and designs.</span></p>
+      </ul></aside>';
+    $expected = '<div class="cgdp-embed-media-wrapper"><div class="embedded-entity cgdp-embed-summary-box cgdp-embed-summary-box--full"><aside class="usa-summary-box"><div class="usa-summary-box__body"><div class="usa-summary-box__heading">What\'s in a CAR T-cell?</div><div class="usa-prose usa-summary-box__text"><p>Although there are important differences between each of the approved CAR T-cell therapies that can affect how they function in patients, they share similar&nbsp;<span style="font-weight:400;">components and designs.</span></p>
       <ul>
         <li>Each CAR on an individual T cell spans the cell membrane, with part of the receptor sitting outside the cell and part within the cell.</li>
         <li>The external part of the CAR is composed of fragments, or domains, of lab-made <a data-gloss-id="44918" data-gloss-dictionary="Cancer.gov" data-gloss-audience="Patient" data-gloss-lang="en" href="/publications/dictionaries/cancer-terms/def/44918" class="definition">antibodies</a>. Which domains are used affects the receptor\'s ability to recognize or bind to its target antigen on tumor cells.</li>
         <li>The internal part of each CAR has "signaling" and "co-stimulatory" domains. After the receptor binds to an antigen on a tumor cell, these domains transmit signals inside the T cells that help them multiply further in the body.</li>
-      </ul></div></div></div></div></aside>';
+      </ul></div></div></aside></div></div>';
 
     // Simulate full transformation process.
     $pre_processed = $this->transformer->preProcessHtml($input);
@@ -197,7 +196,7 @@ class NcidsCalloutBoxTransformerTest extends UnitTestCase {
     $input = '<aside class="callout-box-right">
       <p>Connected health&nbsp;is the use of technology to facilitate the efficient and effective collection, flow, and use of health information.</p>
     </aside>';
-    $expected = '<aside class="cgdp-embed-media-wrapper"><div class="align-right embedded-entity cgdp-embed-summary-box cgdp-embed-summary-box--small"><div class="usa-summary-box"><div class="usa-summary-box__body"><div class="usa-prose usa-summary-box__text"><p>Connected health&nbsp;is the use of technology to facilitate the efficient and effective collection, flow, and use of health information.</p></div></div></div></div></aside>';
+    $expected = '<div class="cgdp-embed-media-wrapper"><div class="align-right embedded-entity cgdp-embed-summary-box cgdp-embed-summary-box--small"><aside class="usa-summary-box"><div class="usa-summary-box__body"><div class="usa-prose usa-summary-box__text"><p>Connected health&nbsp;is the use of technology to facilitate the efficient and effective collection, flow, and use of health information.</p></div></div></aside></div></div>';
 
     // Simulate full transformation process.
     $pre_processed = $this->transformer->preProcessHtml($input);
@@ -213,7 +212,7 @@ class NcidsCalloutBoxTransformerTest extends UnitTestCase {
    */
   public function testCalloutBox4(): void {
     $input = '<div class="callout-box-left">
-      <h3><a href="https://directorsblog.nih.gov/2024/06/27/molecular-portrait-of-key-driver-of-pancreatic-cancer-offers-hope-for-continued-treatment-advances">Molecular Portrait of Key Driver of Pancreatic Cancer Offers Hope for Continued Treatment Advances</a></h3>
+    <h3><a href="https://directorsblog.nih.gov/2024/06/27/molecular-portrait-of-key-driver-of-pancreatic-cancer-offers-hope-for-continued-treatment-advances">Molecular Portrait of Key Driver of Pancreatic Cancer Offers Hope for Continued Treatment Advances</a></h3>
       <p>Researchers have established the most comprehensive molecular portrait yet of the workings of KRAS and how its many downstream impacts may influence outcomes for people with pancreatic cancer.</p>
     </div>';
     $expected = '<div class="cgdp-embed-media-wrapper"><div class="align-left embedded-entity cgdp-embed-summary-box cgdp-embed-summary-box--small"><div class="usa-summary-box"><div class="usa-summary-box__body"><div class="usa-summary-box__heading"><a href="https://directorsblog.nih.gov/2024/06/27/molecular-portrait-of-key-driver-of-pancreatic-cancer-offers-hope-for-continued-treatment-advances">Molecular Portrait of Key Driver of Pancreatic Cancer Offers Hope for Continued Treatment Advances</a></div><div class="usa-prose usa-summary-box__text"><p>Researchers have established the most comprehensive molecular portrait yet of the workings of KRAS and how its many downstream impacts may influence outcomes for people with pancreatic cancer.</p></div></div></div></div></div>';
