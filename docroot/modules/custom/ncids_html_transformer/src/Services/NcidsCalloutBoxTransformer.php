@@ -61,17 +61,21 @@ class NcidsCalloutBoxTransformer extends NcidsHtmlTransformerBase {
     $xpath = new \DOMXpath($dom);
 
     // Find all callout boxes with data-html-transformer.
-    $callout_boxes = $xpath->query("//*[@data-html-transformer='callout-box-full' or @data-html-transformer='callout-box-left' or @data-html-transformer='callout-box-right' or @data-html-transformer='callout-box-center' or @data-html-transformer='callout-box']");
+    $callout_boxes = $xpath->query("//*[@data-html-transformer='NcidsCalloutBoxTransformer']");
 
     foreach ($callout_boxes as $callout_box) {
       /** @var \DOMElement $callout_box */
-      $transformer_type = $callout_box->getAttribute('data-html-transformer');
+      $class_string = trim($callout_box->getAttribute('class'));
+      $class_array = preg_split('/\s+/', $class_string);
+      $callout_box_type = array_find($class_array, function (string $class_name) {
+        return in_array($class_name, static::$preprocessClasses);
+      });
 
       // Determine alignment and size based on transformer type.
       $alignment_class = '';
       $size_class = 'cgdp-embed-summary-box--full';
 
-      switch ($transformer_type) {
+      switch ($callout_box_type) {
         case 'callout-box-left':
           $alignment_class = 'align-left';
           $size_class = 'cgdp-embed-summary-box--small';
@@ -156,7 +160,7 @@ class NcidsCalloutBoxTransformer extends NcidsHtmlTransformerBase {
       // Create a new wrapper element to replace the callout box.
       $new_wrapper = $dom->createElement($callout_box->nodeName);
       $new_wrapper->setAttribute('class', 'cgdp-embed-media-wrapper');
-      $new_wrapper->setAttribute('data-html-transformer', $transformer_type);
+      $new_wrapper->setAttribute('data-html-transformer', 'NcidsCalloutBoxTransformer');
 
       // Parse the summary box HTML and import nodes.
       $temp_dom = Html::load($summary_box_html);
