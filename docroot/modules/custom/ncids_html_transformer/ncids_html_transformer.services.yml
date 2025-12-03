@@ -13,10 +13,12 @@ services:
       - { name: ncids_html_transformer.ncids_html_transform, priority: 7 }
   ncids_html_transformer.callout_box_transformer:
     class: Drupal\ncids_html_transformer\Services\NcidsCalloutBoxTransformer
+    arguments: ['@ncids_html_transformer.html_transformer_manager']
     tags:
       - { name: ncids_html_transformer.ncids_html_transform, priority: 5 }
   ncids_html_transformer.table_transformer:
     class: Drupal\ncids_html_transformer\Services\NcidsTableTransformer
+    arguments: ['@ncids_html_transformer.html_transformer_manager']
     tags:
       - { name: ncids_html_transformer.ncids_html_transform, priority: 4 }
   ncids_html_transformer.ignore_transformer:
