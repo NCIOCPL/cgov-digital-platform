@@ -52,6 +52,18 @@ class NcidsDisallowedClassesTransformerTest extends UnitTestCase {
     $this->assertEquals($expected, $output, 'Should NOT transform nested content within another transformer element.');
   }
 
+  /**
+   * Tests no-bullets transformation.
+   *
+   * @covers ::transform
+   */
+  public function testNoBulletsTransformation(): void {
+    $input = '<ul class="no-bullets no-description"><li>List items</li></ul>';
+    $output = $this->transformer->transform($input);
+    $expected = '<ul><li>List items</li></ul>';
+    $this->assertEquals($expected, $output, 'Should remove no-bullets and no-description classes');
+  }
+
   /* ------------------- Tests for NCIDS elements ------------------- */
 
   /**
@@ -64,9 +76,9 @@ class NcidsDisallowedClassesTransformerTest extends UnitTestCase {
    * @covers ::transform
    */
   public function testSummaryBoxStructure(): void {
-    $input = '<div class="usa-summary-box invalid-class"><h3 class="usa-summary-box__heading wrong-class">Title</h3><div class="usa-summary-box__text invalid">Content</div></div>';
+    $input = '<div class="usa-summary-box invalid-class"><div class="usa-summary-box__heading wrong-class">Title</div><div class="usa-summary-box__text invalid">Content</div></div>';
     $output = $this->transformer->transform($input);
-    $expected = '<div class="usa-summary-box"><h3 class="usa-summary-box__heading">Title</h3><div class="usa-summary-box__text">Content</div></div>';
+    $expected = '<div class="usa-summary-box"><div class="usa-summary-box__heading">Title</div><div class="usa-summary-box__text">Content</div></div>';
     $this->assertEquals($expected, $output, 'Should preserve summary box structure and remove invalid classes (no data tag added)');
   }
 
