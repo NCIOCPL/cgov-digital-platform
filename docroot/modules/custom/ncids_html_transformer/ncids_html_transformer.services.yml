@@ -19,10 +19,6 @@ services:
     class: Drupal\ncids_html_transformer\Services\NcidsTableTransformer
     tags:
       - { name: ncids_html_transformer.ncids_html_transform, priority: 4 }
-  ncids_html_transformer.list_transformer:
-    class: Drupal\ncids_html_transformer\Services\NcidsListTransformer
-    tags:
-      - { name: ncids_html_transformer.ncids_html_transform, priority: 2 }
   ncids_html_transformer.pullquote_transformer:
     class: Drupal\ncids_html_transformer\Services\NcidsPullquoteTransformer
     tags:
