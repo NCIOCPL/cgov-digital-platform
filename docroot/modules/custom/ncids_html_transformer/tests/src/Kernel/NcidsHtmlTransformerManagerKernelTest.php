@@ -32,6 +32,7 @@ class NcidsHtmlTransformerManagerKernelTest extends NcidsTransformerKernelTestBa
     $this->assertInstanceOf(NcidsHtmlTransformerManager::class, $this->transformerManager);
 
     $this->checkMixOfClassesStylesAndAttributes();
+    $this->checkMixOfClassesStylesAndAttributesWithDefinition();
   }
 
   /**
@@ -41,6 +42,16 @@ class NcidsHtmlTransformerManagerKernelTest extends NcidsTransformerKernelTestBa
     $input = '<div id="test-div" class="invalid" style="width: 100%;" data-custom="remove">Content <span class="invalid" style="width: 100%;" id="inner-span">Text</span> <p id="paragraph" class="invalid" style="width: 100%;" onclick="alert()">Para</p></div>';
     $output = $this->transformerManager->transformAll($input);
     $expected = '<div id="test-div">Content <span id="inner-span">Text</span> <p id="paragraph">Para</p></div>';
+    $this->assertEquals($expected, $output, 'Should preserve ID attributes on all elements while removing other disallowed attributes');
+  }
+
+  /**
+   * Tests mix of classes, styles, and attributes on various elements.
+   */
+  private function checkMixOfClassesStylesAndAttributesWithDefinition(): void {
+    $input = '<div id="test-div" class="invalid" style="width: 100%;" data-custom="remove">Content <span class="invalid" style="width: 100%;" id="inner-span">Text</span> <a class="definition" data-glossary-id="CDR0000045214" href="/Common/PopUps/popDefinition.aspx?id=CDR0000045214&amp;version=Patient&amp;language=English">chemotherapy</a> <p id="paragraph" class="invalid" style="width: 100%;" onclick="alert()">Para</p></div>';
+    $output = $this->transformerManager->transformAll($input);
+    $expected = '<div id="test-div">Content <span id="inner-span">Text</span> <nci-definition data-gloss-id="45214" data-gloss-dictionary="Cancer.gov" data-gloss-audience="Patient" data-gloss-lang="en">chemotherapy</nci-definition> <p id="paragraph">Para</p></div>';
     $this->assertEquals($expected, $output, 'Should preserve ID attributes on all elements while removing other disallowed attributes');
   }
 

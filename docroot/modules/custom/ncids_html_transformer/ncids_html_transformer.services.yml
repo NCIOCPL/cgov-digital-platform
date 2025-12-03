@@ -1,37 +1,57 @@
+## Note: The higher the priority number, the sooner the transformer is run. Technically, this
+## only really matters for transformers that do not use pre/post DOM processing with
+## data-html-trasnform attribute, but to keep things predictable we assign priorities
+## to all transformers.
 services:
   ncids_html_transformer.html_transformer_manager:
     class: Drupal\ncids_html_transformer\Services\NcidsHtmlTransformerManager
     tags:
       - { name: service_collector, tag: ncids_html_transformer.ncids_html_transform, call: addTransformer }
-  ncids_html_transformer.disallowed_classes_transformer:
-    class: Drupal\ncids_html_transformer\Services\NcidsDisallowedClassesTransformer
-    tags:
-      - { name: ncids_html_transformer.ncids_html_transform, priority: 6 }
-  ncids_html_transformer.disallowed_styles_transformer:
-    class: Drupal\ncids_html_transformer\Services\NcidsDisallowedStylesTransformer
-    tags:
-      - { name: ncids_html_transformer.ncids_html_transform, priority: 7 }
-  ncids_html_transformer.callout_box_transformer:
-    class: Drupal\ncids_html_transformer\Services\NcidsCalloutBoxTransformer
-    tags:
-      - { name: ncids_html_transformer.ncids_html_transform, priority: 5 }
-  ncids_html_transformer.table_transformer:
-    class: Drupal\ncids_html_transformer\Services\NcidsTableTransformer
-    tags:
-      - { name: ncids_html_transformer.ncids_html_transform, priority: 4 }
+  # The ignore transformer must be run first.
   ncids_html_transformer.ignore_transformer:
     class: Drupal\ncids_html_transformer\Services\NcidsIgnoreTransformer
     tags:
-      - { name: ncids_html_transformer.ncids_html_transform, priority: 1 }
-  ncids_html_transformer.pullquote_transformer:
-    class: Drupal\ncids_html_transformer\Services\NcidsPullquoteTransformer
+      - { name: ncids_html_transformer.ncids_html_transform, priority: 400 }
+  # These transformers do not care about data-html-transform attributes, nor do they set
+  # them, so they run next.
+  ncids_html_transformer.definition_transformer:
+    class: Drupal\ncids_html_transformer\Services\NcidsDefinitionTransformer
     tags:
-      - { name: ncids_html_transformer.ncids_html_transform, priority: 2 }
+      - { name: ncids_html_transformer.ncids_html_transform, priority: 375 }
   ncids_html_transformer.embedded_entity_transformer:
     class: Drupal\ncids_html_transformer\Services\NcidsEmbeddedEntitiesTransformer
     tags:
-      - { name: ncids_html_transformer.ncids_html_transform, priority: 3 }
+      - { name: ncids_html_transformer.ncids_html_transform, priority: 350 }
+
+  ## These transformers set data-html-transform attributes, so none of the disallow
+  ## transformers will run until after these have run. However, they *can* pass
+  ## child html to the transformer manager to have it transformed as well.
+  ncids_html_transformer.callout_box_transformer:
+    class: Drupal\ncids_html_transformer\Services\NcidsCalloutBoxTransformer
+    tags:
+      - { name: ncids_html_transformer.ncids_html_transform, priority: 280 }
+  ncids_html_transformer.table_transformer:
+    class: Drupal\ncids_html_transformer\Services\NcidsTableTransformer
+    tags:
+      - { name: ncids_html_transformer.ncids_html_transform, priority: 270 }
+  ncids_html_transformer.pullquote_transformer:
+    class: Drupal\ncids_html_transformer\Services\NcidsPullquoteTransformer
+    tags:
+      - { name: ncids_html_transformer.ncids_html_transform, priority: 260 }
+
+  # These transformers honor the data-html-transform attribute, so they run last. They
+  # are also the transformers that will remove the classes and attributes the above
+  # transformers might be looking for.
   ncids_html_transformer.disallowed_attributes_transformer:
     class: Drupal\ncids_html_transformer\Services\NcidsDisallowedAttributesTransformer
     tags:
-      - { name: ncids_html_transformer.ncids_html_transform, priority: 8 }
+      - { name: ncids_html_transformer.ncids_html_transform, priority: 30 }
+  ncids_html_transformer.disallowed_classes_transformer:
+    class: Drupal\ncids_html_transformer\Services\NcidsDisallowedClassesTransformer
+    tags:
+      - { name: ncids_html_transformer.ncids_html_transform, priority: 20 }
+  ncids_html_transformer.disallowed_styles_transformer:
+    class: Drupal\ncids_html_transformer\Services\NcidsDisallowedStylesTransformer
+    tags:
+      - { name: ncids_html_transformer.ncids_html_transform, priority: 10 }
+
