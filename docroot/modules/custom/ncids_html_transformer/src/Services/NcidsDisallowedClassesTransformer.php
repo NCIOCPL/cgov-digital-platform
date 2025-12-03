@@ -14,17 +14,17 @@ class NcidsDisallowedClassesTransformer extends NcidsHtmlTransformerBase {
   /**
    * Allowed class combinations with their element restrictions.
    *
+   * The list below should only include those classes that we would keep and
+   * that no other transformer would handle. E.g., tables are transformed by the
+   * NcidsTableTransformer, so table-related classes are not included here. The
+   * same applies to pullquotes, callout boxes, and definitions. The list below
+   * should really only contain NCIDS classes.
+   *
    * @var array
    */
   protected array $allowedClassCombinations = [
     'div' => [
-      ['callout-box'],
       ['az-list'],
-      ['callout-box-center'],
-      ['callout-box', 'center'],
-      ['callout-box-full'],
-      ['callout-box-left'],
-      ['callout-box-right'],
       ['grid-col'],
       ['grid-col-2'],
       ['grid-col-3'],
@@ -44,11 +44,6 @@ class NcidsDisallowedClassesTransformer extends NcidsHtmlTransformerBase {
       ['grid-gap-lg'],
       ['grid-row'],
       ['mobile-lg:grid-col'],
-      ['pullquote'],
-      ['pullquote-center'],
-      ['pullquote-left'],
-      ['pullquote-right'],
-      ['row'],
       ['tablet:grid-col'],
       ['tablet:grid-col-2'],
       ['tablet:grid-col-3'],
@@ -61,40 +56,15 @@ class NcidsDisallowedClassesTransformer extends NcidsHtmlTransformerBase {
       ['tablet:grid-col-fill'],
       ['usa-summary-box'],
       ['usa-summary-box__body'],
+      ['usa-summary-box__heading'],
       ['usa-summary-box__text'],
     ],
-    'p' => [
-      ['author'],
-      ['pullquote-text'],
-    ],
-    'aside' => [
-      ['callout-box'],
-      ['callout-box-center'],
-      ['callout-box-full'],
-      ['callout-box-right'],
-    ],
-    'table' => [
-      ['complex-table'],
-      ['table-default'],
-    ],
     'a' => [
-      ['definition'],
       ['usa-button'],
       ['usa-button--nci-full-width'],
       ['usa-button--outline'],
       ['usa-button--secondary'],
       ['usa-summary-box__link'],
-    ],
-    'ul' => [
-      ['no-bullets'],
-      ['no-bullets-indent'],
-      ['no-description'],
-    ],
-    'td' => [
-      ['text-left'],
-    ],
-    'h3' => [
-      ['usa-summary-box__heading'],
     ],
   ];
 
