@@ -69,7 +69,7 @@ function cgov_metatag_token_info() {
   $info['tokens']['cgov_tokens']['sitename-display-type-meta'] =
         [
           'name' => t('Search Results Site Name Display.'),
-          'description' => t('The value to use for meta tag.'),
+          'description' => t('Schema.org site name.'),
         ];
   $info['tokens']['cgov_tokens']['site-name-display-custom'] =
         [
@@ -115,26 +115,32 @@ function cgov_metatag_tokens($type, $tokens, array $data, array $options, $bubbl
           break;
 
         case 'browser-title-site-name-custom':
+          // 'Getter' for custom values of 'browser-title-site-name'.
           $replacements[$original] = $siteBrandingConfig->get('custom_site_title_value');
           break;
 
         case 'browser-title-site-name-default':
+          // 'Getter' for the default value of 'browser-title-site-name'.
           $replacements[$original] = t('NCI');
           break;
 
         case 'browser-title-site-name':
+          // The custom value (or 'NCI') of the browser title, based on
+          // site branding config.
           $value = '';
           if ($siteBrandingConfig->get('browser_display_type') === 'default') {
-            $value = $token_service->replace('[cgov_tokens:browser-title-site-name-default]');
+            $value = $token_service->replacePlain('[cgov_tokens:browser-title-site-name-default]');
           }
           elseif ($siteBrandingConfig->get('browser_display_type') === 'custom_title') {
-            $value = $token_service->replace('[cgov_tokens:browser-title-site-name-custom]');
+            $value = $token_service->replacePlain('[cgov_tokens:browser-title-site-name-custom]');
           }
           $replacements[$original] = $value;
           break;
 
         case 'browser-title-site-name-meta':
-          if (!empty($siteName = $token_service->replace('[cgov_tokens:browser-title-site-name]'))) {
+          // The custom value (or 'NCI') of the browser title, based on the
+          // browser-title-site-name token.
+          if (!empty($siteName = $token_service->replacePlain('[cgov_tokens:browser-title-site-name]'))) {
             $replacements[$original] = ' - ' . $siteName;
           }
           else {
@@ -143,20 +149,24 @@ function cgov_metatag_tokens($type, $tokens, array $data, array $options, $bubbl
           break;
 
         case 'site-name-display-default':
+          // Default value 'Getter' for sitename-display-type-meta.
           $replacements[$original] = t('National Cancer Institute (.gov)');
           break;
 
         case 'site-name-display-custom':
+          // Custom schama.org value 'Getter' forthe sitename-display-type-meta.
           $replacements[$original] = $siteBrandingConfig->get('custom_site_name');
           break;
 
         case 'sitename-display-type-meta':
+          // Custom schema.org name (or 'National Cancer Institute (.gov)'),
+          // for search results.
           $value = '';
           if ($siteBrandingConfig->get('sitename_display_type') === 'default') {
-            $value = $token_service->replace('[cgov_tokens:site-name-display-default]');
+            $value = $token_service->replacePlain('[cgov_tokens:site-name-display-default]');
           }
           elseif ($siteBrandingConfig->get('sitename_display_type') === 'custom_site_name') {
-            $value = $token_service->replace('[cgov_tokens:site-name-display-custom]');
+            $value = $token_service->replacePlain('[cgov_tokens:site-name-display-custom]');
           }
           $replacements[$original] = $value;
           break;

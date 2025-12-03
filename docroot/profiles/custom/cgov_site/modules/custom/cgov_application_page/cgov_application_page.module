@@ -190,7 +190,7 @@ function cgov_application_page_preprocess_html(&$variables) {
         // of the metatag module's title tag.
         $token_service = \Drupal::token();
         $title = Html::escape(
-          $token_service->replace(
+          $token_service->replacePlain(
             '[cgov_tokens:cgov-title][cgov_tokens:browser-title-site-name-meta]',
             [
               'node' => $node,
