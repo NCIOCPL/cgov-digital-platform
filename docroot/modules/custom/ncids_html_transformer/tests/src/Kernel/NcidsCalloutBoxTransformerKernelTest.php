@@ -61,4 +61,15 @@ class NcidsCalloutBoxTransformerKernelTest extends NcidsTransformerKernelTestBas
     $this->assertEquals($expected, $output, 'Should add data tag and NOT transform callout-box content, preserving all child elements');
   }
 
+  /**
+   * Tests that the transformed HTML can survive multiple passes.
+   */
+  public function checkPreservationOnSecondTransformPass(): void {
+    $input = '<div class="cgdp-embed-media-wrapper"><div class="align-center embedded-entity cgdp-embed-summary-box cgdp-embed-summary-box--small"><div class="usa-summary-box"><div class="usa-summary-box__body"><div class="usa-prose usa-summary-box__text">
+        <p>This is a callout box.</p>
+      </div></div></div></div></div>';
+    $output = $this->transformerManager->transformAll($input);
+    $this->assertEquals($input, $output, 'Should preserve callout-box content on second transform pass');
+  }
+
 }
