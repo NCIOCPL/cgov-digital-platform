@@ -19,10 +19,14 @@ services:
     class: Drupal\ncids_html_transformer\Services\NcidsTableTransformer
     tags:
       - { name: ncids_html_transformer.ncids_html_transform, priority: 4 }
+  ncids_html_transformer.ignore_transformer:
+    class: Drupal\ncids_html_transformer\Services\NcidsIgnoreTransformer
+    tags:
+      - { name: ncids_html_transformer.ncids_html_transform, priority: 1 }
   ncids_html_transformer.pullquote_transformer:
     class: Drupal\ncids_html_transformer\Services\NcidsPullquoteTransformer
     tags:
-      - { name: ncids_html_transformer.ncids_html_transform, priority: 1 }
+      - { name: ncids_html_transformer.ncids_html_transform, priority: 2 }
   ncids_html_transformer.embedded_entity_transformer:
     class: Drupal\ncids_html_transformer\Services\NcidsEmbeddedEntitiesTransformer
     tags:
