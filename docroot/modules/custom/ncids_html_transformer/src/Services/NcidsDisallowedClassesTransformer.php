@@ -66,6 +66,7 @@ class NcidsDisallowedClassesTransformer extends NcidsHtmlTransformerBase {
       ['usa-button--secondary'],
       ['usa-summary-box__link'],
     ],
+    'table' => [['usa-table']],
   ];
 
   /**

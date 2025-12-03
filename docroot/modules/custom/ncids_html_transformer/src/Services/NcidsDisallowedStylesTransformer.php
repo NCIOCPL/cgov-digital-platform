@@ -27,6 +27,7 @@ class NcidsDisallowedStylesTransformer extends NcidsHtmlTransformerBase {
     'text-align',
     'vertical-align',
     'width',
+    'white-space',
   ];
 
   /**
@@ -84,6 +85,11 @@ class NcidsDisallowedStylesTransformer extends NcidsHtmlTransformerBase {
 
     foreach ($styles as $property => $value) {
       if (in_array($property, $this->allowedTableStyles)) {
+        // Check for percentage width values and do not include them.
+        if ($property === 'width' && $value === '100%') {
+          // It's a valid percentage width of 100%; skip adding it.
+          continue;
+        }
         $cleanedStyles[$property] = $value;
       }
     }
