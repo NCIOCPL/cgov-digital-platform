@@ -27,52 +27,58 @@ class NcidsTableTransformerKernelTest extends NcidsTransformerKernelTestBase {
    */
   public function testTransformers(): void {
     $this->checkTableWithAllowedStyles();
-    $this->checkTableCellAlignment();
-    $this->checkComplexNestedStructure();
+    $this->checkTableWithDisallowedClasses();
+    $this->checkNestedTablesForTransformation();
     $this->checkTableStyleCompleteRemoval();
     $this->checkTableMixedStyles();
   }
 
   /**
-   * Tests complex table with allowed styles - should NOT be transformed.
+   * Tests basic table with allowed/disallowed styles.
+   *
+   * Should retain allowed styles and remove those disallowed.
    */
   public function checkTableWithAllowedStyles(): void {
-    $input = '<table class="complex-table" style="width: 100%; background-color: #fff; margin: 10px; invalid-prop: value;"><tr style="text-align: center; invalid: prop;"><td>Content</td></tr></table>';
+    $input = '<table style="width: 100%; background-color: #fff; margin: 10px; invalid-prop: value;"><tr style="text-align: center; invalid: prop;"><td>Content</td></tr></table>';
     $output = $this->transformerManager->transformAll($input);
-    $expected = '<table class="complex-table" style="width: 100%; background-color: #fff; margin: 10px; invalid-prop: value;"><tr style="text-align: center; invalid: prop;"><td>Content</td></tr></table>';
-    $this->assertEquals($expected, $output, 'Should add data tag and NOT transform complex-table content');
+    $expected = '<table style="background-color: #fff;"><tr style="text-align: center;"><td>Content</td></tr></table>';
+    $this->assertEquals($expected, $output, 'Should retain allowed styles and remove those disallowed.');
   }
 
   /**
-   * Tests table cell alignment classes - should be transformed.
+   * Tests basic table with disallowed classes.
    *
-   * @Covers::transform
+   * Should remove invalid classes from all table elements/children.
    */
-  public function checkTableCellAlignment(): void {
+  public function checkTableWithDisallowedClasses(): void {
     $input = '<table class="table-default"><tr><td class="text-left invalid">Content</td><td class="wrong text-left">More</td></tr></table>';
     $output = $this->transformerManager->transformAll($input);
-    $expected = '<table class="table-default"><tr><td class="text-left invalid">Content</td><td class="wrong text-left">More</td></tr></table>';
-    $this->assertEquals($expected, $output, 'Should skip over table cells but add data tag to table element');
+    $expected = '<table><tr><td>Content</td><td>More</td></tr></table>';
+    $this->assertEquals($expected, $output, 'Should remove invalid classes from all table elements/children.');
   }
 
   /**
-   * Tests complex nested structure with multiple elements - complex-table.
+   * Tests nested table with multiple table elements.
+   *
+   * Should transform outer elements as well as all tables.
    */
-  public function checkComplexNestedStructure(): void {
-    $input = '<div class="grid-container invalid"><div class="grid-row wrong"><div class="grid-col-6 bad"><table class="complex-table invalid"><tr class="wrong"><td class="text-left bad" style="text-align: center; invalid: prop;">Content</td></tr></table></div></div></div>';
+  public function checkNestedTablesForTransformation(): void {
+    $input = '<div class="grid-container invalid"><div class="grid-row wrong"><div class="grid-col-6 bad"><table class="complex-table invalid"><tr class="wrong"><td class="text-left bad" style="text-align: center; invalid: prop;"><table class="complex-table invalid"><tr class="wrong"><td class="text-left bad" style="text-align: center; invalid: prop;">Content</td></tr></table></td></tr></table></div></div></div>';
     $output = $this->transformerManager->transformAll($input);
-    $expected = '<div class="grid-container"><div class="grid-row"><div class="grid-col-6"><table class="complex-table invalid"><tr class="wrong"><td class="text-left bad" style="text-align: center; invalid: prop;">Content</td></tr></table></div></div></div>';
-    $this->assertEquals($expected, $output, 'Should transform outer elements but preserve complex-table and its children with data tag');
+    $expected = '<div class="grid-container"><div class="grid-row"><div class="grid-col-6"><table><tr><td style="text-align: center;"><table><tr><td style="text-align: center;">Content</td></tr></table></td></tr></table></div></div></div>';
+    $this->assertEquals($expected, $output, 'Should transform outer elements as well as all tables, included nested tables.');
   }
 
   /**
-   * Tests complete style removal when table elements have no allowed styles.
+   * Tests complete table transformation of a sortable table.
+   *
+   * Should fully transform the table included disallowed attributes and styles.
    */
   public function checkTableStyleCompleteRemoval(): void {
-    $input = '<table style="color: red; margin: 10px; font-size: large;"><tbody style="display: block;"><tr style="cursor: pointer;"><th style="color: blue;">Header</th><td style="font-family: Arial;">Data</td></tr></tbody></table>';
+    $input = '<table data-sortable class="table-default complex-table" style="color: red; margin: 10px; font-size: large;"><tbody style="display: block;"><tr style="cursor: pointer;"><th style="color: blue;">Header</th><td style="font-family: Arial;">Data</td></tr></tbody></table>';
     $output = $this->transformerManager->transformAll($input);
-    $expected = '<table style="color: red; margin: 10px; font-size: large;"><tbody style="display: block;"><tr style="cursor: pointer;"><th style="color: blue;">Header</th><td style="font-family: Arial;">Data</td></tr></tbody></table>';
-    $this->assertEquals($expected, $output, 'Should remove style attributes entirely from table elements when no allowed styles are present');
+    $expected = '<table data-sortable class="usa-table"><tbody><tr><th>Header</th><td>Data</td></tr></tbody></table>';
+    $this->assertEquals($expected, $output, 'Should fully transform the table included disallowed attributes and styles.');
   }
 
   /**
@@ -81,8 +87,32 @@ class NcidsTableTransformerKernelTest extends NcidsTransformerKernelTestBase {
   public function checkTableMixedStyles(): void {
     $input = '<table style="width: 100%; color: red; border: 1px solid black; font-size: 12px;"><tr style="height: 50px; background-color: #f0f0f0; display: flex;"><td style="text-align: left; color: blue; padding: 10px; margin: 5px;">Content</td></tr></table>';
     $output = $this->transformerManager->transformAll($input);
-    $expected = '<table style="width: 100%; color: red; border: 1px solid black; font-size: 12px;"><tr style="height: 50px; background-color: #f0f0f0; display: flex;"><td style="text-align: left; color: blue; padding: 10px; margin: 5px;">Content</td></tr></table>';
+    $expected = '<table style="border: 1px solid black;"><tr style="height: 50px; background-color: #f0f0f0;"><td style="text-align: left; padding: 10px;">Content</td></tr></table>';
     $this->assertEquals($expected, $output, 'Should preserve only allowed styles on table elements and remove disallowed ones');
+  }
+
+  /**
+   * Tests removal of width attribute when value is 100%.
+   *
+   * @covers ::transform
+   */
+  public function testTableStyleTransformationWithPercentWidthAttribute(): void {
+    $input = '<table width="100%" style="background-color: #fff; margin: 10px; invalid-prop: value;"><tr style="text-align: center; color: red;"><td style="padding: 5px; font-size: large;">Cell Content</td></tr></table>';
+    $output = $this->transformerManager->transformAll($input);
+    $expected = '<table style="background-color: #fff;"><tr style="text-align: center;"><td style="padding: 5px;">Cell Content</td></tr></table>';
+    $this->assertEquals($expected, $output, 'Should remove all bad styles from non-table elements and keep only allowed styles on table elements');
+  }
+
+  /**
+   * Tests removal of width style when value is 100%.
+   *
+   * @covers ::transform
+   */
+  public function testTableStyleTransformationWithPercentWidthStyle(): void {
+    $input = '<table style="width: 100%; background-color: #fff; margin: 10px; invalid-prop: value;"><tr style="text-align: center; color: red;"><td style="padding: 5px; font-size: large;">Cell Content</td></tr></table>';
+    $output = $this->transformerManager->transformAll($input);
+    $expected = '<table style="background-color: #fff;"><tr style="text-align: center;"><td style="padding: 5px;">Cell Content</td></tr></table>';
+    $this->assertEquals($expected, $output, 'Should remove all bad styles from non-table elements and keep only allowed styles on table elements');
   }
 
 }

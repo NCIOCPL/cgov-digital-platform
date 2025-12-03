@@ -31,15 +31,15 @@ services:
   ## These transformers set data-html-transform attributes, so none of the disallow
   ## transformers will run until after these have run. However, they *can* pass
   ## child html to the transformer manager to have it transformed as well.
+  ncids_html_transformer.table_transformer:
+    class: Drupal\ncids_html_transformer\Services\NcidsTableTransformer
+    tags:
+      - { name: ncids_html_transformer.ncids_html_transform, priority: 290 }
   ncids_html_transformer.callout_box_transformer:
     class: Drupal\ncids_html_transformer\Services\NcidsCalloutBoxTransformer
     arguments: ['@ncids_html_transformer.html_transformer_manager']
     tags:
       - { name: ncids_html_transformer.ncids_html_transform, priority: 280 }
-  ncids_html_transformer.table_transformer:
-    class: Drupal\ncids_html_transformer\Services\NcidsTableTransformer
-    tags:
-      - { name: ncids_html_transformer.ncids_html_transform, priority: 270 }
   ncids_html_transformer.pullquote_transformer:
     class: Drupal\ncids_html_transformer\Services\NcidsPullquoteTransformer
     arguments: ['@ncids_html_transformer.html_transformer_manager']

@@ -52,6 +52,20 @@ class NcidsDisallowedAttributesTransformer extends NcidsHtmlTransformerBase {
     'script' => ['src', 'type'],
     'time' => ['datetime'],
     'img' => ['alt', 'src', 'srcset', 'height', 'width', 'loading', 'name'],
+    'table' => ['data-sortable'],
+    'th' => [
+      'data-fixed',
+      'data-sortable',
+      'scope',
+      'role',
+      'aria-sort',
+      'aria-label',
+      'data-sortable-type',
+      'colspan',
+      'rowspan',
+    ],
+    'tr' => [],
+    'td' => ['data-sort-active', 'colspan', 'rowspan'],
   ];
 
   /**
@@ -59,7 +73,7 @@ class NcidsDisallowedAttributesTransformer extends NcidsHtmlTransformerBase {
    *
    * @var array
    */
-  protected array $skipElements = ['td', 'th', 'tr', 'table'];
+  protected array $skipElements = [];
 
   /**
    * {@inheritdoc}
@@ -116,7 +130,7 @@ class NcidsDisallowedAttributesTransformer extends NcidsHtmlTransformerBase {
     }
 
     /* All elements are allowed to contain id and class */
-    $allowedForElement = ['id', 'class'];
+    $allowedForElement = ['id', 'class', 'style'];
 
     /* Add element-specific allowed attributes */
     if (isset($this->allowedAttributes[$tagName])) {
@@ -127,6 +141,13 @@ class NcidsDisallowedAttributesTransformer extends NcidsHtmlTransformerBase {
     foreach ($attributes as $attributeName) {
       if (!in_array($attributeName, $allowedForElement)) {
         $element->removeAttribute($attributeName);
+      }
+      elseif (
+        $attributeName === 'style' &&
+        empty(trim($element->getAttribute('style')))
+      ) {
+        // Remove empty style attributes.
+        $element->removeAttribute('style');
       }
     }
   }

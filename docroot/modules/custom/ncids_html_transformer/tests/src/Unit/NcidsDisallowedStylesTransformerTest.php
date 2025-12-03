@@ -55,16 +55,25 @@ class NcidsDisallowedStylesTransformerTest extends UnitTestCase {
   /**
    * Tests style removal from non-table elements and filtering of table styles.
    *
-   * The table in here is a cheat and will depend on the approach for the
-   * NcidsTableTransformer.
-   *
    * @covers ::transform
    */
   public function testStyleTransformation(): void {
     $input = '<div style="color: red; margin: 10px;">Container<span style="font-size: small; color: blue;">Text</span><table style="width: 100%; background-color: #fff; margin: 10px; invalid-prop: value;"><tr style="text-align: center; color: red;"><td style="padding: 5px; font-size: large;">Cell Content</td></tr></table></div>';
     $output = $this->transformer->transform($input);
-    $expected = '<div>Container<span>Text</span><table style="width: 100%; background-color: #fff;"><tr style="text-align: center;"><td style="padding: 5px;">Cell Content</td></tr></table></div>';
+    $expected = '<div>Container<span>Text</span><table style="background-color: #fff;"><tr style="text-align: center;"><td style="padding: 5px;">Cell Content</td></tr></table></div>';
     $this->assertEquals($expected, $output, 'Should remove all bad styles from non-table elements and keep only allowed styles on table elements');
+  }
+
+  /**
+   * Tests removal of width style when value is 100%.
+   *
+   * @covers ::transform
+   */
+  public function testTableStyleTransformationWithPercentWidth(): void {
+    $input = '<table style="width: 100%; background-color: #fff; margin: 10px; invalid-prop: value;"><tr style="text-align: center; color: red;"><td style="padding: 5px; font-size: large;">Cell Content</td></tr></table>';
+    $output = $this->transformer->transform($input);
+    $expected = '<table style="background-color: #fff;"><tr style="text-align: center;"><td style="padding: 5px;">Cell Content</td></tr></table>';
+    $this->assertEquals($expected, $output, 'Should remove invalid styles as well as width style when value is 100%');
   }
 
 }
