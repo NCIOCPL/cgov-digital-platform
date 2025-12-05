@@ -155,7 +155,7 @@ interface BlogManagerInterface {
   public function getNodesByPostedDateAsc($type);
 
   /**
-   * Return the title for blog series..
+   * Return the title for blog series.
    *
    * @param string $month
    *   Month value.

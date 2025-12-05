@@ -1,0 +1,266 @@
+diff --git a/src/Plugin/Purge/Purger/AkamaiPurger.php b/src/Plugin/Purge/Purger/AkamaiPurger.php
+index a70cbdbd557be40ddd03a7b599f1c7c9d4b2bc8c..b3f2d66985085d8aad66231ba532f4da12f5d309 100644
+--- a/src/Plugin/Purge/Purger/AkamaiPurger.php
++++ b/src/Plugin/Purge/Purger/AkamaiPurger.php
+@@ -7,6 +7,7 @@ use Drupal\akamai\Event\AkamaiPurgeEvents;
+ use Drupal\Core\Config\ConfigFactoryInterface;
+ use Drupal\purge\Plugin\Purge\Invalidation\InvalidationInterface;
+ use Drupal\purge\Plugin\Purge\Purger\PurgerBase;
++use Psr\Log\LoggerInterface;
+ use Symfony\Component\DependencyInjection\ContainerInterface;
+ use Symfony\Component\EventDispatcher\EventDispatcherInterface;
+
+@@ -45,6 +46,13 @@ class AkamaiPurger extends PurgerBase {
+    */
+   protected $eventDispatcher;
+
++  /**
++   * A logger instance.
++   *
++   * @var \Drupal\Core\Logger\LoggerChannelInterface
++   */
++  protected $logger;
++
+   /**
+    * {@inheritdoc}
+    */
+@@ -55,7 +63,8 @@ class AkamaiPurger extends PurgerBase {
+       $plugin_definition,
+       $container->get('config.factory'),
+       $container->get('event_dispatcher'),
+-      $container->get('akamai.client.factory')
++      $container->get('akamai.client.factory'),
++      $container->get('logger.channel.akamai')
+     );
+   }
+
+@@ -74,12 +83,15 @@ class AkamaiPurger extends PurgerBase {
+    *   The event dispatcher.
+    * @param \Drupal\akamai\AkamaiClientFactory $akamai_client_factory
+    *   The akamai client factory.
++   * @param \Psr\Log\LoggerInterface $logger
++   *   Logger interface.
+    */
+-  public function __construct(array $configuration, $plugin_id, $plugin_definition, ConfigFactoryInterface $config, EventDispatcherInterface $event_dispatcher, AkamaiClientFactory $akamai_client_factory) {
++  public function __construct(array $configuration, $plugin_id, $plugin_definition, ConfigFactoryInterface $config, EventDispatcherInterface $event_dispatcher, AkamaiClientFactory $akamai_client_factory, LoggerInterface $logger) {
+     parent::__construct($configuration, $plugin_id, $plugin_definition);
+     $this->client = $akamai_client_factory->get();
+     $this->akamaiClientConfig = $config->get('akamai.settings');
+     $this->eventDispatcher = $event_dispatcher;
++    $this->logger = $logger;
+   }
+
+   /**
+@@ -134,11 +146,22 @@ class AkamaiPurger extends PurgerBase {
+
+     // Purge all URLs in a single request. Akamai accepts up to 50 (?)
+     // invalidations per request.
+-    $result = $this->client->purgeUrls($urls_to_clear);
+-    $invalidation_state = InvalidationInterface::SUCCEEDED;
+-    if (!$result) {
++    $invalidation_state = InvalidationInterface::PROCESSING;
++    $result = NULL;
++    try {
++      $result = $this->client->purgeUrls($urls_to_clear);
++      if (!$result) {
++        $invalidation_state = InvalidationInterface::FAILED;
++      }
++      else {
++        $invalidation_state = InvalidationInterface::SUCCEEDED;
++      }
++    }
++    catch (\Exception $e) {
++      $this->logger->error('Purge Urls has encountered errors connecting to Akamai.', ['exception' => $e]);
+       $invalidation_state = InvalidationInterface::FAILED;
+     }
++
+     // If we hit the rate limit, keep this in the queue to run again later.
+     if (is_object($result) && ($result->getStatusCode() === 429)) {
+       $invalidation_state = InvalidationInterface::PROCESSING;
+diff --git a/src/Plugin/Purge/Purger/AkamaiTagPurger.php b/src/Plugin/Purge/Purger/AkamaiTagPurger.php
+index 52a823af668da6a13163ea422f1afe12ee4fc8ad..b627cb4943df2fe53ae686b17ca6dfb8152d5fc5 100644
+--- a/src/Plugin/Purge/Purger/AkamaiTagPurger.php
++++ b/src/Plugin/Purge/Purger/AkamaiTagPurger.php
+@@ -137,11 +137,22 @@ class AkamaiTagPurger extends PurgerBase {
+     $tags_to_clear = $event->data;
+
+     // Purge tags.
+-    $result = $this->client->purgeTags($tags_to_clear);
+-    $invalidation_state = InvalidationInterface::SUCCEEDED;
+-    if (!$result) {
++    $invalidation_state = InvalidationInterface::PROCESSING;
++    $result = NULL;
++    try {
++      $result = $this->client->purgeTags($tags_to_clear);
++      if (!$result) {
++        $invalidation_state = InvalidationInterface::FAILED;
++      }
++      else {
++        $invalidation_state = InvalidationInterface::SUCCEEDED;
++      }
++    }
++    catch (\Exception $e) {
++      $this->logger->error('Purge Tags has encountered errors connecting to Akamai.', ['exception' => $e]);
+       $invalidation_state = InvalidationInterface::FAILED;
+     }
++
+     // If we hit the rate limit, keep this in the queue to run again later.
+     if (is_object($result) && ($result->getStatusCode() === 429)) {
+       $invalidation_state = InvalidationInterface::PROCESSING;
+diff --git a/tests/src/Unit/Plugin/Purge/Purger/AkamaiPurgerTest.php b/tests/src/Unit/Plugin/Purge/Purger/AkamaiPurgerTest.php
+index 65438be9c53ff40fc9b57dd679128fbf6ca933c3..80e42c19ce689310f2981a5f4696c550cda3308a 100644
+--- a/tests/src/Unit/Plugin/Purge/Purger/AkamaiPurgerTest.php
++++ b/tests/src/Unit/Plugin/Purge/Purger/AkamaiPurgerTest.php
+@@ -45,11 +45,75 @@ class AkamaiPurgerTest extends UnitTestCase {
+       $config_factory->method('get')
+         ->willReturn($config);
+
+-      $purger = new AkamaiPurger(['id' => 'my_id'], 'my_id', 'my_definition', $config_factory, $event_dispatcher, $akamai_client_factory);
++      $logger = $this->getMockBuilder('\Psr\Log\LoggerInterface')->getMock();
++
++      $purger = new AkamaiPurger(['id' => 'my_id'], 'my_id', 'my_definition', $config_factory, $event_dispatcher, $akamai_client_factory, $logger);
+
+       $this->assertEquals($purger->getTimeHint(), $returned_value);
+     }
+
+   }
+
++  /**
++   * Tests AkamaiPurger::invalidate() handles exceptions properly.
++   */
++  public function testInvalidateHandlesExceptions() {
++    $logger = $this->getMockBuilder('\Drupal\Core\Logger\LoggerChannel')
++      ->disableOriginalConstructor()
++      ->onlyMethods(['error'])
++      ->getMock();
++    $logger->expects($this->once())
++      ->method('error')
++      ->with('Purge Urls has encountered errors connecting to Akamai.', $this->callback(function ($context) {
++        return isset($context['exception']) && $context['exception'] instanceof \Exception && $context['exception']->getMessage() === 'Connection error';
++      }));
++
++    $purger = $this->getMockBuilder('Drupal\akamai\Plugin\Purge\Purger\AkamaiPurger')
++      ->disableOriginalConstructor()
++      ->onlyMethods([])
++      ->getMock();
++    $reflection = new \ReflectionClass($purger);
++    $reflection_property = $reflection->getProperty('logger');
++    $reflection_property->setAccessible(TRUE);
++    $reflection_property->setValue($purger, $logger);
++
++    $client = $this->getMockBuilder('Drupal\akamai\Plugin\Client\AkamaiClientV3')
++      ->disableOriginalConstructor()
++      ->onlyMethods(['purgeUrls'])
++      ->getMock();
++
++    // Make purgeUrls throw an exception.
++    $client->method('purgeUrls')
++      ->willThrowException(new \Exception('Connection error'));
++
++    $reflection_property = $reflection->getProperty('client');
++    $reflection_property->setAccessible(TRUE);
++    $reflection_property->setValue($purger, $client);
++
++    // Setup the mock event dispatcher.
++    $event_dispatcher = $this->getMockBuilder('Symfony\Component\EventDispatcher\EventDispatcherInterface')
++      ->getMock();
++
++    $reflection_property = $reflection->getProperty('eventDispatcher');
++    $reflection_property->setAccessible(TRUE);
++    $reflection_property->setValue($purger, $event_dispatcher);
++
++    // Create stub for path invalidation.
++    $invalidation = $this->getMockBuilder('Drupal\purge\Plugin\Purge\Invalidation\PathInvalidation')
++      ->disableOriginalConstructor()
++      ->getMock();
++    $invalidation->method('getPluginId')
++      ->willReturn('path');
++    $invalidation->method('getExpression')
++      ->willReturn('/test/path');
++
++    // Verify setState is called twice - once for PROCESSING, once for FAILED.
++    $invalidation->expects($this->exactly(2))
++      ->method('setState');
++
++    $purger->invalidate([
++      $invalidation,
++    ]);
++  }
++
+ }
+diff --git a/tests/src/Unit/Plugin/Purge/Purger/AkamaiTagPurgerTest.php b/tests/src/Unit/Plugin/Purge/Purger/AkamaiTagPurgerTest.php
+index 0f3291d1dde4902cc183cb0f02dc5f586c323f13..0e91dd50807de8ce39579b4c85d927809ee56095 100644
+--- a/tests/src/Unit/Plugin/Purge/Purger/AkamaiTagPurgerTest.php
++++ b/tests/src/Unit/Plugin/Purge/Purger/AkamaiTagPurgerTest.php
+@@ -232,4 +232,71 @@ class AkamaiTagPurgerTest extends UnitTestCase {
+     ]);
+   }
+
++  /**
++   * Tests AkamaiTagPurger::invalidate() handles exceptions properly.
++   */
++  public function testInvalidateHandlesExceptions() {
++    $logger = $this->getMockBuilder('\Drupal\Core\Logger\LoggerChannel')
++      ->disableOriginalConstructor()
++      ->onlyMethods(['error'])
++      ->getMock();
++    $logger->expects($this->once())
++      ->method('error')
++      ->with('Purge Tags has encountered errors connecting to Akamai.', $this->callback(function ($context) {
++        return isset($context['exception']) && $context['exception'] instanceof \Exception && $context['exception']->getMessage() === 'Connection error';
++      }));
++
++    $purger = $this->getMockBuilder('Drupal\akamai\Plugin\Purge\Purger\AkamaiTagPurger')
++      ->disableOriginalConstructor()
++      ->onlyMethods([])
++      ->getMock();
++    $reflection = new \ReflectionClass($purger);
++    $reflection_property = $reflection->getProperty('logger');
++    $reflection_property->setAccessible(TRUE);
++    $reflection_property->setValue($purger, $logger);
++
++    $formatter = new CacheTagFormatter();
++
++    $container = new ContainerBuilder();
++    $container->set('akamai.helper.cachetagformatter', $formatter);
++    \Drupal::setContainer($container);
++
++    $client = $this->getMockBuilder('Drupal\akamai\Plugin\Client\AkamaiClientV3')
++      ->disableOriginalConstructor()
++      ->onlyMethods(['setType', 'purgeTags'])
++      ->getMock();
++
++    // Make purgeTags throw an exception.
++    $client->method('purgeTags')
++      ->willThrowException(new \Exception('Connection error'));
++
++    $reflection_property = $reflection->getProperty('client');
++    $reflection_property->setAccessible(TRUE);
++    $reflection_property->setValue($purger, $client);
++
++    // Setup the mock event subscriber.
++    $subscriber = new MockSubscriber();
++    $event_dispatcher = new EventDispatcher();
++    $event_dispatcher->addListener(AkamaiPurgeEvents::PURGE_CREATION, [$subscriber, 'onPurgeCreation']);
++
++    $reflection_property = $reflection->getProperty('eventDispatcher');
++    $reflection_property->setAccessible(TRUE);
++    $reflection_property->setValue($purger, $event_dispatcher);
++
++    // Create stub for invalidation.
++    $invalidation = $this->getMockBuilder('Drupal\purge\Plugin\Purge\Invalidation\TagInvalidation')
++      ->disableOriginalConstructor()
++      ->getMock();
++    $invalidation->method('getExpression')
++      ->willReturn('test_tag');
++
++    // Verify setState is called twice - once for PROCESSING, once for FAILED.
++    $invalidation->expects($this->exactly(2))
++      ->method('setState');
++
++    $purger->invalidate([
++      $invalidation,
++    ]);
++  }
++
+ }

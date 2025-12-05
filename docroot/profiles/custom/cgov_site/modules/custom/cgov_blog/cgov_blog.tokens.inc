@@ -112,7 +112,7 @@ function _get_blog_post_path($node) {
 }
 
 /**
- * Get the blog series title base of the url params..
+ * Get the blog series title base of the url params.
  */
 function _get_blog_series_title($node) {
   $hasTopic = \Drupal::request()->query->get('topic') != NULL;
