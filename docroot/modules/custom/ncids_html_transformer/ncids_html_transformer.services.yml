@@ -1,6 +1,6 @@
 ## Note: The higher the priority number, the sooner the transformer is run. Technically, this
 ## only really matters for transformers that do not use pre/post DOM processing with
-## data-html-trasnform attribute, but to keep things predictable we assign priorities
+## data-html-transform attribute, but to keep things predictable we assign priorities
 ## to all transformers.
 services:
   ncids_html_transformer.html_transformer_manager:
@@ -28,6 +28,7 @@ services:
   ## child html to the transformer manager to have it transformed as well.
   ncids_html_transformer.callout_box_transformer:
     class: Drupal\ncids_html_transformer\Services\NcidsCalloutBoxTransformer
+    arguments: ['@ncids_html_transformer.html_transformer_manager']
     tags:
       - { name: ncids_html_transformer.ncids_html_transform, priority: 280 }
   ncids_html_transformer.table_transformer:
