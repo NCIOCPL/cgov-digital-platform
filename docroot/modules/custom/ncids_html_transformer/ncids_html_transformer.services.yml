@@ -7,6 +7,10 @@ services:
     class: Drupal\ncids_html_transformer\Services\NcidsHtmlTransformerManager
     tags:
       - { name: service_collector, tag: ncids_html_transformer.ncids_html_transform, call: addTransformer }
+  logger.channel.ncids_migration:
+    parent: logger.channel_base
+    arguments: ['ncids_migration']
+
   # The ignore transformer must be run first.
   ncids_html_transformer.ignore_transformer:
     class: Drupal\ncids_html_transformer\Services\NcidsIgnoreTransformer
@@ -20,6 +24,7 @@ services:
       - { name: ncids_html_transformer.ncids_html_transform, priority: 375 }
   ncids_html_transformer.embedded_entity_transformer:
     class: Drupal\ncids_html_transformer\Services\NcidsEmbeddedEntitiesTransformer
+    arguments: ['@logger.channel.ncids_migration']
     tags:
       - { name: ncids_html_transformer.ncids_html_transform, priority: 350 }
 
