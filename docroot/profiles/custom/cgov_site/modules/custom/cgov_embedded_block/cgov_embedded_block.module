@@ -133,9 +133,13 @@ function cgov_embedded_block_theme_suggestions_block_content(array $variables) {
 function cgov_embedded_block_views_query_alter(ViewExecutable $view, QueryPluginBase $query) {
   // Check that we are altering the correct view.
   if ($view->id() == 'block_content_browser') {
+    $excluded_values = ['cgov_image_carousel', 'cgov_video_carousel'];
+    if ($view->current_display == 'content_block_raw_html_browser') {
+      $excluded_values[] = 'cgov_external_link_block';
+      $excluded_values[] = 'ncids_mega_menu_content';
+    }
     if ($query instanceof Sql) {
       $field_name = 'block_content_field_data.type';
-      $excluded_values = ['cgov_image_carousel', 'cgov_video_carousel'];
       $query->addWhere(0, $field_name, $excluded_values, 'NOT IN');
     }
   }
