@@ -177,7 +177,7 @@ function ncids_trans_theme_suggestions_field_alter(array &$suggestions, array $v
  * Add theme suggestions for entity embed container.
  */
 function ncids_trans_theme_suggestions_entity_embed_container_alter(array &$suggestions, array $variables) {
-  if (!$variables['element']['entity']['#block_content']) {
+  if (empty($variables['element']['entity']['#block_content'])) {
     return $suggestions;
   }
   $block_content = $variables['element']['entity']['#block_content'];

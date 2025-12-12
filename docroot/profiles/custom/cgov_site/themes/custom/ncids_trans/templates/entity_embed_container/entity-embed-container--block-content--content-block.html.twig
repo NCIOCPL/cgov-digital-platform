@@ -24,5 +24,7 @@ feature_card_string in data_entity_embed_display %}
 attributes['data-embed-button'] == 'insert_block_content' %}
   <div{{ attributes.addClass(embed_class) }}>{{ children }}</div>
 {% else %}
-  {{ children }}
+  <div class="cgdp-embed-media-wrapper">
+    <div{{ attributes.addClass(embed_class) }}>{{ children }}</div>
+  </div>
 {% endif %}

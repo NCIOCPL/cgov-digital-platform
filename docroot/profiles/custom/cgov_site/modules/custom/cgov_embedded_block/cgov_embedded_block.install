@@ -33,6 +33,22 @@ function _cgov_embedded_block_install_permissions(CgovCoreTools $siteHelper) {
   $perms = [
     'admin_ui' => [
       'access block_content_browser entity browser pages',
+      'access content_block_raw_html_browser entity browser pages',
+    ],
+  ];
+
+  $siteHelper->addRolePermissions($perms);
+}
+
+/**
+ * The most recent update hook.
+ */
+function cgov_embedded_block_update_10001() {
+  // Get our helper.
+  $siteHelper = \Drupal::service('cgov_core.tools');
+  $perms = [
+    'admin_ui' => [
+      'access content_block_raw_html_browser entity browser pages',
     ],
   ];
 
