@@ -5,7 +5,7 @@
 @forward '../../common/cgdp-embed-summary-box';
 @forward '../../common/cgdp-embed-video';
 @forward '../../common/cgdp-wysiwyg-table';
-@forward "../../common/cgdp-embed-pullquote";
+@forward '../../common/cgdp-embed-pullquote';
 @forward '../../common/cgdp-embed-summary-box';
 
 @use 'uswds-core' as *;
@@ -17,6 +17,17 @@
 	h5,
 	h6 {
 		clear: none;
+	}
+
+	// Temp fix - should be removed once fixed in NCIDS
+	// external links in nested DOM
+	&.usa-prose {
+		.usa-table-container--scrollable {
+			a:not([class]) {
+				@include typeset-link;
+				@include automatic-external-link('default');
+			}
+		}
 	}
 }
 
