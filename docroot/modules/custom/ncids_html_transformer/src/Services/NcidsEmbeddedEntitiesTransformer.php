@@ -70,6 +70,7 @@ class NcidsEmbeddedEntitiesTransformer extends NcidsHtmlTransformerBase {
             break;
 
           case 'view_mode:block_content.full':
+            $drupal_embed->setAttribute('data-embed-button', 'insert_content_block_content');
             break;
 
           default:

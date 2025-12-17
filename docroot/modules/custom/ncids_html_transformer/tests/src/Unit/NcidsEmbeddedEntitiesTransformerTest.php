@@ -184,4 +184,32 @@ class NcidsEmbeddedEntitiesTransformerTest extends UnitTestCase {
     $this->assertEquals($expected_html, $post_processed, 'Should transform external link blocks with new embed button for no image view mode.');
   }
 
+  /**
+   * Test content block migration with block_content.full.
+   *
+   * @covers ::transform
+   */
+  public function testContentBlock() {
+    $original_html =
+      '<drupal-entity ' .
+        'data-align="right" data-entity-type="block_content" ' .
+        'data-entity-uuid="e69980a2-d521-4f68-b7d8-98aa59921444" ' .
+        'data-embed-button="insert_block_content" ' .
+        'data-entity-embed-display="view_mode:block_content.full"' .
+      '>&nbsp;</drupal-entity>';
+    $expected_html =
+      '<drupal-entity ' .
+        'data-align="right" data-entity-type="block_content" ' .
+        'data-entity-uuid="e69980a2-d521-4f68-b7d8-98aa59921444" ' .
+        'data-embed-button="insert_content_block_content" ' .
+        'data-entity-embed-display="view_mode:block_content.full"' .
+      '>&nbsp;</drupal-entity>';
+
+    // Simulate full transformation process.
+    $pre_processed = $this->transformer->preProcessHtml($original_html);
+    $transformed = $this->transformer->transform($pre_processed);
+    $post_processed = $this->transformer->postProcessHtml($transformed);
+    $this->assertEquals($expected_html, $post_processed, 'Should transform content block.');
+  }
+
 }
