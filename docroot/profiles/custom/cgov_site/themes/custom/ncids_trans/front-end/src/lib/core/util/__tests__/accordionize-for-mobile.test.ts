@@ -53,7 +53,7 @@ describe('accordionizeForMobile function', () => {
 		) as HTMLElement;
 
 		// Will return nothing as window is too big to initialize
-		accordionizeForMobile('.cgdp-related-resources', null);
+		accordionizeForMobile('.cgdp-related-resources', null, '.nci-heading-h2');
 
 		// Resize Event for Accordionize Logic
 		// Class is added in resize event listener
@@ -71,7 +71,7 @@ describe('accordionizeForMobile function', () => {
 			'.cgdp-related-resources'
 		) as HTMLElement;
 
-		accordionizeForMobile('.cgdp-related-resources', null);
+		accordionizeForMobile('.cgdp-related-resources', null, '.nci-heading-h2');
 
 		// Resize Event for Accordionize Logic
 		global.innerWidth = 1024;
@@ -86,7 +86,7 @@ describe('accordionizeForMobile function', () => {
 			'.cgdp-related-resources'
 		) as HTMLElement;
 
-		accordionizeForMobile('.not-real-selector', null);
+		accordionizeForMobile('.not-real-selector', null, '.nci-heading-h2');
 
 		expect(articleBody).not.toHaveClass('usa-accordion');
 	});
@@ -102,12 +102,14 @@ describe('accordionizeForMobile function', () => {
 		accordionInstance = USAAccordion.create(articleBody, {
 			allowMultipleOpen: true,
 			openSections: [],
+			headerSelector: '.nci-heading-h2',
 		});
 
 		accordionInstance =
 			(accordionizeForMobile(
 				'.cgdp-related-resources',
-				accordionInstance
+				accordionInstance,
+				'.nci-heading-h2'
 			) as USAAccordion) || null;
 
 		// Resize Event for Accordionize Logic
