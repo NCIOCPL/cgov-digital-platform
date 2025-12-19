@@ -56,7 +56,8 @@ const initialize = (): void => {
 
 	accordionInstance = accordionizeForMobile(
 		'.cgdp-article-body--multiple',
-		accordionInstance
+		accordionInstance,
+		'.cgdp-article-body__heading'
 	) as USAAccordion | null; // Because the function can return undefined, we cast it to USAAccordion | null
 	accordionHasOpened = false;
 

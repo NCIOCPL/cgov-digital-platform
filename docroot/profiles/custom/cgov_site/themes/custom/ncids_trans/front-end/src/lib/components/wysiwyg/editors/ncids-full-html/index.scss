@@ -9,6 +9,11 @@
 @forward '../../common/cgdp-embed-summary-box';
 
 @use 'uswds-core' as *;
+@use "sass:meta" as meta;
+
+@mixin temp-external-link-icon {
+	display: inline !important;
+}
 
 .usa-prose--ncids-full-html {
 	h2,
@@ -25,13 +30,12 @@
 		.usa-table-container--scrollable {
 			a:not([class]) {
 				@include typeset-link;
-				@include automatic-external-link('default');
+				@include automatic-external-link(
+					'default',
+					$margin-between: units(0.5),
+					$external-mixin: meta.get-mixin('temp-external-link-icon')
+				);
 			}
 		}
 	}
-}
-
-.cgdp-embed-media-wrapper {
-	max-width: measure($theme-text-measure);
-	margin-top: 0;
 }
