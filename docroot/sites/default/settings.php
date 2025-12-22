@@ -793,3 +793,19 @@ require DRUPAL_ROOT . "/../vendor/acquia/drupal-recommended-settings/settings/ac
  *
  * @link https://docs.acquia.com/
  */
+
+/**
+ * In order to get ddev to manage its settings, it will always edit this file
+ * if the include is not present. However, we **DO** want it to manage the
+ * settings.ddev.php file with the database settings. So we put in this return
+ * statement to prevent ddev from adding its include again. We end up including
+ * the settings.ddev.php file in the Acquia Drupal Recommended Settings global
+ * includes in docroot/sites/settings so that it can be loaded at the correct time.
+ */
+return;
+
+// Automatically generated include for settings managed by ddev.
+$ddev_settings = __DIR__ . '/settings.ddev.php';
+if (getenv('IS_DDEV_PROJECT') == 'true' && is_readable($ddev_settings)) {
+  require $ddev_settings;
+}
