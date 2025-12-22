@@ -1,0 +1,7 @@
+# Get the NIH Root certificates and install them so we work on VPN
+# Download from https://ocio.nih.gov/Smartcard/Pages/PKI_chain.aspx
+
+RUN mkdir /usr/local/share/ca-certificates/nih \
+  && curl -o /usr/local/share/ca-certificates/nih/NIH-DPKI-ROOT-1A-base64.crt http://nihdpkicrl.nih.gov/CertData/NIH-DPKI-CA-1A.crt \
+  && curl -o /usr/local/share/ca-certificates/nih/NIH-DPKI-CA-1A-base64.crt http://nihdpkicrl.nih.gov/CertData/NIHDPKIRCA_NIH-DPKI-ROOT-1A.crt \
+  && update-ca-certificates
