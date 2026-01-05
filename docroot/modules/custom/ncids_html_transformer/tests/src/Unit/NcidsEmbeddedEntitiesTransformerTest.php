@@ -212,4 +212,32 @@ class NcidsEmbeddedEntitiesTransformerTest extends UnitTestCase {
     $this->assertEquals($expected_html, $post_processed, 'Should transform content block.');
   }
 
+  /**
+   * Test content block migration with block_content.full.
+   *
+   * @covers ::transform
+   */
+  public function testContentBlockHighChart() {
+    $original_html =
+      '<drupal-entity ' .
+        'data-entity-uuid="2eb6563f-ca7f-4e80-a6a2-ff7d86cddfde" ' .
+        'data-embed-button="insert_block_content" ' .
+        'data-entity-embed-display="view_mode:block_content.full" ' .
+        'data-entity-type="block_content"' .
+      '></drupal-entity>';
+    $expected_html =
+      '<drupal-entity ' .
+        'data-entity-uuid="2eb6563f-ca7f-4e80-a6a2-ff7d86cddfde" ' .
+        'data-embed-button="insert_content_block_content" ' .
+        'data-entity-embed-display="view_mode:block_content.legacy_highchart" ' .
+        'data-entity-type="block_content"' .
+      '></drupal-entity>';
+
+    // Simulate full transformation process.
+    $pre_processed = $this->transformer->preProcessHtml($original_html);
+    $transformed = $this->transformer->transform($pre_processed);
+    $post_processed = $this->transformer->postProcessHtml($transformed);
+    $this->assertEquals($expected_html, $post_processed, 'Should transform content block to have a legacy-highchart view mode.');
+  }
+
 }
