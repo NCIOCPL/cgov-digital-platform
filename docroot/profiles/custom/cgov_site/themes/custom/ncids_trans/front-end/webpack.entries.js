@@ -99,4 +99,8 @@ module.exports = {
 		'src/entrypoints/infographic/infographic.ts'
 	),
 	video: path.resolve(__dirname, 'src/entrypoints/video/video.ts'),
+	'legacy-highcharts': path.resolve(
+		__dirname,
+		'src/entrypoints/legacy-highcharts/legacy-highcharts.ts'
+	),
 };
