@@ -65,3 +65,8 @@ services:
     class: Drupal\ncids_html_transformer\Services\NcidsDisallowedStylesTransformer
     tags:
       - { name: ncids_html_transformer.ncids_html_transform, priority: 10 }
+  ncids_html_transformer.unwrap_transformer:
+    class: Drupal\ncids_html_transformer\Services\NcidsUnwrapTransformer
+    arguments: ['@logger.channel.ncids_migration']
+    tags:
+      - { name: ncids_html_transformer.ncids_html_transform, priority: 0 }

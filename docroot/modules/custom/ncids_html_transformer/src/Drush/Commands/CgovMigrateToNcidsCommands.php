@@ -103,6 +103,8 @@ class CgovMigrateToNcidsCommands extends DrushCommands {
     }
 
     try {
+      \Drupal::logger('ncids_migration')->notice('Starting processing for nid: {nid}', ['nid' => $nid]);
+
       $node = Node::load($nid);
 
       if (!$node) {
