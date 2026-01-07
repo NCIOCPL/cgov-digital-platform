@@ -1,0 +1,120 @@
+- entity: "node"
+  type: "cgov_article"
+  langcode: en
+  status: 1
+  moderation_state:
+    value: 'published'
+  title: "Test Prose External Links Content"
+  title__ES:
+      value: "Test Prose External Links  Content - ES"
+  field_page_description:
+    value: "Test page for Prose External Links  content"
+  field_page_description__ES:
+    value: "Test page for Prose External Links  content - ES"
+  field_browser_title:
+    value: "Test Prose External Links  Content"
+  field_browser_title_ES:
+    value: "Test Prose External Links  Content - ES"
+  field_site_section:
+    - '#process':
+        callback: 'reference'
+        args:
+          - 'taxonomy_term'
+          - vid: 'cgov_site_sections'
+            computed_path: '/test'
+  field_pretty_url:
+    value: "test-prose-ext-links"
+  field_site_section__ES:
+    - '#process':
+        callback: 'reference'
+        args:
+          - 'taxonomy_term'
+          - vid: 'cgov_site_sections'
+            computed_path: '/test-es'
+  field_pretty_url__ES:
+    value: "test-prose-ext-links"
+  field_date_posted:
+    value: "2018-03-20"
+  field_date_reviewed:
+    value: "2017-03-20"
+  field_date_updated:
+    value: "2016-03-20"
+  field_date_display_mode:
+    - value: 'updated'
+  field_article_body:
+    - entity: 'paragraph'
+      type: "body_section"
+      field_body_section_heading:
+        - format: "simple"
+          value: "Normal Heading"
+      field_body_section_content:
+        - format: "ncids_full_html"
+          value: |
+            <div class="usa-table-container--scrollable">
+              <table class="usa-table">
+                <caption>Types of Third-Party Websites and Applications</caption>
+                <tbody>
+                  <tr>
+                    <th>Third-Party Website and Application</th>
+                    <th>How It Works</th>
+                  </tr>
+                  <tr>
+                    <td>Bit.ly</td>
+                    <td>
+                    <p>NCI uses Bit.ly to shorten long URLs for use in email messages, X feeds and on Facebook pages. Bit.ly collects and provides data on how often you as an email recipient or Facebook/X user, click on the shortened URLs distributed by NCI staff. Bit.ly analytics show how many people clicked on the URLs posted by NCI, compared to the total number of clicks on the shortened URLs. Bit.ly analytics do not provide any PII about the visitors who open the shortened links. (See <a href="https://bitly.com/pages/privacy">Bit.ly Privacy Policy</a>.)</p>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>Eventbrite</td>
+                    <td>
+                    <p>NCI uses Eventbrite for online event registration. To register for an NCI event using Eventbrite, you may be required to provide PII so that the NCI event management staff may contact you with details pertaining to the event. PII could include your name, email address, telephone number, and job title. NCI staff does not disclose any information about people who register for NCI events. (See <a href="https://www.eventbrite.com/help/en-us/articles/460838/eventbrite-privacy-policy/">Eventbrite Privacy Policy</a>.)</p>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>Facebook</td>
+                    <td>
+                    <p>NCI has two Facebook pages — <a href="https://www.facebook.com/cancer.gov">National Cancer Institute</a>&nbsp;and <a href="https://www.facebook.com/NCIatFrederick/">National Cancer Institute at Frederick</a>. NCI Facebook pages are managed by NCI staff members who post news and other items of interest to be consumed by the public. If you have a Facebook account, you can log in to your account to post comments, and 'like' NCI Facebook pages and individual entries. If once you click on an NCI Facebook page, you comment or click on the 'like' button, your PII will be visible to NCI staff and other Facebook site visitors. The amount of visible personal information displayed will depend on your own Facebook privacy settings. You can completely avoid displaying any PII by not creating a Facebook account, not posting comments, not clicking on the 'like' options, or interacting with NCI Facebook accounts in any way (i.e., private messaging, sharing NCI posts, etc.). NCI staff do not collect, use or disclose any information about visitors who comment or 'like' the NCI Facebook sites. However, as a practice, comment moderator policy requires the removal from NCI Facebook pages of any comments that contain spam or are improper, inflammatory, off-topic or offensive. Repeat offenders may be subject to banning. The information is then saved on a password-protected shared drive accessible to NCI Managers, System Owners, Communications Staff, Web Teams, and other designated staff who require this information to perform their duties. The Facebook Privacy Policy is available at <a href="https://www.facebook.com/privacy/policy/">https://www.facebook.com/policy.php</a>.</p>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>GovDelivery Subscription Management</td>
+                    <td>
+                    <p>NCI uses GovDelivery to send e-newsletters, alerts and other messages to visitors who subscribe to them. To subscribe to receive an NCI product, you must provide an email address and indicate your subscription preferences, including the items you want to receive. The email subscriber lists are password protected by GovDelivery. Only the NCI managers who send newsletters, alerts, or memos via GovDelivery and the staff members who monitor the results of email initiatives have access to the subscriber lists. GovDelivery never allows access to the subscriber lists to anyone outside of NCI for any purpose. GovDelivery collects and provides non-identifying information about the number of messages sent, clicks, and open rates. This information is password-protected and only available to NCI Managers, System Owners, Communications Staff, Web Teams, and other designated staff who require this information to perform their duties. (See <a href="https://granicus.com/privacy-policy/">GovDelivery Privacy Policy</a>.)</p>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>Instagram</td>
+                    <td>
+                    <p>NCI primarily uses Instagram to make images from our online image library more widely available to the general public and to educate the public about cancer research. While you may view the NCI Instagram feed without subscribing, if you want to subscribe to (or follow) NCI’s Instagram feed, you must create an Instagram account. To create an account, you must provide some personal information, such as your username, password and email address. You have the option to provide additional personal information including your name, a biography or a picture. Most information you provide for an Instagram account is available to the public, but you can modify how much of your information is visible by setting your account to Private. NCI staff members monitor the number of subscribers and respond to comments and queries via Instagram, but the staff never takes possession of the personal information belonging to you as an Instagram follower. However, as a practice, comment moderator policy requires the removal from the NCI Instagram pages of any comments that contain spam or are improper, inflammatory, or offensive. The information is then saved on a password-protected shared drive accessible to NCI Managers, System Owners, Communications Staff, Web Teams, and other designated staff who require this information to perform their duties. (See <a href="https://privacycenter.instagram.com/policy">Instagram Privacy Policy</a>.)</p>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>LinkedIn</td>
+                    <td>
+                    <p>NCI uses the “groups” feature on LinkedIn to engage with current and past employees and members of the public. In order to join an NCI group on LinkedIn, you must register for a LinkedIn account and provide your first and last name and e-mail address. Upon confirmation of your email address, you must provide LinkedIn with information regarding your employment, country, zip code, job title, etc. The amount of visible personal information will depend on your LinkedIn user privacy settings. You can completely avoid displaying any PII by not creating a LinkedIn account, not joining NCI LinkedIn groups, or not interacting with NCI LinkedIn groups in any way (i.e., private messaging, posting on group pages, etc.). Although NCI staff managing LinkedIn groups may view the information you provide when you submit a request to join NCI LinkedIn groups, NCI staff does not collect, use, or disclose any of this information. (See <a href="https://www.linkedin.com/legal/privacy-policy">LinkedIn Privacy Policy</a>.)</p>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>Submittable</td>
+                    <td>
+                    <p>NCI uses Submittable for online event registration. To register for an NCI event using Submittable you may be required to provide PII so that the NCI event management staff may contact you with details pertaining to the event. PII could include your name, email address, telephone number, and job title. NCI staff do not disclose any information about people who register for NCI events. (See <a href="https://www.submittable.com/privacy/">Submittable Privacy Policy</a>.)</p>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>X</td>
+                    <td>
+                    <p>NCI uses X to send short messages to share information about NCI with our audiences and respond to comments and inquiries sent via X to NCI. While users may read the NCI X feeds without subscribing to them, users who want to subscribe to (or follow) NCI X feeds must create an X&nbsp;account at www.x.com.</p>
+                    <p>To create an account, you must provide some personal information, such as name, username, password, and email address. You have the option to provide additional personal information including a short biography, location, or a picture. Most information you provide for an X&nbsp;account is available to the public, but you can modify how much of your information is visible by changing your privacy settings at the website X.com.</p>
+                    <p>NCI staff members monitor the number of subscribers and respond to comments and queries via X, but the staff never uses the personal information of their X followers. NCI does not collect, maintain, disclose, or share any information about people who follow NCI on X. (See <a href="https://x.com/en/privacy">X Privacy Policy</a>.)</p>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>YouTube</td>
+                    <td>
+                    <p>NCI videos introduce you to many different aspects of the research that NCI supports and connect you to our research-based information resources. Some videos feature stories from researchers, cancer patients, and their caregivers. Others seek to explain NCI's major research programs. Most of these videos are available on NCI's websites as well. (See <a href="https://policies.google.com/privacy?hl=en">YouTube.com Privacy Policy</a>.)</p>
+                    <p>To be notified when NCI adds new videos, users with YouTube accounts can subscribe to the NCIgov channel. NCI staff members monitor the number of subscribers and may respond to comments and queries on YouTube, but NCI does not collect, maintain, disclose, or share any information about people who follow NCI on YouTube.</p>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
