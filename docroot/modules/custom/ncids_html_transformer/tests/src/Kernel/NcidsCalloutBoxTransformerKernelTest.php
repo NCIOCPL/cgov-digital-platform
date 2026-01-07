@@ -64,7 +64,7 @@ class NcidsCalloutBoxTransformerKernelTest extends NcidsTransformerKernelTestBas
     '<div class="align-center embedded-entity cgdp-embed-summary-box cgdp-embed-summary-box--small">' .
     '<div class="usa-summary-box"><div class="usa-summary-box__body">' .
     '<div class="usa-prose usa-summary-box__text">' .
-    '<div><p>Text</p></div></div></div></div></div></div>';
+    '<p>Text</p></div></div></div></div></div>';
     $this->assertEquals($expected, $output, 'Should transform the callout box while removing invalid class from nested elements.');
   }
 
@@ -84,7 +84,7 @@ class NcidsCalloutBoxTransformerKernelTest extends NcidsTransformerKernelTestBas
     '<div class="align-right embedded-entity cgdp-embed-summary-box cgdp-embed-summary-box--small">' .
     '<aside class="usa-summary-box">' .
     '<div class="usa-summary-box__body">' .
-    '<div class="usa-prose usa-summary-box__text">Right Box</div>' .
+    '<div class="usa-prose usa-summary-box__text"><p>Right Box</p></div>' .
     '</div></aside></div></div></div></div></div></div></div>';
     // phpcs:enable Drupal.Strings.UnnecessaryStringConcat
     $this->assertEquals($expected, $output, 'Should transform the callout box while also transforming the nested callout box as well.');
@@ -101,7 +101,7 @@ class NcidsCalloutBoxTransformerKernelTest extends NcidsTransformerKernelTestBas
     '<div class="align-center embedded-entity cgdp-embed-summary-box cgdp-embed-summary-box--small">' .
     '<div class="usa-summary-box">' .
     '<div class="usa-summary-box__body">' .
-    '<div class="usa-prose usa-summary-box__text">Text <span>More</span> <p>Text</p>' .
+    '<div class="usa-prose usa-summary-box__text"><p>Text More </p><p>Text</p>' .
     '</div></div></div></div></div>';
     // phpcs:enable Drupal.Strings.UnnecessaryStringConcat
     $this->assertEquals($expected, $output, 'Transform the callout box while retaining the text elements in its content.');

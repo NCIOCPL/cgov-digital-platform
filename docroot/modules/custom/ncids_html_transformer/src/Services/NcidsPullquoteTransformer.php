@@ -168,7 +168,31 @@ class NcidsPullquoteTransformer extends NcidsHtmlTransformerBase {
     if (!empty($pullquote_text)) {
       $text_el = $dom->createElement('p');
       $text_el->setAttribute('class', 'cgdp-pullquote__body');
-      $this->insertChildHtml($dom, $text_el, $pullquote_text);
+
+      // Parse the transformed text.
+      $tmp_dom = Html::load($pullquote_text);
+      $body = $tmp_dom->getElementsByTagName('body')->item(0);
+
+      if ($body && $body->hasChildNodes()) {
+        // Check if we have a single paragraph element.
+        if ($body->childNodes->length === 1 &&
+            $body->firstChild instanceof \DOMElement &&
+            $body->firstChild->tagName === 'p') {
+          // Extract content from inside the paragraph.
+          foreach ($body->firstChild->childNodes as $child) {
+            $imported_node = $dom->importNode($child, TRUE);
+            $text_el->appendChild($imported_node);
+          }
+        }
+        else {
+          // Use content as-is.
+          foreach ($body->childNodes as $node) {
+            $imported_node = $dom->importNode($node, TRUE);
+            $text_el->appendChild($imported_node);
+          }
+        }
+      }
+
       $pullquote_container->appendChild($text_el);
     }
 
