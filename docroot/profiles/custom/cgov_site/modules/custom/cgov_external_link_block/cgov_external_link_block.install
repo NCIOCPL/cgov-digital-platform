@@ -33,9 +33,17 @@ function cgov_external_link_block_install() {
 }
 
 /**
- * The most recent update hook.
+ * Add permissions for the new external link block browser.
  */
-function cgov_external_link_update_10001() {
+function cgov_external_link_block_update_10001() {
+  // Import the configs to so that the entity browser gets
+  // installed. The permission will not exist until the browser
+  // is installed.
+  $service = \Drupal::service('features.manager');
+  $assigner = \Drupal::service('features_assigner');
+  $assigner->assignConfigPackages();
+  $service->import(['cgov_external_link_block']);
+
   // Get our helper.
   $siteHelper = \Drupal::service('cgov_core.tools');
   $perms = [

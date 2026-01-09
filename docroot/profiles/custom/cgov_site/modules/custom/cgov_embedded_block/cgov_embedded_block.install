@@ -6,6 +6,7 @@
  */
 
 use Drupal\cgov_core\CgovCoreTools;
+use Drupal\Core\Entity\Entity\EntityViewMode;
 
 /**
  * Implements hook_install().
@@ -41,9 +42,37 @@ function _cgov_embedded_block_install_permissions(CgovCoreTools $siteHelper) {
 }
 
 /**
- * The most recent update hook.
+ * Add permissions for the new content block browser.
  */
 function cgov_embedded_block_update_10001() {
+
+  // We need to call features to install new content block browser config
+  // in order to grant the permission to admin ui. Unfortunately, we cannot
+  // do that until after the view mode for the legacy highchart block content
+  // type is created. It seems like features/Drupal is not smart enough to
+  // see the dependency in the browser config on the view mode existing and
+  // load it first. So we create the view mode here first.
+  $view_mode = $view_mode = EntityViewMode::create([
+    'id' => 'block_content.legacy_highchart',
+    'targetEntityType' => 'block_content',
+    'label' => 'Legacy Highchart',
+    'status' => TRUE,
+    'cache' => TRUE,
+  ]);
+  $view_mode->save();
+
+  // Just creating and saving is not good enough, we have to clear out caches
+  // or else we STILL get an error.
+  drupal_flush_all_caches();
+
+  // Import the configs to so that the entity browser gets
+  // installed. The permission will not exist until the browser
+  // is installed.
+  $service = \Drupal::service('features.manager');
+  $assigner = \Drupal::service('features_assigner');
+  $assigner->assignConfigPackages();
+  $service->import(['cgov_embedded_block']);
+
   // Get our helper.
   $siteHelper = \Drupal::service('cgov_core.tools');
   $perms = [
