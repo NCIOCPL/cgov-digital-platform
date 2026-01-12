@@ -179,29 +179,39 @@ class CgovPublishBundleCommands extends DrushCommands {
     // P.S. I am going to assume that we get a revision back since we
     // called this from the list of languages on the node itself.
     $translation_revision_id = $node_storage->getLatestTranslationAffectedRevisionId($node->id(), $langcode);
-    /** @var \Drupal\node\Entity\Node $loaded_revision */
-    $loaded_revision = $node_storage->loadRevision($translation_revision_id);
+    /** @var \Drupal\node\Entity\Node $state_revision */
+    $state_revision = $node_storage->loadRevision($translation_revision_id);
 
-    // While we loaded the revision at the version for the language, we still
-    // need to get the language specific translation object.
-    $translated_node = $loaded_revision->getTranslation($langcode);
+    // Get the translation to check its current state.
+    $state_translation = $state_revision->getTranslation($langcode);
 
     // We have a weird thing in YAML content that I think is just YAML junk,
     // but there a piece of content that is in the published state, but the
     // status field is 0 (unpublished). So we are going to check both here.
-    $state = $translated_node->get('moderation_state')->value;
+    $state = $state_translation->get('moderation_state')->value;
+    $is_published = $state_translation->isPublished();
 
-    if ($state === 'archived' && !$translated_node->isPublished()) {
+    if ($state === 'archived' && !$is_published) {
       // Archived content that is unpublished should not be published.
       return FALSE;
     }
 
-    if ($state === 'published' && $translated_node->isPublished()) {
+    if ($state === 'published' && $is_published) {
       // Already published, nothing to do.
       return FALSE;
     }
 
-    if ($state === 'archived' && $translated_node->isPublished()) {
+    // Now load the latest overall revision to preserve all other translations'
+    // current content when we save. If we used the translation-specific
+    // revision, we would overwrite other translations with older content.
+    $latest_revision_id = $node_storage->getLatestRevisionId($node->id());
+    /** @var \Drupal\node\Entity\Node $latest_revision */
+    $latest_revision = $node_storage->loadRevision($latest_revision_id);
+
+    // Get the translation from the latest revision to make changes.
+    $translated_node = $latest_revision->getTranslation($langcode);
+
+    if ($state === 'archived' && $is_published) {
       // Archived content that is published should not be published again.
       \Drupal::logger('publish_bundle')->notice('Processing Archived/Status 1 nid: @nid, language: @lang', [
         '@nid' => $node->id(),
@@ -209,7 +219,7 @@ class CgovPublishBundleCommands extends DrushCommands {
       ]);
       $translated_node->setUnpublished();
     }
-    elseif ($state === 'published' && !$translated_node->isPublished()) {
+    elseif ($state === 'published' && !$is_published) {
       // This one is an odd case, the moderation state is published, but the
       // status is unpublished. We will just set the status to be published.
       \Drupal::logger('publish_bundle')->notice('Processing Published/Status 0 nid: @nid, language: @lang', [
@@ -231,6 +241,7 @@ class CgovPublishBundleCommands extends DrushCommands {
 
     try {
       // Tell Drupal that the new revision applies to this translation.
+      $translated_node->setNewRevision(TRUE);
       $translated_node->setRevisionTranslationAffected(TRUE);
       $translated_node->save();
       return TRUE;
