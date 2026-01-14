@@ -65,7 +65,7 @@ class NcidsTableTransformerKernelTest extends NcidsTransformerKernelTestBase {
   public function checkNestedTablesForTransformation(): void {
     $input = '<div class="grid-container invalid"><div class="grid-row wrong"><div class="grid-col-6 bad"><table class="complex-table invalid"><tr class="wrong"><td class="text-left bad" style="text-align: center; invalid: prop;"><table class="complex-table invalid"><tr class="wrong"><td class="text-left bad" style="text-align: center; invalid: prop;">Content</td></tr></table></td></tr></table></div></div></div>';
     $output = $this->transformerManager->transformAll($input);
-    $expected = '<div class="grid-container"><div class="grid-row"><div class="grid-col-6"><table><tr><td style="text-align: center;"><table><tr><td style="text-align: center;">Content</td></tr></table></td></tr></table></div></div></div>';
+    $expected = '<div class="grid-container"><div class="grid-row"><div class="grid-col-6 usa-prose"><table><tr><td style="text-align: center;"><table><tr><td style="text-align: center;">Content</td></tr></table></td></tr></table></div></div></div>';
     $this->assertEquals($expected, $output, 'Should transform outer elements as well as all tables, included nested tables.');
   }
 
