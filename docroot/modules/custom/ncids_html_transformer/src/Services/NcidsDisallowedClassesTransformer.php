@@ -58,6 +58,7 @@ class NcidsDisallowedClassesTransformer extends NcidsHtmlTransformerBase {
       ['usa-summary-box__body'],
       ['usa-summary-box__heading'],
       ['usa-summary-box__text'],
+      ['usa-prose'],
     ],
     'a' => [
       ['usa-button'],

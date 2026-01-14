@@ -27,6 +27,10 @@ services:
     arguments: ['@logger.channel.ncids_migration']
     tags:
       - { name: ncids_html_transformer.ncids_html_transform, priority: 350 }
+  ncids_html_transformer.column_prose_transformer:
+    class: Drupal\ncids_html_transformer\Services\NcidsColumnProseTransformer
+    tags:
+      - { name: ncids_html_transformer.ncids_html_transform, priority: 325 }
 
   ## These transformers set data-html-transform attributes, so none of the disallow
   ## transformers will run until after these have run. However, they *can* pass
@@ -61,4 +65,3 @@ services:
     class: Drupal\ncids_html_transformer\Services\NcidsDisallowedStylesTransformer
     tags:
       - { name: ncids_html_transformer.ncids_html_transform, priority: 10 }
-
