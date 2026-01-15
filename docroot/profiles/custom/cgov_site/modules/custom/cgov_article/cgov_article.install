@@ -34,3 +34,67 @@ function cgov_article_update_8003() {
     $installer->install(['cgov_schema_org']);
   }
 }
+
+/**
+ * Update to restirct permissions for cgov_article content type.
+ *
+ * Revokes content type permissions for cgov_article from all roles except
+ * 'administrator' and 'site_admin'.
+ */
+function cgov_article_update_8006() {
+  $roles = \Drupal::entityTypeManager()->getStorage('user_role')->loadMultiple();
+  // $roles is an array of \Drupal\user\RoleInterface objects.
+  // Define the node permissions you want to remove.
+  $permissions_to_add_or_remove = [
+    'create cgov_article content',
+    'delete any cgov_article content',
+    'delete own cgov_article content',
+    'edit any cgov_article content',
+    'edit own cgov_article content',
+    'revert cgov_article revisions',
+    'translate cgov_article node',
+    'view cgov_article revisions',
+  ];
+  foreach ($roles as $role_id => $role) {
+    \Drupal::logger('cgov_article')->notice('Processing "@role_id" role.', ['@role_id' => $role_id]);
+    if ($role) {
+      if ($role->id() == 'site_admin') {
+        foreach ($permissions_to_add_or_remove as $permission) {
+          if (!$role->hasPermission($permission)) {
+            $role->grantPermission($permission);
+          }
+        }
+        // Save the role to apply changes.
+        $role->save();
+        \Drupal::logger('cgov_article')->notice('Added permissions "@permissions" from the "@role" role.', [
+          '@permissions' => implode(', ', $permissions_to_add_or_remove),
+          '@role' => $role->id(),
+        ]);
+        continue;
+      }
+      else {
+        if ($role->id() != 'administrator' && $role->id() != 'site_admin') {
+          // Check which of the permissions exist in the role.
+          $existing_permissions = $role->getPermissions();
+          $permissions_to_revoke = array_intersect($permissions_to_add_or_remove, $existing_permissions);
+          if (!empty($permissions_to_revoke)) {
+            \Drupal::logger('cgov_article')->notice('Permissions to revoke "@revoke_permissions".', ['@revoke_permissions' => implode(', ', $permissions_to_revoke)]);
+            // Use user_role_revoke_permissions to remove the permissions.
+            user_role_revoke_permissions($role->id(), $permissions_to_revoke);
+            // Log a message for the update log.
+            \Drupal::logger('cgov_article')->notice('Revoked permissions "@permissions" from the "@role" role.', [
+              '@permissions' => implode(', ', $permissions_to_revoke),
+              '@role' => $role->id(),
+            ]);
+          }
+          else {
+            \Drupal::logger('cgov_article')->notice('No relevant permissions to revoke from the "@role" role.', ['@role' => $role->id()]);
+          }
+        }
+      }
+    }
+    else {
+      \Drupal::logger('cgov_article')->notice('Role "@role" not found.', ['@role' => $role->id()]);
+    }
+  }
+}
