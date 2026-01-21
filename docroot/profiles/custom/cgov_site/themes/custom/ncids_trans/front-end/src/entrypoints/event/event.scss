@@ -10,3 +10,30 @@
 @forward '../../lib/components/wysiwyg/common/cgdp-embed-infographic';
 @forward '../../lib/components/wysiwyg/common/cgdp-embed-video';
 @forward '../../lib/components/wysiwyg/common/cgdp-embed-card/';
+
+@use 'uswds-core' as *;
+@use 'nci-heading' as heading;
+
+.cgdp-event-info__series {
+	@extend .nci-heading-h2;
+	clear: unset;
+	@include u-margin-top(2.5);
+	@include u-margin-bottom(2);
+}
+
+.cgdp-event-info {
+	p {
+		line-height: 1.5;
+		@include u-margin-y(2.5);
+	}
+}
+
+p.cgdp-event-info__location {
+	& > span {
+		@include u-display('block');
+	}
+}
+
+.nci-heading-h2+p {
+	@include u-margin-top(1);
+}

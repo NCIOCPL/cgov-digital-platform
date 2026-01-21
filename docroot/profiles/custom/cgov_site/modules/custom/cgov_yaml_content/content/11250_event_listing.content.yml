@@ -1,0 +1,381 @@
+- entity: "node"
+  type: "cgov_event"
+  langcode: en
+  status: 1
+  moderation_state:
+    value: 'published'
+  field_site_section:
+    - '#process':
+        callback: 'reference'
+        args:
+          - 'taxonomy_term'
+          - vid: 'cgov_site_sections'
+            computed_path: '/test'
+  field_pretty_url:
+    value: "event-listing-multi-day"
+  title: "Event Page - Test for Multi Day"
+  field_browser_title:
+    - value: 'Event Page - Browser Title'
+  field_card_title:
+    - value: 'Event Page - Card Title'
+  field_feature_card_description:
+    - value: 'Event Page - Feature Card Description'
+  field_list_description:
+    - value: 'Event Page - List Description'
+  field_page_description:
+    value: 'Event Page - Page Description'
+  field_event_start_date:
+    value: '2025-07-11T10:30:00'
+  field_event_end_date:
+    value: '2025-08-11T11:30:00'
+  field_all_day_event: 0
+  field_event_series:
+    - '#process':
+        callback: 'reference'
+        args:
+          - 'taxonomy_term'
+          - vid: 'cgov_event_series'
+            name: 'NCI Event Series'
+  field_venue:
+    - '#process':
+        callback: 'reference'
+        args:
+          - 'taxonomy_term'
+          - vid: 'cgov_event_venues'
+            name: 'NCI Shady Grove Campus'
+  field_room:
+    value: "TE Seminar 116"
+  field_city_state:
+    value: "Rockville, MD"
+  body:
+    - format: "full_html"
+      value: |
+          <p><strong>Speaker</strong><br>Matt Buman, Ph.D., Associate Professor at Arizona State University, College of Health Solutions, Phoenix, AZ</p>
+          <p><strong>Host</strong><br><a href="/about/staff-directory/biographies/A-J/matthews-charles">Charles Matthews</a>, Ph.D., Senior Investigator,&nbsp;
+          <a href="https://dceg.cancer.gov/about/organization/programs-ebp/meb">Metabolic Epidemiology Branch</a>, Division of Cancer Epidemiology &amp; Genetics, National Cancer Institute</p>
+          <p><strong><a href="#">JOIN WEBEX MEETING</a> <a class="exitNotification" href="https://www.cancer.gov/policies/linking"></a></strong></p>
+          <p><strong>Meeting number</strong> (access code): 555 555 555</p>
+          <p>You can also dial 555-555-555 and enter your meeting number.</p>
+          <p><strong>JOIN BY PHONE</strong></p>
+          <p>1-855-555-5555 Call-in toll number (US/Canada) Tap <a>here</a> to call (mobile phones only, hosts not supported)</p>
+          <p>IMPORTANT NOTICE: Please note that this Webex service allows audio and other information sent during the session to be recorded, which may be discoverable in a legal matter. You should inform all meeting attendees prior to recording if you intend to record the meet</p>
+  field_image_article:
+    - target_type: 'media'
+      '#process':
+        callback: 'reference'
+        args:
+          - 'media'
+          - bundle: 'cgov_image'
+            name: 'oropharynx'
+  field_related_resources:
+    - entity: 'paragraph'
+      type: "cgov_internal_link"
+      field_internal_link:
+        - target_type: 'node'
+          '#process':
+            callback: 'reference'
+            args:
+              - 'node'
+              - type: 'cgov_article'
+                title: 'Sexual Health Issues in Men with Cancer'
+    - entity: 'paragraph'
+      type: "cgov_internal_link"
+      field_internal_link:
+        - target_type: 'node'
+          '#process':
+            callback: 'reference'
+            args:
+              - 'node'
+              - type: 'cgov_article'
+                title: 'Sexual Health Issues in Women with Cancer'
+    - entity: 'paragraph'
+      type: "cgov_external_link"
+      field_override_title:
+        - value: 'External Card Title'
+      field_external_link:
+        - uri: 'https://www.google.com'
+    - entity: 'paragraph'
+      type: "cgov_external_link"
+      field_override_title:
+        - value: 'National Institute of Mental Health - NIMH'
+      field_external_link:
+        - uri: 'http://www.nimh.nih.com/'
+    - entity: 'paragraph'
+      type: "cgov_external_link"
+      field_override_title:
+        - value: 'Yahoo.com'
+      field_external_link:
+        - uri: 'http://www.yahoo.com/'
+
+- entity: "node"
+  type: "cgov_event"
+  langcode: en
+  status: 1
+  moderation_state:
+    value: 'published'
+  field_site_section:
+    - '#process':
+        callback: 'reference'
+        args:
+          - 'taxonomy_term'
+          - vid: 'cgov_site_sections'
+            computed_path: '/test'
+  field_pretty_url:
+    value: "event-listing-multi-year"
+  title: "Event Page - Test for Multi Year"
+  field_browser_title:
+    - value: 'Event Page - Browser Title'
+  field_card_title:
+    - value: 'Event Page - Card Title'
+  field_feature_card_description:
+    - value: 'Event Page - Feature Card Description'
+  field_list_description:
+    - value: 'Event Page - List Description'
+  field_page_description:
+    value: 'Event Page - Page Description'
+  field_event_start_date:
+    value: '2025-07-11T10:30:00'
+  field_event_end_date:
+    value: '2026-08-11T11:30:00'
+  field_all_day_event: 0
+  field_event_series:
+    - '#process':
+        callback: 'reference'
+        args:
+          - 'taxonomy_term'
+          - vid: 'cgov_event_series'
+            name: 'NCI Event Series'
+  field_room:
+    value: "TE Seminar 116"
+  body:
+    - format: "full_html"
+      value: |
+          <p><strong>Speaker</strong><br>Matt Buman, Ph.D., Associate Professor at Arizona State University, College of Health Solutions, Phoenix, AZ</p>
+          <p><strong>Host</strong><br><a href="/about/staff-directory/biographies/A-J/matthews-charles">Charles Matthews</a>, Ph.D., Senior Investigator,&nbsp;
+          <a href="https://dceg.cancer.gov/about/organization/programs-ebp/meb">Metabolic Epidemiology Branch</a>, Division of Cancer Epidemiology &amp; Genetics, National Cancer Institute</p>
+          <p><strong><a href="#">JOIN WEBEX MEETING</a> <a class="exitNotification" href="https://www.cancer.gov/policies/linking"></a></strong></p>
+          <p><strong>Meeting number</strong> (access code): 555 555 555</p>
+          <p>You can also dial 555-555-555 and enter your meeting number.</p>
+          <p><strong>JOIN BY PHONE</strong></p>
+          <p>1-855-555-5555 Call-in toll number (US/Canada) Tap <a>here</a> to call (mobile phones only, hosts not supported)</p>
+          <p>IMPORTANT NOTICE: Please note that this Webex service allows audio and other information sent during the session to be recorded, which may be discoverable in a legal matter. You should inform all meeting attendees prior to recording if you intend to record the meet</p>
+  field_image_article:
+    - target_type: 'media'
+      '#process':
+        callback: 'reference'
+        args:
+          - 'media'
+          - bundle: 'cgov_image'
+            name: 'oropharynx'
+
+- entity: "node"
+  type: "cgov_event"
+  langcode: en
+  status: 1
+  moderation_state:
+    value: 'published'
+  field_site_section:
+    - '#process':
+        callback: 'reference'
+        args:
+          - 'taxonomy_term'
+          - vid: 'cgov_site_sections'
+            computed_path: '/test'
+  field_pretty_url:
+    value: "event-listing-all-day"
+  title: "Event Page - Test for All Day"
+  field_browser_title:
+    - value: 'Event Page - Browser Title'
+  field_card_title:
+    - value: 'Event Page - Card Title'
+  field_feature_card_description:
+    - value: 'Event Page - Feature Card Description'
+  field_list_description:
+    - value: 'Event Page - List Description'
+  field_page_description:
+    value: 'Event Page - Page Description'
+  field_event_start_date:
+    value: '2025-07-11T10:30:00'
+  field_event_end_date:
+    value: '2025-07-11T22:30:00'
+  field_all_day_event: 1
+  field_event_series:
+    - '#process':
+        callback: 'reference'
+        args:
+          - 'taxonomy_term'
+          - vid: 'cgov_event_series'
+            name: 'NCI Event Series'
+  field_venue:
+    - '#process':
+        callback: 'reference'
+        args:
+          - 'taxonomy_term'
+          - vid: 'cgov_event_venues'
+            name: 'NIH Bethesda Campus'
+  field_room:
+    value: ""
+  field_city_state:
+    value: ""
+  body:
+    - format: "full_html"
+      value: |
+          <p><strong>Speaker</strong><br>Matt Buman, Ph.D., Associate Professor at Arizona State University, College of Health Solutions, Phoenix, AZ</p>
+          <p><strong>Host</strong><br><a href="/about/staff-directory/biographies/A-J/matthews-charles">Charles Matthews</a>, Ph.D., Senior Investigator,&nbsp;
+          <a href="https://dceg.cancer.gov/about/organization/programs-ebp/meb">Metabolic Epidemiology Branch</a>, Division of Cancer Epidemiology &amp; Genetics, National Cancer Institute</p>
+          <p><strong><a href="#">JOIN WEBEX MEETING</a> <a class="exitNotification" href="https://www.cancer.gov/policies/linking"></a></strong></p>
+          <p><strong>Meeting number</strong> (access code): 555 555 555</p>
+          <p>You can also dial 555-555-555 and enter your meeting number.</p>
+          <p><strong>JOIN BY PHONE</strong></p>
+          <p>1-855-555-5555 Call-in toll number (US/Canada) Tap <a>here</a> to call (mobile phones only, hosts not supported)</p>
+          <p>IMPORTANT NOTICE: Please note that this Webex service allows audio and other information sent during the session to be recorded, which may be discoverable in a legal matter. You should inform all meeting attendees prior to recording if you intend to record the meet</p>
+  field_image_article:
+    - target_type: 'media'
+      '#process':
+        callback: 'reference'
+        args:
+          - 'media'
+          - bundle: 'cgov_image'
+            name: 'oropharynx'
+
+
+- entity: "node"
+  type: "cgov_event"
+  langcode: en
+  status: 1
+  moderation_state:
+    value: 'published'
+  field_site_section:
+    - '#process':
+        callback: 'reference'
+        args:
+          - 'taxonomy_term'
+          - vid: 'cgov_site_sections'
+            computed_path: '/test'
+  field_pretty_url:
+    value: "event-listing-zipcode"
+  title: "Event Page - Test for Zipcode"
+  field_browser_title:
+    - value: 'Event Page - Browser Title'
+  field_card_title:
+    - value: 'Event Page - Card Title'
+  field_feature_card_description:
+    - value: 'Event Page - Feature Card Description'
+  field_list_description:
+    - value: 'Event Page - List Description'
+  field_page_description:
+    value: 'Event Page - Page Description'
+  field_event_start_date:
+    value: '2025-07-11T10:30:00'
+  field_event_end_date:
+    value: '2025-07-11T12:30:00'
+  field_all_day_event: 0
+  field_event_series:
+    - '#process':
+        callback: 'reference'
+        args:
+          - 'taxonomy_term'
+          - vid: 'cgov_event_series'
+            name: 'NCI Event Series'
+  field_venue:
+    - '#process':
+        callback: 'reference'
+        args:
+          - 'taxonomy_term'
+          - vid: 'cgov_event_venues'
+            name: 'NCI Frederick Campus'
+  field_room:
+    value: "TE Seminar 116"
+  field_city_state:
+    value: "Rockville, MD 20851"
+  body:
+    - format: "full_html"
+      value: |
+          <p><strong>Speaker</strong><br>Matt Buman, Ph.D., Associate Professor at Arizona State University, College of Health Solutions, Phoenix, AZ</p>
+          <p><strong>Host</strong><br><a href="/about/staff-directory/biographies/A-J/matthews-charles">Charles Matthews</a>, Ph.D., Senior Investigator,&nbsp;
+          <a href="https://dceg.cancer.gov/about/organization/programs-ebp/meb">Metabolic Epidemiology Branch</a>, Division of Cancer Epidemiology &amp; Genetics, National Cancer Institute</p>
+          <p><strong><a href="#">JOIN WEBEX MEETING</a> <a class="exitNotification" href="https://www.cancer.gov/policies/linking"></a></strong></p>
+          <p><strong>Meeting number</strong> (access code): 555 555 555</p>
+          <p>You can also dial 555-555-555 and enter your meeting number.</p>
+          <p><strong>JOIN BY PHONE</strong></p>
+          <p>1-855-555-5555 Call-in toll number (US/Canada) Tap <a>here</a> to call (mobile phones only, hosts not supported)</p>
+          <p>IMPORTANT NOTICE: Please note that this Webex service allows audio and other information sent during the session to be recorded, which may be discoverable in a legal matter. You should inform all meeting attendees prior to recording if you intend to record the meet</p>
+  field_image_article:
+    - target_type: 'media'
+      '#process':
+        callback: 'reference'
+        args:
+          - 'media'
+          - bundle: 'cgov_image'
+            name: 'oropharynx'
+
+
+- entity: "node"
+  type: "cgov_event"
+  langcode: en
+  status: 1
+  moderation_state:
+    value: 'published'
+  field_site_section:
+    - '#process':
+        callback: 'reference'
+        args:
+          - 'taxonomy_term'
+          - vid: 'cgov_site_sections'
+            computed_path: '/test'
+  field_pretty_url:
+    value: "event-listing-city-state"
+  title: "Event Page - Test for City State"
+  field_browser_title:
+    - value: 'Event Page - Browser Title'
+  field_card_title:
+    - value: 'Event Page - Card Title'
+  field_feature_card_description:
+    - value: 'Event Page - Feature Card Description'
+  field_list_description:
+    - value: 'Event Page - List Description'
+  field_page_description:
+    value: 'Event Page - Page Description'
+  field_event_start_date:
+    value: '2025-07-11T10:30:00'
+  field_event_end_date:
+    value: '2025-07-11T12:30:00'
+  field_all_day_event: 0
+  field_event_series:
+    - '#process':
+        callback: 'reference'
+        args:
+          - 'taxonomy_term'
+          - vid: 'cgov_event_series'
+            name: 'NCI Event Series'
+  field_venue:
+    - '#process':
+        callback: 'reference'
+        args:
+          - 'taxonomy_term'
+          - vid: 'cgov_event_venues'
+            name: 'NCI Frederick Campus'
+  field_room:
+    value: ""
+  field_city_state:
+    value: "Rockville, MD"
+  body:
+    - format: "full_html"
+      value: |
+          <p><strong>Speaker</strong><br>Matt Buman, Ph.D., Associate Professor at Arizona State University, College of Health Solutions, Phoenix, AZ</p>
+          <p><strong>Host</strong><br><a href="/about/staff-directory/biographies/A-J/matthews-charles">Charles Matthews</a>, Ph.D., Senior Investigator,&nbsp;
+          <a href="https://dceg.cancer.gov/about/organization/programs-ebp/meb">Metabolic Epidemiology Branch</a>, Division of Cancer Epidemiology &amp; Genetics, National Cancer Institute</p>
+          <p><strong><a href="#">JOIN WEBEX MEETING</a> <a class="exitNotification" href="https://www.cancer.gov/policies/linking"></a></strong></p>
+          <p><strong>Meeting number</strong> (access code): 555 555 555</p>
+          <p>You can also dial 555-555-555 and enter your meeting number.</p>
+          <p><strong>JOIN BY PHONE</strong></p>
+          <p>1-855-555-5555 Call-in toll number (US/Canada) Tap <a>here</a> to call (mobile phones only, hosts not supported)</p>
+          <p>IMPORTANT NOTICE: Please note that this Webex service allows audio and other information sent during the session to be recorded, which may be discoverable in a legal matter. You should inform all meeting attendees prior to recording if you intend to record the meet</p>
+  field_image_article:
+    - target_type: 'media'
+      '#process':
+        callback: 'reference'
+        args:
+          - 'media'
+          - bundle: 'cgov_image'
+            name: 'oropharynx'
