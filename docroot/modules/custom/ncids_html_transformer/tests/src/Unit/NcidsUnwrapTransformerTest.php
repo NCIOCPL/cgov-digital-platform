@@ -110,6 +110,18 @@ class NcidsUnwrapTransformerTest extends UnitTestCase {
   }
 
   /**
+   * Keep div with structural grid class around drupal-entity.
+   *
+   * @covers ::transform
+   */
+  public function testKeepGridClassDivAroundDrupalEntity() {
+    $original = '<div class="tablet:grid-col-2"><drupal-entity data-entity-type="media"></drupal-entity></div>';
+    $expected = '<div class="tablet:grid-col-2"><drupal-entity data-entity-type="media"></drupal-entity></div>';
+    $output = $this->transformer->transform($original);
+    $this->assertEquals($expected, $output);
+  }
+
+  /**
    * Unwrap plain div but keep div with grid-row class.
    *
    * @covers ::transform
