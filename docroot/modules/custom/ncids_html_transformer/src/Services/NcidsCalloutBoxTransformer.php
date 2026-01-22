@@ -124,7 +124,7 @@ class NcidsCalloutBoxTransformer extends NcidsHtmlTransformerBase {
 
         case 'callout-box':
           $alignment_class = 'align-center';
-          $size_class = 'cgdp-embed-summary-box--small';
+          $size_class = 'cgdp-embed-summary-box--full';
           break;
       }
 

@@ -61,7 +61,7 @@ class NcidsCalloutBoxTransformerKernelTest extends NcidsTransformerKernelTestBas
     $input = '<div class="callout-box"><div class="invalid1"><p class="invalid2">Text</p></div></div>';
     $output = $this->transformerManager->transformAll($input);
     $expected = '<div class="cgdp-embed-media-wrapper">' .
-    '<div class="align-center embedded-entity cgdp-embed-summary-box cgdp-embed-summary-box--small">' .
+    '<div class="align-center embedded-entity cgdp-embed-summary-box cgdp-embed-summary-box--full">' .
     '<div class="usa-summary-box"><div class="usa-summary-box__body">' .
     '<div class="usa-prose usa-summary-box__text">' .
     '<p>Text</p></div></div></div></div></div>';
@@ -98,7 +98,7 @@ class NcidsCalloutBoxTransformerKernelTest extends NcidsTransformerKernelTestBas
     $output = $this->transformerManager->transformAll($input);
     // phpcs:disable Drupal.Strings.UnnecessaryStringConcat
     $expected = '<div class="cgdp-embed-media-wrapper">' .
-    '<div class="align-center embedded-entity cgdp-embed-summary-box cgdp-embed-summary-box--small">' .
+    '<div class="align-center embedded-entity cgdp-embed-summary-box cgdp-embed-summary-box--full">' .
     '<div class="usa-summary-box">' .
     '<div class="usa-summary-box__body">' .
     '<div class="usa-prose usa-summary-box__text"><p>Text More </p><p>Text</p>' .

@@ -98,7 +98,7 @@ class NcidsCalloutBoxTransformerTest extends UnitTestCase {
    */
   public function testSimpleIntegrationTest() {
     $input = '<div class="callout-box"><p>This is an info callout box.</p></div>';
-    $expected = '<div class="cgdp-embed-media-wrapper"><div class="align-center embedded-entity cgdp-embed-summary-box cgdp-embed-summary-box--small"><div class="usa-summary-box"><div class="usa-summary-box__body"><div class="usa-prose usa-summary-box__text"><p>This is an info callout box.</p></div></div></div></div></div>';
+    $expected = '<div class="cgdp-embed-media-wrapper"><div class="align-center embedded-entity cgdp-embed-summary-box cgdp-embed-summary-box--full"><div class="usa-summary-box"><div class="usa-summary-box__body"><div class="usa-prose usa-summary-box__text"><p>This is an info callout box.</p></div></div></div></div></div>';
 
     // Simulate full transformation process.
     $pre_processed = $this->transformer->preProcessHtml($input);
@@ -228,7 +228,7 @@ class NcidsCalloutBoxTransformerTest extends UnitTestCase {
         </p>
       </center>
     </div>';
-    $expected = '<div class="cgdp-embed-media-wrapper"><div class="align-center embedded-entity cgdp-embed-summary-box cgdp-embed-summary-box--small"><div class="usa-summary-box"><div class="usa-summary-box__body"><div class="usa-prose usa-summary-box__text"><center>
+    $expected = '<div class="cgdp-embed-media-wrapper"><div class="align-center embedded-entity cgdp-embed-summary-box cgdp-embed-summary-box--full"><div class="usa-summary-box"><div class="usa-summary-box__body"><div class="usa-prose usa-summary-box__text"><center>
         <p>
           <a href="https://public.govdelivery.com/accounts/USNIHNCI/subscriber/new?topic_id=USNIHNCI_223">Sign up to get stories like this and CCDI updates in your inbox</a>
         </p>
@@ -248,7 +248,7 @@ class NcidsCalloutBoxTransformerTest extends UnitTestCase {
    */
   public function testCalloutBoxWithCommentAndHeading() : void {
     $input = '<div class="callout-box"> <!-- This is a comment --> <h2>Important Notice</h2><p>Please read the following information carefully.</p></div>';
-    $expected = '<div class="cgdp-embed-media-wrapper"><div class="align-center embedded-entity cgdp-embed-summary-box cgdp-embed-summary-box--small">' .
+    $expected = '<div class="cgdp-embed-media-wrapper"><div class="align-center embedded-entity cgdp-embed-summary-box cgdp-embed-summary-box--full">' .
       '<div class="usa-summary-box"><div class="usa-summary-box__body"><div class="usa-summary-box__heading">Important Notice</div>' .
       '<div class="usa-prose usa-summary-box__text">' .
       '<!-- This is a comment --> <p>Please read the following information carefully.</p></div></div></div></div></div>';
@@ -271,7 +271,7 @@ class NcidsCalloutBoxTransformerTest extends UnitTestCase {
       <h2>Key Information</h2>
       <p>This section contains key information.</p>
     </div>';
-    $expected = '<div class="cgdp-embed-media-wrapper"><div class="align-center embedded-entity cgdp-embed-summary-box cgdp-embed-summary-box--small"><div class="usa-summary-box"><div class="usa-summary-box__body"><div class="usa-prose usa-summary-box__text">Some introductory text.
+    $expected = '<div class="cgdp-embed-media-wrapper"><div class="align-center embedded-entity cgdp-embed-summary-box cgdp-embed-summary-box--full"><div class="usa-summary-box"><div class="usa-summary-box__body"><div class="usa-prose usa-summary-box__text">Some introductory text.
       <h2>Key Information</h2>
       <p>This section contains key information.</p></div></div></div></div></div>';
 
@@ -293,7 +293,7 @@ class NcidsCalloutBoxTransformerTest extends UnitTestCase {
       <h2>Main Heading</h2>
       <p>Details under the main heading.</p>
     </div>';
-    $expected = '<div class="cgdp-embed-media-wrapper"><div class="align-center embedded-entity cgdp-embed-summary-box cgdp-embed-summary-box--small"><div class="usa-summary-box"><div class="usa-summary-box__body"><div class="usa-prose usa-summary-box__text"><p>Introductory paragraph.</p>
+    $expected = '<div class="cgdp-embed-media-wrapper"><div class="align-center embedded-entity cgdp-embed-summary-box cgdp-embed-summary-box--full"><div class="usa-summary-box"><div class="usa-summary-box__body"><div class="usa-prose usa-summary-box__text"><p>Introductory paragraph.</p>
       <h2>Main Heading</h2>
       <p>Details under the main heading.</p></div></div></div></div></div>';
 
