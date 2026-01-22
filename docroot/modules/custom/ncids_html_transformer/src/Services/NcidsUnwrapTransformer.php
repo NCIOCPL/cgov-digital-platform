@@ -260,7 +260,7 @@ class NcidsUnwrapTransformer extends NcidsHtmlTransformerBase {
     // Unwrap divs that directly contain drupal-entity.
     if ($tagName === 'div') {
       foreach ($element->childNodes as $child) {
-        if ($child instanceof \DOMElement && strtolower($child->tagName) === 'drupal-entity') {
+        if ($child instanceof \DOMElement && strtolower($child->tagName) === 'drupal-entity' && $this->isPlainWrapper($element)) {
           return TRUE;
         }
       }
