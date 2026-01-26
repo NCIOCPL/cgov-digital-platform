@@ -93,8 +93,19 @@ $include-html-type-classes: false;
 			margin: 0 0 2.5em 0;
 		}
 
+		&.align-right {
+			float: none;
+			@include at-media('tablet') {
+				float: right;
+			}
+		}
+
 		&.align-left {
 			margin-right: 2.5em;
+			float: none;
+			@include at-media('tablet') {
+				float: left;
+			}
 		}
 
 		&.align-center {
@@ -220,22 +231,22 @@ $include-html-type-classes: false;
 @import '../../legacy/transition-hacks/inner-page-embed-infographic-hack';
 
 .embedded-entity.cgdp-embed-infographic {
-	&.cgdp-embed-infographic--large  {
+	&.cgdp-embed-infographic--large {
 		margin: 0;
-		width:100%;
+		width: 100%;
 		@include at-media('tablet') {
-				margin: 2em auto 2.5em auto;
-			}
+			margin: 2em auto 2.5em auto;
+		}
 		&.align-right {
 			margin: 0 0 2.5em 0;
 			@include at-media('tablet') {
-				margin: 0 0 2.5em 2.5em
+				margin: 0 0 2.5em 2.5em;
 			}
 		}
 		&.align-left {
 			margin: 0 2.5em 2.5em 0;
 			@include at-media('tablet') {
-				margin: 0 2.5em 2.5em 0
+				margin: 0 2.5em 2.5em 0;
 			}
 		}
 		&.align-center {
@@ -277,7 +288,7 @@ $include-html-type-classes: false;
 }
 
 .embedded-entity.cgdp-embed-video {
-	width:100%;
+	width: 100%;
 	&.align-right {
 		@include at-media('tablet') {
 		}
