@@ -581,4 +581,52 @@ class NcidsUnwrapTransformerTest extends UnitTestCase {
     $this->assertEquals($expected, $output);
   }
 
+  /**
+   * Text in caption should NOT be wrapped in paragraph.
+   *
+   * @covers ::transform
+   */
+  public function testTextInCaptionNotWrappedInParagraph() {
+    $original = '<table><caption>Table Title</caption><tbody><tr><td>Cell</td></tr></tbody></table>';
+    $expected = '<table><caption>Table Title</caption><tbody><tr><td>Cell</td></tr></tbody></table>';
+    $output = $this->transformer->transform($original);
+    $this->assertEquals($expected, $output);
+  }
+
+  /**
+   * Caption with inline elements should not be wrapped.
+   *
+   * @covers ::transform
+   */
+  public function testCaptionWithInlineElementsNotWrapped() {
+    $original = '<table><caption>Table <strong>One</strong></caption><tbody><tr><td>Data</td></tr></tbody></table>';
+    $expected = '<table><caption>Table <strong>One</strong></caption><tbody><tr><td>Data</td></tr></tbody></table>';
+    $output = $this->transformer->transform($original);
+    $this->assertEquals($expected, $output);
+  }
+
+  /**
+   * Text in figcaption should NOT be wrapped in paragraph.
+   *
+   * @covers ::transform
+   */
+  public function testTextInFigcaptionNotWrappedInParagraph() {
+    $original = '<figure><img src="/image.jpg" alt="Test"><figcaption>Image caption</figcaption></figure>';
+    $expected = '<figure><p><img src="/image.jpg" alt="Test"></p><figcaption>Image caption</figcaption></figure>';
+    $output = $this->transformer->transform($original);
+    $this->assertEquals($expected, $output);
+  }
+
+  /**
+   * Figcaption with inline elements should not be wrapped.
+   *
+   * @covers ::transform
+   */
+  public function testFigcaptionWithInlineElementsNotWrapped() {
+    $original = '<figure><img src="/image.jpg" alt="Test"><figcaption>Figure <em>caption</em> text</figcaption></figure>';
+    $expected = '<figure><p><img src="/image.jpg" alt="Test"></p><figcaption>Figure <em>caption</em> text</figcaption></figure>';
+    $output = $this->transformer->transform($original);
+    $this->assertEquals($expected, $output);
+  }
+
 }
