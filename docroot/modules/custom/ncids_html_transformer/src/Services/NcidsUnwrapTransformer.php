@@ -34,6 +34,7 @@ class NcidsUnwrapTransformer extends NcidsHtmlTransformerBase {
   private const TEXT_CONTAINER_ELEMENTS = [
     'p', 'div', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6',
     'ul', 'ol', 'li', 'table', 'thead', 'tbody', 'tfoot', 'tr', 'td', 'th',
+    'caption', 'figcaption',
     'drupal-entity',
   ];
 
