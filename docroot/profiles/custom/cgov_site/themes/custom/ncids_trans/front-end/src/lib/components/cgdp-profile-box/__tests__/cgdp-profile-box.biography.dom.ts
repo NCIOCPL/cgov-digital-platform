@@ -19,7 +19,8 @@ export const cgdpProfileBoxBiographyDom = `
           NCI Shady Grove Campus | Room 7E434
 				</div>
 				<div class="cgdp-profile-box__phone">
-          240-276-7367 <span class="contact-divider">|</span><a href="mailto:loukissj@mail.nih.gov" tabindex="-1">loukissj@mail.nih.gov</a>
+          240-276-7367 <span class="contact-divider">|</span>
+          <a class="cgdp-profile-box__email" href="mailto:loukissj@mail.nih.gov" tabindex="-1">loukissj@mail.nih.gov</a>
   			</div>
 				<div class="cgdp-profile-box__social-media">
 					<a class="cgdp-profile-box__twitter no-exit-notification usa-social-link" href="https://twitter.com/jloukissas" tabindex="-1">

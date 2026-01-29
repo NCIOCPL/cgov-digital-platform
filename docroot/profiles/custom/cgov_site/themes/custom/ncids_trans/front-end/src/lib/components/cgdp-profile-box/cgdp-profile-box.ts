@@ -1,6 +1,22 @@
 import { trackOther } from '../../core/analytics/eddl-util';
 
 /**
+ * Enum for field type.
+ */
+enum FieldTypes {
+	/** field_linkedin_handle */
+	Linkedin = 'LinkedIn Profile Handle',
+	/** field_twitter_handle */
+	Twitter = 'Twitter Profile Handle',
+	/** field_twitter_handle */
+	Email = 'Email Address',
+	/** field_scientific_publications */
+	Publications = 'Publications............',
+	/** Something was clicked we didn't expect. */
+	Other = 'Other',
+}
+
+/**
  * Enum for the type of link.
  */
 enum LinkTypes {
@@ -46,7 +62,7 @@ const linkClickHandler: EventListener = (evt: Event) => {
 	const profileBoxElement = target.closest('.cgdp-profile-box') as HTMLElement;
 	const profileBoxType = getProfileBoxType(profileBoxElement);
 	const profileBoxTitle = getProfileBoxHeading(profileBoxElement);
-	const profileField = getProfileBoxField();
+	const profileField = getProfileBoxField(target as HTMLAnchorElement);
 	const linkType = getLinkType(target as HTMLAnchorElement);
 
 	track(profileBoxType, profileBoxTitle, profileField, linkType);
@@ -81,17 +97,30 @@ const getProfileBoxHeading = (profileBoxElement: HTMLElement): string => {
 };
 
 /**
- * This should return the name of the CMS text field that contains the link. E.g. 'Email Address' or 'LinkedIn Profile Handle'
- * @todo
+ * Gets the label of the field of the link clicked.
+ * @param link Link clicked.
  */
-const getProfileBoxField = (): string => {
+const getProfileBoxField = (link: HTMLAnchorElement): string => {
 	// what's the best way to grab the field name?
 	// const profileField = profileBoxElement.parentElement;
-	return 'todo';
+
+	switch (true) {
+		case link.classList.contains('cgdp-profile-box__linkedin'):
+			return FieldTypes.Linkedin;
+		case link.classList.contains('cgdp-profile-box__twitter'):
+			return FieldTypes.Twitter;
+		case link.classList.contains('cgdp-profile-box__email'):
+			return FieldTypes.Email;
+		case link.classList.contains('cgdp-profile-box__publications'):
+			return FieldTypes.Publications;
+		default:
+			return FieldTypes.Other;
+	}
 };
 
 /**
  * Gets type of link: External, Internal, Email, or other.
+ * @param link Link clicked.
  */
 const getLinkType = (link: HTMLAnchorElement): string => {
 	switch (link.protocol) {
