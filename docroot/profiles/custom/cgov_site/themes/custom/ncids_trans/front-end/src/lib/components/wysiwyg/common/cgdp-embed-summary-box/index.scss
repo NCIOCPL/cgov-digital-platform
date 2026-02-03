@@ -1,0 +1,25 @@
+@use 'uswds-core' as *;
+@forward "usa-summary-box";
+
+@use '../../embedded-entity-mixins' as embedded;
+
+// Currently, we are adding summary boxes via HTML through the source view
+// of the WYSIWYG editor but eventually will create an embed button to embed
+// summary boxes in the WYSIWYG editor. At that point, we will want to have
+// cgdp-embed-summary-box as the parent element and change this class to reflect
+.cgdp-embed-summary-box {
+	&.cgdp-embed-summary-box--full {
+		@include embedded.embedded-entity(12);
+	}
+
+	&.cgdp-embed-summary-box--small {
+		@include embedded.embedded-entity(5);
+	}
+
+	// Summary boxes have extra bottom margin by default for MLP and H&L summary boxes.
+	// This removes that extra margin when embedded in the WYSIWYG and allows margins to
+	// be controlled via the embedded-entity mixin.
+	.usa-summary-box {
+		@include u-margin-bottom(0);
+	}
+}

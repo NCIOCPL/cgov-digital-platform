@@ -19,8 +19,6 @@
 
 {% set id = node.id()|clean_unique_id %}
 
-<div class="cgdp-embed-card">
-  <div class="nci-card">
-    {{ cardMacros.ncidsFeatureCard(title, description, image, url, directory, id, 'block_content', 'Internal') }}
-  </div>
+<div class="nci-card">
+  {{ cardMacros.ncidsFeatureCard(title, description, image, url, directory, id, 'block_content', 'Internal') }}
 </div>

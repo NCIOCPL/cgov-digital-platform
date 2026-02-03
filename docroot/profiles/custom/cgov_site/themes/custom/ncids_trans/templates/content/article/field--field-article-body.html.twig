@@ -35,16 +35,11 @@
 {% if items | length > 1 %}
   {% set body_attribs = body_attribs.addClass('cgdp-article-body--multiple') %}
 {% endif %}
-<div class="cgdpl">
-  <div class="contentzone">
-    <div id="cgvBody">
-      <div {{ body_attribs }}>
-        {% for item in items %}
-          {{ item.content }}
-        {% endfor %}
-      </div>
-    </div>
+  <div {{ body_attribs }}>
+    {% for item in items %}
+      {{ item.content }}
+    {% endfor %}
   </div>
-</div>
+
 {# End of article body field #}
 

@@ -1,0 +1,30 @@
+{#
+/**
+ * @file
+ * Default theme implementation of a container used to wrap embedded entities.
+ *
+ * Available variables:
+ * - attributes: HTML attributes for the containing element.
+ * - children: The rendered child elements of the container.
+ *
+ * @see template_preprocess_entity_embed_container()
+ *
+ * @ingroup themeable
+ */
+#}
+{% set data_entity_embed_display = attributes['data-entity-embed-display']|lower %}
+{% set feature_card_string = 'feature_card' %}
+{% if data_entity_embed_display is defined and
+feature_card_string in data_entity_embed_display %}
+   {% set embed_class = 'cgdp-embed-feature-card' %}
+{% else %}
+  {% set embed_class = '' %}
+{% endif %}
+{% if attributes['data-embed-button'] is defined and
+attributes['data-embed-button'] == 'insert_block_content' %}
+  <div{{ attributes.addClass(embed_class) }}>{{ children }}</div>
+{% else %}
+  <div class="cgdp-embed-media-wrapper">
+    <div{{ attributes.addClass(embed_class) }}>{{ children }}</div>
+  </div>
+{% endif %}

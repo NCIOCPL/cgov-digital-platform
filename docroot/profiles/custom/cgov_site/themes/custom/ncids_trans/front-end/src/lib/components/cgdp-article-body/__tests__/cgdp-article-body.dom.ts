@@ -262,3 +262,41 @@ export const cgdpArticleBodyNoAccordion = `
 	</div>
 </aside>
 `;
+
+export const cgdpFullHtmlDom = `
+<section class="cgdp-article-body__section" aria-labelledby="test-links-in-body-container">
+  <h2 class="cgdp-article-body__heading" id="test-links-in-body-container">
+    <p>Test Links in Body Container</p>
+  </h2>
+  <div class="usa-prose usa-prose--ncids-full-html">
+    <table border="0" cellpadding="4">
+      <tbody>
+        <tr>
+          <th align="left" scope="row" valign="top"><strong>Telephone:</strong></th>
+          <td><a href="tel:+1–800–555–1212">1–800–555–1212</a></td>
+        </tr>
+        <tr>
+          <th align="left" scope="row" valign="top"><strong>E-mail:</strong></th>
+          <td><a href="mailto:test@example.org">test@example.org</a></td>
+        </tr>
+        <tr>
+          <th align="left" scope="row" valign="top"><strong>External:</strong></th>
+          <td><a href="http://www.google.com">http://www.google.com</a></td>
+        </tr>
+        <tr>
+          <th align="left" scope="row" valign="top"><strong>Internal:</strong></th>
+          <td><a data-entity-substitution="canonical" data-entity-type="node" data-entity-uuid="a3464a4e-e0db-45b3-9b69-661ef35f5abc" data-cgov-yaml-query-type="cgov_home_landing" data-cgov-yaml-query-title="About Cancer" href="/about-cancer">content link</a></td>
+        </tr>
+        <tr>
+          <th align="left" scope="row" valign="top"><strong>Media:</strong></th>
+          <td><a data-entity-substitution="canonical" data-entity-type="media" data-entity-uuid="2a2069ae-7d76-49ea-8cf5-1d5b6ca48631" data-cgov-yaml-query-bundle="cgov_file" data-cgov-yaml-query-name="Test PDF File name" href="/research/progress/discovery/test-file-url">media link</a></td>
+        </tr>
+				<tr>
+          <th align="left" scope="row" valign="top"><strong>Bad Link No Text</strong></th>
+          <td><a href="/research/progress/discovery/test-file-url"></a></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+`;

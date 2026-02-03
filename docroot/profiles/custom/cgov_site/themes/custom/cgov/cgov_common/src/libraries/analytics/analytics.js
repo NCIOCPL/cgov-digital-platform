@@ -237,7 +237,7 @@ $(window).on("load", function () {
     NCIAnalytics.BlogSubscribeClick(this, pageName);
   });
 
-  $("#cgvBody.cgvblogpost").on("click", "a:not(.definition)", function () {
+  $("#cgvBody.cgvblogpost").on("click", "a:not(.definition):not(.cgdp-definition-link)", function () {
     var $this = $(this);
     var linkText = $this.text();
     NCIAnalytics.BlogBodyLinkClick(this, linkText, pageName);

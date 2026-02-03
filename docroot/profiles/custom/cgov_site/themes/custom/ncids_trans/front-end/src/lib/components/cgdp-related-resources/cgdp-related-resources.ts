@@ -135,7 +135,8 @@ const relatedResourcesCreate = (relatedResourcesEl: HTMLElement) => {
 	// Initialize the Accordion
 	accordionInstance = accordionizeForMobile(
 		'.cgdp-related-resources',
-		accordionInstance
+		accordionInstance,
+		'.nci-heading-h2'
 	) as USAAccordion | null; // Because the function can return undefined, we cast it to USAAccordion | null
 	accordionHasOpened = false;
 

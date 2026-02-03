@@ -14,6 +14,10 @@ module.exports = {
 		__dirname,
 		'src/entrypoints/global/ncids-minimal.ts'
 	),
+	'ncids-inner-minimal': path.resolve(
+		__dirname,
+		'src/entrypoints/global/ncids-inner-minimal.ts'
+	),
 	// This is named old-wysiwyg instead of legacy to avoid prefixing
 	// with .cgdpl as the postcss.config.js is looking for *-legacy
 	// filename.
@@ -95,4 +99,8 @@ module.exports = {
 		'src/entrypoints/infographic/infographic.ts'
 	),
 	video: path.resolve(__dirname, 'src/entrypoints/video/video.ts'),
+	'legacy-highcharts': path.resolve(
+		__dirname,
+		'src/entrypoints/legacy-highcharts/legacy-highcharts.ts'
+	),
 };

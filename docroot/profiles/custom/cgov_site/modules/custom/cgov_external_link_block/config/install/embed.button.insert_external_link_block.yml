@@ -1,0 +1,28 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - block_content.type.cgov_external_link_block
+    - core.entity_view_mode.block_content.embedded_feature_card
+    - core.entity_view_mode.block_content.embedded_feature_card_no_image
+    - entity_browser.browser.embedded_external_link_browser
+  module:
+    - block_content
+    - entity_embed
+label: 'Insert External Link Block'
+id: insert_external_link_block
+type_id: entity
+type_settings:
+  entity_type: block_content
+  bundles:
+    - cgov_external_link_block
+  display_plugins:
+    - 'view_mode:block_content.embedded_feature_card'
+    - 'view_mode:block_content.embedded_feature_card_no_image'
+  entity_browser: embedded_external_link_browser
+  entity_browser_settings:
+    display_review: false
+icon:
+  uri: 'public://embed_buttons/external-link-icon.svg'
+  data: PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgdmlld0JveD0iMCAwIDI0IDI0Ij48cGF0aCBkPSJNMTkgMTlINVY1aDdWM0g1YTIgMiAwIDAgMC0yIDJ2MTRhMiAyIDAgMCAwIDIgMmgxNGMxLjEgMCAyLS45IDItMnYtN2gtMnY3ek0xNCAzdjJoMy41OWwtOS44MyA5LjgzIDEuNDEgMS40MUwxOSA2LjQxVjEwaDJWM2gtN3oiLz48L3N2Zz4=
+icon_uuid: null

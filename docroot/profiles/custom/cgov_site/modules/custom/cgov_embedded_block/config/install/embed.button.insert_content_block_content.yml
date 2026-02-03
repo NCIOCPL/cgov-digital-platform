@@ -1,0 +1,25 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - core.entity_view_mode.block_content.full
+    - core.entity_view_mode.block_content.legacy_highchart
+    - entity_browser.browser.content_block_raw_html_browser
+  module:
+    - block_content
+    - entity_embed
+label: 'Insert Content Block Content'
+id: insert_content_block_content
+type_id: entity
+type_settings:
+  entity_type: block_content
+  bundles: {  }
+  display_plugins:
+    - 'view_mode:block_content.full'
+    - 'view_mode:block_content.legacy_highchart'
+  entity_browser: content_block_raw_html_browser
+  entity_browser_settings:
+    display_review: false
+icon:
+  uri: 'module://cgov_embedded_block/assets/images/embed_block.svg'
+icon_uuid: null

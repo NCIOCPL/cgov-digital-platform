@@ -185,6 +185,7 @@ const initialize = (): void => {
 	USAAccordion.create(accordion, {
 		allowMultipleOpen: true,
 		openSections: [1],
+		headerSelector: 'h2',
 	});
 	const accordionAnchorTags = document.querySelectorAll('[az_list] a.usa-link');
 	accordionAnchorTags.forEach((anchorTag) => {

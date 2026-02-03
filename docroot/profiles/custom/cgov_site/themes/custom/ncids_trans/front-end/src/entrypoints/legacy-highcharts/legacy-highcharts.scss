@@ -1,0 +1,126 @@
+// This contains the NCIDS Settings and required items. Nothing in this
+// file should generate markup.
+@forward '../cgdp-required';
+
+@use 'uswds-core' as *;
+
+/** Legacy mixin things **/
+@import '~Core/styles/environments/percussion';
+@import '../../legacy/styles/variables';
+@import '~Core/styles/mixins';
+@import '~Core/styles/fonts';
+@import '../../legacy/styles/breakpoint-mixins';
+@import '~Core/styles/placeholders';
+@import '~Styles/sprites/svg-sprite'; //sprites are sometimes used in *_overrides files
+/** Legacy mixin things END **/
+
+// We are moving foundation outside of legacy
+@import '../../legacy/styles/nci-foundation';
+
+@import '../../legacy/styles/jqueryui_overrides';
+@import '../../legacy/styles/jqueryui';
+
+// Highcharts override for popup styles
+// This is only ever used on article pages since factbook pages are
+// the only pages that use highcharts.
+// Most highcharts styles come from charts.scss and are already imported
+// via index.ts
+.highcharts-label {
+	table {
+		@include table();
+	}
+}
+
+// Styles for setting the font family in jQuery UI dialogs
+// specifically for Highcharts popups.
+.ui-dialog {
+	.ui-dialog-title {
+		@include typeset(
+			'heading',
+			$theme-h5-font-size,
+			$theme-heading-line-height
+		);
+	}
+	.no-results-message {
+		@include typeset(
+			$theme-body-font-family,
+			$theme-body-font-size,
+			$theme-body-line-height
+		);
+	}
+}
+
+// Styles from cgov/src/styles/_tables.scss that are needed for
+// Highcharts data table popups.
+[class^='flexTable'] {
+	display: flex;
+	flex-wrap: wrap;
+	margin: 0;
+	padding: 0;
+	min-width: 170px;
+	> div {
+		box-sizing: border-box;
+		flex-grow: 1;
+		width: 100%; // Default to full width
+		padding: 0.4em 0.8em;
+		overflow: hidden; // Or flex might break
+		list-style: none;
+		white-space: normal;
+		> h1,
+		> h2,
+		> h3,
+		> h4,
+		> h5,
+		> h6 {
+			margin: 0;
+		}
+	}
+}
+.flexTable--2cols > div {
+	width: 50%;
+}
+.flexTable--3cols > div {
+	width: 33.33%;
+}
+.flexTable--4cols > div {
+	width: 25%;
+}
+.flexTable--5cols > div {
+	width: 20%;
+}
+.flexTable--6cols > div {
+	width: 16.6%;
+}
+
+.highcharts-tooltip .flexTable--2cols {
+	> div:nth-child(odd) {
+		position: relative;
+		width: 60%;
+		span {
+			position: absolute;
+			top: 4px;
+			left: 0;
+		}
+	}
+	> div:nth-child(even) {
+		width: 40%;
+	}
+}
+// Horray for one-off cases!
+.highcharts-tooltip .flexTable--2cols.cellWidths-45-55 {
+	> div:nth-child(odd) {
+		width: 45%;
+	}
+	> div:nth-child(even) {
+		width: 55%;
+	}
+}
+
+.highcharts-tooltip .flexTable--2cols.cellWidths-50-50 {
+	> div:nth-child(odd) {
+		width: 50%;
+	}
+	> div:nth-child(even) {
+		width: 50%;
+	}
+}

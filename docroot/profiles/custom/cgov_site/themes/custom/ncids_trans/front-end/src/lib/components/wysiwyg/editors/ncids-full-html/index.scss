@@ -1,0 +1,48 @@
+@forward '../../common/cgdp-embed-card';
+@forward '../../common/cgdp-embed-image';
+@forward '../../common/cgdp-embed-infographic';
+@forward '../../common/cgdp-embed-pullquote';
+@forward '../../common/cgdp-embed-summary-box';
+@forward '../../common/cgdp-embed-video';
+@forward '../../common/cgdp-wysiwyg-table';
+@forward '../../common/cgdp-embed-pullquote';
+@forward '../../common/cgdp-embed-summary-box';
+
+@use 'uswds-core' as *;
+@use "sass:meta" as meta;
+
+@mixin temp-external-link-icon {
+	display: inline !important;
+}
+
+.usa-prose--ncids-full-html {
+	h2,
+	h3,
+	h4,
+	h5,
+	h6 {
+		clear: none;
+	}
+
+	// Temp fix - should be removed once fixed in NCIDS
+	// external links in nested DOM
+	&.usa-prose {
+		.usa-table-container--scrollable {
+			a:not([class]) {
+				@include typeset-link;
+				@include automatic-external-link(
+					'default',
+					$margin-between: units(0.5),
+					$external-mixin: meta.get-mixin('temp-external-link-icon')
+				);
+			}
+		}
+	}
+}
+
+// Styles for applying measure to embedded media wrappers
+.cgdp-embed-media-wrapper {
+	max-width: measure($theme-text-measure);
+	margin-top: 0;
+	clear: both;
+}
