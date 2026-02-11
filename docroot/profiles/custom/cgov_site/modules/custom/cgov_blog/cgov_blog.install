@@ -89,3 +89,23 @@ function cgov_blog_update_10001() {
     field_purge_batch(50);
   }
 }
+
+/**
+ * Updates configs to remove public use from blog series.
+ */
+function cgov_blog_update_10002() {
+  // Import the features module to ensure we have the latest configs.
+  $features_mgr = \Drupal::service('features.manager');
+  $assigner = \Drupal::service('features_assigner');
+  $assigner->assignConfigPackages();
+  $features_mgr->import(['cgov_blog']);
+
+  // Delete the field_config for public_use on cgov_blog_series.
+  // Note: We only delete the field config, not the field storage,
+  // since field_public_use is shared with other content types.
+  $field_config_storage = \Drupal::entityTypeManager()->getStorage('field_config');
+  $field_config = $field_config_storage->load('node.cgov_blog_series.field_public_use');
+  if ($field_config) {
+    $field_config->delete();
+  }
+}
