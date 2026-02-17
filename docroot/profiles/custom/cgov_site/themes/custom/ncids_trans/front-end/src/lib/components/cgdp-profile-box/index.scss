@@ -6,10 +6,14 @@
 	@include u-radius('md');
 	@include u-padding(3);
 
-	// TODO we should just expect good images, right?
 	img {
-		max-width: 100%;
-		height: auto;
+		@include u-margin-bottom(2);
+		@include u-maxw('full');
+		@include u-height('auto');
+
+		@include at-media('tablet') {
+			@include u-margin-bottom(0);
+		}
 	}
 
 	.cgdp-profile-box__heading {
@@ -18,7 +22,7 @@
 	}
 
 	.cgdp-profile-box__title {
-		font-size: size("body", "sm");
+		font-size: size('body', 'sm');
 	}
 
 	.cgdp-profile-box__titles,
@@ -27,10 +31,13 @@
 		@include u-margin-y(2);
 	}
 
+	.cgdp-profile-box__publications {
+		@include u-display('block');
+	}
+
 	.cgdp-profile-box__address,
 	.cgdp-profile-box__phone,
 	.cgdp-profile-box__publications,
-	.cgdp-profile-box__social-media,
 	.cgdp-profile-box__website {
 		@include u-margin-y(2);
 	}
