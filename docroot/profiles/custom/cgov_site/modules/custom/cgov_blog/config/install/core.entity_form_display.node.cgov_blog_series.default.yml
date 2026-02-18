@@ -12,7 +12,6 @@ dependencies:
     - field.field.node.cgov_blog_series.field_browser_title
     - field.field.node.cgov_blog_series.field_card_title
     - field.field.node.cgov_blog_series.field_feature_card_description
-    - field.field.node.cgov_blog_series.field_featured_posts
     - field.field.node.cgov_blog_series.field_feedburner_url
     - field.field.node.cgov_blog_series.field_image_promotional
     - field.field.node.cgov_blog_series.field_list_description
@@ -104,20 +103,6 @@ content:
     settings:
       size: 60
       placeholder: ''
-    third_party_settings: {  }
-  field_featured_posts:
-    type: entity_browser_entity_reference
-    weight: 16
-    region: content
-    settings:
-      entity_browser: cgov_blog_browser
-      field_widget_display: label
-      field_widget_edit: false
-      field_widget_remove: true
-      field_widget_replace: false
-      open: false
-      field_widget_display_settings: {  }
-      selection_mode: selection_append
     third_party_settings: {  }
   field_feedburner_url:
     type: string_textfield
@@ -234,9 +219,9 @@ content:
     third_party_settings: {  }
   simple_sitemap:
     weight: 10
+    region: content
     settings: {  }
     third_party_settings: {  }
-    region: content
   title:
     type: string_textfield
     weight: 1

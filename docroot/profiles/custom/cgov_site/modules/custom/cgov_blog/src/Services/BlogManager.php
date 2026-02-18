@@ -179,23 +179,6 @@ class BlogManager implements BlogManagerInterface {
   /**
    * {@inheritdoc}
    */
-  public function getSeriesFeaturedPosts(NodeInterface $blog_series) {
-    $langcode = $this->languageManager->getCurrentLanguage()->getId();
-    $featured_posts = [];
-    $featured_posts_translated = [];
-    if (!empty($blog_series->field_featured_posts)) {
-      $featured_posts = $blog_series->field_featured_posts->referencedEntities();
-    }
-    foreach ($featured_posts as $key => $post) {
-      $translated_post = $this->entityRepository->getTranslationFromContext($post, $langcode);
-      $featured_posts_translated[$key] = $translated_post;
-    }
-    return $featured_posts_translated;
-  }
-
-  /**
-   * {@inheritdoc}
-   */
   public function getNodesByPostedDateDesc($type) {
     $query = $this->entityTypeManager->getStorage('node');
     $nids = $query->getQuery()
