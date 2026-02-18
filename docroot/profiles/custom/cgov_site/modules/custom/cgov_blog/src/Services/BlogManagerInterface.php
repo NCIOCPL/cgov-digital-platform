@@ -74,17 +74,6 @@ interface BlogManagerInterface {
   public function getCurrentEntity();
 
   /**
-   * Gets the featured posts from the blog series.
-   *
-   * @param \Drupal\node\NodeInterface $blog_series
-   *   The blog series.
-   *
-   * @return \Drupal\node\Entity\Node[]
-   *   An array of featured post nodes.
-   */
-  public function getSeriesFeaturedPosts(NodeInterface $blog_series);
-
-  /**
    * Return query results based on date posted.
    *
    * @param string $type

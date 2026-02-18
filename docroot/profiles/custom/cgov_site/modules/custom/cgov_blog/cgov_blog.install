@@ -57,3 +57,35 @@ function _cgov_blog_install_permissions(CgovCoreTools $siteHelper) {
  */
 function cgov_blog_update_8002() {
 }
+
+/**
+ * Remove featured posts block from blog layouts.
+ */
+function cgov_blog_update_10001() {
+  // Import the features module to ensure we have the latest configs.
+  $features_mgr = \Drupal::service('features.manager');
+  $assigner = \Drupal::service('features_assigner');
+  $assigner->assignConfigPackages();
+  $features_mgr->import(['cgov_blog']);
+
+  // Remove field config/storage and purge data for field_featured_posts.
+  $field_config_storage = \Drupal::entityTypeManager()->getStorage('field_config');
+  $field_storage_storage = \Drupal::entityTypeManager()->getStorage('field_storage_config');
+
+  $field_config = $field_config_storage->load('node.cgov_blog_series.field_featured_posts');
+  if ($field_config) {
+    $field_config->delete();
+  }
+
+  $field_storage = $field_storage_storage->load('node.field_featured_posts');
+  if ($field_storage) {
+    $field_storage->delete();
+  }
+
+  if (\Drupal::hasService('field.purge')) {
+    \Drupal::service('field.purge')->purgeBatch(50);
+  }
+  else {
+    field_purge_batch(50);
+  }
+}

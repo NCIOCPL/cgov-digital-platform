@@ -12,7 +12,6 @@ dependencies:
     - field.field.node.cgov_blog_series.field_browser_title
     - field.field.node.cgov_blog_series.field_card_title
     - field.field.node.cgov_blog_series.field_feature_card_description
-    - field.field.node.cgov_blog_series.field_featured_posts
     - field.field.node.cgov_blog_series.field_feedburner_url
     - field.field.node.cgov_blog_series.field_image_promotional
     - field.field.node.cgov_blog_series.field_list_description
@@ -56,17 +55,6 @@ third_party_settings:
               view_mode: lb_primary_content
               context_mapping:
                 entity: layout_builder.entity
-            weight: 0
-            additional: {  }
-          156faf05-49bb-45cf-aa48-ccb363610ae1:
-            uuid: 156faf05-49bb-45cf-aa48-ccb363610ae1
-            region: second
-            configuration:
-              id: cgov_blog_featured_posts
-              label: 'Cgov Blog Featured Posts'
-              label_display: '0'
-              provider: cgov_blog
-              context_mapping: {  }
             weight: 0
             additional: {  }
           45f7df9d-e624-49df-9267-b45fe3c209c9:
@@ -174,14 +162,6 @@ content:
       link_to_entity: false
     third_party_settings: {  }
     weight: 7
-    region: content
-  field_featured_posts:
-    type: entity_reference_label
-    label: hidden
-    settings:
-      link: true
-    third_party_settings: {  }
-    weight: 21
     region: content
   field_feedburner_url:
     type: string
