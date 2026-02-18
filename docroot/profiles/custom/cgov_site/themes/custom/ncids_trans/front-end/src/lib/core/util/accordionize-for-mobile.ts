@@ -52,7 +52,8 @@ export const accordionAnalyticsHandler = (
 // based on the window's width.
 export const accordionizeForMobile = (
 	selector: string,
-	accordionInstance: USAAccordion | null
+	accordionInstance: USAAccordion | null,
+	headerSelector: string
 ) => {
 	const articleBody = document.querySelector(selector) as HTMLElement;
 	if (!articleBody) return;
@@ -67,6 +68,7 @@ export const accordionizeForMobile = (
 			accordionInstance = USAAccordion.create(articleBody, {
 				allowMultipleOpen: true,
 				openSections: [],
+				headerSelector: headerSelector,
 			});
 		} else {
 			// Destroy the accordion
@@ -84,6 +86,7 @@ export const accordionizeForMobile = (
 			accordionInstance = USAAccordion.create(articleBody, {
 				allowMultipleOpen: true,
 				openSections: [],
+				headerSelector: headerSelector,
 			});
 	}
 	return accordionInstance || null;

@@ -37,7 +37,8 @@ const initialize = () => {
 	// Initialize the Accordion
 	accordionInstance = accordionizeForMobile(
 		'.cgdp-article-footer-citation',
-		accordionInstance
+		accordionInstance,
+		'.nci-heading-h2'
 	) as USAAccordion | null; // Because the function can return undefined, we cast it to USAAccordion | null
 	accordionHasOpened = false;
 

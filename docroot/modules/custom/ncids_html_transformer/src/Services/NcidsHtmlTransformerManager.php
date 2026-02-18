@@ -57,12 +57,22 @@ class NcidsHtmlTransformerManager implements ContainerInjectionInterface {
    *   The transformed HTML.
    */
   public function transformAll(string $html): string {
+
+    // No need to process if HTML is empty or null.
+    if (empty(trim($html))) {
+      return $html;
+    }
+
     foreach ($this->transformers as $transformer) {
       $html = $transformer->preProcessHtml($html);
     }
 
     foreach ($this->transformers as $transformer) {
       $html = $transformer->transform($html);
+    }
+
+    foreach ($this->transformers as $transformer) {
+      $html = $transformer->postProcessHtml($html);
     }
 
     return $html;

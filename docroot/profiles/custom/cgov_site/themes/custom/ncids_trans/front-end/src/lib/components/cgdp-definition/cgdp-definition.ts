@@ -110,9 +110,11 @@ const addListenersToDefinitionTerms = (
 };
 
 /**
- * Wires up the definition links for the cdgp requirements.
+ * Wires up the definition links for the cgdp requirements.
+ * @param suppressLegacy boolean to indicate whether legacy glossary links should be ignored
+ * for the purpose of adding event listeners for glossary popups.
  */
-const initialize = () => {
+const initialize = (suppressLegacy = false) => {
 	// The config for the modal
 	const modalConfig = {
 		id: 'modal-callback',
@@ -122,8 +124,10 @@ const initialize = () => {
 	};
 	const modal = USAModal.createConfig(modalConfig);
 	addListenersToDefinitionTerms(modal);
-	addListenersToDrupalGlossaryTerms(modal);
-	addListenersToPdqAndLegacyGlossaryTerms(modal);
+	if (!suppressLegacy) {
+		addListenersToDrupalGlossaryTerms(modal);
+		addListenersToPdqAndLegacyGlossaryTerms(modal);
+	}
 };
 
 export default initialize;

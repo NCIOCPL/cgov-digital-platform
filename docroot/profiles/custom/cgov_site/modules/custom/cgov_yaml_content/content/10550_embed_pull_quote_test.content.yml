@@ -1,0 +1,586 @@
+# Article Test Page for Pull-Quotes
+- entity: "node"
+  type: "cgov_article"
+  title: "Pull-Quote Test Page"
+  title__ES:
+      value: "Pull-Quote Test Page - Spanish"
+  langcode: en
+  status: 1
+  field_site_section:
+    - '#process':
+        callback: 'reference'
+        args:
+          - 'taxonomy_term'
+          - vid: 'cgov_site_sections'
+            computed_path: '/test'
+  field_site_section__ES:
+    - '#process':
+        callback: 'reference'
+        args:
+          - 'taxonomy_term'
+          - vid: 'cgov_site_sections'
+            computed_path: '/test-es'
+  field_pretty_url:
+    value: 'pull-quote-test'
+  field_pretty_url__ES:
+    value: 'pull-quote-test-es'
+  moderation_state:
+    value: 'published'
+  field_article_body:
+    - entity: 'paragraph'
+      type: "body_section"
+      field_body_section_heading:
+        - format: "simple"
+          value: "Full - No Alignment"
+      field_body_section_content:
+      - format: "ncids_full_html"
+        value: |
+          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut sed ante ac nibh molestie feugiat sed id enim. Morbi sed nisl eget dui consequat pellentesque quis ac mauris. Integer id mollis mi.</p>
+          <p>Vestibulum vestibulum mi ante, at ornare augue luctus quis. Nunc urna velit, iaculis consectetur mi ac, posuere congue velit. Quisque commodo convallis facilisis. Proin euismod in magna et ornare. Proin augue mi, finibus eget elementum id, scelerisque a turpis. </p>
+          <div class="cgdp-embed-media-wrapper">
+            <div class="embedded-entity cgdp-embed-pullquote cgdp-embed-pullquote--full">
+              <div class="cgdp-pullquote">
+                <div class="cgdp-pullquote__container">
+                  <p class="cgdp-pullquote__body">Mauris vehicula erat quis facilisis laoreet. Mauris eget vestibulum diam, quis pulvinar odio. Aenean nec eros ligula. Aliquam erat divvolutpat. Quisque volutpat nisl risus</p>
+                  <p class="cgdp-pullquote__author">Stephen J. Chanock, M.D.</p>
+                  <p class="cgdp-pullquote__title">Division of Cancer Epidemiology &amp; Genetics Director</p>
+                </div>
+              </div>
+            </div>
+          </div>
+          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut sed ante ac nibh molestie feugiat sed id enim. Morbi sed nisl eget dui consequat pellentesque quis ac mauris. Integer id mollis mi.</p>
+          <p>Vestibulum vestibulum mi ante, at ornare augue luctus quis. Nunc urna velit, iaculis consectetur mi ac, posuere congue velit. Quisque commodo convallis facilisis. Proin euismod in magna et ornare. Proin augue mi, finibus eget elementum id, scelerisque a turpis. </p>
+    - entity: 'paragraph'
+      type: "body_section"
+      field_body_section_heading:
+        - format: "simple"
+          value: "Full - Align Center"
+      field_body_section_content:
+        - format: "ncids_full_html"
+          value: |
+            <p>If you feel guilty, know that many people with cancer feel this way. You may blame yourself for upsetting the people you love, or worry that you're a burden in some way. Or, you may envy other people's good health and be ashamed of this feeling. You might even blame yourself for lifestyle choices that you think could have led to your cancer.</p>
+            <p>These feelings are all very common. It may help you to share them with someone. Let your doctor know if you would like to talk with a counselor or go to a support group.</p>
+            <p>If you feel guilty, know that many people with cancer feel this way. You may blame yourself for upsetting the people you love, or worry that you're a burden in some way. Or, you may envy other people's good health and be ashamed of this feeling. You might even blame yourself for lifestyle choices that you think could have led to your cancer.</p>
+            <p>These feelings are all very common. It may help you to share them with someone. Let your doctor know if you would like to talk with a counselor or go to a support group.</p>
+            <div class="cgdp-embed-media-wrapper">
+              <div class="align-center embedded-entity cgdp-embed-pullquote cgdp-embed-pullquote--full">
+                <div class="cgdp-pullquote">
+                  <div class="cgdp-pullquote__container">
+                    <p class="cgdp-pullquote__body">Mauris vehicula erat quis facilisis laoreet. Mauris eget vestibulum diam, quis pulvinar odio. Aenean nec eros ligula. Aliquam erat divvolutpat. Quisque volutpat nisl risus</p>
+                    <p class="cgdp-pullquote__author">Stephen J. Chanock, M.D.</p>
+                    <p class="cgdp-pullquote__title">Division of Cancer Epidemiology &amp; Genetics Director</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <p>If you feel guilty, know that many people with cancer feel this way. You may blame yourself for upsetting the people you love, or worry that you're a burden in some way. Or, you may envy other people's good health and be ashamed of this feeling. You might even blame yourself for lifestyle choices that you think could have led to your cancer.</p>
+            <p>These feelings are all very common. It may help you to share them with someone. Let your doctor know if you would like to talk with a counselor or go to a support group.</p>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut sed ante ac nibh molestie feugiat sed id enim. Morbi sed nisl eget dui consequat pellentesque quis ac mauris. Integer id mollis mi.</p>
+            <p>Vestibulum vestibulum mi ante, at ornare augue luctus quis. Nunc urna velit, iaculis consectetur mi ac, posuere congue velit. Quisque commodo convallis facilisis. Proin euismod in magna et ornare. Proin augue mi, finibus eget elementum id, scelerisque a turpis. </p>
+    - entity: 'paragraph'
+      type: "body_section"
+      field_body_section_heading:
+        - format: "simple"
+          value: "Full - Align Left"
+      field_body_section_content:
+        - format: "ncids_full_html"
+          value: |
+            <p>If you feel guilty, know that many people with cancer feel this way. You may blame yourself for upsetting the people you love, or worry that you're a burden in some way. Or, you may envy other people's good health and be ashamed of this feeling. You might even blame yourself for lifestyle choices that you think could have led to your cancer.</p>
+            <p>These feelings are all very common. It may help you to share them with someone. Let your doctor know if you would like to talk with a counselor or go to a support group.</p>
+            <p>If you feel guilty, know that many people with cancer feel this way. You may blame yourself for upsetting the people you love, or worry that you're a burden in some way. Or, you may envy other people's good health and be ashamed of this feeling. You might even blame yourself for lifestyle choices that you think could have led to your cancer.</p>
+            <p>These feelings are all very common. It may help you to share them with someone. Let your doctor know if you would like to talk with a counselor or go to a support group.</p>
+            <div class="cgdp-embed-media-wrapper">
+              <div class="align-left embedded-entity cgdp-embed-pullquote cgdp-embed-pullquote--full">
+                <div class="cgdp-pullquote">
+                  <div class="cgdp-pullquote__container">
+                    <p class="cgdp-pullquote__body">Mauris vehicula erat quis facilisis laoreet. Mauris eget vestibulum diam, quis pulvinar odio. Aenean nec eros ligula. Aliquam erat divvolutpat. Quisque volutpat nisl risus</p>
+                    <p class="cgdp-pullquote__author">Stephen J. Chanock, M.D.</p>
+                    <p class="cgdp-pullquote__title">Division of Cancer Epidemiology &amp; Genetics Director</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <p>If you feel guilty, know that many people with cancer feel this way. You may blame yourself for upsetting the people you love, or worry that you're a burden in some way. Or, you may envy other people's good health and be ashamed of this feeling. You might even blame yourself for lifestyle choices that you think could have led to your cancer.</p>
+            <p>These feelings are all very common. It may help you to share them with someone. Let your doctor know if you would like to talk with a counselor or go to a support group.</p>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut sed ante ac nibh molestie feugiat sed id enim. Morbi sed nisl eget dui consequat pellentesque quis ac mauris. Integer id mollis mi.</p>
+            <p>Vestibulum vestibulum mi ante, at ornare augue luctus quis. Nunc urna velit, iaculis consectetur mi ac, posuere congue velit. Quisque commodo convallis facilisis. Proin euismod in magna et ornare. Proin augue mi, finibus eget elementum id, scelerisque a turpis. </p>
+    - entity: 'paragraph'
+      type: "body_section"
+      field_body_section_heading:
+        - format: "simple"
+          value: "Full - Align Right"
+      field_body_section_content:
+        - format: "ncids_full_html"
+          value: |
+            <p>If you feel guilty, know that many people with cancer feel this way. You may blame yourself for upsetting the people you love, or worry that you're a burden in some way. Or, you may envy other people's good health and be ashamed of this feeling. You might even blame yourself for lifestyle choices that you think could have led to your cancer.</p>
+            <p>These feelings are all very common. It may help you to share them with someone. Let your doctor know if you would like to talk with a counselor or go to a support group.</p>
+            <p>If you feel guilty, know that many people with cancer feel this way. You may blame yourself for upsetting the people you love, or worry that you're a burden in some way. Or, you may envy other people's good health and be ashamed of this feeling. You might even blame yourself for lifestyle choices that you think could have led to your cancer.</p>
+            <p>These feelings are all very common. It may help you to share them with someone. Let your doctor know if you would like to talk with a counselor or go to a support group.</p>
+            <div class="cgdp-embed-media-wrapper">
+              <div class="align-right embedded-entity cgdp-embed-pullquote cgdp-embed-pullquote--full">
+                <div class="cgdp-pullquote">
+                  <div class="cgdp-pullquote__container">
+                    <p class="cgdp-pullquote__body">Mauris vehicula erat quis facilisis laoreet. Mauris eget vestibulum diam, quis pulvinar odio. Aenean nec eros ligula. Aliquam erat divvolutpat. Quisque volutpat nisl risus</p>
+                    <p class="cgdp-pullquote__author">Stephen J. Chanock, M.D.</p>
+                    <p class="cgdp-pullquote__title">Division of Cancer Epidemiology &amp; Genetics Director</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <p>If you feel guilty, know that many people with cancer feel this way. You may blame yourself for upsetting the people you love, or worry that you're a burden in some way. Or, you may envy other people's good health and be ashamed of this feeling. You might even blame yourself for lifestyle choices that you think could have led to your cancer.</p>
+            <p>These feelings are all very common. It may help you to share them with someone. Let your doctor know if you would like to talk with a counselor or go to a support group.</p>
+    - entity: 'paragraph'
+      type: "body_section"
+      field_body_section_heading:
+        - format: "simple"
+          value: "Small - No Alignment"
+      field_body_section_content:
+      - format: "ncids_full_html"
+        value: |
+          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut sed ante ac nibh molestie feugiat sed id enim. Morbi sed nisl eget dui consequat pellentesque quis ac mauris. Integer id mollis mi.</p>
+          <p>Vestibulum vestibulum mi ante, at ornare augue luctus quis. Nunc urna velit, iaculis consectetur mi ac, posuere congue velit. Quisque commodo convallis facilisis. Proin euismod in magna et ornare. Proin augue mi, finibus eget elementum id, scelerisque a turpis. </p>
+          <div class="cgdp-embed-media-wrapper">
+            <div class="embedded-entity cgdp-embed-pullquote cgdp-embed-pullquote--small">
+              <div class="cgdp-pullquote">
+                <div class="cgdp-pullquote__container">
+                  <p class="cgdp-pullquote__body">Mauris vehicula erat quis facilisis laoreet. Mauris eget vestibulum diam, quis pulvinar odio. Aenean nec eros ligula. Aliquam erat divvolutpat. Quisque volutpat nisl risus</p>
+                  <p class="cgdp-pullquote__author">Stephen J. Chanock, M.D.</p>
+                  <p class="cgdp-pullquote__title">Division of Cancer Epidemiology &amp; Genetics Director</p>
+                </div>
+              </div>
+            </div>
+          </div>
+          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut sed ante ac nibh molestie feugiat sed id enim. Morbi sed nisl eget dui consequat pellentesque quis ac mauris. Integer id mollis mi.</p>
+          <p>Vestibulum vestibulum mi ante, at ornare augue luctus quis. Nunc urna velit, iaculis consectetur mi ac, posuere congue velit. Quisque commodo convallis facilisis. Proin euismod in magna et ornare. Proin augue mi, finibus eget elementum id, scelerisque a turpis. </p>
+    - entity: 'paragraph'
+      type: "body_section"
+      field_body_section_heading:
+        - format: "simple"
+          value: "Small - Align Center"
+      field_body_section_content:
+        - format: "ncids_full_html"
+          value: |
+            <p>If you feel guilty, know that many people with cancer feel this way. You may blame yourself for upsetting the people you love, or worry that you're a burden in some way. Or, you may envy other people's good health and be ashamed of this feeling. You might even blame yourself for lifestyle choices that you think could have led to your cancer.</p>
+            <p>These feelings are all very common. It may help you to share them with someone. Let your doctor know if you would like to talk with a counselor or go to a support group.</p>
+            <p>If you feel guilty, know that many people with cancer feel this way. You may blame yourself for upsetting the people you love, or worry that you're a burden in some way. Or, you may envy other people's good health and be ashamed of this feeling. You might even blame yourself for lifestyle choices that you think could have led to your cancer.</p>
+            <p>These feelings are all very common. It may help you to share them with someone. Let your doctor know if you would like to talk with a counselor or go to a support group.</p>
+            <div class="cgdp-embed-media-wrapper">
+              <div class="align-center embedded-entity cgdp-embed-pullquote cgdp-embed-pullquote--small">
+                <div class="cgdp-pullquote">
+                  <div class="cgdp-pullquote__container">
+                    <p class="cgdp-pullquote__body">Mauris vehicula erat quis facilisis laoreet. Mauris eget vestibulum diam, quis pulvinar odio. Aenean nec eros ligula. Aliquam erat divvolutpat. Quisque volutpat nisl risus</p>
+                    <p class="cgdp-pullquote__author">Stephen J. Chanock, M.D.</p>
+                    <p class="cgdp-pullquote__title">Division of Cancer Epidemiology &amp; Genetics Director</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <p>If you feel guilty, know that many people with cancer feel this way. You may blame yourself for upsetting the people you love, or worry that you're a burden in some way. Or, you may envy other people's good health and be ashamed of this feeling. You might even blame yourself for lifestyle choices that you think could have led to your cancer.</p>
+            <p>These feelings are all very common. It may help you to share them with someone. Let your doctor know if you would like to talk with a counselor or go to a support group.</p>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut sed ante ac nibh molestie feugiat sed id enim. Morbi sed nisl eget dui consequat pellentesque quis ac mauris. Integer id mollis mi.</p>
+            <p>Vestibulum vestibulum mi ante, at ornare augue luctus quis. Nunc urna velit, iaculis consectetur mi ac, posuere congue velit. Quisque commodo convallis facilisis. Proin euismod in magna et ornare. Proin augue mi, finibus eget elementum id, scelerisque a turpis. </p>
+    - entity: 'paragraph'
+      type: "body_section"
+      field_body_section_heading:
+        - format: "simple"
+          value: "Small - Align Left"
+      field_body_section_content:
+        - format: "ncids_full_html"
+          value: |
+            <p>If you feel guilty, know that many people with cancer feel this way. You may blame yourself for upsetting the people you love, or worry that you're a burden in some way. Or, you may envy other people's good health and be ashamed of this feeling. You might even blame yourself for lifestyle choices that you think could have led to your cancer.</p>
+            <p>These feelings are all very common. It may help you to share them with someone. Let your doctor know if you would like to talk with a counselor or go to a support group.</p>
+            <p>If you feel guilty, know that many people with cancer feel this way. You may blame yourself for upsetting the people you love, or worry that you're a burden in some way. Or, you may envy other people's good health and be ashamed of this feeling. You might even blame yourself for lifestyle choices that you think could have led to your cancer.</p>
+            <p>These feelings are all very common. It may help you to share them with someone. Let your doctor know if you would like to talk with a counselor or go to a support group.</p>
+            <div class="cgdp-embed-media-wrapper">
+              <div class="align-left embedded-entity cgdp-embed-pullquote cgdp-embed-pullquote--small">
+                <div class="cgdp-pullquote">
+                  <div class="cgdp-pullquote__container">
+                    <p class="cgdp-pullquote__body">Mauris vehicula erat quis facilisis laoreet. Mauris eget vestibulum diam, quis pulvinar odio. Aenean nec eros ligula. Aliquam erat divvolutpat. Quisque volutpat nisl risus</p>
+                    <p class="cgdp-pullquote__author">Stephen J. Chanock, M.D.</p>
+                    <p class="cgdp-pullquote__title">Division of Cancer Epidemiology &amp; Genetics Director</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <p>If you feel guilty, know that many people with cancer feel this way. You may blame yourself for upsetting the people you love, or worry that you're a burden in some way. Or, you may envy other people's good health and be ashamed of this feeling. You might even blame yourself for lifestyle choices that you think could have led to your cancer.</p>
+            <p>These feelings are all very common. It may help you to share them with someone. Let your doctor know if you would like to talk with a counselor or go to a support group.</p>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut sed ante ac nibh molestie feugiat sed id enim. Morbi sed nisl eget dui consequat pellentesque quis ac mauris. Integer id mollis mi.</p>
+            <p>Vestibulum vestibulum mi ante, at ornare augue luctus quis. Nunc urna velit, iaculis consectetur mi ac, posuere congue velit. Quisque commodo convallis facilisis. Proin euismod in magna et ornare. Proin augue mi, finibus eget elementum id, scelerisque a turpis. </p>
+    - entity: 'paragraph'
+      type: "body_section"
+      field_body_section_heading:
+        - format: "simple"
+          value: "Small - Align Right"
+      field_body_section_content:
+        - format: "ncids_full_html"
+          value: |
+            <p>If you feel guilty, know that many people with cancer feel this way. You may blame yourself for upsetting the people you love, or worry that you're a burden in some way. Or, you may envy other people's good health and be ashamed of this feeling. You might even blame yourself for lifestyle choices that you think could have led to your cancer.</p>
+            <p>These feelings are all very common. It may help you to share them with someone. Let your doctor know if you would like to talk with a counselor or go to a support group.</p>
+            <p>If you feel guilty, know that many people with cancer feel this way. You may blame yourself for upsetting the people you love, or worry that you're a burden in some way. Or, you may envy other people's good health and be ashamed of this feeling. You might even blame yourself for lifestyle choices that you think could have led to your cancer.</p>
+            <p>These feelings are all very common. It may help you to share them with someone. Let your doctor know if you would like to talk with a counselor or go to a support group.</p>
+            <div class="cgdp-embed-media-wrapper">
+              <div class="align-right embedded-entity cgdp-embed-pullquote cgdp-embed-pullquote--small">
+                <div class="cgdp-pullquote">
+                  <div class="cgdp-pullquote__container">
+                    <p class="cgdp-pullquote__body">Mauris vehicula erat quis facilisis laoreet. Mauris eget vestibulum diam, quis pulvinar odio. Aenean nec eros ligula. Aliquam erat divvolutpat. Quisque volutpat nisl risus</p>
+                    <p class="cgdp-pullquote__author">Stephen J. Chanock, M.D.</p>
+                    <p class="cgdp-pullquote__title">Division of Cancer Epidemiology &amp; Genetics Director</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <p>If you feel guilty, know that many people with cancer feel this way. You may blame yourself for upsetting the people you love, or worry that you're a burden in some way. Or, you may envy other people's good health and be ashamed of this feeling. You might even blame yourself for lifestyle choices that you think could have led to your cancer.</p>
+            <p>These feelings are all very common. It may help you to share them with someone. Let your doctor know if you would like to talk with a counselor or go to a support group.</p>
+    - entity: 'paragraph'
+      type: "body_section"
+      field_body_section_heading:
+        - format: "simple"
+          value: "Full - No Title"
+      field_body_section_content:
+      - format: "ncids_full_html"
+        value: |
+          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut sed ante ac nibh molestie feugiat sed id enim. Morbi sed nisl eget dui consequat pellentesque quis ac mauris. Integer id mollis mi.</p>
+          <p>Vestibulum vestibulum mi ante, at ornare augue luctus quis. Nunc urna velit, iaculis consectetur mi ac, posuere congue velit. Quisque commodo convallis facilisis. Proin euismod in magna et ornare. Proin augue mi, finibus eget elementum id, scelerisque a turpis. </p>
+          <div class="cgdp-embed-media-wrapper">
+            <div class="embedded-entity cgdp-embed-pullquote cgdp-embed-pullquote--full">
+              <div class="cgdp-pullquote">
+                <div class="cgdp-pullquote__container">
+                  <p class="cgdp-pullquote__body">Mauris vehicula erat quis facilisis laoreet. Mauris eget vestibulum diam, quis pulvinar odio. Aenean nec eros ligula. Aliquam erat divvolutpat. Quisque volutpat nisl risus</p>
+                  <p class="cgdp-pullquote__author">Stephen J. Chanock, M.D.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut sed ante ac nibh molestie feugiat sed id enim. Morbi sed nisl eget dui consequat pellentesque quis ac mauris. Integer id mollis mi.</p>
+          <p>Vestibulum vestibulum mi ante, at ornare augue luctus quis. Nunc urna velit, iaculis consectetur mi ac, posuere congue velit. Quisque commodo convallis facilisis. Proin euismod in magna et ornare. Proin augue mi, finibus eget elementum id, scelerisque a turpis. </p>
+    - entity: 'paragraph'
+      type: "body_section"
+      field_body_section_heading:
+        - format: "simple"
+          value: "Full - No Author"
+      field_body_section_content:
+      - format: "ncids_full_html"
+        value: |
+          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut sed ante ac nibh molestie feugiat sed id enim. Morbi sed nisl eget dui consequat pellentesque quis ac mauris. Integer id mollis mi.</p>
+          <p>Vestibulum vestibulum mi ante, at ornare augue luctus quis. Nunc urna velit, iaculis consectetur mi ac, posuere congue velit. Quisque commodo convallis facilisis. Proin euismod in magna et ornare. Proin augue mi, finibus eget elementum id, scelerisque a turpis. </p>
+          <div class="cgdp-embed-media-wrapper">
+            <div class="embedded-entity cgdp-embed-pullquote cgdp-embed-pullquote--full">
+              <div class="cgdp-pullquote">
+                <div class="cgdp-pullquote__container">
+                  <p class="cgdp-pullquote__body">Mauris vehicula erat quis facilisis laoreet. Mauris eget vestibulum diam, quis pulvinar odio. Aenean nec eros ligula. Aliquam erat divvolutpat. Quisque volutpat nisl risus</p>
+                  <p class="cgdp-pullquote__title">Division of Cancer Epidemiology &amp; Genetics Director</p>
+                </div>
+              </div>
+            </div>
+          </div>
+          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut sed ante ac nibh molestie feugiat sed id enim. Morbi sed nisl eget dui consequat pellentesque quis ac mauris. Integer id mollis mi.</p>
+          <p>Vestibulum vestibulum mi ante, at ornare augue luctus quis. Nunc urna velit, iaculis consectetur mi ac, posuere congue velit. Quisque commodo convallis facilisis. Proin euismod in magna et ornare. Proin augue mi, finibus eget elementum id, scelerisque a turpis. </p>
+    - entity: 'paragraph'
+      type: "body_section"
+      field_body_section_heading:
+        - format: "simple"
+          value: "Full - No Author - No Title"
+      field_body_section_content:
+      - format: "ncids_full_html"
+        value: |
+          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut sed ante ac nibh molestie feugiat sed id enim. Morbi sed nisl eget dui consequat pellentesque quis ac mauris. Integer id mollis mi.</p>
+          <p>Vestibulum vestibulum mi ante, at ornare augue luctus quis. Nunc urna velit, iaculis consectetur mi ac, posuere congue velit. Quisque commodo convallis facilisis. Proin euismod in magna et ornare. Proin augue mi, finibus eget elementum id, scelerisque a turpis. </p>
+          <div class="cgdp-embed-media-wrapper">
+            <div class="embedded-entity cgdp-embed-pullquote cgdp-embed-pullquote--full">
+              <div class="cgdp-pullquote">
+                <div class="cgdp-pullquote__container">
+                  <p class="cgdp-pullquote__body">Mauris vehicula erat quis facilisis laoreet. Mauris eget vestibulum diam, quis pulvinar odio. Aenean nec eros ligula. Aliquam erat divvolutpat. Quisque volutpat nisl risus</p>
+                </div>
+              </div>
+            </div>
+          </div>
+          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut sed ante ac nibh molestie feugiat sed id enim. Morbi sed nisl eget dui consequat pellentesque quis ac mauris. Integer id mollis mi.</p>
+          <p>Vestibulum vestibulum mi ante, at ornare augue luctus quis. Nunc urna velit, iaculis consectetur mi ac, posuere congue velit. Quisque commodo convallis facilisis. Proin euismod in magna et ornare. Proin augue mi, finibus eget elementum id, scelerisque a turpis. </p>
+  field_article_body__ES:
+    - entity: 'paragraph'
+      type: "body_section"
+      field_body_section_heading:
+        - format: "simple"
+          value: "Full - No Alignment"
+      field_body_section_content:
+      - format: "ncids_full_html"
+        value: |
+          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut sed ante ac nibh molestie feugiat sed id enim. Morbi sed nisl eget dui consequat pellentesque quis ac mauris. Integer id mollis mi.</p>
+          <p>Vestibulum vestibulum mi ante, at ornare augue luctus quis. Nunc urna velit, iaculis consectetur mi ac, posuere congue velit. Quisque commodo convallis facilisis. Proin euismod in magna et ornare. Proin augue mi, finibus eget elementum id, scelerisque a turpis. </p>
+          <div class="cgdp-embed-media-wrapper">
+            <div class="embedded-entity cgdp-embed-pullquote cgdp-embed-pullquote--full">
+              <div class="cgdp-pullquote">
+                <div class="cgdp-pullquote__container">
+                  <p class="cgdp-pullquote__body">Cuando empiezo a sentirme culpable de haber causado mi enfermedad, pienso en cómo los niños pequeños pueden padecer cáncer. Con eso me doy cuenta de que el cáncer puede suceder sin razón. No es mi culpa</p>
+                  <p class="cgdp-pullquote__author">Stephen J. Chanock, M.D.</p>
+                  <p class="cgdp-pullquote__title">Division of Cancer Epidemiology &amp; Genetics Director</p>
+                </div>
+              </div>
+            </div>
+          </div>
+          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut sed ante ac nibh molestie feugiat sed id enim. Morbi sed nisl eget dui consequat pellentesque quis ac mauris. Integer id mollis mi.</p>
+          <p>Vestibulum vestibulum mi ante, at ornare augue luctus quis. Nunc urna velit, iaculis consectetur mi ac, posuere congue velit. Quisque commodo convallis facilisis. Proin euismod in magna et ornare. Proin augue mi, finibus eget elementum id, scelerisque a turpis. </p>
+    - entity: 'paragraph'
+      type: "body_section"
+      field_body_section_heading:
+        - format: "simple"
+          value: "Full - Align Center"
+      field_body_section_content:
+        - format: "ncids_full_html"
+          value: |
+            <p>If you feel guilty, know that many people with cancer feel this way. You may blame yourself for upsetting the people you love, or worry that you're a burden in some way. Or, you may envy other people's good health and be ashamed of this feeling. You might even blame yourself for lifestyle choices that you think could have led to your cancer.</p>
+            <p>These feelings are all very common. It may help you to share them with someone. Let your doctor know if you would like to talk with a counselor or go to a support group.</p>
+            <p>If you feel guilty, know that many people with cancer feel this way. You may blame yourself for upsetting the people you love, or worry that you're a burden in some way. Or, you may envy other people's good health and be ashamed of this feeling. You might even blame yourself for lifestyle choices that you think could have led to your cancer.</p>
+            <p>These feelings are all very common. It may help you to share them with someone. Let your doctor know if you would like to talk with a counselor or go to a support group.</p>
+            <div class="cgdp-embed-media-wrapper">
+              <div class="align-center embedded-entity cgdp-embed-pullquote cgdp-embed-pullquote--full">
+                <div class="cgdp-pullquote">
+                  <div class="cgdp-pullquote__container">
+                    <p class="cgdp-pullquote__body">Cuando empiezo a sentirme culpable de haber causado mi enfermedad, pienso en cómo los niños pequeños pueden padecer cáncer. Con eso me doy cuenta de que el cáncer puede suceder sin razón. No es mi culpa</p>
+                    <p class="cgdp-pullquote__author">Stephen J. Chanock, M.D.</p>
+                    <p class="cgdp-pullquote__title">Division of Cancer Epidemiology &amp; Genetics Director</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <p>If you feel guilty, know that many people with cancer feel this way. You may blame yourself for upsetting the people you love, or worry that you're a burden in some way. Or, you may envy other people's good health and be ashamed of this feeling. You might even blame yourself for lifestyle choices that you think could have led to your cancer.</p>
+            <p>These feelings are all very common. It may help you to share them with someone. Let your doctor know if you would like to talk with a counselor or go to a support group.</p>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut sed ante ac nibh molestie feugiat sed id enim. Morbi sed nisl eget dui consequat pellentesque quis ac mauris. Integer id mollis mi.</p>
+            <p>Vestibulum vestibulum mi ante, at ornare augue luctus quis. Nunc urna velit, iaculis consectetur mi ac, posuere congue velit. Quisque commodo convallis facilisis. Proin euismod in magna et ornare. Proin augue mi, finibus eget elementum id, scelerisque a turpis. </p>
+    - entity: 'paragraph'
+      type: "body_section"
+      field_body_section_heading:
+        - format: "simple"
+          value: "Full - Align Left"
+      field_body_section_content:
+        - format: "ncids_full_html"
+          value: |
+            <p>If you feel guilty, know that many people with cancer feel this way. You may blame yourself for upsetting the people you love, or worry that you're a burden in some way. Or, you may envy other people's good health and be ashamed of this feeling. You might even blame yourself for lifestyle choices that you think could have led to your cancer.</p>
+            <p>These feelings are all very common. It may help you to share them with someone. Let your doctor know if you would like to talk with a counselor or go to a support group.</p>
+            <p>If you feel guilty, know that many people with cancer feel this way. You may blame yourself for upsetting the people you love, or worry that you're a burden in some way. Or, you may envy other people's good health and be ashamed of this feeling. You might even blame yourself for lifestyle choices that you think could have led to your cancer.</p>
+            <p>These feelings are all very common. It may help you to share them with someone. Let your doctor know if you would like to talk with a counselor or go to a support group.</p>
+            <div class="cgdp-embed-media-wrapper">
+              <div class="align-left embedded-entity cgdp-embed-pullquote cgdp-embed-pullquote--full">
+                <div class="cgdp-pullquote">
+                  <div class="cgdp-pullquote__container">
+                    <p class="cgdp-pullquote__body">Cuando empiezo a sentirme culpable de haber causado mi enfermedad, pienso en cómo los niños pequeños pueden padecer cáncer. Con eso me doy cuenta de que el cáncer puede suceder sin razón. No es mi culpa</p>
+                    <p class="cgdp-pullquote__author">Stephen J. Chanock, M.D.</p>
+                    <p class="cgdp-pullquote__title">Division of Cancer Epidemiology &amp; Genetics Director</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <p>If you feel guilty, know that many people with cancer feel this way. You may blame yourself for upsetting the people you love, or worry that you're a burden in some way. Or, you may envy other people's good health and be ashamed of this feeling. You might even blame yourself for lifestyle choices that you think could have led to your cancer.</p>
+            <p>These feelings are all very common. It may help you to share them with someone. Let your doctor know if you would like to talk with a counselor or go to a support group.</p>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut sed ante ac nibh molestie feugiat sed id enim. Morbi sed nisl eget dui consequat pellentesque quis ac mauris. Integer id mollis mi.</p>
+            <p>Vestibulum vestibulum mi ante, at ornare augue luctus quis. Nunc urna velit, iaculis consectetur mi ac, posuere congue velit. Quisque commodo convallis facilisis. Proin euismod in magna et ornare. Proin augue mi, finibus eget elementum id, scelerisque a turpis. </p>
+    - entity: 'paragraph'
+      type: "body_section"
+      field_body_section_heading:
+        - format: "simple"
+          value: "Full - Align Right"
+      field_body_section_content:
+        - format: "ncids_full_html"
+          value: |
+            <p>If you feel guilty, know that many people with cancer feel this way. You may blame yourself for upsetting the people you love, or worry that you're a burden in some way. Or, you may envy other people's good health and be ashamed of this feeling. You might even blame yourself for lifestyle choices that you think could have led to your cancer.</p>
+            <p>These feelings are all very common. It may help you to share them with someone. Let your doctor know if you would like to talk with a counselor or go to a support group.</p>
+            <p>If you feel guilty, know that many people with cancer feel this way. You may blame yourself for upsetting the people you love, or worry that you're a burden in some way. Or, you may envy other people's good health and be ashamed of this feeling. You might even blame yourself for lifestyle choices that you think could have led to your cancer.</p>
+            <p>These feelings are all very common. It may help you to share them with someone. Let your doctor know if you would like to talk with a counselor or go to a support group.</p>
+            <div class="cgdp-embed-media-wrapper">
+              <div class="align-right embedded-entity cgdp-embed-pullquote cgdp-embed-pullquote--full">
+                <div class="cgdp-pullquote">
+                  <div class="cgdp-pullquote__container">
+                    <p class="cgdp-pullquote__body">Cuando empiezo a sentirme culpable de haber causado mi enfermedad, pienso en cómo los niños pequeños pueden padecer cáncer. Con eso me doy cuenta de que el cáncer puede suceder sin razón. No es mi culpa</p>
+                    <p class="cgdp-pullquote__author">Stephen J. Chanock, M.D.</p>
+                    <p class="cgdp-pullquote__title">Division of Cancer Epidemiology &amp; Genetics Director</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <p>If you feel guilty, know that many people with cancer feel this way. You may blame yourself for upsetting the people you love, or worry that you're a burden in some way. Or, you may envy other people's good health and be ashamed of this feeling. You might even blame yourself for lifestyle choices that you think could have led to your cancer.</p>
+            <p>These feelings are all very common. It may help you to share them with someone. Let your doctor know if you would like to talk with a counselor or go to a support group.</p>
+    - entity: 'paragraph'
+      type: "body_section"
+      field_body_section_heading:
+        - format: "simple"
+          value: "Small - No Alignment"
+      field_body_section_content:
+      - format: "ncids_full_html"
+        value: |
+          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut sed ante ac nibh molestie feugiat sed id enim. Morbi sed nisl eget dui consequat pellentesque quis ac mauris. Integer id mollis mi.</p>
+          <p>Vestibulum vestibulum mi ante, at ornare augue luctus quis. Nunc urna velit, iaculis consectetur mi ac, posuere congue velit. Quisque commodo convallis facilisis. Proin euismod in magna et ornare. Proin augue mi, finibus eget elementum id, scelerisque a turpis. </p>
+          <div class="cgdp-embed-media-wrapper">
+            <div class="embedded-entity cgdp-embed-pullquote cgdp-embed-pullquote--small">
+              <div class="cgdp-pullquote">
+                <div class="cgdp-pullquote__container">
+                  <p class="cgdp-pullquote__body">Cuando empiezo a sentirme culpable de haber causado mi enfermedad, pienso en cómo los niños pequeños pueden padecer cáncer. Con eso me doy cuenta de que el cáncer puede suceder sin razón. No es mi culpa</p>
+                  <p class="cgdp-pullquote__author">Stephen J. Chanock, M.D.</p>
+                  <p class="cgdp-pullquote__title">Division of Cancer Epidemiology &amp; Genetics Director</p>
+                </div>
+              </div>
+            </div>
+          </div>
+          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut sed ante ac nibh molestie feugiat sed id enim. Morbi sed nisl eget dui consequat pellentesque quis ac mauris. Integer id mollis mi.</p>
+          <p>Vestibulum vestibulum mi ante, at ornare augue luctus quis. Nunc urna velit, iaculis consectetur mi ac, posuere congue velit. Quisque commodo convallis facilisis. Proin euismod in magna et ornare. Proin augue mi, finibus eget elementum id, scelerisque a turpis. </p>
+    - entity: 'paragraph'
+      type: "body_section"
+      field_body_section_heading:
+        - format: "simple"
+          value: "Small - Align Center"
+      field_body_section_content:
+        - format: "ncids_full_html"
+          value: |
+            <p>If you feel guilty, know that many people with cancer feel this way. You may blame yourself for upsetting the people you love, or worry that you're a burden in some way. Or, you may envy other people's good health and be ashamed of this feeling. You might even blame yourself for lifestyle choices that you think could have led to your cancer.</p>
+            <p>These feelings are all very common. It may help you to share them with someone. Let your doctor know if you would like to talk with a counselor or go to a support group.</p>
+            <p>If you feel guilty, know that many people with cancer feel this way. You may blame yourself for upsetting the people you love, or worry that you're a burden in some way. Or, you may envy other people's good health and be ashamed of this feeling. You might even blame yourself for lifestyle choices that you think could have led to your cancer.</p>
+            <p>These feelings are all very common. It may help you to share them with someone. Let your doctor know if you would like to talk with a counselor or go to a support group.</p>
+            <div class="cgdp-embed-media-wrapper">
+              <div class="align-center embedded-entity cgdp-embed-pullquote cgdp-embed-pullquote--small">
+                <div class="cgdp-pullquote">
+                  <div class="cgdp-pullquote__container">
+                    <p class="cgdp-pullquote__body">Cuando empiezo a sentirme culpable de haber causado mi enfermedad, pienso en cómo los niños pequeños pueden padecer cáncer. Con eso me doy cuenta de que el cáncer puede suceder sin razón. No es mi culpa</p>
+                    <p class="cgdp-pullquote__author">Stephen J. Chanock, M.D.</p>
+                    <p class="cgdp-pullquote__title">Division of Cancer Epidemiology &amp; Genetics Director</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <p>If you feel guilty, know that many people with cancer feel this way. You may blame yourself for upsetting the people you love, or worry that you're a burden in some way. Or, you may envy other people's good health and be ashamed of this feeling. You might even blame yourself for lifestyle choices that you think could have led to your cancer.</p>
+            <p>These feelings are all very common. It may help you to share them with someone. Let your doctor know if you would like to talk with a counselor or go to a support group.</p>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut sed ante ac nibh molestie feugiat sed id enim. Morbi sed nisl eget dui consequat pellentesque quis ac mauris. Integer id mollis mi.</p>
+            <p>Vestibulum vestibulum mi ante, at ornare augue luctus quis. Nunc urna velit, iaculis consectetur mi ac, posuere congue velit. Quisque commodo convallis facilisis. Proin euismod in magna et ornare. Proin augue mi, finibus eget elementum id, scelerisque a turpis. </p>
+    - entity: 'paragraph'
+      type: "body_section"
+      field_body_section_heading:
+        - format: "simple"
+          value: "Small - Align Left"
+      field_body_section_content:
+        - format: "ncids_full_html"
+          value: |
+            <p>If you feel guilty, know that many people with cancer feel this way. You may blame yourself for upsetting the people you love, or worry that you're a burden in some way. Or, you may envy other people's good health and be ashamed of this feeling. You might even blame yourself for lifestyle choices that you think could have led to your cancer.</p>
+            <p>These feelings are all very common. It may help you to share them with someone. Let your doctor know if you would like to talk with a counselor or go to a support group.</p>
+            <p>If you feel guilty, know that many people with cancer feel this way. You may blame yourself for upsetting the people you love, or worry that you're a burden in some way. Or, you may envy other people's good health and be ashamed of this feeling. You might even blame yourself for lifestyle choices that you think could have led to your cancer.</p>
+            <p>These feelings are all very common. It may help you to share them with someone. Let your doctor know if you would like to talk with a counselor or go to a support group.</p>
+            <div class="cgdp-embed-media-wrapper">
+              <div class="align-left embedded-entity cgdp-embed-pullquote cgdp-embed-pullquote--small">
+                <div class="cgdp-pullquote">
+                  <div class="cgdp-pullquote__container">
+                    <p class="cgdp-pullquote__body">Cuando empiezo a sentirme culpable de haber causado mi enfermedad, pienso en cómo los niños pequeños pueden padecer cáncer. Con eso me doy cuenta de que el cáncer puede suceder sin razón. No es mi culpa</p>
+                    <p class="cgdp-pullquote__author">Stephen J. Chanock, M.D.</p>
+                    <p class="cgdp-pullquote__title">Division of Cancer Epidemiology &amp; Genetics Director</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <p>If you feel guilty, know that many people with cancer feel this way. You may blame yourself for upsetting the people you love, or worry that you're a burden in some way. Or, you may envy other people's good health and be ashamed of this feeling. You might even blame yourself for lifestyle choices that you think could have led to your cancer.</p>
+            <p>These feelings are all very common. It may help you to share them with someone. Let your doctor know if you would like to talk with a counselor or go to a support group.</p>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut sed ante ac nibh molestie feugiat sed id enim. Morbi sed nisl eget dui consequat pellentesque quis ac mauris. Integer id mollis mi.</p>
+            <p>Vestibulum vestibulum mi ante, at ornare augue luctus quis. Nunc urna velit, iaculis consectetur mi ac, posuere congue velit. Quisque commodo convallis facilisis. Proin euismod in magna et ornare. Proin augue mi, finibus eget elementum id, scelerisque a turpis. </p>
+    - entity: 'paragraph'
+      type: "body_section"
+      field_body_section_heading:
+        - format: "simple"
+          value: "Small - Align Right"
+      field_body_section_content:
+        - format: "ncids_full_html"
+          value: |
+            <p>If you feel guilty, know that many people with cancer feel this way. You may blame yourself for upsetting the people you love, or worry that you're a burden in some way. Or, you may envy other people's good health and be ashamed of this feeling. You might even blame yourself for lifestyle choices that you think could have led to your cancer.</p>
+            <p>These feelings are all very common. It may help you to share them with someone. Let your doctor know if you would like to talk with a counselor or go to a support group.</p>
+            <p>If you feel guilty, know that many people with cancer feel this way. You may blame yourself for upsetting the people you love, or worry that you're a burden in some way. Or, you may envy other people's good health and be ashamed of this feeling. You might even blame yourself for lifestyle choices that you think could have led to your cancer.</p>
+            <p>These feelings are all very common. It may help you to share them with someone. Let your doctor know if you would like to talk with a counselor or go to a support group.</p>
+            <div class="cgdp-embed-media-wrapper">
+              <div class="align-right embedded-entity cgdp-embed-pullquote cgdp-embed-pullquote--small">
+                <div class="cgdp-pullquote">
+                  <div class="cgdp-pullquote__container">
+                    <p class="cgdp-pullquote__body">Cuando empiezo a sentirme culpable de haber causado mi enfermedad, pienso en cómo los niños pequeños pueden padecer cáncer. Con eso me doy cuenta de que el cáncer puede suceder sin razón. No es mi culpa</p>
+                    <p class="cgdp-pullquote__author">Stephen J. Chanock, M.D.</p>
+                    <p class="cgdp-pullquote__title">Division of Cancer Epidemiology &amp; Genetics Director</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <p>If you feel guilty, know that many people with cancer feel this way. You may blame yourself for upsetting the people you love, or worry that you're a burden in some way. Or, you may envy other people's good health and be ashamed of this feeling. You might even blame yourself for lifestyle choices that you think could have led to your cancer.</p>
+            <p>These feelings are all very common. It may help you to share them with someone. Let your doctor know if you would like to talk with a counselor or go to a support group.</p>
+    - entity: 'paragraph'
+      type: "body_section"
+      field_body_section_heading:
+        - format: "simple"
+          value: "Full - No Title"
+      field_body_section_content:
+      - format: "ncids_full_html"
+        value: |
+          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut sed ante ac nibh molestie feugiat sed id enim. Morbi sed nisl eget dui consequat pellentesque quis ac mauris. Integer id mollis mi.</p>
+          <p>Vestibulum vestibulum mi ante, at ornare augue luctus quis. Nunc urna velit, iaculis consectetur mi ac, posuere congue velit. Quisque commodo convallis facilisis. Proin euismod in magna et ornare. Proin augue mi, finibus eget elementum id, scelerisque a turpis. </p>
+          <div class="cgdp-embed-media-wrapper">
+            <div class="embedded-entity cgdp-embed-pullquote cgdp-embed-pullquote--full">
+              <div class="cgdp-pullquote">
+                <div class="cgdp-pullquote__container">
+                  <p class="cgdp-pullquote__body">Cuando empiezo a sentirme culpable de haber causado mi enfermedad, pienso en cómo los niños pequeños pueden padecer cáncer. Con eso me doy cuenta de que el cáncer puede suceder sin razón. No es mi culpa</p>
+                  <p class="cgdp-pullquote__author">Stephen J. Chanock, M.D.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut sed ante ac nibh molestie feugiat sed id enim. Morbi sed nisl eget dui consequat pellentesque quis ac mauris. Integer id mollis mi.</p>
+          <p>Vestibulum vestibulum mi ante, at ornare augue luctus quis. Nunc urna velit, iaculis consectetur mi ac, posuere congue velit. Quisque commodo convallis facilisis. Proin euismod in magna et ornare. Proin augue mi, finibus eget elementum id, scelerisque a turpis. </p>
+    - entity: 'paragraph'
+      type: "body_section"
+      field_body_section_heading:
+        - format: "simple"
+          value: "Full - No Author"
+      field_body_section_content:
+      - format: "ncids_full_html"
+        value: |
+          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut sed ante ac nibh molestie feugiat sed id enim. Morbi sed nisl eget dui consequat pellentesque quis ac mauris. Integer id mollis mi.</p>
+          <p>Vestibulum vestibulum mi ante, at ornare augue luctus quis. Nunc urna velit, iaculis consectetur mi ac, posuere congue velit. Quisque commodo convallis facilisis. Proin euismod in magna et ornare. Proin augue mi, finibus eget elementum id, scelerisque a turpis. </p>
+          <div class="cgdp-embed-media-wrapper">
+            <div class="embedded-entity cgdp-embed-pullquote cgdp-embed-pullquote--full">
+              <div class="cgdp-pullquote">
+                <div class="cgdp-pullquote__container">
+                  <p class="cgdp-pullquote__body">Cuando empiezo a sentirme culpable de haber causado mi enfermedad, pienso en cómo los niños pequeños pueden padecer cáncer. Con eso me doy cuenta de que el cáncer puede suceder sin razón. No es mi culpa</p>
+                  <p class="cgdp-pullquote__title">Division of Cancer Epidemiology &amp; Genetics Director</p>
+                </div>
+              </div>
+            </div>
+          </div>
+          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut sed ante ac nibh molestie feugiat sed id enim. Morbi sed nisl eget dui consequat pellentesque quis ac mauris. Integer id mollis mi.</p>
+          <p>Vestibulum vestibulum mi ante, at ornare augue luctus quis. Nunc urna velit, iaculis consectetur mi ac, posuere congue velit. Quisque commodo convallis facilisis. Proin euismod in magna et ornare. Proin augue mi, finibus eget elementum id, scelerisque a turpis. </p>
+    - entity: 'paragraph'
+      type: "body_section"
+      field_body_section_heading:
+        - format: "simple"
+          value: "Full - No Author - No Title"
+      field_body_section_content:
+      - format: "ncids_full_html"
+        value: |
+          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut sed ante ac nibh molestie feugiat sed id enim. Morbi sed nisl eget dui consequat pellentesque quis ac mauris. Integer id mollis mi.</p>
+          <p>Vestibulum vestibulum mi ante, at ornare augue luctus quis. Nunc urna velit, iaculis consectetur mi ac, posuere congue velit. Quisque commodo convallis facilisis. Proin euismod in magna et ornare. Proin augue mi, finibus eget elementum id, scelerisque a turpis. </p>
+          <div class="cgdp-embed-media-wrapper">
+            <div class="embedded-entity cgdp-embed-pullquote cgdp-embed-pullquote--full">
+              <div class="cgdp-pullquote">
+                <div class="cgdp-pullquote__container">
+                  <p class="cgdp-pullquote__body">Cuando empiezo a sentirme culpable de haber causado mi enfermedad, pienso en cómo los niños pequeños pueden padecer cáncer. Con eso me doy cuenta de que el cáncer puede suceder sin razón. No es mi culpa</p>
+                </div>
+              </div>
+            </div>
+          </div>
+          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut sed ante ac nibh molestie feugiat sed id enim. Morbi sed nisl eget dui consequat pellentesque quis ac mauris. Integer id mollis mi.</p>
+          <p>Vestibulum vestibulum mi ante, at ornare augue luctus quis. Nunc urna velit, iaculis consectetur mi ac, posuere congue velit. Quisque commodo convallis facilisis. Proin euismod in magna et ornare. Proin augue mi, finibus eget elementum id, scelerisque a turpis. </p>
+  field_browser_title:
+    value: "Pull Quote Test Page"
+  field_feature_card_description:
+    value: "This is a feature card description"
+  field_card_title:
+    value: "Basic Article Title English"
+  field_date_display_mode:
+    - value: 'posted'
+    - value: 'reviewed'
+    - value: 'updated'
+  field_page_description:
+    value: "This is the Meta Description AKA Page Description"
+  field_date_posted:
+    value: "2014-11-10"
+  field_date_reviewed:
+    value: "2012-12-10"
+  field_date_updated:
+    value: "2018-02-10"

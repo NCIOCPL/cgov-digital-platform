@@ -456,6 +456,22 @@ function _cgov_site_section_will_trigger_cache_tag_invalidation(EntityInterface 
     // Construct the new alias.
     $section_tid = (int) $updated_entity->get('field_site_section')->target_id;
     $term = Term::load($section_tid);
+
+    // From time to time we have found nodes where someone deleted the site
+    // section without removing it from the node. Log an error and exit early.
+    if ($term === NULL) {
+      \Drupal::logger('cgov_site_section')
+        ->error(
+          'Could not load site section for @entity_type entity @entity_id term with tid: @tid',
+          [
+            '@entity_type' => $updated_entity->getEntityTypeId(),
+            '@entity_id' => $updated_entity->id(),
+            '@tid' => $section_tid,
+          ]
+        );
+      return FALSE;
+    }
+
     $computed_path = $term->get('computed_path')->value;
     $pretty_url = $updated_entity->get('field_pretty_url')->value;
 

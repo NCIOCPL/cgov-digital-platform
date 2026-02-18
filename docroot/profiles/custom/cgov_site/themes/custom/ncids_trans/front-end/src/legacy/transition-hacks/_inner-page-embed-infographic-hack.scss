@@ -1,0 +1,105 @@
+.embedded-entity.cgdp-embed-infographic {
+	.cgdp-infographic {
+		@include u-display('flex');
+		@include u-flex('column');
+		@include u-flex('align-center');
+		&__wrapper {
+			@include u-display('inline-block');
+		}
+	}
+	@include u-margin-y(4);
+	@include u-margin-x('auto');
+	margin: 2rem auto;
+	@include at-media('tablet') {
+		margin-bottom: 2.5em;
+	}
+	width: 100%;
+	&.cgdp-embed-infographic--large  {
+		.cgdp-infographic {
+			@include u-display('flex');
+			@include u-flex('column');
+			@include u-flex('align-center');
+			&__wrapper {
+				@include u-display('inline-block');
+			}
+		}
+		@include at-media('tablet') {
+			margin-bottom: 2.5em;
+		}
+		&.align-right {
+			margin: 2em 0;
+			@include at-media('tablet') {
+				margin: 0 0 2.5em 2.5em;
+			}
+		}
+		&.align-left {
+			margin: 1rem 0 2em 0;
+			@include at-media('tablet') {
+				margin: 1rem 2em 2em 0;
+			}
+			.cgdp-infographic {
+				@include u-display('block');
+				align-items: flex-start;
+				@include at-media('tablet') {
+					@include u-display('block');
+					@include u-flex('align-start');
+					@include u-flex('column');
+					&__wrapper {
+						@include u-display('inline-block');
+					}
+				}
+			}
+		}
+		&.align-center {
+			margin: 2em auto;
+			@include at-media('tablet') {
+				margin: 2.5em auto;
+			}
+			.cgdp-infographic {
+				@include u-display('flex');
+				@include u-flex('column');
+				@include u-flex('align-center');
+				&__wrapper {
+					@include u-display('inline-block');
+				}
+			}
+		}
+	}
+
+	&.cgdp-embed-infographic--medium {
+		@include at-media('tablet') {
+			margin-bottom: 2.5em;
+		}
+		@media only screen and (min-width: 769px) {
+			width: 40%;
+		}
+		&.align-right {
+			margin: 1rem 0 2rem 0;
+			.cgdp-infographic {
+				@include u-display('block');
+			}
+			@include at-media('tablet') {
+				@include u-display('flex');
+				margin: 1rem 0 2rem 2rem;
+			}
+		}
+
+		&.align-left {
+			margin: 1rem 0 2rem 0;
+			.cgdp-infographic {
+				@include u-display('block');
+			}
+			@include at-media('tablet') {
+				@include u-display('flex');
+				margin: 1rem 2rem 2rem 0;
+			}
+		}
+		&.align-center {
+			margin: 2rem auto;
+			@include at-media('tablet') {
+				@include u-display('flex');
+				margin: 2.5em auto;
+			}
+		}
+	}
+}

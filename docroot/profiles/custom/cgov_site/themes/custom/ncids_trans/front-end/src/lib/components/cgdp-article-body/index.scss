@@ -6,4 +6,30 @@
 	@include at-media('tablet') {
 		@include u-margin-top(4);
 	}
+
+	&__section {
+		@include u-margin-top(2);
+	}
+
+	&__heading:not(.usa-accordion__heading) {
+		@include h2;
+		@include typeset-heading-base;
+		clear: none;
+		& > p {
+			@include u-margin-top(0);
+			@include u-margin-bottom(0);
+		}
+
+		+ * {
+			@include u-margin-top($theme-paragraph-margin-top);
+			@include u-margin-bottom(0);
+		}
+	}
+
+	// usa-prose adds margin to headings when something comes before it
+	// These styles are added to apply the same style to the article body headings
+	// when there is another article body section before it.
+	* + &__section &__heading:not(.usa-accordion__heading) {
+		@include u-margin-top($theme-heading-margin-top);
+	}
 }

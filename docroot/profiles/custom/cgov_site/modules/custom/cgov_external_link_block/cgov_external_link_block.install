@@ -22,4 +22,35 @@ function cgov_external_link_block_install() {
     // Add content type permissions.
     $tools->addBlockContentTypePermissions($block_type, ['advanced_editor']);
   }
+
+  $perms = [
+    'admin_ui' => [
+      'access embedded_external_link_browser entity browser pages',
+    ],
+  ];
+
+  $tools->addRolePermissions($perms);
+}
+
+/**
+ * Add permissions for the new external link block browser.
+ */
+function cgov_external_link_block_update_10001() {
+  // Import the configs to so that the entity browser gets
+  // installed. The permission will not exist until the browser
+  // is installed.
+  $service = \Drupal::service('features.manager');
+  $assigner = \Drupal::service('features_assigner');
+  $assigner->assignConfigPackages();
+  $service->import(['cgov_external_link_block']);
+
+  // Get our helper.
+  $siteHelper = \Drupal::service('cgov_core.tools');
+  $perms = [
+    'admin_ui' => [
+      'access embedded_external_link_browser entity browser pages',
+    ],
+  ];
+
+  $siteHelper->addRolePermissions($perms);
 }

@@ -1,0 +1,132 @@
+- entity: 'node'
+  type: 'cgov_article'
+  langcode: en
+  status: 1
+  moderation_state:
+    value: 'published'
+  title: 'Article Body Section - NCIDS Full HTML with Sortable Table'
+  field_page_description:
+    value: 'An article page to test the new "ncids" sortable tables'
+  field_browser_title:
+    value: 'Article Body Section - NCIDS Full HTML with Sortable Table'
+  field_site_section:
+    - '#process':
+        callback: 'reference'
+        args:
+          - 'taxonomy_term'
+          - vid: 'cgov_site_sections'
+            computed_path: '/test'
+  field_pretty_url:
+    value: 'article-body-section-ncids-sortable-table'
+  field_intro_text:
+    - format: "ncids_streamlined_no_headings"
+      value: |
+        Testing NCIDS Sortable Tables
+  field_article_body:
+    ### Data attributes / custom links
+    - entity: 'paragraph'
+      type: 'body_section'
+      field_body_section_content:
+        - format: 'ncids_full_html'
+          value: |
+            <table data-sortable class="usa-table">
+              <caption>Recently admitted US states (sortable table example)</caption>
+              <thead>
+                <tr>
+                  <th>
+                    Name
+                  </th>
+                  <th>
+                    Order admitted to union
+                  </th>
+                  <th data-sortable-type="date">
+                    Date of ratification vote
+                  </th>
+                  <th data-sortable-type="date">
+                    Date admitted to union
+                  </th>
+                  <th>
+                    Percent of voters in favor of ratification
+                  </th>
+                  <th data-fixed>
+                    Votes cast in favor of ratification
+                  </th>
+                  <th>
+                    Estimated population at time of admission
+                  </th>
+                  <th>
+                    Bad Column
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <th>Hawaii</th>
+                  <td>50th</td>
+                  <td>Jun. 27, 1959</td>
+                  <td>Aug. 21, 1959</td>
+                  <td>94.3%</td>
+                  <td>132,773</td>
+                  <td>632,772</td>
+                  <td>$weird%</td>
+                </tr>
+                <tr>
+                  <th>Alaska</th>
+                  <td>49th</td>
+                  <td>Apr. 24, 1956</td>
+                  <td>Jan. 3, 1959</td>
+                  <td>68.1%</td>
+                  <td>17,477</td>
+                  <td>226,167</td>
+                  <td>enjoy%$</td>
+                </tr>
+                <tr>
+                  <th>Arizona</th>
+                  <td >48th</td>
+                  <td>Feb. 9, 1911</td>
+                  <td>Feb. 14, 1912</td>
+                  <td>78.7%</td>
+                  <td>12,187</td>
+                  <td>204,354</td>
+                  <td>204,354</td>
+                </tr>
+                <tr>
+                  <th>New Mexico</th>
+                  <td>47th</td>
+                  <td>Nov. 5, 1911</td>
+                  <td>Jan. 6, 1912</td>
+                  <td>70.3%</td>
+                  <td>31,742</td>
+                  <td>327,301</td>
+                  <td>327,301</td>
+                </tr>
+                <tr>
+                  <th>Oklahoma</th>
+                  <td>46th</td>
+                  <td>Sep. 17, 1907</td>
+                  <td>Nov. 16, 1907</td>
+                  <td>71.2%</td>
+                  <td>180,333</td>
+                  <td>1,657,155</td>
+                  <td>New Jersey</td>
+                </tr>
+                <tr>
+                  <th>Utah</th>
+                  <td>45th</td>
+                  <td>Nov. 5, 1895</td>
+                  <td>Jan. 4, 1896</td>
+                  <td>80.5%</td>
+                  <td>31,305</td>
+                  <td>210,779</td>
+                  <td>210,779</td>
+                </tr>
+              </tbody>
+            </table>
+  field_date_posted:
+    value: '2019-06-19'
+  field_date_reviewed:
+    value: '2019-06-19'
+  field_date_updated:
+    value: '2019-06-19'
+  field_date_display_mode:
+    value: 'reviewed'

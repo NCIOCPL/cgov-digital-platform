@@ -17,6 +17,24 @@ abstract class NcidsHtmlTransformerBase implements NcidsHtmlTransformerInterface
   protected static $preprocessClasses = [];
 
   /**
+   * List of elements that should be skipped entirely from processing.
+   *
+   * @var array
+   */
+  protected static $preprocessElements = [];
+
+  /**
+   * Get the short name of this transformer class.
+   *
+   * @return string
+   *   The short class name.
+   */
+  protected function getShortName(): string {
+    $parts = explode('\\', get_class($this));
+    return end($parts);
+  }
+
+  /**
    * Check if an element should be skipped due to data-html-transformer tag.
    *
    * @param \DOMElement $element
@@ -42,24 +60,57 @@ abstract class NcidsHtmlTransformerBase implements NcidsHtmlTransformerInterface
    * {@inheritdoc}
    */
   public function preProcessHtml(string $html): string {
-    if (empty(static::$preprocessClasses) || empty(trim($html))) {
+    if ((empty(static::$preprocessClasses) && empty(static::$preprocessElements)) || empty(trim($html))) {
       return $html;
     }
 
     $dom = Html::load($html);
     $xpath = new \DOMXpath($dom);
 
-    $class_list = static::$preprocessClasses;
-
-    foreach ($class_list as $class_name) {
-      $elements = $xpath->query("//*[contains(concat(' ', normalize-space(@class), ' '), ' {$class_name} ')]");
-
-      foreach ($elements as $element) {
-        /** @var \DomElement $element */
-        $element->setAttribute('data-html-transformer', $class_name);
+    /* Process classes */
+    if (!empty(static::$preprocessClasses)) {
+      foreach (static::$preprocessClasses as $class_name) {
+        $elements = $xpath->query("//*[contains(concat(' ', normalize-space(@class), ' '), ' {$class_name} ')]");
+        foreach ($elements as $element) {
+          /** @var \DomElement $element */
+          $element->setAttribute('data-html-transformer', $this->getShortName());
+        }
       }
     }
 
+    /* Process elements */
+    if (!empty(static::$preprocessElements)) {
+      /* Create XPath to find just the specified elements */
+      $elementSelectors = implode('|', array_map(function ($tagName) {
+        return "//{$tagName}";
+      }, static::$preprocessElements));
+
+      $elements = $xpath->query($elementSelectors);
+      foreach ($elements as $element) {
+        /** @var \DomElement $element */
+        $element->setAttribute('data-html-transformer', $this->getShortName());
+      }
+    }
+
+    return Html::serialize($dom);
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function postProcessHtml(string $html): string {
+    if (empty(trim($html))) {
+      return $html;
+    }
+
+    $dom = Html::load($html);
+    $xpath = new \DOMXpath($dom);
+    $elements = $xpath->query('//*[@data-html-transformer="' . $this->getShortName() . '"]');
+    foreach ($elements as $element) {
+      if ($element instanceof \DOMElement) {
+        $element->removeAttribute('data-html-transformer');
+      }
+    }
     return Html::serialize($dom);
   }
 
