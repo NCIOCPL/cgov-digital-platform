@@ -23,14 +23,16 @@ describe('Embedded Card Analytics Behavior', () => {
 		document.body.innerHTML = '';
 		initialize();
 
-		const card = document.querySelector('.cgdp-embed-card');
+		const card = document.querySelector('.cgdp-embed-feature-card');
 		expect(card).toBeNull();
 	});
 
 	it('should initialize the embedded card and call analytics on click', () => {
 		initialize();
 
-		const card = document.querySelector('.cgdp-embed-card') as HTMLElement;
+		const card = document.querySelector(
+			'.cgdp-embed-feature-card'
+		) as HTMLElement;
 		expect(card).not.toBeNull();
 
 		fireEvent.click(card);
@@ -54,7 +56,9 @@ describe('Embedded Card Analytics Behavior', () => {
 		document.body.innerHTML = cgdpEmbedCardEmptyTitle;
 		initialize();
 
-		const card = document.querySelector('.cgdp-embed-card') as HTMLElement;
+		const card = document.querySelector(
+			'.cgdp-embed-feature-card'
+		) as HTMLElement;
 		expect(card).not.toBeNull();
 
 		fireEvent.click(card);
@@ -78,7 +82,9 @@ describe('Embedded Card Analytics Behavior', () => {
 		document.body.innerHTML = cgdpEmbedCardRight;
 		initialize();
 
-		const card = document.querySelector('.cgdp-embed-card') as HTMLElement;
+		const card = document.querySelector(
+			'.cgdp-embed-feature-card'
+		) as HTMLElement;
 		expect(card).not.toBeNull();
 
 		fireEvent.click(card);
@@ -102,7 +108,9 @@ describe('Embedded Card Analytics Behavior', () => {
 		document.body.innerHTML = cgdpEmbedCardImageless;
 		initialize();
 
-		const card = document.querySelector('.cgdp-embed-card') as HTMLElement;
+		const card = document.querySelector(
+			'.cgdp-embed-feature-card'
+		) as HTMLElement;
 		expect(card).not.toBeNull();
 
 		fireEvent.click(card);

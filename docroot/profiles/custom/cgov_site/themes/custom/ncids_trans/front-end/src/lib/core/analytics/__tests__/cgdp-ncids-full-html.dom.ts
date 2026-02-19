@@ -35,8 +35,7 @@ export const cgdpFullHtmlDom = `
   </div>
 	<div class="cgdp-embed-media-wrapper">
   <div data-embed-button="insert_block_content" data-entity-embed-display="view_mode:block_content.embedded_feature_card" data-entity-type="block_content" data-entity-uuid="5f1c25b1-e7e0-4574-9b46-35960874d69a" data-cgov-yaml-query-type="cgov_external_link_block" data-cgov-yaml-query-info="External link block description" class="align-right embedded-entity cgdp-embed-feature-card" data-langcode="en" data-entity-embed-display-settings="[]">
-    <div class="cgdp-embed-card">
-      <div class="nci-card">
+    <div class="nci-card">
         <a href="https://www.google.com" aria-labelledby="block_content-36--2" data-eddl-landing-item="feature_card" data-eddl-landing-item-link-type="External">
           <picture class="nci-card__image">
             <img src="/sites/default/files/styles/ncids_featured_16x9/module/cgov_image/img/placeholder-16x9.png?itok=eQnQfVDC" alt="No Image Placeholder">
@@ -47,14 +46,12 @@ export const cgdpFullHtmlDom = `
             <p class="nci-card__description">Testing for Derek - Override Description</p>
           </div>
         </a>
-      </div>
     </div>
   </div>
 </div>
 <div class="cgdp-embed-media-wrapper">
   <div data-embed-button="insert_block_content" data-entity-embed-display="view_mode:block_content.embedded_feature_card" data-entity-type="block_content" data-entity-uuid="5f1c25b1-e7e0-4574-9b46-35960874d69a" data-cgov-yaml-query-type="cgov_external_link_block" data-cgov-yaml-query-info="External link block description" class="align-right embedded-entity cgdp-embed-feature-card" data-langcode="en" data-entity-embed-display-settings="[]">
-    <div class="cgdp-embed-card">
-      <div class="nci-card">
+    <div class="nci-card">
         <a href="https://www.google.com" aria-labelledby="block_content-36--2" data-eddl-landing-item="feature_card" data-eddl-landing-item-link-type="External">
           <picture class="nci-card__image">
             <img src="/sites/default/files/styles/ncids_featured_16x9/module/cgov_image/img/placeholder-16x9.png?itok=eQnQfVDC" alt="No Image Placeholder">
@@ -65,7 +62,6 @@ export const cgdpFullHtmlDom = `
             <p class="nci-card__description">Testing for Derek - Override Description</p>
           </div>
         </a>
-      </div>
     </div>
   </div>
 </div>
