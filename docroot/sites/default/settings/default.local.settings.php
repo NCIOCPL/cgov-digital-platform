@@ -17,6 +17,7 @@ use Acquia\Drupal\RecommendedSettings\Helpers\EnvironmentDetector;
 
 // Use development service parameters.
 $settings['container_yamls'][] = EnvironmentDetector::getRepoRoot() . '/docroot/sites/development.services.yml';
+$settings['container_yamls'][] = EnvironmentDetector::getRepoRoot() . '/docroot/sites/nci.development.services.yml';
 
 // Allow access to update.php.
 $settings['update_free_access'] = TRUE;
