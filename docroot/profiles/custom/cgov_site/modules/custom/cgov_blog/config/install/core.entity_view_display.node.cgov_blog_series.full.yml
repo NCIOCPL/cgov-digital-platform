@@ -4,11 +4,9 @@ dependencies:
   config:
     - core.entity_view_mode.node.full
     - field.field.node.cgov_blog_series.field_about_blog
-    - field.field.node.cgov_blog_series.field_allow_comments
     - field.field.node.cgov_blog_series.field_archive_back_years
     - field.field.node.cgov_blog_series.field_archive_group_by
     - field.field.node.cgov_blog_series.field_banner_image
-    - field.field.node.cgov_blog_series.field_blog_series_shortname
     - field.field.node.cgov_blog_series.field_browser_title
     - field.field.node.cgov_blog_series.field_card_title
     - field.field.node.cgov_blog_series.field_feature_card_description
@@ -96,13 +94,6 @@ content:
     third_party_settings: {  }
     weight: 19
     region: content
-  field_allow_comments:
-    type: list_default
-    label: hidden
-    settings: {  }
-    third_party_settings: {  }
-    weight: 18
-    region: content
   field_archive_back_years:
     type: number_integer
     label: hidden
@@ -129,14 +120,6 @@ content:
         attribute: lazy
     third_party_settings: {  }
     weight: 12
-    region: content
-  field_blog_series_shortname:
-    type: string
-    label: hidden
-    settings:
-      link_to_entity: false
-    third_party_settings: {  }
-    weight: 14
     region: content
   field_browser_title:
     type: string
