@@ -9,7 +9,7 @@
 		margin-top: 0;
 		font-size: 1.5em;
 		line-height: 1.215;
-		
+
 		@include bp('(min-width: ' + (map-get($breakpoints, small) + 1px) + ') and (max-width: ' + (750px) + ')') {
 			font-size: 20px;
 		}
@@ -52,19 +52,6 @@
 // HTML needs to be changed for this widget
 .dictionary-search .button {
 	min-width: inherit;
-}
-
-// This is a hack to rehide the comment policy on pages that aren't blog post pages with comments.
-// The redundant rule is being left in the blog partial until a final approach is determined (some
-// backend issues may need to be resolved). If you find this comment unchanged in 6 months, just
-// sigh, shake your head, and remove the redundant rule. BB 4/2018.
-
-// NOTE: The comment below about all.js is out of date and possibly predates the encapsulation of the
-// page specific templates. This feature now only works on BlogPostPages
-.blog-comment-policy {
-	display: none;
-	// made visible by JavaScript if an element matching `#cgvCommentsSl` exists (i.e., if comments are enabled)
-	// @see all.js
 }
 
 
