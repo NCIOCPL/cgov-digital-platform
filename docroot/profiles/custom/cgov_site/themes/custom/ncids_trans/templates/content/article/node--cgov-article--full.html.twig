@@ -14,11 +14,18 @@
 		{{ content.field_citation }}
 		{{ content.field_related_resources }}
 		{{ contentPageMacros.ncidsDisplayDates(node, content) }}
-		{% if node.field_public_use.value == '1' %}
-			{{ drupal_region('public_use') }}
-		{% endif %}
-		{% if node.field_hhs_syndication.value[0]['syndicate'] == '1' %}
-			{{ drupal_region('syndication') }}
-		{% endif %}
+
+		{% set hasPublicUse = node.field_public_use.value == '1' %}
+    {% set hasSyndication = node.field_hhs_syndication.value[0]['syndicate'] == '1' %}
+    {% if hasPublicUse or hasSyndication %}
+      <div class="cgdp-article-footer__seprator">
+      {% if hasPublicUse %}
+        {{ drupal_region('public_use') }}
+      {% endif %}
+      {% if hasSyndication %}
+        {{ drupal_region('syndication') }}
+      {% endif %}
+      </div>
+    {% endif %}
 	</footer>
 </article>

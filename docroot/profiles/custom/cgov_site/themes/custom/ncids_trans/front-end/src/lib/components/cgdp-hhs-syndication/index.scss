@@ -3,9 +3,15 @@
 .cgdp-hhs-syndication {
 	@include u-display(flex);
 	@include u-flex('align-center');
+	@include at-media('tablet') {
+		@include u-margin-top(.5);
+	}
 	svg {
 		@include u-margin-right(1);
 		@include u-font-size('body', 15);
 		flex-shrink: 0;
+	}
+	p {
+		@include u-margin-top(1.5);
 	}
 }
