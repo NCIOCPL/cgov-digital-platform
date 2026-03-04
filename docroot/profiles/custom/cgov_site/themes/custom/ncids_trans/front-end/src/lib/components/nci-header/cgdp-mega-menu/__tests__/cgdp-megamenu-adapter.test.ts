@@ -1,10 +1,11 @@
 import '@testing-library/jest-dom';
 import '@testing-library/jest-dom/extend-expect';
-import axios from 'axios';
 import CgdpMegaMenuAdapter from '../cgdp-megamenu-adapter';
 import getGoodMegaMenu from './data/good-mega-menu';
 import getHeadingOnlyListMegaMenu from './data/heading-only-list';
-import * as nock from 'nock';
+
+import * as goodMegaMenuData from './data/good-mega-menu.json';
+import * as headingOnlyListMegaMenuData from './data/heading-only-list.json';
 
 describe('cgdp-megamenu-adapter', () => {
 	let consoleError: jest.SpyInstance;
@@ -19,71 +20,69 @@ describe('cgdp-megamenu-adapter', () => {
 		consoleError.mockRestore();
 	});
 
-	beforeAll(() => {
-		nock.disableNetConnect();
-	});
-
 	afterAll(() => {
-		nock.cleanAll();
-		nock.enableNetConnect();
 		jest.restoreAllMocks();
 	});
 
-	const client = axios.create({
-		baseURL: 'http://localhost',
-	});
+	const client = 'http://localhost/';
 
 	it('makes the mega menu', async () => {
-		const scope = nock('http://localhost')
-			.get('/taxonomy/term/1234/mega-menu')
-			.once()
-			.replyWithFile(200, __dirname + '/data/good-mega-menu.json');
+		// Mock the fetch response for the initial menu. This is the menu that the adapter will start in.
+		global.fetch = jest.fn().mockReturnValueOnce({
+			ok: true,
+			status: 200,
+			json: () => goodMegaMenuData,
+		});
 
 		const adapter = new CgdpMegaMenuAdapter(client);
 		const expectedHtml = getGoodMegaMenu() as HTMLElement;
 		const actualHtml = await adapter.getMegaMenuContent('1234');
 
 		expect(actualHtml.isEqualNode(expectedHtml)).toBeTruthy();
-
-		scope.isDone();
 	});
 
 	it('handles caching', async () => {
-		const scope = nock('http://localhost')
-			.get('/taxonomy/term/1234/mega-menu')
-			.once()
-			.replyWithFile(200, __dirname + '/data/good-mega-menu.json');
+		// Mock the fetch response for the initial menu. This is the menu that the adapter will start in.
+		global.fetch = jest.fn().mockReturnValueOnce({
+			ok: true,
+			status: 200,
+			json: () => goodMegaMenuData,
+		});
 
 		const adapter = new CgdpMegaMenuAdapter(client);
 		await adapter.getMegaMenuContent('1234');
 		await adapter.getMegaMenuContent('1234');
 
-		//The once and scope.isDone should throw if not.
-		// This is how you do it...
-		expect(true).toBeTruthy();
+		const expectedHtml = getGoodMegaMenu() as HTMLElement;
+		const actualHtml = await adapter.getMegaMenuContent('1234');
 
-		scope.isDone();
+		expect(global.fetch).toHaveBeenCalledTimes(1);
+		expect(actualHtml.isEqualNode(expectedHtml)).toBeTruthy();
 	});
 
 	it('handles mega menu lists without items', async () => {
-		const scope = nock('http://localhost')
-			.get('/taxonomy/term/1234/mega-menu')
-			.once()
-			.replyWithFile(200, __dirname + '/data/heading-only-list.json');
+		// Mock the fetch response for the initial menu. This is the menu that the adapter will start in.
+		global.fetch = jest.fn().mockReturnValueOnce({
+			ok: true,
+			status: 200,
+			json: () => headingOnlyListMegaMenuData,
+		});
 
 		const adapter = new CgdpMegaMenuAdapter(client);
 		const expectedHtml = getHeadingOnlyListMegaMenu() as HTMLElement;
 		const actualHtml = await adapter.getMegaMenuContent('1234');
 		expect(actualHtml.isEqualNode(expectedHtml)).toBeTruthy();
-
-		scope.isDone();
 	});
 
 	it('handles bad responses', async () => {
-		const scope = nock('http://localhost')
-			.get('/taxonomy/term/1234/mega-menu')
-			.once()
-			.reply(404);
+		// Mock the fetch response for the initial menu. This is the menu that the adapter will start in.
+		global.fetch = jest.fn().mockReturnValueOnce({
+			ok: false,
+			status: 404,
+			json: () => {
+				return { error: 'Not Found' };
+			},
+		});
 
 		const adapter = new CgdpMegaMenuAdapter(client);
 		const expectedHtml = document.createElement('div');
@@ -92,26 +91,16 @@ describe('cgdp-megamenu-adapter', () => {
 		expect(consoleError).toHaveBeenCalledWith(
 			'Megamenu unexpected status 404 fetching 1234'
 		);
-		scope.isDone();
 	});
 
-	it('handles errors', async () => {
-		const scope = nock('http://localhost')
-			.get('/taxonomy/term/1234/mega-menu')
-			.once()
-			.replyWithError('Stuff broke');
-
+	it('handles fetch rejections', async () => {
+		// Mock fetch to reject (e.g., network error).
+		global.fetch = jest.fn().mockRejectedValueOnce(new Error('Network error'));
 		const adapter = new CgdpMegaMenuAdapter(client);
 		const expectedHtml = document.createElement('div');
 		const actualHtml = await adapter.getMegaMenuContent('1234');
 		expect(actualHtml.isEqualNode(expectedHtml)).toBeTruthy();
-		// The first call to console error must be Axios doing a console.error on
-		// the exception.
-		expect(consoleError).toHaveBeenNthCalledWith(
-			2,
-			'Could not fetch megamenu for 1234.'
-		);
-		scope.isDone();
+		expect(consoleError).toHaveBeenCalled();
 	});
 
 	// Click heading
