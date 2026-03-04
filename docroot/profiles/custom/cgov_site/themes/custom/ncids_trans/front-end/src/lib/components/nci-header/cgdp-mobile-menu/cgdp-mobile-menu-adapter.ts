@@ -1,4 +1,3 @@
-import axios, { Axios } from 'axios';
 import type {
 	MobileMenuAdapter,
 	MobileMenuData,
@@ -30,9 +29,9 @@ const locale: { [resname: string]: { en: string; es: string } } = {
  */
 class CgdpMobileMenuAdapter implements MobileMenuAdapter {
 	/**
-	 * Instance of an axios client.
+	 * The base URL of the API to fetch mobile menu data from.
 	 */
-	protected client: Axios;
+	protected requestBaseUrl: string;
 
 	/**
 	 * The menu item id of the current page's nav.
@@ -87,7 +86,7 @@ class CgdpMobileMenuAdapter implements MobileMenuAdapter {
 	/**
 	 * @jsdoc
 	 * @param {boolean} useUrlForNavigationId this param is stupid.
-	 * @param {Axios} client an axios client
+	 * @param {string} requestBaseUrl the base URL of the API to fetch mega/mobile menu data from.
 	 * @param {string} initialItemId the initial menu id
 	 * @param {DrupalNavApiReference} initialNavRef information about the initial nav
 	 * @param {'en'|'es'} langcode the language code of the current page.
@@ -95,14 +94,16 @@ class CgdpMobileMenuAdapter implements MobileMenuAdapter {
 	 */
 	constructor(
 		useUrlForNavigationId: boolean,
-		client: Axios,
+		requestBaseUrl: string,
 		initialItemId: string,
 		initialNavRef: DrupalNavApiReference,
 		langcode: 'en' | 'es',
 		baseURL: string
 	) {
 		this.useUrlForNavigationId = useUrlForNavigationId;
-		this.client = client;
+		this.requestBaseUrl = requestBaseUrl.endsWith('/')
+			? requestBaseUrl.slice(0, -1)
+			: requestBaseUrl;
 
 		// The header initializer should be the one to look at the window object.
 		// This class should not know the dom exists at all.
@@ -405,23 +406,31 @@ class CgdpMobileMenuAdapter implements MobileMenuAdapter {
 	private async fetchNav(
 		navInfo: DrupalNavApiReference
 	): Promise<DrupalNavApiResponse> {
-		try {
-			const res = await this.client.get(
-				`/taxonomy/term/${navInfo.id}/${navInfo.menu_type}`
-			);
+		const url = `${this.requestBaseUrl}/taxonomy/term/${navInfo.id}/${navInfo.menu_type}`;
 
-			// Axios will throw for anything non-200.
-			// todo: Account for the API possibly returning {} as the data. In this case it should be
-			// an error.
-			const data = res.data;
-			return data;
-		} catch (error: unknown) {
-			// This conditional will be hit for any status >= 300.
-			if (axios.isAxiosError(error) && error.response) {
+		try {
+			const res = await fetch(url, { credentials: 'same-origin' });
+
+			if (!res.ok) {
 				throw new Error(
-					`Mobile menu unexpected status ${error.response.status} fetching ${navInfo.id}/${navInfo.menu_type}`
+					`Mobile menu unexpected status ${res.status} fetching ${navInfo.id}/${navInfo.menu_type}`
 				);
 			}
+
+			const data = await res.json();
+
+			// todo: Account for the API possibly returning {} as the data. In this case it should be
+			// an error.
+			return data;
+		} catch (error: unknown) {
+			// Check if it's our custom error with status info
+			if (
+				error instanceof Error &&
+				error.message.includes('Mobile menu unexpected status')
+			) {
+				throw error;
+			}
+			// Network or parse errors
 			throw new Error(
 				`Could not fetch mobile menu for ${navInfo.id}/${navInfo.menu_type}.`
 			);

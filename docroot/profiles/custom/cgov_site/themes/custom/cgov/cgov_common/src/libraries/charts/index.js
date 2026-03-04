@@ -1,11 +1,21 @@
-import "./chart.scss";
-import axios from 'axios';
+import './chart.scss';
 import Chart from './Chart';
 import rules from './rules';
 import charts from './library';
 import { getShouldLoadChartWrapper } from './utilities';
 
 let isInitialized = false;
+
+class ChartHttpError extends Error {
+  constructor(response) {
+    super(`HTTP ${response.status}: ${response.statusText} — ${response.url}`);
+    this.name = 'HttpError';
+    this.status = response.status;
+    this.statusText = response.statusText;
+    this.url = response.url;
+    this.response = response; // preserve for body access if needed
+  }
+}
 
 /**
  * We want to spare DOM crawling as much as possible. We'll first test whether the route matches one
@@ -14,29 +24,29 @@ let isInitialized = false;
  *
  */
 const init = () => {
-  if(isInitialized) {
+  if (isInitialized) {
     return;
-  }
-  else {
+  } else {
     isInitialized = true;
   }
 
   const pathName = location.pathname.toLowerCase();
   const shouldCheckForChartHooks = getShouldLoadChartWrapper(pathName, rules);
 
-  if(shouldCheckForChartHooks) {
-    for(let i = 0; i < charts.length; i++){
+  if (shouldCheckForChartHooks) {
+    for (let i = 0; i < charts.length; i++) {
       const { dataFileName, id, initChart, miscDataURL } = charts[i];
       const el = document.getElementById(id);
 
-      if(el){
+      if (el) {
         const { chartRevision } = el.dataset;
-        getChartData(dataFileName, chartRevision, miscDataURL)
-          .then(({data, miscData}) => initChart(Chart, data, miscData));
+        getChartData(dataFileName, chartRevision, miscDataURL).then(
+          ({ data, miscData }) => initChart(Chart, data, miscData)
+        );
       }
     }
   }
-}
+};
 
 const getChartData = async (dataFileName, chartRevision, miscDataURL) => {
   const { chartData } = window.CDEConfig || {};
@@ -55,15 +65,25 @@ const getChartData = async (dataFileName, chartRevision, miscDataURL) => {
   }
 
   try {
-    const requests = requestURLArray.map(requestURL => axios.get(requestURL));
+    const requests = requestURLArray.map((requestURL) =>
+      fetch(requestURL).then((res) => {
+        // Throw custom error with response details.
+        if (!res.ok) {
+          throw new ChartHttpError(res);
+        }
+        return res.json();
+      })
+    );
 
-    const [chartConfigResponse, miscDataResponse] = await axios.all(requests);
-    const data = chartConfigResponse?.data;
-    const miscData = miscDataResponse?.data;
-    return {data, miscData};
+    const [data, miscData] = await Promise.all(requests);
+    return { data, miscData };
   } catch (error) {
-    if (axios.isAxiosError(error) && error.response ) {
-      throw new Error(`An error was returned while fetching data for FactBook ${dataFileName} chart with status ${error.response.status}`)
+    if (error instanceof TypeError) {
+      // Network error
+      throw new Error(`Couldn't retrieve data for chart ${dataFileName}`);
+    }
+    if (error instanceof ChartHttpError) {
+      throw error; // Re-throw ChartHttpError for caller to handle
     }
     throw new Error(`Couldn't retrieve data for chart ${dataFileName}`);
   }

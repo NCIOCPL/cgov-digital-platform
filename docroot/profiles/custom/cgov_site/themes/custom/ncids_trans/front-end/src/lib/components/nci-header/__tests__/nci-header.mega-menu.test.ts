@@ -9,7 +9,7 @@ import headerInit from '../nci-header';
 import { headerWithDataMenuId } from './nci-header.mega-menu.dom';
 import { headerWithDataMenuIdBasePath } from './nci-header.mega-menu-basepath.dom';
 
-import * as nock from 'nock';
+import * as megaMenuResponse from './data/mega-menu-content.json';
 
 jest.mock('../../../core/analytics/eddl-util');
 
@@ -31,10 +31,6 @@ describe('nci-header - mega menu analytics', () => {
 		});
 	});
 
-	beforeAll(() => {
-		nock.disableNetConnect();
-	});
-
 	afterEach(() => {
 		// Hack to clean out the dom.
 		document.getElementsByTagName('body')[0].innerHTML = '';
@@ -42,8 +38,6 @@ describe('nci-header - mega menu analytics', () => {
 	});
 
 	afterAll(() => {
-		nock.cleanAll();
-		nock.enableNetConnect();
 		jest.restoreAllMocks();
 	});
 
@@ -54,10 +48,15 @@ describe('nci-header - mega menu analytics', () => {
 	};
 
 	it('handles mega menu item click with base path', async () => {
-		const scope = nock('http://localhost')
-			.get('/nano/taxonomy/term/1234/mega-menu')
-			.once()
-			.replyWithFile(200, __dirname + '/data/mega-menu-content.json');
+		// Mock the fetch request / response
+		global.fetch = jest.fn().mockImplementationOnce((url) => {
+			expect(url).toBe('/nano/taxonomy/term/1234/mega-menu');
+			return Promise.resolve({
+				ok: true,
+				status: 200,
+				json: async () => megaMenuResponse,
+			});
+		});
 
 		// Add the header to the body
 		document.body.appendChild(headerWithDataMenuIdBasePath());
@@ -78,18 +77,21 @@ describe('nci-header - mega menu analytics', () => {
 		});
 
 		expect(mmPrimary).toBeInTheDocument();
-
-		scope.done();
 	});
 
 	it('handles mega menu item clicks', async () => {
 		// Lets make a spy to ensure that trackOther is called correctly
 		const spy = jest.spyOn(eddlUtil, 'trackOther');
 
-		const scope = nock('http://localhost')
-			.get('/taxonomy/term/1234/mega-menu')
-			.once()
-			.replyWithFile(200, __dirname + '/data/mega-menu-content.json');
+		// Mock the fetch request / response
+		global.fetch = jest.fn().mockImplementationOnce((url) => {
+			expect(url).toBe('/taxonomy/term/1234/mega-menu');
+			return Promise.resolve({
+				ok: true,
+				status: 200,
+				json: async () => megaMenuResponse,
+			});
+		});
 
 		// Add the header to the body
 		document.body.appendChild(headerWithDataMenuId());
@@ -203,7 +205,5 @@ describe('nci-header - mega menu analytics', () => {
 				location: 'Header',
 			}
 		);
-
-		scope.done();
 	});
 });
