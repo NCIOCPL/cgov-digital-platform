@@ -25,6 +25,10 @@ on:
       - '.github/workflows/test-deployability.yml'
       - 'blt/*'
 
+permissions:
+  contents: read
+  packages: read
+
 # Only run one instance of this workflow at a time per branch.
 concurrency:
   group: ${{ github.ref_name }}-${{ github.workflow }}
