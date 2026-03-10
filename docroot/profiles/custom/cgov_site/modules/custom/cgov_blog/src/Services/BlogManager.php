@@ -118,14 +118,6 @@ class BlogManager implements BlogManagerInterface {
   /**
    * {@inheritdoc}
    */
-  public function getSeriesPath(NodeInterface $blog_series, $queryParams = []) {
-    $path = $blog_series->toUrl('canonical', ['query' => $queryParams]);
-    return $path->toString();
-  }
-
-  /**
-   * {@inheritdoc}
-   */
   public function getTopicsBySeries(NodeInterface $series) {
     return $this->getTopicsBySeriesId($series->id(), $this->languageManager->getCurrentLanguage()->getId());
   }
@@ -149,47 +141,8 @@ class BlogManager implements BlogManagerInterface {
   /**
    * {@inheritdoc}
    */
-  public function getFilteredTopicsBySeries(NodeInterface $blog_series) {
-    $topics = $this->getTopicsBySeries($blog_series);
-    $rtn_topics = [];
-    $langcode = $this->languageManager->getCurrentLanguage()->getId();
-    foreach ($topics as $key => $term) {
-      $node_storage = $this->entityTypeManager->getStorage('node');
-      $node = $node_storage->getQuery()
-        ->accessCheck(TRUE)
-        ->condition('field_blog_topics', $term->id(), '=', $langcode)
-        ->condition('type', 'cgov_blog_post')
-        ->condition('status', 1)
-        ->execute();
-      // Remove the category if there are zero usages.
-      if (!empty($node)) {
-        $rtn_topics[$key] = $term->getTranslation($langcode);
-      }
-    }
-    return $rtn_topics;
-  }
-
-  /**
-   * {@inheritdoc}
-   */
   public function getCurrentEntity() {
     return $this->routeMatcher->getParameter('node') ?? FALSE;
-  }
-
-  /**
-   * {@inheritdoc}
-   */
-  public function getNodesByPostedDateDesc($type) {
-    $query = $this->entityTypeManager->getStorage('node');
-    $nids = $query->getQuery()
-      ->accessCheck(TRUE)
-      ->condition('status', 1)
-      ->condition('type', $type)
-      ->condition('langcode', $this->getCurrentEntity()->language()->getId())
-      ->sort('field_date_posted', 'DESC')
-      ->execute();
-    $nodes = $query->loadMultiple($nids);
-    return $nodes;
   }
 
   /**
