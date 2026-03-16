@@ -84,7 +84,7 @@ class CgovNavTreeController extends ControllerBase {
 
     // The root of the tree does not count in the levels to display.
     // So we are increasing the depth by 1 level.
-    $depth = (theme_get_setting('mobile_levels_to_display', 'cgov_common') ?? 4) + 1;
+    $depth = 5;
     $tree_root = $this->getNavData($taxonomy_term, $menu_type, $depth);
 
     if ($tree_root !== NULL) {
@@ -406,7 +406,7 @@ class CgovNavTreeController extends ControllerBase {
     // No term *should* be a main nav root and a section nav root. When they
     // are, the mobile nav takes precedence.
     if ($branch[0]->get('field_main_nav_root')->value) {
-      $max_depth = (theme_get_setting('mobile_levels_to_display', 'cgov_common') ?? 4) + 1;
+      $max_depth = 5;
       $pruned_branch = $this->pruneBranch($branch, 'mobile_nav', $max_depth);
     }
     elseif ($branch[0]->get('field_section_nav_root')->value) {

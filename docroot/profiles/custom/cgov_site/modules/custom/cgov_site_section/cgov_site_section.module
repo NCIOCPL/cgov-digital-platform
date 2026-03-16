@@ -908,7 +908,7 @@ function _cgov_site_section_get_rendering_sections_for_mobile(EntityInterface $t
     // If the current term is a root, determine if it would display
     // the updated sections changes.
     // Levels to render will always be a positive integer, eg. from 1-5.
-    $levelsToRender = theme_get_setting('mobile_levels_to_display', 'cgov_common') ?? 4;
+    $levelsToRender = 4;
     if ($level < $levelsToRender) {
       $renderingSections[] = $section->id();
     }

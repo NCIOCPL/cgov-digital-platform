@@ -154,8 +154,6 @@ class MainNav extends BlockBase implements ContainerFactoryPluginInterface, Trus
       // Get the child HTML elements for this items Mobile menu.
       $children = self::renderMobileNavLevel($rootItem, 2);
 
-      // Get the Megamenu contents if they have been set.
-      $megamenu = $rootItem->getMegamenuContent();
       $hasChildrenClassname = strlen($children) > 0 ? 'has-children' : '';
       $markup = "
       <li class='nav-item lvl-1 $hasChildrenClassname item-$itemIndex'>
@@ -163,9 +161,6 @@ class MainNav extends BlockBase implements ContainerFactoryPluginInterface, Trus
           <a href='$href'>$label</a>
         </div>
         $children
-        <div class='sub-nav-mega' aria-expanded='true' aria-haspopup='true'>
-          $megamenu
-        </div>
       </li>
       ";
       $renderedMegaNavTrees[] = $markup;
