@@ -1,0 +1,13 @@
+{% set active_topic = active_topic|default('')|trim %}
+
+<ul class="usa-list usa-list--unstyled">
+  {% for row in rows %}
+    {% set topic_link = view.style_plugin.getField(loop.index0, 'name') %}
+    {% set topic_pretty = view.style_plugin.getField(loop.index0, 'field_topic_pretty_url')|striptags|trim %}
+    {% set is_active = active_topic and topic_pretty and active_topic == topic_pretty %}
+
+    <li{{ is_active ? ' class="usa-list__selected"' : '' }}>
+      {{- topic_link -}}
+    </li>
+  {% endfor %}
+</ul>

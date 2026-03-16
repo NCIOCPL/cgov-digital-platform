@@ -163,3 +163,14 @@ function cgov_blog_update_10003() {
     }
   }
 }
+
+/**
+ * Updates configs to add categories to blog posts.
+ */
+function cgov_blog_update_10004() {
+  // Import the features module to ensure we have the latest configs.
+  $features_mgr = \Drupal::service('features.manager');
+  $assigner = \Drupal::service('features_assigner');
+  $assigner->assignConfigPackages();
+  $features_mgr->import(['cgov_blog']);
+}
