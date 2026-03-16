@@ -24,6 +24,7 @@ dependencies:
     - field.field.node.cgov_blog_post.field_related_resources
     - field.field.node.cgov_blog_post.field_search_engine_restrictions
     - node.type.cgov_blog_post
+    - views.view.cgov_block_blog_categories
   module:
     - cgov_blog
     - ctools
@@ -33,6 +34,7 @@ dependencies:
     - options
     - text
     - user
+    - views
 third_party_settings:
   layout_builder:
     enabled: true
@@ -56,6 +58,19 @@ third_party_settings:
               context_mapping:
                 entity: layout_builder.entity
             weight: 0
+            additional: {  }
+          78c0386c-3626-4038-ade9-07a15c5fcbc0:
+            uuid: 78c0386c-3626-4038-ade9-07a15c5fcbc0
+            region: second
+            configuration:
+              id: 'views_block:cgov_block_blog_categories-block_cgdp_categories'
+              label: ''
+              label_display: visible
+              provider: views
+              context_mapping: {  }
+              views_label: ''
+              items_per_page: none
+            weight: 1
             additional: {  }
         third_party_settings: {  }
 id: node.cgov_blog_post.full

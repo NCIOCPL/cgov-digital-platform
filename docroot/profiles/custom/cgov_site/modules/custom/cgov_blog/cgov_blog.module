@@ -8,9 +8,11 @@
 use Drupal\Core\Access\AccessResult;
 use Drupal\Core\Cache\Cache;
 use Drupal\Core\Form\FormStateInterface;
+use Drupal\Core\Link;
 use Drupal\Core\Url;
 use Drupal\node\NodeInterface;
 use Drupal\taxonomy\Entity\Term;
+use Drupal\taxonomy\TermInterface;
 use Drupal\views\ViewExecutable;
 
 /**
@@ -98,53 +100,83 @@ function _cgov_blog_update_blog_post_checkboxes($form, &$form_state) {
  */
 function cgov_blog_views_pre_view(ViewExecutable $view, $display_id, array &$args) {
 
-  if ($view->id() !== 'blog_rss' && $view->id() !== 'cgov_block_blog_posts') {
+  // Blog post listing view behavior.
+  if ($view->id() === 'blog_rss' || $view->id() === 'cgov_block_blog_posts') {
+
+    // If this is a list in a Blog Series, use 'items per page' field.
+    // Only applies to cgov_block_blog_posts, not blog_rss.
+    if ($view->id() === 'cgov_block_blog_posts' && !empty($args[0])) {
+      $node = \Drupal::entityTypeManager()->getStorage('node')->load((int) $args[0]);
+      if ($node instanceof NodeInterface && $node->bundle() === 'cgov_blog_series' && isset($node->field_num_display_posts)) {
+        $view->setItemsPerPage($node->field_num_display_posts->value);
+      }
+    }
+
+    // Allow replacement of contextual filter arguments.
+    // Can use ?topic=clinical-trial-results.
+    // NOTE: query parameters will only get the last value if the
+    // parameters are duplicated. e.g., ?a=1&a=2 returns 2 when you
+    // get('a').
+    $topic = \Drupal::request()->query->get('topic');
+
+    // Setup cache contexts as the topic and date filters can change the items
+    // display, and so should be part of the cache keys.
+    // The series is determined by the page context (route parameter), not
+    // query args, so it doesn't need to be included in cache contexts.
+    // This fixes #4568 where random junk requests were caching the
+    // block in a bad state where none of these parameters changed it.
+    $contexts = ['url.query_args:topic'];
+
+    // Only add month/year cache contexts for cgov_block_blog_posts.
+    if ($view->id() === 'cgov_block_blog_posts') {
+      array_push($contexts, 'url.query_args:month', 'url.query_args:year');
+    }
+
+    $view->element['#cache']['contexts'] = Cache::mergeContexts(
+      $view->element['#cache']['contexts'] ?? [],
+      $contexts
+    );
+
+    // Convert BlogTopic.PrettyUrl to ID.
+    if ($topic && !is_numeric($topic) && $topic !== 'all') {
+      $terms = \Drupal::entityTypeManager()
+        ->getStorage('taxonomy_term')
+        ->loadByProperties([
+          'field_topic_pretty_url' => $topic,
+          'field_owner_blog.target_id' => $args[0],
+        ]);
+
+      // Get first array key.
+      reset($terms);
+      $tid = key($terms);
+
+      // Store as the second contextual filter argument.
+      // Note: intentionally no $tid falsy guard here matching develop behavior.
+      $view->args[1] = (int) $tid;
+    }
+
     return;
   }
 
-  // If this is a list in a Blog Series, use 'items per page' field.
-  if ($view->id() == 'cgov_block_blog_posts') {
-    $node = Drupal::entityTypeManager()->getStorage('node')->load((int) $args[0]);
-    if (isset($node) && $node->bundle() == 'cgov_blog_series' && isset($node->field_num_display_posts)) {
-      $view->setItemsPerPage($node->field_num_display_posts->value);
+  // Blog categories block behavior.
+  if ($view->id() === 'cgov_block_blog_categories' && $display_id === 'block_cgdp_categories') {
+    $node = \Drupal::routeMatch()->getParameter('node');
+    if (!$node instanceof NodeInterface) {
+      return;
     }
-  }
 
-  // Allow replacement of contextual filters arguments.
-  // Can use ?topic=clinical-trial-results.
-  // NOTE: query parameters will only get the last value if the
-  // parameters are duplicated. e.g., ?a=1&a=2 returns 2 when you
-  // get('a');.
-  $topic = \Drupal::request()->query->get('topic');
+    // On blog post pages, use the referenced series node.
+    if ($node->bundle() === 'cgov_blog_post') {
+      if ($node->hasField('field_blog_series') && !$node->get('field_blog_series')->isEmpty()) {
+        $args[0] = (int) $node->get('field_blog_series')->target_id;
+      }
+      return;
+    }
 
-  // Setup cache contexts as the topic and date filters can change the
-  // items display, and so should be part of the cache keys.
-  // The series is determined by the page context (route parameter), not
-  // query args, so it doesn't need to be included in cache contexts.
-  // This fixes #4568 where random junk requests were caching the
-  // block in a bad state where none of these parameters changed it.
-  $contexts = ['url.query_args:topic'];
-  if ($view->id() == 'cgov_block_blog_posts') {
-    array_push($contexts, 'url.query_args:month', 'url.query_args:year');
-  }
-
-  $view->element['#cache']['contexts'] = Cache::mergeContexts(
-    $view->element['#cache']['contexts'] ?? [],
-    $contexts
-  );
-
-  // Convert BlogTopic.PrettyUrl to ID.
-  if ($topic && !is_numeric($topic) && $topic != 'all') {
-    $terms = \Drupal::entityTypeManager()
-      ->getStorage('taxonomy_term')
-      ->loadByProperties(
-          ['field_topic_pretty_url' => $topic]
-      );
-    // Get first array key.
-    reset($terms);
-    $tid = key($terms);
-    // Store NID as the first contextual filter argument.
-    $view->args[1] = (int) $tid;
+    // On blog series pages, use the current node ID.
+    if ($node->bundle() === 'cgov_blog_series') {
+      $args[0] = (int) $node->id();
+    }
   }
 }
 
@@ -328,4 +360,85 @@ function cgov_blog_node_delete($entity) {
       Cache::invalidateTags(['node:' . $blog_series_target_id]);
     }
   }
+}
+
+/**
+ * Implements hook_preprocess_views_view_field().
+ *
+ * Rewrites taxonomy term links in the blog categories block to use the
+ * pattern: /{site_section}/{blog_series:field_pretty_url}?topic={term:field_topic_pretty_url}.
+ */
+function cgov_blog_preprocess_views_view_field(&$variables) {
+  $view = $variables['view'];
+  if ($view->id() === 'cgov_block_blog_categories' || $view->current_display === 'block_cgdp_categories') {
+    if ($variables['field']->field !== 'name') {
+      return;
+    }
+
+    // Get the taxonomy term from the row.
+    $term = $variables['row']->_entity ?? NULL;
+    if (!$term instanceof TermInterface) {
+      return;
+    }
+
+    // Read the series nid from the first contextual argument. This value is
+    // populated in hook_views_pre_view() from the routed blog post/series node.
+    $series_nid = $view->args[0] ?? NULL;
+    if (!$series_nid) {
+      return;
+    }
+
+    $langcode = \Drupal::languageManager()->getCurrentLanguage()->getId();
+
+    // Avoid reloading/translating the same series node for each term in this
+    // block render; resets on the next page request.
+    static $series_node_cache = [];
+    $cache_key = $series_nid . ':' . $langcode;
+
+    if (isset($series_node_cache[$cache_key])) {
+      $series_node = $series_node_cache[$cache_key];
+    }
+    else {
+      // Load the series node.
+      $series_node = \Drupal::entityTypeManager()
+        ->getStorage('node')
+        ->load($series_nid);
+
+      if (!$series_node instanceof NodeInterface || $series_node->bundle() !== 'cgov_blog_series') {
+        return;
+      }
+      if ($series_node->hasTranslation($langcode)) {
+        $series_node = $series_node->getTranslation($langcode);
+      }
+      $series_node_cache[$cache_key] = $series_node;
+    }
+
+    if ($term->hasTranslation($langcode)) {
+      $term = $term->getTranslation($langcode);
+    }
+
+    $topic_value = $term->get('field_topic_pretty_url')->value ?? $term->id();
+    $url = $series_node->toUrl('canonical', ['query' => ['topic' => $topic_value]]);
+    $url->setOption('attributes', [
+      'class' => ['usa-link'],
+    ]);
+
+    $link = Link::fromTextAndUrl($term->label(), $url);
+    $variables['output'] = $link->toRenderable();
+  }
+}
+
+/**
+ * Implements hook_preprocess_views_view_unformatted().
+ */
+function cgov_blog_preprocess_views_view_unformatted(&$variables) {
+  $view = $variables['view'];
+  if ($view->id() !== 'cgov_block_blog_categories' || $view->current_display !== 'block_cgdp_categories') {
+    return;
+  }
+
+  // Add active class to the current topic link
+  // based on the query parameter.
+  // Will be used in views-view-unformatted--cgov-block-blog-categories--block-cgdp-categories.html.twig.
+  $variables['active_topic'] = trim((string) \Drupal::request()->query->get('topic', ''));
 }
