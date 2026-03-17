@@ -1,0 +1,16 @@
+<div class="cgdp-blog-archive">
+  <div class="usa-accordion usa-accordion--bordered">
+		<div class="usa-accordion__heading">
+			<button
+        class="usa-accordion__button"
+        type="button"
+        aria-expanded="{{ archive_is_open ? 'true' : 'false' }}"
+        aria-controls="blog-archive-content">
+        {% trans %}Archive{% endtrans %}
+      </button>
+		</div>
+    <div class="usa-accordion__content" id="blog-archive-content"{{ archive_is_open ? '' : ' hidden' }}>
+      {{ content }}
+    </div>
+  </div>
+</div>

@@ -5,7 +5,6 @@ dependencies:
     - core.entity_view_mode.node.full
     - field.field.node.cgov_blog_series.field_about_blog
     - field.field.node.cgov_blog_series.field_archive_back_years
-    - field.field.node.cgov_blog_series.field_archive_group_by
     - field.field.node.cgov_blog_series.field_banner_image
     - field.field.node.cgov_blog_series.field_browser_title
     - field.field.node.cgov_blog_series.field_card_title
@@ -22,6 +21,7 @@ dependencies:
     - field.field.node.cgov_blog_series.field_show_list_thumbnails
     - field.field.node.cgov_blog_series.field_site_section
     - node.type.cgov_blog_series
+    - views.view.cgov_block_blog_archive
     - views.view.cgov_block_blog_categories
   module:
     - cgov_blog
@@ -69,6 +69,19 @@ third_party_settings:
               items_per_page: none
             weight: 0
             additional: {  }
+          be0512bc-081a-44d4-ba78-2167e30e5764:
+            uuid: be0512bc-081a-44d4-ba78-2167e30e5764
+            region: second
+            configuration:
+              id: 'views_block:cgov_block_blog_archive-block_cgdp_archive'
+              label: ''
+              label_display: visible
+              provider: views
+              context_mapping: {  }
+              views_label: ''
+              items_per_page: none
+            weight: 1
+            additional: {  }
         third_party_settings: {  }
 id: node.cgov_blog_series.full
 targetEntityType: node
@@ -95,13 +108,6 @@ content:
       prefix_suffix: true
     third_party_settings: {  }
     weight: 23
-    region: content
-  field_archive_group_by:
-    type: list_default
-    label: hidden
-    settings: {  }
-    third_party_settings: {  }
-    weight: 22
     region: content
   field_banner_image:
     type: image

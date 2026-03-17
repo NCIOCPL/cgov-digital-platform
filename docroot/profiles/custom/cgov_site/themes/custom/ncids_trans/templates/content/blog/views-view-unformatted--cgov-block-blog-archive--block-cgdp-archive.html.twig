@@ -1,0 +1,13 @@
+{% set active_topic = active_topic|default(active_year|default(''))|trim %}
+<ul class="usa-list usa-list--unstyled">
+  {% for row in rows %}
+    {% set row_content = row.content is iterable ? row.content|render : row.content %}
+    {% set row_text = row_content|striptags|trim %}
+    {% set row_year = row_text|split('(')|first|trim %}
+    {% set is_active = active_topic and row_year and active_topic == row_year %}
+
+    <li{{ is_active ? ' class="usa-list--selected"' : '' }}>
+      {{- row_content -}}
+    </li>
+  {% endfor %}
+</ul>
