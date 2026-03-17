@@ -34,33 +34,6 @@
 {% endmacro %}
 
 {#
- # Draw archive list item for month type.
- # @param array monthInfo
- # @param string monthInfo
- #}
-{% macro getMonthLinks(monthInfo, year, path) %}
-  {% for month, count in monthInfo %}
-    <li class="month">
-      <a href="{{path}}?year={{year}}&month={{month}}">
-        {{ _self.transformMonthName(month) }}
-      </a> ({{ count }})
-    </li>
-  {% endfor %}
-{% endmacro %}
-
-{#
- # Draw archive list item for year type.
- # @param array yearInfo
- #}
-{% macro getYearLinks(yearInfo, path) %}
-  {% for year, count in yearInfo %}
-      <li class="year">
-        <a href="{{path}}?year={{year}}">{{year}}</a> ({{count}})
-      </li>
-  {% endfor %}
-{% endmacro %}
-
-{#
  # Draw the title for a given Blog Series. Prepend the month/year to the title if
  # this is a Blog Archive page. Prepend the category name if this is a Blog Category
  # page.
