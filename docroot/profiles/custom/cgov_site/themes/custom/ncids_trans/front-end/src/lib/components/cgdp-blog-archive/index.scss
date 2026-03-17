@@ -1,0 +1,40 @@
+@use 'uswds-core' as *;
+@forward "usa-accordion";
+
+.cgdp-blog-archive {
+	@include u-margin-y(3);
+	.usa-list {
+		li > a {
+			text-decoration: none;
+			@include u-padding-left(3);
+			@include u-padding-y(1);
+			@include u-margin-left('05');
+			@include u-display('inline-block');
+			width: calc(100% - 0.5rem);
+			.cgdp-blog-archive__total {
+				@include u-color('ink');
+				@include u-text(400);
+				@include u-margin-left('05');
+			}
+		}
+
+		.usa-list__selected {
+			@include u-bg('base-lightest');
+			@include u-border-left('05', $theme-color-secondary);
+			@include u-text(700);
+			@include u-margin-y(0);
+			& a {
+				@include u-padding-left('205');
+			}
+		}
+		.usa-link:visited {
+			@include u-text($theme-link-color);
+		}
+	}
+	.usa-accordion {
+		@include u-position('relative');
+		.usa-accordion__content {
+			@include u-padding-x(0);
+		}
+	}
+}
