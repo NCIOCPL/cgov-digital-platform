@@ -23,3 +23,18 @@ function cgov_saml_auth_config_install() {
  */
 function cgov_saml_auth_config_update_9002() {
 }
+
+/**
+ * Unregisters the js_cookie module.
+ *
+ * It was removed as a dependency in drupal/autologout.
+ */
+function cgov_saml_auth_config_update_10001() {
+  $extension_config = \Drupal::configFactory()->getEditable('core.extension');
+  $modules = $extension_config->get('module');
+  if (isset($modules['js_cookie'])) {
+    unset($modules['js_cookie']);
+    $extension_config->set('module', $modules)->save();
+    \Drupal::keyValue('system.schema')->delete('js_cookie');
+  }
+}
