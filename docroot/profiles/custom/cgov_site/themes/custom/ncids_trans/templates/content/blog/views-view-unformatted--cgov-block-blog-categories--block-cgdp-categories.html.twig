@@ -4,7 +4,14 @@
   {% for row in rows %}
     {% set topic_link = view.style_plugin.getField(loop.index0, 'name') %}
     {% set topic_pretty = view.style_plugin.getField(loop.index0, 'field_topic_pretty_url')|striptags|trim %}
-    {% set is_active = active_topic and topic_pretty and active_topic == topic_pretty %}
+    {% set term_entity = view.result[loop.index0]._entity ?? null %}
+    {% set topic_id = term_entity ? term_entity.id() : '' %}
+    {% if topic_pretty %}
+      {% set topic_value = topic_pretty %}
+    {% else %}
+      {% set topic_value = topic_id %}
+    {% endif %}
+    {% set is_active = active_topic and topic_value and active_topic == topic_value %}
 
     <li {{ is_active ? ' class="usa-list--selected"' : '' }}>
       {{- topic_link -}}
