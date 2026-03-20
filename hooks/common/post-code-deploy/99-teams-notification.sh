@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
 set -o pipefail
 
-## If this is ACSF then exit.
-if [[ $AH_SITE_GROUP == "ncigov" ]]; then
+## If this is MEO then exit.
+if [[ $AH_SITE_GROUP == "ncigovmeo" ]]; then
   exit;
 fi;
 
@@ -14,7 +14,7 @@ repo_url="$5"
 repo_type="$6"
 
 # Acquire our secrets
-FILE=$HOME/$target_env/teams_webhook
+FILE=/mnt/files/{$_ENV['AH_SITE_GROUP']}.{$_ENV['AH_SITE_ENVIRONMENT']}/cgdp/teams_webhook
 
 if [[ -f "$FILE" ]]; then
     . "$FILE"
