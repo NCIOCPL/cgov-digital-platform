@@ -59,6 +59,17 @@ function cgov_blog_update_8002() {
 }
 
 /**
+ * Rename Blog Topics vocabulary for MEO.
+ */
+function cgov_blog_update_10002() {
+  $vocab = \Drupal::entityTypeManager()->getStorage('taxonomy_vocabulary')->load('cgov_blog_topics');
+  if ($vocab) {
+    $vocab->set('name', 'Blog Topics TestMEO');
+    $vocab->save();
+  }
+}
+
+/**
  * Remove featured posts block from blog layouts.
  */
 function cgov_blog_update_10001() {
