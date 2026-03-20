@@ -1,4 +1,3 @@
-import axios, { Axios } from 'axios';
 import type { MegaMenuAdapter } from '@nciocpl/ncids-js/nci-header';
 import { CgdpMegaMenuData } from './types';
 import getCgdpMegaMenu from './components/cgdp-mega-menu';
@@ -13,9 +12,9 @@ class CgdpMegaMenuAdapter implements MegaMenuAdapter {
 	useUrlForNavigationId = false;
 
 	/**
-	 * Instance of an axios client.
+	 * Base URL to use for requests (e.g. `/` or `/some/path`).
 	 */
-	client: Axios;
+	baseUrl: string;
 
 	/**
 	 * Cache of fetched and built mega menu contents.
@@ -26,10 +25,10 @@ class CgdpMegaMenuAdapter implements MegaMenuAdapter {
 
 	/**
 	 * Creates an instance of a Cgdp Mega Menu Adapter
-	 * @param {Axios} client an axios client
+	 * @param baseUrl  Base URL for the Drupal API.
 	 */
-	constructor(client: Axios) {
-		this.client = client;
+	constructor(baseUrl: string) {
+		this.baseUrl = baseUrl.endsWith('/') ? baseUrl.slice(0, -1) : baseUrl;
 		this.cache = {};
 	}
 
@@ -38,19 +37,16 @@ class CgdpMegaMenuAdapter implements MegaMenuAdapter {
 	 * @param {string} id the id of the mega menu to fetch.
 	 */
 	private async fetchContent(id: string): Promise<CgdpMegaMenuData> {
-		try {
-			const res = await this.client.get(`/taxonomy/term/${id}/mega-menu`);
-			// Axios will throw for anything non-200.
-			return res.data;
-		} catch (error: unknown) {
-			// This conditional will be hit for any status >= 300.
-			if (axios.isAxiosError(error) && error.response) {
-				throw new Error(
-					`Megamenu unexpected status ${error.response.status} fetching ${id}`
-				);
-			}
-			throw new Error(`Could not fetch megamenu for ${id}.`);
+		const url = `${this.baseUrl}/taxonomy/term/${id}/mega-menu`;
+
+		const res = await fetch(url, { credentials: 'same-origin' });
+		if (!res.ok) {
+			throw new Error(
+				`Megamenu unexpected status ${res.status} fetching ${id}`
+			);
 		}
+
+		return (await res.json()) as CgdpMegaMenuData;
 	}
 
 	/**

@@ -3,7 +3,6 @@
 namespace Drupal\cgov_core;
 
 use Drupal\cgov_core\Services\CgovNavigationManager;
-use Drupal\Component\Utility\Html;
 use Drupal\taxonomy\TermInterface;
 
 /**
@@ -202,33 +201,6 @@ class NavItem {
    */
   public function getWeight() {
     return $this->term->getWeight();
-  }
-
-  /**
-   * Retrieve raw megamenu html markup.
-   *
-   * NOTE: This is for the Legacy cgov_common theme, NOT NCIDS.
-   * The markup for megamenus are stored in content blocks as URI encoded raw
-   * html. We need to retrieve it and unencode the html.
-   *
-   * @return string
-   *   Megamenu content block markup.
-   */
-  public function getMegamenuContent() {
-    $megamenuFieldEntityReference = $this->term->get('field_mega_menu_content');
-    $referencedEntities = $megamenuFieldEntityReference->referencedEntities();
-    $hasMegamenu = count($referencedEntities) > 0;
-    if ($hasMegamenu) {
-      /* Based on the comment above, this method should go away once
-       * cgov_common is gone, so there's no point in changing it for phpstan
-       * when it's already not going to be called.
-       * @phpstan-ignore-next-line
-       */
-      $megamenuMarkupEncoded = $megamenuFieldEntityReference->entity->get('field_raw_html')->value;
-      $megamenuMarkupDecoded = Html::decodeEntities($megamenuMarkupEncoded);
-      return $megamenuMarkupDecoded;
-    }
-    return "";
   }
 
   /**

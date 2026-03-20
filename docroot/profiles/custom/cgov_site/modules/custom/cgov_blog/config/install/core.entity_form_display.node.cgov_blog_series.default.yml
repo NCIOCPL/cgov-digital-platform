@@ -4,11 +4,9 @@ dependencies:
   config:
     - entity_browser.browser.cgov_site_section_browser
     - field.field.node.cgov_blog_series.field_about_blog
-    - field.field.node.cgov_blog_series.field_allow_comments
     - field.field.node.cgov_blog_series.field_archive_back_years
     - field.field.node.cgov_blog_series.field_archive_group_by
     - field.field.node.cgov_blog_series.field_banner_image
-    - field.field.node.cgov_blog_series.field_blog_series_shortname
     - field.field.node.cgov_blog_series.field_browser_title
     - field.field.node.cgov_blog_series.field_card_title
     - field.field.node.cgov_blog_series.field_feature_card_description
@@ -19,7 +17,6 @@ dependencies:
     - field.field.node.cgov_blog_series.field_num_display_posts
     - field.field.node.cgov_blog_series.field_page_description
     - field.field.node.cgov_blog_series.field_pretty_url
-    - field.field.node.cgov_blog_series.field_public_use
     - field.field.node.cgov_blog_series.field_recommended_content_header
     - field.field.node.cgov_blog_series.field_search_engine_restrictions
     - field.field.node.cgov_blog_series.field_show_list_thumbnails
@@ -45,12 +42,6 @@ content:
       rows: 5
       placeholder: ''
     third_party_settings: {  }
-  field_allow_comments:
-    type: options_select
-    weight: 12
-    region: content
-    settings: {  }
-    third_party_settings: {  }
   field_archive_back_years:
     type: number
     weight: 25
@@ -71,14 +62,6 @@ content:
     settings:
       progress_indicator: throbber
       preview_image_style: thumbnail
-    third_party_settings: {  }
-  field_blog_series_shortname:
-    type: string_textfield
-    weight: 10
-    region: content
-    settings:
-      size: 60
-      placeholder: ''
     third_party_settings: {  }
   field_browser_title:
     type: string_textfield
@@ -157,12 +140,6 @@ content:
     settings:
       size: 60
       placeholder: ''
-    third_party_settings: {  }
-  field_public_use:
-    type: options_select
-    weight: 20
-    region: content
-    settings: {  }
     third_party_settings: {  }
   field_recommended_content_header:
     type: string_textfield

@@ -464,7 +464,7 @@ class CgovNavigationManager {
         'mobile_nav' :
         'section_nav',
       $menu_type === 'mobile-nav' ?
-        (theme_get_setting('mobile_levels_to_display', 'cgov_common') ?? 4) + 1 :
+        5 :
         $closest_root->field_levels_to_display->value ?? 5
     );
 
@@ -596,12 +596,7 @@ class CgovNavigationManager {
       // able to tell if we are good or not. Main nav and section nav
       // are handled differently.
       if ($parent_term->get('field_main_nav_root')->value) {
-        // For a mobile nav, the root is the start. So if we only should show 1
-        // level, then we need the depth to be 2 to show any children.
-        $depth = (theme_get_setting('mobile_levels_to_display', 'cgov_common') ?? 4) + 1;
-        if ($depth <= 2) {
-          continue;
-        }
+        $depth = 5;
 
         if ($this->hasDisplayableChildren($parent_term, 'hide_in_mobile_nav')) {
           return $parent_term;

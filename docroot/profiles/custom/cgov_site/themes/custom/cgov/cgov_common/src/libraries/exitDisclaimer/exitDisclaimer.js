@@ -12,7 +12,7 @@ const legacyFilterSet = (_, el) => {
     !$(el).hasClass("toolbar-item") && // Drupal admin toolbar selector
     !$(el).hasClass("no-exit-notification") &&
     !$(el).hasClass("usa-link") &&
-    $(el).parents(".cgdp-embed-card").length === 0 // Don't add external icon for embedded cards, they have their own
+    $(el).parents(".cgdp-embed-card, .cgdp-embed-feature-card").length === 0 // Don't add external icon for embedded cards, they have their own
   );
 };
 

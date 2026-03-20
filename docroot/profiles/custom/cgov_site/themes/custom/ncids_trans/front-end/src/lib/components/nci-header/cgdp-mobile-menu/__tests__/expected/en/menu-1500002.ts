@@ -25,6 +25,6 @@ export default {
 		langcode: 'en',
 		label: 'Back',
 		path: '/api-test/a',
-		hasChildren: false,
+		hasChildren: true,
 	},
 };

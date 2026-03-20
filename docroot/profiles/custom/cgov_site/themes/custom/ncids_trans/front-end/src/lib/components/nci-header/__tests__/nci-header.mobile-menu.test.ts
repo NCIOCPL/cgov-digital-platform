@@ -9,7 +9,7 @@ import * as eddlUtil from '../../../core/analytics/eddl-util';
 import headerInit from '../nci-header';
 import { headerWithDataMenuId } from './nci-header.mega-menu.dom';
 
-import * as nock from 'nock';
+import * as mobileMenuResponse from '../cgdp-mobile-menu/__tests__/data/section-nav/1500002.json';
 
 jest.mock('../../../core/analytics/eddl-util');
 
@@ -35,10 +35,6 @@ describe('nci-header - mobile menu analytics', () => {
 		window.dispatchEvent(new Event('resize'));
 	});
 
-	beforeAll(() => {
-		nock.disableNetConnect();
-	});
-
 	afterEach(() => {
 		// Hack to clean out the dom.
 		document.getElementsByTagName('body')[0].innerHTML = '';
@@ -46,8 +42,6 @@ describe('nci-header - mobile menu analytics', () => {
 	});
 
 	afterAll(() => {
-		nock.cleanAll();
-		nock.enableNetConnect();
 		jest.restoreAllMocks();
 	});
 
@@ -60,14 +54,15 @@ describe('nci-header - mobile menu analytics', () => {
 	it('open mobile menu', async () => {
 		// Add the header to the body
 		const spy = jest.spyOn(eddlUtil, 'trackOther');
-		const scope = nock('http://localhost')
-			.get('/taxonomy/term/1500002/section-nav')
-			.once()
-			.replyWithFile(
-				200,
-				__dirname +
-					'/../cgdp-mobile-menu/__tests__/data/section-nav/1500002.json'
-			);
+		// Mock the fetch request / response
+		global.fetch = jest.fn().mockImplementationOnce((url) => {
+			expect(url).toBe('/taxonomy/term/1500002/section-nav');
+			return Promise.resolve({
+				ok: true,
+				status: 200,
+				json: async () => mobileMenuResponse,
+			});
+		});
 
 		const container = headerWithDataMenuId();
 		document.body.append(container);
@@ -89,21 +84,20 @@ describe('nci-header - mobile menu analytics', () => {
 				location: 'MobilePrimaryNav',
 			}
 		);
-
-		scope.isDone();
 	});
 
 	it('link click test', async () => {
 		// Add the header to the body
 		const spy = jest.spyOn(eddlUtil, 'trackOther');
-		const scope = nock('http://localhost')
-			.get('/taxonomy/term/1500002/section-nav')
-			.once()
-			.replyWithFile(
-				200,
-				__dirname +
-					'/../cgdp-mobile-menu/__tests__/data/section-nav/1500002.json'
-			);
+		// Mock the fetch request / response
+		global.fetch = jest.fn().mockImplementationOnce((url) => {
+			expect(url).toBe('/taxonomy/term/1500002/section-nav');
+			return Promise.resolve({
+				ok: true,
+				status: 200,
+				json: async () => mobileMenuResponse,
+			});
+		});
 
 		const container = headerWithDataMenuId();
 		document.body.append(container);
@@ -172,21 +166,17 @@ describe('nci-header - mobile menu analytics', () => {
 				listNumber: 1,
 			}
 		);
-
-		scope.isDone();
 	});
 
 	it('Close menu with overlay click', async () => {
 		// Add the header to the body
 		const spy = jest.spyOn(eddlUtil, 'trackOther');
-		const scope = nock('http://localhost')
-			.get('/taxonomy/term/1500002/section-nav')
-			.once()
-			.replyWithFile(
-				200,
-				__dirname +
-					'/../cgdp-mobile-menu/__tests__/data/section-nav/1500002.json'
-			);
+		// Mock the fetch request / response
+		global.fetch = jest.fn().mockReturnValueOnce({
+			ok: true,
+			status: 200,
+			json: () => mobileMenuResponse,
+		});
 
 		const container = headerWithDataMenuId();
 		document.body.append(container);
@@ -213,20 +203,17 @@ describe('nci-header - mobile menu analytics', () => {
 				location: 'MobilePrimaryNav',
 			}
 		);
-		scope.isDone();
 	});
 
 	it('Close menu with X click', async () => {
 		// Add the header to the body
 		const spy = jest.spyOn(eddlUtil, 'trackOther');
-		const scope = nock('http://localhost')
-			.get('/taxonomy/term/1500002/section-nav')
-			.once()
-			.replyWithFile(
-				200,
-				__dirname +
-					'/../cgdp-mobile-menu/__tests__/data/section-nav/1500002.json'
-			);
+		// Mock the fetch request / response
+		global.fetch = jest.fn().mockReturnValueOnce({
+			ok: true,
+			status: 200,
+			json: () => mobileMenuResponse,
+		});
 
 		const container = headerWithDataMenuId();
 		document.body.append(container);
@@ -253,22 +240,18 @@ describe('nci-header - mobile menu analytics', () => {
 				location: 'MobilePrimaryNav',
 			}
 		);
-
-		scope.isDone();
 	});
 
 	it('Close menu with Escape key click', async () => {
 		// Add the header to the body
 		const user = userEvent.setup();
 		const spy = jest.spyOn(eddlUtil, 'trackOther');
-		const scope = nock('http://localhost')
-			.get('/taxonomy/term/1500002/section-nav')
-			.once()
-			.replyWithFile(
-				200,
-				__dirname +
-					'/../cgdp-mobile-menu/__tests__/data/section-nav/1500002.json'
-			);
+		// Mock the fetch request / response
+		global.fetch = jest.fn().mockReturnValueOnce({
+			ok: true,
+			status: 200,
+			json: () => mobileMenuResponse,
+		});
 
 		const container = headerWithDataMenuId();
 		document.body.append(container);
@@ -292,7 +275,5 @@ describe('nci-header - mobile menu analytics', () => {
 				location: 'MobilePrimaryNav',
 			}
 		);
-
-		scope.isDone();
 	});
 });

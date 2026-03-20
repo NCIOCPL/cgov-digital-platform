@@ -2,7 +2,6 @@ import '@testing-library/jest-dom';
 import '@testing-library/jest-dom/extend-expect';
 import { fireEvent, screen } from '@testing-library/dom';
 import userEvent from '@testing-library/user-event';
-import * as nock from 'nock';
 
 import * as eddlUtil from '../../../core/analytics/eddl-util';
 import headerInit from '../nci-header';
@@ -56,10 +55,6 @@ describe('nci-header - autocomplete analytics', () => {
 		});
 	});
 
-	beforeAll(() => {
-		nock.disableNetConnect();
-	});
-
 	afterEach(() => {
 		// Hack to clean out the dom.
 		document.getElementsByTagName('body')[0].innerHTML = '';
@@ -68,8 +63,6 @@ describe('nci-header - autocomplete analytics', () => {
 	});
 
 	afterAll(() => {
-		nock.cleanAll();
-		nock.enableNetConnect();
 		jest.restoreAllMocks();
 	});
 
@@ -86,10 +79,12 @@ describe('nci-header - autocomplete analytics', () => {
 			},
 		};
 
-		const scope = nock('http://localhost')
-			.get('/Autosuggest/cgov/en/can')
-			.once()
-			.reply(200, response);
+		// Mock the fetch response for an error. This is the menu that the adapter will start in.
+		global.fetch = jest.fn().mockReturnValueOnce({
+			ok: true,
+			status: 200,
+			json: () => response,
+		});
 
 		document.body.appendChild(nciHeaderAutosuggestDom());
 
@@ -123,8 +118,6 @@ describe('nci-header - autocomplete analytics', () => {
 				location: 'Header',
 			}
 		);
-
-		scope.isDone();
 	});
 
 	it('sends correct analytics when options are offered', async () => {
@@ -140,10 +133,12 @@ describe('nci-header - autocomplete analytics', () => {
 			},
 		};
 
-		const scope = nock('http://localhost')
-			.get('/Autosuggest/cgov/en/can')
-			.once()
-			.reply(200, response);
+		// Mock the fetch response for an error. This is the menu that the adapter will start in.
+		global.fetch = jest.fn().mockReturnValueOnce({
+			ok: true,
+			status: 200,
+			json: () => response,
+		});
 
 		document.body.appendChild(nciHeaderAutosuggestDom());
 
@@ -181,8 +176,6 @@ describe('nci-header - autocomplete analytics', () => {
 				location: 'Header',
 			}
 		);
-
-		scope.isDone();
 	});
 
 	it('sends correct analytics when option is selected', async () => {
@@ -198,10 +191,12 @@ describe('nci-header - autocomplete analytics', () => {
 			},
 		};
 
-		const scope = nock('http://localhost')
-			.get('/Autosuggest/cgov/en/can')
-			.once()
-			.reply(200, response);
+		// Mock the fetch response for an error. This is the menu that the adapter will start in.
+		global.fetch = jest.fn().mockReturnValueOnce({
+			ok: true,
+			status: 200,
+			json: () => response,
+		});
 
 		document.body.appendChild(nciHeaderAutosuggestDom());
 
@@ -237,8 +232,6 @@ describe('nci-header - autocomplete analytics', () => {
 				location: 'Header',
 			}
 		);
-
-		scope.isDone();
 	});
 
 	it('logs an error when search collection without api key', async () => {

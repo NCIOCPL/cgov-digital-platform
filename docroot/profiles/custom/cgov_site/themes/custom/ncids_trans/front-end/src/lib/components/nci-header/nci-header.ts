@@ -1,4 +1,3 @@
-import axios from 'axios';
 import { NCIExtendedHeaderWithMegaMenu } from '@nciocpl/ncids-js/nci-header';
 import { NCIAutocomplete } from '@nciocpl/ncids-js/nci-autocomplete';
 import { CgdpMobileMenuAdapter } from './cgdp-mobile-menu';
@@ -68,12 +67,11 @@ const initializeSearch = (lang: 'en' | 'es') => {
 		return;
 	}
 
-	const client = axios.create({
-		baseURL: searchApiServer,
-		responseType: 'json',
-	});
-
-	const ACSource = new CgdpAutocompleteAdapter(client, collection, lang);
+	const ACSource = new CgdpAutocompleteAdapter(
+		searchApiServer,
+		collection,
+		lang
+	);
 	let minPlaceholderMsg = 'Please enter 3 or more characters';
 	if (lang !== 'en') {
 		minPlaceholderMsg = 'Ingrese 3 o más caracteres';
@@ -109,14 +107,7 @@ const initialize = () => {
 	// to have a baseUrl like /nano.
 	const baseURL = headerEl.dataset.basePath ?? '/';
 
-	// This is the client that can be used for both the MobileMenuAdapter and the
-	// MegaMenuAdapter.
-	const client = axios.create({
-		baseURL,
-		responseType: 'json',
-	});
-
-	const megaMenuSource = new CgdpMegaMenuAdapter(client);
+	const megaMenuSource = new CgdpMegaMenuAdapter(baseURL);
 
 	// We need to get the menu information off the window.
 	if (!window.ncidsNavInfo) {
@@ -128,7 +119,7 @@ const initialize = () => {
 	// todo: add a bit more checks to make sure the nav info is the right shape.
 	const mobileMenuSource = new CgdpMobileMenuAdapter(
 		false,
-		client,
+		baseURL,
 		window.ncidsNavInfo?.item_id?.toString(),
 		window.ncidsNavInfo.nav,
 		lang,
