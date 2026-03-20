@@ -59,17 +59,6 @@ function cgov_blog_update_8002() {
 }
 
 /**
- * Rename Blog Topics vocabulary for MEO.
- */
-function cgov_blog_update_10002() {
-  $vocab = \Drupal::entityTypeManager()->getStorage('taxonomy_vocabulary')->load('cgov_blog_topics');
-  if ($vocab) {
-    $vocab->set('name', 'Blog Topics TestMEO');
-    $vocab->save();
-  }
-}
-
-/**
  * Remove featured posts block from blog layouts.
  */
 function cgov_blog_update_10001() {
@@ -98,5 +87,90 @@ function cgov_blog_update_10001() {
   }
   else {
     field_purge_batch(50);
+  }
+}
+
+/**
+ * Updates configs to remove public use from blog series.
+ */
+function cgov_blog_update_10002() {
+  // Import the features module to ensure we have the latest configs.
+  $features_mgr = \Drupal::service('features.manager');
+  $assigner = \Drupal::service('features_assigner');
+  $assigner->assignConfigPackages();
+  $features_mgr->import(['cgov_blog']);
+
+  // Delete the field_config for public_use on cgov_blog_series.
+  // Note: We only delete the field config, not the field storage,
+  // since field_public_use is shared with other content types.
+  $field_config_storage = \Drupal::entityTypeManager()->getStorage('field_config');
+  $field_config = $field_config_storage->load('node.cgov_blog_series.field_public_use');
+  if ($field_config) {
+    $field_config->delete();
+  }
+}
+
+/**
+ * Updates configs to remove disqus from blog posts.
+ */
+function cgov_blog_update_10003() {
+  // Import the features module to ensure we have the latest configs.
+  $features_mgr = \Drupal::service('features.manager');
+  $assigner = \Drupal::service('features_assigner');
+  $assigner->assignConfigPackages();
+  $features_mgr->import(['cgov_blog']);
+
+  // Remove field config/storage and purge data for field_allow_comments.
+  $field_config_storage = \Drupal::entityTypeManager()->getStorage('field_config');
+  $field_storage_storage = \Drupal::entityTypeManager()->getStorage('field_storage_config');
+
+  $field_config = $field_config_storage->load('node.cgov_blog_series.field_allow_comments');
+  if ($field_config) {
+    $field_config->delete();
+  }
+
+  $field_storage = $field_storage_storage->load('node.field_allow_comments');
+  if ($field_storage) {
+    $field_storage->delete();
+  }
+
+  // Remove field config/storage and purge data for field_blog_series_shortname.
+  $field_config_storage = \Drupal::entityTypeManager()->getStorage('field_config');
+  $field_storage_storage = \Drupal::entityTypeManager()->getStorage('field_storage_config');
+
+  $field_config = $field_config_storage->load('node.cgov_blog_series.field_blog_series_shortname');
+  if ($field_config) {
+    $field_config->delete();
+  }
+
+  $field_storage = $field_storage_storage->load('node.field_blog_series_shortname');
+  if ($field_storage) {
+    $field_storage->delete();
+  }
+
+  if (\Drupal::hasService('field.purge')) {
+    // Continue purging in batches of 50 until there is nothing left to purge.
+    do {
+      $purged_count = \Drupal::service('field.purge')->purgeBatch(50);
+    } while ($purged_count > 0);
+  }
+  else {
+    // Fallback for environments without the field.purge service.
+    if (function_exists('field_purge_batch')) {
+      do {
+        $purged_count = field_purge_batch(50);
+      } while ($purged_count > 0);
+    }
+  }
+}
+
+/**
+ * Rename Blog Topics vocabulary for MEO.
+ */
+function cgov_blog_update_10004() {
+  $vocab = \Drupal::entityTypeManager()->getStorage('taxonomy_vocabulary')->load('cgov_blog_topics');
+  if ($vocab) {
+    $vocab->set('name', 'Blog Topics TestMEO');
+    $vocab->save();
   }
 }
