@@ -85,5 +85,18 @@ echo "$site_and_domain_list" | nl | \
       sleep "$delay_to_wait"
     fi
 
-    . "${SCRIPT_DIR}/../../../scripts/meo-hook-scripts/site-post-code-deploy.sh" "$SITE_GROUP" "$ENV" "$name" "$domain"
+    site_install_log="/shared/logs/post-code-deploy/${name}-install.log"
+    mkdir -p "$(dirname "$site_install_log")"
+    : > "$site_install_log"
+
+    set +e
+    {
+      "${SCRIPT_DIR}/../../../scripts/meo-hook-scripts/site-post-code-deploy.sh" "$SITE_GROUP" "$ENV" "$name" "$domain"
+      exit_code=$?
+      echo "Exit code: $exit_code"
+      exit "$exit_code"
+    } 2>&1 | tee -a "$site_install_log"
+    exit_code=${PIPESTATUS[0]}
+    set -e
+    exit "$exit_code"
 '
