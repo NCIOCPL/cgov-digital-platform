@@ -7,6 +7,8 @@
 # Exit immediately on error and enable verbose log output.
 set -e
 
+env
+
 # Map the script inputs to convenient names:
 # Acquia Hosting sitegroup (application) and environment.
 sitegroup="$1"

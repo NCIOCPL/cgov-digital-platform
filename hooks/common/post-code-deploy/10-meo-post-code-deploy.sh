@@ -9,6 +9,8 @@
 # Usage: post-code-deploy site-group env source-branch deployed-tag repo-url
 #
 
+env
+
 ## Only run on MEO environments (ncigovmeo). Exit if not MEO.
 if [ "$AH_SITE_GROUP" != "ncigovmeo" ]; then
   exit;
