@@ -9,6 +9,7 @@ use Drupal\Core\Access\AccessResult;
 use Drupal\Core\Cache\Cache;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Link;
+use Drupal\Core\Render\Markup;
 use Drupal\Core\Url;
 use Drupal\node\NodeInterface;
 use Drupal\taxonomy\Entity\Term;
@@ -158,6 +159,43 @@ function cgov_blog_views_pre_view(ViewExecutable $view, $display_id, array &$arg
     return;
   }
 
+  // Blog archive block behavior.
+  if ($view->id() === 'cgov_block_blog_archive' && $display_id === 'block_cgdp_archive') {
+    $node = \Drupal::routeMatch()->getParameter('node');
+    if (!$node instanceof NodeInterface) {
+      return;
+    }
+
+    $view->element['#cache']['contexts'] = Cache::mergeContexts(
+      $view->element['#cache']['contexts'] ?? [],
+      ['url.query_args:year']
+    );
+
+    // On blog post pages, use the referenced series node.
+    if ($node->bundle() === 'cgov_blog_post') {
+      if ($node->hasField('field_blog_series') && !$node->get('field_blog_series')->isEmpty()) {
+        $args[0] = (int) $node->get('field_blog_series')->target_id;
+      }
+    }
+
+    // On blog series pages, use the current node ID.
+    if ($node->bundle() === 'cgov_blog_series') {
+      $args[0] = (int) $node->id();
+    }
+
+    if (!empty($args[0]) && is_numeric($args[0])) {
+      $view->element['#cache']['tags'] = Cache::mergeTags(
+        $view->element['#cache']['tags'] ?? [],
+        ['node:' . (int) $args[0]]
+      );
+    }
+
+    // Keep archive block stable on filtered pages: always show all years.
+    $args[1] = 'all';
+
+    return;
+  }
+
   // Blog categories block behavior.
   if ($view->id() === 'cgov_block_blog_categories' && $display_id === 'block_cgdp_categories') {
     $node = \Drupal::routeMatch()->getParameter('node');
@@ -181,6 +219,40 @@ function cgov_blog_views_pre_view(ViewExecutable $view, $display_id, array &$arg
 }
 
 /**
+ * Implements hook_views_pre_render().
+ */
+function cgov_blog_views_pre_render(ViewExecutable $view) {
+  if ($view->id() !== 'cgov_block_blog_archive' || $view->current_display !== 'block_cgdp_archive') {
+    return;
+  }
+
+  $series_nid = $view->args[0] ?? NULL;
+  if (empty($series_nid) || !is_numeric($series_nid)) {
+    return;
+  }
+
+  $series_node = \Drupal::entityTypeManager()
+    ->getStorage('node')
+    ->load((int) $series_nid);
+
+  if (!$series_node instanceof NodeInterface || $series_node->bundle() !== 'cgov_blog_series') {
+    return;
+  }
+
+  if (!$series_node->hasField('field_archive_back_years') || $series_node->get('field_archive_back_years')->isEmpty()) {
+    return;
+  }
+
+  $archive_back_years = (int) $series_node->get('field_archive_back_years')->value;
+  if ($archive_back_years <= 0) {
+    return;
+  }
+
+  $view->result = array_slice($view->result, 0, $archive_back_years);
+  $view->total_rows = count($view->result);
+}
+
+/**
  * Check if the current form is in the draft or review state.
  */
 function _cgov_blog_is_selectable(array $form) {
@@ -193,6 +265,19 @@ function _cgov_blog_is_selectable(array $form) {
  * Preprocess function for block templates.
  */
 function cgov_blog_preprocess_block(&$variables) {
+  // Control blog archive accordion open state.
+  if (($variables['plugin_id'] ?? '') === 'views_block:cgov_block_blog_archive-block_cgdp_archive') {
+    $year = trim((string) \Drupal::request()->query->get('year', ''));
+    $variables['archive_is_open'] = ($year !== '' && is_numeric($year));
+
+    if (isset($variables['elements']['#cache'])) {
+      $variables['elements']['#cache']['contexts'] = Cache::mergeContexts(
+        $variables['elements']['#cache']['contexts'] ?? [],
+        ['url.query_args:year']
+      );
+    }
+  }
+
   /*
    * Make changes to the breadcrumb block. If the block is of type
    * 'cgov_breadcrumb'and the URL contains valid query parameters
@@ -365,12 +450,15 @@ function cgov_blog_node_delete($entity) {
 /**
  * Implements hook_preprocess_views_view_field().
  *
- * Rewrites taxonomy term links in the blog categories block to use the
- * pattern: /{site_section}/{blog_series:field_pretty_url}?topic={term:field_topic_pretty_url}.
+ * Rewrites links in blog blocks:
+ * - Blog categories: /{site_section}/{blog_series:field_pretty_url}?topic={term:field_topic_pretty_url}
+ * - Blog archive: /{site_section}/{blog_series:field_pretty_url}?year={yyyy}
  */
 function cgov_blog_preprocess_views_view_field(&$variables) {
   $view = $variables['view'];
-  if ($view->id() === 'cgov_block_blog_categories' || $view->current_display === 'block_cgdp_categories') {
+
+  // Handle blog categories block.
+  if ($view->id() === 'cgov_block_blog_categories' && $view->current_display === 'block_cgdp_categories') {
     if ($variables['field']->field !== 'name') {
       return;
     }
@@ -425,6 +513,72 @@ function cgov_blog_preprocess_views_view_field(&$variables) {
 
     $link = Link::fromTextAndUrl($term->label(), $url);
     $variables['output'] = $link->toRenderable();
+    return;
+  }
+
+  // Handle blog archive block.
+  if ($view->id() === 'cgov_block_blog_archive' && $view->current_display === 'block_cgdp_archive') {
+    if ($variables['field']->field !== 'field_date_posted') {
+      return;
+    }
+
+    $series_nid = $view->args[0] ?? NULL;
+    if (!$series_nid) {
+      return;
+    }
+
+    $langcode = \Drupal::languageManager()->getCurrentLanguage()->getId();
+    static $series_archive_node_cache = [];
+    $cache_key = $series_nid . ':' . $langcode;
+
+    if (isset($series_archive_node_cache[$cache_key])) {
+      $series_node = $series_archive_node_cache[$cache_key];
+    }
+    else {
+      $series_node = \Drupal::entityTypeManager()
+        ->getStorage('node')
+        ->load($series_nid);
+
+      if (!$series_node instanceof NodeInterface || $series_node->bundle() !== 'cgov_blog_series') {
+        return;
+      }
+      if ($series_node->hasTranslation($langcode)) {
+        $series_node = $series_node->getTranslation($langcode);
+      }
+      $series_archive_node_cache[$cache_key] = $series_node;
+    }
+
+    // Extract year and count from rendered output (format: "2025 (22)").
+    $year_text = trim((string) strip_tags((string) ($variables['output'] ?? '')));
+    if ($year_text === '') {
+      return;
+    }
+
+    if (preg_match('/^(\d{4})\s*\((\d+)\)$/', $year_text, $matches)) {
+      $year = $matches[1];
+      $count = $matches[2];
+      $url = $series_node->toUrl('canonical', ['query' => ['year' => $year]]);
+      $url->setOption('attributes', [
+        'class' => ['usa-link'],
+      ]);
+
+      $link_text = Markup::create($year . '<span class="cgdp-blog-archive__total">(' . $count . ')</span>');
+      $link = Link::fromTextAndUrl($link_text, $url);
+      $variables['output'] = $link->toRenderable();
+      return;
+    }
+
+    // Fallback: only a year was rendered.
+    if (preg_match('/(\d{4})/', $year_text, $matches)) {
+      $year = $matches[1];
+      $url = $series_node->toUrl('canonical', ['query' => ['year' => $year]]);
+      $url->setOption('attributes', [
+        'class' => ['usa-link'],
+      ]);
+
+      $link = Link::fromTextAndUrl($year, $url);
+      $variables['output'] = $link->toRenderable();
+    }
   }
 }
 
@@ -433,6 +587,12 @@ function cgov_blog_preprocess_views_view_field(&$variables) {
  */
 function cgov_blog_preprocess_views_view_unformatted(&$variables) {
   $view = $variables['view'];
+  if ($view->id() === 'cgov_block_blog_archive' && $view->current_display === 'block_cgdp_archive') {
+    $active_year = trim((string) \Drupal::request()->query->get('year', ''));
+    $variables['active_topic'] = $active_year;
+    $variables['active_year'] = $active_year;
+  }
+
   if ($view->id() !== 'cgov_block_blog_categories' || $view->current_display !== 'block_cgdp_categories') {
     return;
   }
