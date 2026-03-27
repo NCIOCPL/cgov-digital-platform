@@ -68,7 +68,9 @@ const embeddedCardLinkClickHandler = (evt: Event): void => {
  * Wire up component per cgdp requirements.
  */
 const initialize = (): void => {
-	const embedCardElements = document.querySelectorAll('.cgdp-embed-card');
+	const embedCardElements = document.querySelectorAll(
+		'.cgdp-embed-feature-card'
+	);
 	if (!embedCardElements.length) return;
 
 	embedCardElements.forEach((cardElement) => {

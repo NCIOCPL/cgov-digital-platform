@@ -1,0 +1,29 @@
+# .ddev/docker-compose.mounts.yaml
+###############################################################################
+## Normally ddev would have you make symlinks from the homeadditions folder
+## to your home directory files, but for sensitive files like these, it's
+## better to mount them directly from the host system so they are not stored
+## in the project at all. Also, the files get copied into the container when
+## using homeadditions, which means you must restart to update a token. By
+## mounting, the files are always current.
+##
+## We do need a pre-start hook to ensure that the files exist on the host
+## system before ddev starts, or ddev will create empty directories at those
+## mount points. DDev reads this file and generates volume mounts accordingly.
+###############################################################################
+services:
+  web:
+    volumes:
+      ## Npmrc for package installation.
+      ## https://docs.github.com/en/packages/working-with-a-github-packages-registry/working-with-the-npm-registry#authenticating-with-a-personal-access-token
+      ## You should only need read:packages if you are not someone
+      ## that works with it frequently enough to know what this
+      ## iss. (For read-only don't follow the npm login steps)
+      - ~/.npmrc:/home/${DDEV_USER}/.npmrc
+      ## Composer authentication for NCIOCPL package overrides.
+      ## This only needs a no-scope token. (Classic token with nothing
+      ## checked.) (The token needs to authorized for NCIOCPL SSO)
+      ## Authenticate using:
+      ## `composer config --global github-oauth.github.com <TOKEN>`
+      - ~/.composer/auth.json:/home/${DDEV_USER}/.composer/auth.json
+ 

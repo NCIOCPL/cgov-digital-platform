@@ -36,3 +36,16 @@ if ($settings_files = array_filter(
     require $settings_file;
   }
 }
+
+/*
+ * DDev wants to add the following to settings.php. We would like to leave that
+ * untouched, so we will add after all the other general config options. We do
+ * need to leave the settings.ddev.php in the folder with settings.php though,
+ * since ddev can make changes there.
+ */
+if (getenv('IS_DDEV_PROJECT') == 'true') {
+  $ddev_settings = __DIR__ . '/../default' . '/settings.ddev.php';
+  if (is_readable($ddev_settings)) {
+    require $ddev_settings;
+  }
+}

@@ -7,6 +7,13 @@
 	@include at-media('tablet') {
 		@include u-margin-y(4);
 	}
+
+	// Seprator line for when an article page has public use
+	// and or Sindication active on a page
+	.cgdp-article-footer__seprator {
+		@include u-border-top(1px, $theme-color-base);
+		@include u-margin-y(0);
+	}
 }
 
 // All direct children of article footer
@@ -25,21 +32,11 @@
 
 	// The sum of the spacing below should be 32px
 	// (the space between all components in the article footer)
-	// ** Public use is special because it has a border above it **
 
-	// The space between the element above public use
-	// and public use's top border (16px)
-	&:has(+ .cgdp-public-use) {
+	&:has(+ .cgdp-article-footer__seprator) {
 		@include u-margin-bottom(1.5);
 		@include at-media('tablet') {
 			@include u-margin-bottom(2);
-		}
-	}
-	// The space between public use text and its top border (16px)
-	&.cgdp-public-use {
-		@include u-margin-top(1.5);
-		@include at-media('tablet') {
-			@include u-margin-top(2);
 		}
 	}
 }

@@ -1,0 +1,33 @@
+@use 'uswds-core' as *;
+@use 'usa-list' as usalist;
+@use 'usa-link' as usalink;
+
+.cgdp-embed-az-list {
+
+	& > ul {
+		@extend .usa-list;
+		@extend .usa-list--unstyled;
+		@include u-margin-left(-1.5);
+		@include u-line-height($theme-body-font-family, $theme-body-line-height);
+
+		& > li {
+			@include u-display('inline-block');
+			@include u-margin-bottom(2);
+			@include u-margin-right(-1);
+			@include u-padding-left(1.5);
+			&:after {
+				@include u-margin-left(1);
+				@include u-color($theme-color-base-lightest);
+			}
+			&:not(:last-child) {
+				&:after {
+					@include u-color($theme-color-base-lightest);
+					content: '|';
+				}
+			}
+			& a {
+				@extend .usa-link;
+			}
+		}
+	}
+}

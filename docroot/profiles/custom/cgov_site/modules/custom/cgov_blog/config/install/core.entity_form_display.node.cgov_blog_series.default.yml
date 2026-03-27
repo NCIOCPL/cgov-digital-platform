@@ -4,15 +4,12 @@ dependencies:
   config:
     - entity_browser.browser.cgov_site_section_browser
     - field.field.node.cgov_blog_series.field_about_blog
-    - field.field.node.cgov_blog_series.field_allow_comments
     - field.field.node.cgov_blog_series.field_archive_back_years
     - field.field.node.cgov_blog_series.field_archive_group_by
     - field.field.node.cgov_blog_series.field_banner_image
-    - field.field.node.cgov_blog_series.field_blog_series_shortname
     - field.field.node.cgov_blog_series.field_browser_title
     - field.field.node.cgov_blog_series.field_card_title
     - field.field.node.cgov_blog_series.field_feature_card_description
-    - field.field.node.cgov_blog_series.field_featured_posts
     - field.field.node.cgov_blog_series.field_feedburner_url
     - field.field.node.cgov_blog_series.field_image_promotional
     - field.field.node.cgov_blog_series.field_list_description
@@ -20,7 +17,6 @@ dependencies:
     - field.field.node.cgov_blog_series.field_num_display_posts
     - field.field.node.cgov_blog_series.field_page_description
     - field.field.node.cgov_blog_series.field_pretty_url
-    - field.field.node.cgov_blog_series.field_public_use
     - field.field.node.cgov_blog_series.field_recommended_content_header
     - field.field.node.cgov_blog_series.field_search_engine_restrictions
     - field.field.node.cgov_blog_series.field_show_list_thumbnails
@@ -46,12 +42,6 @@ content:
       rows: 5
       placeholder: ''
     third_party_settings: {  }
-  field_allow_comments:
-    type: options_select
-    weight: 12
-    region: content
-    settings: {  }
-    third_party_settings: {  }
   field_archive_back_years:
     type: number
     weight: 25
@@ -72,14 +62,6 @@ content:
     settings:
       progress_indicator: throbber
       preview_image_style: thumbnail
-    third_party_settings: {  }
-  field_blog_series_shortname:
-    type: string_textfield
-    weight: 10
-    region: content
-    settings:
-      size: 60
-      placeholder: ''
     third_party_settings: {  }
   field_browser_title:
     type: string_textfield
@@ -104,20 +86,6 @@ content:
     settings:
       size: 60
       placeholder: ''
-    third_party_settings: {  }
-  field_featured_posts:
-    type: entity_browser_entity_reference
-    weight: 16
-    region: content
-    settings:
-      entity_browser: cgov_blog_browser
-      field_widget_display: label
-      field_widget_edit: false
-      field_widget_remove: true
-      field_widget_replace: false
-      open: false
-      field_widget_display_settings: {  }
-      selection_mode: selection_append
     third_party_settings: {  }
   field_feedburner_url:
     type: string_textfield
@@ -172,12 +140,6 @@ content:
     settings:
       size: 60
       placeholder: ''
-    third_party_settings: {  }
-  field_public_use:
-    type: options_select
-    weight: 20
-    region: content
-    settings: {  }
     third_party_settings: {  }
   field_recommended_content_header:
     type: string_textfield
@@ -234,9 +196,9 @@ content:
     third_party_settings: {  }
   simple_sitemap:
     weight: 10
+    region: content
     settings: {  }
     third_party_settings: {  }
-    region: content
   title:
     type: string_textfield
     weight: 1

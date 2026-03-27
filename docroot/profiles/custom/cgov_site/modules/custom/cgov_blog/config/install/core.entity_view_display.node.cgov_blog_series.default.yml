@@ -3,15 +3,12 @@ status: true
 dependencies:
   config:
     - field.field.node.cgov_blog_series.field_about_blog
-    - field.field.node.cgov_blog_series.field_allow_comments
     - field.field.node.cgov_blog_series.field_archive_back_years
     - field.field.node.cgov_blog_series.field_archive_group_by
     - field.field.node.cgov_blog_series.field_banner_image
-    - field.field.node.cgov_blog_series.field_blog_series_shortname
     - field.field.node.cgov_blog_series.field_browser_title
     - field.field.node.cgov_blog_series.field_card_title
     - field.field.node.cgov_blog_series.field_feature_card_description
-    - field.field.node.cgov_blog_series.field_featured_posts
     - field.field.node.cgov_blog_series.field_feedburner_url
     - field.field.node.cgov_blog_series.field_image_promotional
     - field.field.node.cgov_blog_series.field_list_description
@@ -19,7 +16,6 @@ dependencies:
     - field.field.node.cgov_blog_series.field_num_display_posts
     - field.field.node.cgov_blog_series.field_page_description
     - field.field.node.cgov_blog_series.field_pretty_url
-    - field.field.node.cgov_blog_series.field_public_use
     - field.field.node.cgov_blog_series.field_recommended_content_header
     - field.field.node.cgov_blog_series.field_search_engine_restrictions
     - field.field.node.cgov_blog_series.field_show_list_thumbnails
@@ -46,13 +42,6 @@ content:
     settings: {  }
     third_party_settings: {  }
     weight: 20
-    region: content
-  field_allow_comments:
-    type: list_default
-    label: hidden
-    settings: {  }
-    third_party_settings: {  }
-    weight: 19
     region: content
   field_archive_back_years:
     type: number_integer
@@ -81,14 +70,6 @@ content:
     third_party_settings: {  }
     weight: 13
     region: content
-  field_blog_series_shortname:
-    type: string
-    label: hidden
-    settings:
-      link_to_entity: false
-    third_party_settings: {  }
-    weight: 15
-    region: content
   field_browser_title:
     type: string
     label: hidden
@@ -112,14 +93,6 @@ content:
       link_to_entity: false
     third_party_settings: {  }
     weight: 7
-    region: content
-  field_featured_posts:
-    type: entity_reference_label
-    label: hidden
-    settings:
-      link: true
-    third_party_settings: {  }
-    weight: 22
     region: content
   field_feedburner_url:
     type: string
@@ -169,13 +142,6 @@ content:
       link_to_entity: false
     third_party_settings: {  }
     weight: 10
-    region: content
-  field_public_use:
-    type: list_default
-    label: hidden
-    settings: {  }
-    third_party_settings: {  }
-    weight: 11
     region: content
   field_recommended_content_header:
     type: string

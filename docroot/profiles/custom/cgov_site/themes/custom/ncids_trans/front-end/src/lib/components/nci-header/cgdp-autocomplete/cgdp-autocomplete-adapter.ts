@@ -1,30 +1,40 @@
-import { Axios } from 'axios';
 import { AutocompleteAdapter } from '@nciocpl/ncids-js/nci-autocomplete';
 
 class CgdpAutocompleteAdapter implements AutocompleteAdapter {
 	/**
-	 * Instance of an axios client.
+	 * The base URL that will be prepended to every request.
 	 */
-	client: Axios;
+	baseUrl: string;
 	collection: string;
 	lang: string;
 
 	/**
-	 * Creates an instance of a Cgdp Auto Complete Adapter
-	 * @param {Axios} client an axios client.
+	 * @param baseUrl    Base URL for the autosuggest API
+	 *                   (e.g. "https://webapis.cancer.gov/sitewidesearch/v1/").
+	 * @param collection Autosuggest collection name.
+	 * @param lang       Language code ("en"/"es").
 	 */
-	constructor(client: Axios, collection: string, lang: string) {
-		this.client = client;
+	constructor(baseUrl: string, collection: string, lang: string) {
+		this.baseUrl = baseUrl.endsWith('/') ? baseUrl.slice(0, -1) : baseUrl;
 		this.collection = collection;
 		this.lang = lang;
 	}
 
-	async getAutocompleteSuggestions(searchText: string): Promise<Array<string>> {
-		const path = `/Autosuggest/${this.collection}/${this.lang}/${searchText}`;
+	async getAutocompleteSuggestions(searchText: string): Promise<string[]> {
+		const path = `/Autosuggest/${this.collection}/${
+			this.lang
+		}/${encodeURIComponent(searchText)}`;
+
 		try {
-			// The sws autosuggest will always return a results object even if it is an empty array
-			const res = await this.client.get(path);
-			return res.data.results.map((item: { term: string }) => item.term);
+			const res = await fetch(`${this.baseUrl}${path}`);
+
+			if (!res.ok) {
+				throw new Error(`Request failed with status code ${res.status}`);
+			}
+
+			const data = await res.json();
+			// the API always returns a `results` object, even if empty
+			return data.results.map((item: { term: string }) => item.term);
 		} catch (error) {
 			console.error(`Autosuggest Fetch Error: ${error}`);
 			return [];

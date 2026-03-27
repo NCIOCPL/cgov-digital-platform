@@ -71,6 +71,17 @@ class JSOnlyAppModulePluginBuildTest extends BrowserTestBase {
   protected $defaultTheme = 'stable9';
 
   /**
+   * Known SIMPLETEST_BASE_URL strings.
+   *
+   * The baseHost can change depending on the SIMPLETEST_BASE_URL,
+   * and this impacts the base url of the config. So we can replace
+   * known hosts with a common value for testing.
+   *
+   * @var array
+   */
+  private static $replaceableHosts = ['http://127.0.0.1', 'http://web'];
+
+  /**
    * These are a set of default options for the plugin methods.
    *
    * Copy the array and make changes for your tests. This way you
@@ -365,9 +376,17 @@ class JSOnlyAppModulePluginBuildTest extends BrowserTestBase {
     $script_config_el = $assert->elementExists('css', 'script#' . $rootId . '-js-config');
     $actual_script_config = $script_config_el->getText();
     $full_expected_config = "(function() { window." . str_replace("-", "_", $rootId) . "_js_config = { " . $expected_config . "}; })();";
-    // So in pipelines the test URL will not be simpletest, so we need to
-    // replace it.
-    $this->assertEquals($full_expected_config, str_replace("http://127.0.0.1", "http://simpletest", $actual_script_config));
+
+    // The baseHost can change depending on the SIMPLETEST_BASE_URL,
+    // and this impacts the base url of the config. So we can replace
+    // known hosts with a common value for testing.
+    $this->assertEquals(
+      $full_expected_config,
+      str_replace(
+        self::$replaceableHosts,
+        'http://simpletest',
+        $actual_script_config)
+    );
 
     // Test that the app root exists.
     $assert->elementExists('css', 'div#' . $rootId);
