@@ -23,12 +23,15 @@ source "/mnt/www/html/$sitegroup.$env/scripts/blt/blt-env-helper.sh"
 
 # Set up BLT executable and environment mapping
 setup_blt_environment "$sitegroup" "$env"
+drush_executable="/mnt/www/html/$sitegroup.$env/vendor/bin/drush"
 
 echo "Running BLT deploy tasks on $sitename site in $env environment on the $sitegroup subscription."
 
 # Run blt drupal:update tasks. The trailing slash behind the domain works
 # around a bug in Drush < 9.6 for path based domains: "domain.com/subpath/" is
 # considered a valid URI but "domain.com/subpath" is not.
+$drush_executable cgov:destroy-caches --uri=$domain/ --verbose --no-interaction --no-ansi
+echo
 $blt_executable drupal:update --environment=$blt_environment --site=$sitename --define drush.uri=$domain/ --verbose --no-interaction -D drush.ansi=false
 $blt_executable cgov:meo:db-update --environment=$blt_environment --site=${sitename} --define drush.uri=$domain/ --verbose --no-interaction -D drush.ansi=false
 
