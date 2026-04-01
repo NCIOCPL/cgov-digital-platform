@@ -25,10 +25,11 @@ classDiagram
     }
 
     class CgovMigrateToNcidsCommands {
-        +migrateArticleToNcids() void
-        +processArticle(int nid, array context)$ void
-        -processNodeContent(Node node, object transformer)$ bool
-        +batchFinished(bool success, mixed results, mixed operations)$ void
+        +migrateBodyToNcids(string bundle) void
+        +processBodyNode(int nid, array context) void
+        -processTranslation(string langcode, Node node, NcidsHtmlTransformerManager transformerManager) bool
+        -processNode(Node node, object transformer) bool
+        +batchFinished(bool success, mixed results, mixed operations, float elapsed) void
     }
 
     class ServiceCollector {
@@ -203,14 +204,32 @@ The feature branch contains YAML files with already-transformed HTML. To properl
    ```
 
 5. **Run the Migration Script**
+
+   Using Event Pages as an Example:
    ```bash
-   drush cgov:migrate-article-to-ncids
+   drush cgov:migrate-body-to-ncids cgov_event
    ```
 
 This ensures you have:
 - ✅ Untransformed YAML content from develop
 - ✅ Your latest migration script code
 - ✅ Accurate test results
+
+### Migration Command
+
+The migration command updates the `body` field for all nodes in a specific content type bundle:
+
+```bash
+drush cgov:migrate-body-to-ncids <bundle>
+```
+
+Example:
+
+```bash
+drush cgov:migrate-body-to-ncids cgov_event
+```
+
+Before queuing nodes, the command verifies that the bundle exists and has a `body` field. During the batch it processes each translation, skips archived unpublished translations, reports non-published/non-archived translations as skipped, saves transformed body HTML as `ncids_full_html`, and logs batch results to `ncids_migration`.
 
 ### Running Unit Tests
 
