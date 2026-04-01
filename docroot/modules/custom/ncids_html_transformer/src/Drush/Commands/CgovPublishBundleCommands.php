@@ -105,7 +105,7 @@ class CgovPublishBundleCommands extends DrushCommands {
       $context['results']['skipped'] = 0;
       $context['results']['failed'] = 0;
       $context['results']['progress'] = 0;
-      $context['results']['process'] = 'Article migration batch completed';
+      $context['results']['process'] = "{$bundle} migration batch completed";
     }
 
     try {
