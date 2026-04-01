@@ -316,8 +316,8 @@ function cgov_core_update_10016() {
     // at the moment until they are on Acquia Cloud Next.
     $config->set('enabled', TRUE);
     $config->set('outage_action', 1);
-    $config->set('scan_mode', 1);
-    $config->set('verbosity', 0);
+    $config->set('scan_mode', 0);
+    $config->set('verbosity', 1);
     $config->set('mode_executable', [
       'executable_path' => '/usr/bin/clamscan',
       'executable_parameters' => '',
