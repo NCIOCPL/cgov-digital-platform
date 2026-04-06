@@ -8,10 +8,12 @@ enum FieldTypes {
 	Linkedin = 'LinkedIn Profile Handle',
 	/** field_twitter_handle */
 	Twitter = 'Twitter Profile Handle',
-	/** field_twitter_handle */
+	/** field_email_address */
 	Email = 'Email Address',
 	/** field_scientific_publications */
-	Publications = 'Publications............',
+	Publications = 'Publications',
+	/** field_website_url */
+	Website = 'Website',
 	/** Something was clicked we didn't expect. */
 	Other = 'Other',
 }
@@ -31,7 +33,7 @@ enum LinkTypes {
 }
 
 /**
- * Tracks a language toggle click.
+ * Tracks clicks on links within the profile box component.
  * @param profileBoxType 'Biography' or 'Cancer Center'
  * @param profileBoxTitle Heading of profile box
  * @param profileField Type of profile field
@@ -101,9 +103,6 @@ const getProfileBoxHeading = (profileBoxElement: HTMLElement): string => {
  * @param link Link clicked.
  */
 const getProfileBoxField = (link: HTMLAnchorElement): string => {
-	// what's the best way to grab the field name?
-	// const profileField = profileBoxElement.parentElement;
-
 	switch (true) {
 		case link.classList.contains('cgdp-profile-box__linkedin'):
 			return FieldTypes.Linkedin;
@@ -113,6 +112,8 @@ const getProfileBoxField = (link: HTMLAnchorElement): string => {
 			return FieldTypes.Email;
 		case link.classList.contains('cgdp-profile-box__publications'):
 			return FieldTypes.Publications;
+		case link.classList.contains('cgdp-profile-box__website-url'):
+			return FieldTypes.Website;
 		default:
 			return FieldTypes.Other;
 	}

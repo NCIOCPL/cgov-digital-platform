@@ -3,9 +3,13 @@
 <!-- ********************************* BEGIN Page Content ********************************** -->
 <article>
   <div class="cgdp-profile-box cgdp-profile-box--cancer-center">
-    <div class="grid-row grid-gap">
+    <div class="grid-row grid-gap-lg">
       <div class="tablet:grid-col-4">
-        {{ content.field_image_promotional }}
+        {% if content.field_image_promotional %}
+          {{ content.field_image_promotional }}
+        {% else %}
+          <img src="{{ get_placeholder_image('ncids_promo_1x1') }}" alt="No Image Placeholder">
+        {% endif %}
       </div>
 
       <div class="tablet:grid-col-8">

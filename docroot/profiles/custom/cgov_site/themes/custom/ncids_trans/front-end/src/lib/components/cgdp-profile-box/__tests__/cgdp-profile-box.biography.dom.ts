@@ -1,6 +1,6 @@
 export const cgdpProfileBoxBiographyDom = `
 <div class="cgdp-profile-box cgdp-profile-box--biography">
-	<div class="grid-row grid-gap">
+	<div class="grid-row grid-gap-lg">
 		<div class="tablet:grid-col-4">
 			<img loading="lazy" src="/" width="160" height="140" alt="Jennifer K. Loukissas, M.P.P.">
 		</div>
@@ -22,6 +22,7 @@ export const cgdpProfileBoxBiographyDom = `
           240-276-7367 <span class="contact-divider">|</span>
           <a class="cgdp-profile-box__email" href="mailto:loukissj@mail.nih.gov" tabindex="-1">loukissj@mail.nih.gov</a>
   			</div>
+  			<a href="https://dceg2.cancer.gov/cgi-bin-pubsearch/pubsearch/index.pl?EntryLimit=0&amp;branch=ALL&amp;searchTxtAuth=chanock%20s&amp;authorOption=exact&amp;pi=0010114442" class="cgdp-profile-box__publications no-exit-notification" tabindex="-1">Scientific Publications</a>
 				<div class="cgdp-profile-box__social-media">
 					<a class="cgdp-profile-box__twitter no-exit-notification usa-social-link" href="https://twitter.com/jloukissas" tabindex="-1">
 						<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="usa-icon" role="img" aria-labelledby="x-title">

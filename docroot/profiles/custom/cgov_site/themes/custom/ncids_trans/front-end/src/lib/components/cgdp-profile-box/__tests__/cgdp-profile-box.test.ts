@@ -43,13 +43,13 @@ describe('NCIDS Profile Box', () => {
 				componentType: 'Profile Box',
 				profileBoxType: 'Biography',
 				profileBoxTitle: 'Jennifer K. Loukissas, M.P.P.',
-				profileField: 'todo',
+				profileField: 'Email Address',
 				linkType: 'Email',
 			}
 		);
 	});
 
-	it('sends analytics for external links', async () => {
+	it('sends analytics for twitter links', async () => {
 		// Let's make a spy to ensure that trackOther is called correctly
 		const spy = jest.spyOn(eddlUtil, 'trackOther');
 
@@ -73,13 +73,73 @@ describe('NCIDS Profile Box', () => {
 				componentType: 'Profile Box',
 				profileBoxType: 'Biography',
 				profileBoxTitle: 'Jennifer K. Loukissas, M.P.P.',
-				profileField: 'todo',
+				profileField: 'Twitter Profile Handle',
 				linkType: 'External',
 			}
 		);
 	});
 
-	it('sends analytics for internal links', async () => {
+	it('sends analytics for linkedin links', async () => {
+		// Let's make a spy to ensure that trackOther is called correctly
+		const spy = jest.spyOn(eddlUtil, 'trackOther');
+
+		// Inject the HTML into the dom.
+		document.body.insertAdjacentHTML('beforeend', cgdpProfileBoxBiographyDom);
+
+		// Create the JS
+		cgdpProfileBox();
+
+		// Get links
+		const link = screen.getByText('Connect with me on LinkedIn');
+
+		// Click the link
+		fireEvent.click(link);
+
+		expect(spy).toHaveBeenCalledWith(
+			'Inner:ProfileBox:LinkClick',
+			'Inner:ProfileBox:LinkClick',
+			{
+				location: 'Body',
+				componentType: 'Profile Box',
+				profileBoxType: 'Biography',
+				profileBoxTitle: 'Jennifer K. Loukissas, M.P.P.',
+				profileField: 'LinkedIn Profile Handle',
+				linkType: 'External',
+			}
+		);
+	});
+
+	it('sends analytics for publications links', async () => {
+		// Let's make a spy to ensure that trackOther is called correctly
+		const spy = jest.spyOn(eddlUtil, 'trackOther');
+
+		// Inject the HTML into the dom.
+		document.body.insertAdjacentHTML('beforeend', cgdpProfileBoxBiographyDom);
+
+		// Create the JS
+		cgdpProfileBox();
+
+		// Get links
+		const link = screen.getByText('Scientific Publications');
+
+		// Click the link
+		fireEvent.click(link);
+
+		expect(spy).toHaveBeenCalledWith(
+			'Inner:ProfileBox:LinkClick',
+			'Inner:ProfileBox:LinkClick',
+			{
+				location: 'Body',
+				componentType: 'Profile Box',
+				profileBoxType: 'Biography',
+				profileBoxTitle: 'Jennifer K. Loukissas, M.P.P.',
+				profileField: 'Publications',
+				linkType: 'External',
+			}
+		);
+	});
+
+	it('sends analytics for website links', async () => {
 		// Let's make a spy to ensure that trackOther is called correctly
 		const spy = jest.spyOn(eddlUtil, 'trackOther');
 
@@ -106,7 +166,7 @@ describe('NCIDS Profile Box', () => {
 				componentType: 'Profile Box',
 				profileBoxType: 'Cancer Center',
 				profileBoxTitle: 'Duke Cancer Center',
-				profileField: 'todo',
+				profileField: 'Website',
 				linkType: 'Internal',
 			}
 		);
@@ -139,7 +199,7 @@ describe('NCIDS Profile Box', () => {
 				componentType: 'Profile Box',
 				profileBoxType: 'Cancer Center',
 				profileBoxTitle: 'Duke Cancer Center',
-				profileField: 'todo',
+				profileField: 'Other',
 				linkType: 'Other',
 			}
 		);
@@ -174,7 +234,7 @@ describe('NCIDS Profile Box', () => {
 				componentType: 'Profile Box',
 				profileBoxType: 'Cancer Center',
 				profileBoxTitle: '_ERROR_',
-				profileField: 'todo',
+				profileField: 'Other',
 				linkType: 'Other',
 			}
 		);

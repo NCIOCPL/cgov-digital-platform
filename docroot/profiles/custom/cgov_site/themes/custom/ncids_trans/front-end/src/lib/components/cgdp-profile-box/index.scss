@@ -1,10 +1,15 @@
 @forward 'usa-icon';
+@forward 'usa-link';
 @use 'uswds-core' as *;
 
 .cgdp-profile-box {
 	@include u-shadow(2);
 	@include u-radius('md');
-	@include u-padding(3);
+	padding: units(2.5) units(4);
+
+	@include at-media('tablet') {
+		padding: units(2) units(3);
+	}
 
 	img {
 		@include u-margin-bottom(2);
