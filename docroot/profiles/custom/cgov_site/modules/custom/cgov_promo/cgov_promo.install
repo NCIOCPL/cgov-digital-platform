@@ -10,3 +10,13 @@
  */
 function cgov_promo_update_10003() {
 }
+
+/**
+ * Update hook to add the new view mode for the recommended content group card.
+ */
+function cgov_promo_update_10004() {
+  $features_mgr = \Drupal::service('features.manager');
+  $assigner = \Drupal::service('features_assigner');
+  $assigner->assignConfigPackages();
+  $features_mgr->import(['cgov_promo']);
+}

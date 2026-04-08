@@ -129,12 +129,12 @@ class BlogPager extends BlockBase implements ContainerFactoryPluginInterface {
    *   An array of blog links or an empty array.
    */
   private function getBlogPostPagerLinks($cid, $content_type) {
-    // Get available Blog Post nids.
-    $blog_post_nids = $this->blogManager->getNodesByPostedDateAsc($content_type);
-
     // Create series filter.
     $filter_node = $this->blogManager->getNodeFromNid($cid);
     $filter_series = $filter_node->field_blog_series->target_id;
+
+    // Get available Blog Post nids.
+    $blog_post_nids = $this->blogManager->getNodesByPostedDateAsc($content_type, $filter_series);
 
     // Initialize the links list in case there aren't any published posts.
     $blog_links = [];
@@ -142,41 +142,13 @@ class BlogPager extends BlockBase implements ContainerFactoryPluginInterface {
     // Build a collection of blog link objects.
     foreach ($blog_post_nids as $nid) {
       $node = $this->blogManager->getNodeFromNid($nid);
-      $node_series = $node->field_blog_series->target_id;
-
-      if ($node_series == $filter_series) {
-        $blog_links[] = [
-          'nid' => $nid,
-          'date' => $node->field_date_posted->value,
-          'title' => $node->title->value,
-        ];
-      }
+      $blog_links[] = [
+        'nid' => $nid,
+        'title' => $node->title->value,
+      ];
     }
 
-    // Run through sorting function to handle date wierdness.
-    $blog_links = $this->sortByField($blog_links, 'date');
     return $blog_links;
-  }
-
-  /**
-   * Sort links by a given field.
-   *
-   * @param array $links
-   *   Array of link objects.
-   * @param string $field
-   *   Field to sort by.
-   *
-   * @return array
-   *   A sorted array of $links by $field.
-   */
-  private function sortByField(array $links, $field) {
-    if (count($links) > 1) {
-      // Usort callback function.
-      usort($links, function ($a, $b) use ($field) {
-        return strcmp($a[$field], $b[$field]);
-      });
-    }
-    return $links;
   }
 
   /**

@@ -102,11 +102,13 @@ interface BlogManagerInterface {
    *
    * @param string $type
    *   Content type or bundle.
+   * @param int $series_id
+   *   The blog series id.
    *
    * @return string[]
    *   An array of ids.
    */
-  public function getNodesByPostedDateAsc($type);
+  public function getNodesByPostedDateAsc($type, $series_id);
 
   /**
    * Return the title for blog series.
