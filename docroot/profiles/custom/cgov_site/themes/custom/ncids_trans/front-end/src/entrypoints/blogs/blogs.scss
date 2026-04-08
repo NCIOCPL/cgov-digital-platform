@@ -3,8 +3,20 @@
 @forward '../cgdp-required';
 
 @forward '../../lib/components/cgdp-blog-archive/';
+@forward '../../lib/components/cgdp-article-footer/';
+@forward '../../lib/components/cgdp-recommended-content/';
+@forward '../../lib/components/cgdp-blog-post-pager/';
+@forward '../../lib/components/cgdp-public-use';
+@forward '../../lib/components/cgdp-article-footer-citation/';
+@forward '../../lib/components/cgdp-related-resources/';
 @forward '../../lib/components/cgdp-blog-categories/';
 @forward '../../lib/components/wysiwyg/common/cgdp-embed-image/';
 @forward '../../lib/components/wysiwyg/common/cgdp-embed-infographic/';
 @forward '../../lib/components/wysiwyg/common/cgdp-embed-video';
 @forward '../../lib/components/wysiwyg/common/cgdp-embed-card/';
+
+@use 'uswds-core' as *;
+
+.cgdp-article-footer-citation {
+	@include u-margin-bottom(0);
+}

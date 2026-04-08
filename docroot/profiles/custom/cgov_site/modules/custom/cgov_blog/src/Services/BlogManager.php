@@ -240,12 +240,13 @@ class BlogManager implements BlogManagerInterface {
   /**
    * {@inheritdoc}
    */
-  public function getNodesByPostedDateAsc($type) {
+  public function getNodesByPostedDateAsc($type, $series_id) {
     $node_storage = $this->entityTypeManager->getStorage('node');
     $nids = $node_storage->getQuery()
       ->accessCheck(FALSE)
       ->condition('status', 1)
       ->condition('type', $type)
+      ->condition('field_blog_series', $series_id)
       ->condition('langcode', $this->getCurrentEntity()->language()->getId())
       ->sort('field_date_posted')
       ->execute();

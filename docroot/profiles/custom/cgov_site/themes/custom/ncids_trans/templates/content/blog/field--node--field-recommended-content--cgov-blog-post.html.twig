@@ -1,0 +1,20 @@
+{% if items|length %}
+  {% set blog_post = element['#object'] %}
+  {% set series = blog_post.field_blog_series.entity %}
+  {% if series and element['#language'] and series.hasTranslation(element['#language']) %}
+    {% set series = series.getTranslation(element['#language']) %}
+  {% endif %}
+
+  <div class="cgdp-recommended-content cgdp-feature-card-row">
+    {% if series and series.field_recommended_content_header.value %}
+      <h2 class="cgdp-feature-card-row__heading">
+        {{ series.field_recommended_content_header.value }}
+      </h2>
+    {% endif %}
+    <ul class="nci-card-group">
+      {% for item in items %}
+        {{- item.content -}}
+      {% endfor %}
+    </ul>
+  </div>
+{% endif %}

@@ -1,0 +1,9 @@
+@forward '../cgdp-feature-card-row/';
+@use 'uswds-core' as *;
+
+.cgdp-recommended-content {
+	@include u-display('none');
+	@include at-media('desktop') {
+		@include u-display('block');
+	}
+}

@@ -1,18 +1,23 @@
 {% set catch_cache = content|render %}
-<div id='cgov-blog-post-pagination' class='clearfix'>
+{% set has_prev = content['#cgov_block_data'].prev_nid is not empty %}
+{% set has_next = content['#cgov_block_data'].next_nid is not empty %}
 
-  {% if content['#cgov_block_data'].prev_nid is not empty %}
-    <div class='blog-post-older'>
-      <a href="{{ content['#cgov_block_data'].prev_link }}">&lt; {% trans %}Older Post{% endtrans %}</a>
+{% if has_prev or has_next %}
+<div class="cgdp-blog-post-pager">
+
+  {% if has_prev %}
+    <div class='cgdp-blog-post-pager--older'>
+      <a class="usa-link" href="{{ content['#cgov_block_data'].prev_link }}">&lt; {% trans %}Older Post{% endtrans %}</a>
       <p><i>{{ content['#cgov_block_data'].prev_title }}</i></p>
     </div>
   {% endif %}
 
-  {% if content['#cgov_block_data'].next_nid is not empty %}
-    <div class='blog-post-newer'>
-      <a href="{{ content['#cgov_block_data'].next_link }}">{% trans %}Newer Post{% endtrans %} &gt;</a>
+  {% if has_next %}
+    <div class='cgdp-blog-post-pager--newer'>
+      <a class="usa-link" href="{{ content['#cgov_block_data'].next_link }}">{% trans %}Newer Post{% endtrans %} &gt;</a>
       <p><i>{{ content['#cgov_block_data'].next_title }}</i></p>
     </div>
   {% endif %}
 
 </div>
+{% endif %}
