@@ -1,10 +1,8 @@
 {{ attach_library('ncids_trans/event') }}
 {% import '@ncids_trans/content_page_macros.twig' as contentPageMacros %}
 <!-- ********************************* BEGIN Page Content ********************************** -->
-{% set eventStart = content.field_event_start_date[0]['#attributes']["datetime"] %}
-{% set eventEnd = content.field_event_end_date[0]['#attributes']["datetime"] %}
-{% set isValidEventDate = eventStart|date('Y-m-d') < eventEnd|date('Y-m-d') %}
-{% set isMultiYearEvent = eventStart|date('Y') <  eventEnd|date('Y') %}
+{% set isValidEventDate = event_start_date < event_end_date %}
+{% set isMultiYearEvent = event_start_year < event_end_year %}
 
 <article>
 	<h1 class="nci-heading-h1">{{ node.label }}</h1>
@@ -15,21 +13,21 @@
 			<p class="cgdp-event-info__date-time">
 				{% if isValidEventDate %}
 					{% if isMultiYearEvent %}
-						{{ eventStart|date('F j, Y') }}
+						{{ event_start_long }}
 						&ndash;
-						{{ eventEnd|date('F j, Y') }}
+						{{ event_end_long }}
 					{% else %}
-						{{ eventStart|date('F j') }}
+						{{ event_start_short }}
 						&ndash;
-						{{ eventEnd|date('F j, Y') }}
+						{{ event_end_long }}
 					{% endif %}
 				{% else %}
-					{{ eventStart|date('F j, Y') }}
+					{{ event_start_long }}
 					{% if content.field_all_day_event[0]['#markup'] == "Off" %}
 						&vert;
-						{{ eventStart|date('g:i A') }}
+						{{ event_start_time }}
 						&ndash;
-						{{ eventEnd|date('g:i A') }}
+						{{ event_end_time }}
 					{% endif %}
 				{% endif %}
 			</p>
