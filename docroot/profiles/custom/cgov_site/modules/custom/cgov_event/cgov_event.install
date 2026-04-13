@@ -141,3 +141,25 @@ function cgov_event_update_10001() {
   }
 
 }
+
+/**
+ * Add cgov_event date formats for localized date display.
+ */
+function cgov_event_update_10002() {
+  $formats = [
+    'cgov_event_date_long' => ['label' => 'Cgov Event Date Long', 'pattern' => 'F j, Y'],
+    'cgov_event_date_short' => ['label' => 'Cgov Event Date Short', 'pattern' => 'F j'],
+    'cgov_event_time' => ['label' => 'Cgov Event Time', 'pattern' => 'g:i A'],
+  ];
+
+  $storage = \Drupal::entityTypeManager()->getStorage('date_format');
+  foreach ($formats as $id => $data) {
+    if (!$storage->load($id)) {
+      $storage->create([
+        'id' => $id,
+        'label' => $data['label'],
+        'pattern' => $data['pattern'],
+      ])->save();
+    }
+  }
+}
