@@ -7,6 +7,7 @@
  * This is copied over from cgov_common.
  */
 
+use Drupal\Core\Datetime\DrupalDateTime;
 use Drupal\Core\Language\LanguageInterface;
 use Drupal\media\Entity\Media;
 use Drupal\node\Entity\Node;
@@ -230,6 +231,34 @@ function ncids_trans_preprocess_node(&$variables) {
   catch (Exception $e) {
     // If the database is not yet available, set the default value.
     $variables['is_front'] = FALSE;
+  }
+
+  // Pre-format event dates using the current interface language so that month
+  // names are localized. Twig's |date() filter always outputs English.
+  if ($variables['node']->getType() === 'cgov_event') {
+    $node = $variables['node'];
+    $langcode = \Drupal::languageManager()->getCurrentLanguage()->getId();
+    /** @var \Drupal\Core\Datetime\DateFormatterInterface $dateFormatter */
+    $dateFormatter = \Drupal::service('date.formatter');
+
+    $startValue = $node->get('field_event_start_date')->value;
+    $endValue = $node->get('field_event_end_date')->value;
+
+    if ($startValue && $endValue) {
+      $startTs = (new DrupalDateTime($startValue, 'UTC'))->getTimestamp();
+      $endTs = (new DrupalDateTime($endValue, 'UTC'))->getTimestamp();
+
+      $variables['event_start_long'] = $dateFormatter->format($startTs, 'cgov_event_date_long', '', NULL, $langcode);
+      $variables['event_start_short'] = $dateFormatter->format($startTs, 'cgov_event_date_short', '', NULL, $langcode);
+      $variables['event_start_time'] = $dateFormatter->format($startTs, 'cgov_event_time', '', NULL, $langcode);
+      $variables['event_start_date'] = $dateFormatter->format($startTs, 'custom', 'Y-m-d', NULL, $langcode);
+      $variables['event_start_year'] = $dateFormatter->format($startTs, 'custom', 'Y', NULL, $langcode);
+      $variables['event_end_long'] = $dateFormatter->format($endTs, 'cgov_event_date_long', '', NULL, $langcode);
+      $variables['event_end_time'] = $dateFormatter->format($endTs, 'cgov_event_time', '', NULL, $langcode);
+      $variables['event_end_date'] = $dateFormatter->format($endTs, 'custom', 'Y-m-d', NULL, $langcode);
+      $variables['event_end_year'] = $dateFormatter->format($endTs, 'custom', 'Y', NULL, $langcode);
+      $variables['is_all_day_event'] = (bool) $node->get('field_all_day_event')->value;
+    }
   }
 }
 
