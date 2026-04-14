@@ -2,18 +2,9 @@
 
 <!-- ********************************* BEGIN Series Page Full Content ********************************** -->
 <article>
-  {% if not (get.year or get.topic) %}
-    {% if (content.field_banner_image[0]) %}
-      <div id="cgvBodyHeader" class="row banner-slot">
-        <div class="slot-item only-SI large-12 columns body-banner">
-          <a name="NCI+Update+Blog+Banner"></a>
-          <div class="blog body-banner">{{ content.field_banner_image }}</div>
-        </div>
-      </div>
-    {% endif %}
-  {% endif %}
+  {{ content.field_banner_image }}
 
-  <div class="resize-content">
+  <div class="cgdpl resize-content">
     {{ blogMacros.drawBlogSeriesTitle(get.month, get.year, get.topic, node) }}
     <div id="nvcgSubTitle">
       {% if node.field_feedburner_url.value|length > 0 %}
