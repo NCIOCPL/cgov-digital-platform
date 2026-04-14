@@ -3,17 +3,11 @@
 
 <!-- ********************************* BEGIN Blog Post Page Full Content ********************************** -->
 <article>
-  <div class="cgdpl resize-content">
-    <h1>
-      {{ node.label }}
-    </h1>
-    <div id="nvcgSubTitle">
-      {% if series.field_feedburner_url.value %}
-        <div class="subscribeRSS">
-          <a class="blogRSS" href="{{ series.field_feedburner_url.value }}"><span>{% trans %}Subscribe{% endtrans %}</span></a>
-        </div>
-      {% endif %}
-    </div>
+  <h1 class="nci-heading-h1">
+    {{ node.label }}
+  </h1>
+  {{ blogMacros.drawSubscribeLink(series) }}
+  <div class="resize-content cgdpl">
     <div id="cgvBody" class="cgvblogpost">
       <p class="blog-post-publishing-info">
         {{ blogMacros.getByline(content) }}
