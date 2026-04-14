@@ -256,13 +256,12 @@ class BlogManager implements BlogManagerInterface {
   /**
    * {@inheritdoc}
    */
-  public function getBlogSeriesTitle($month, $year, $includeTopic, $blog_series) {
+  public function getBlogSeriesTitle($year, $includeTopic, $blog_series) {
 
     $title = "";
     // If url has topic or year add them to the title.
     if ($includeTopic or $year) {
       if ($year) {
-        $title .= $month ? date('F', mktime(0, 0, 0, $month, 10)) : '';
         $title .= ' ' . $year . ' - ';
         $title .= ($blog_series->field_card_title->value) ? $blog_series->field_card_title->value : $blog_series->field_browser_title->value;
       }

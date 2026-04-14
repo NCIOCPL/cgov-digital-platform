@@ -43,12 +43,10 @@
  # @param string topic
  # @param object node
  #}
-{% macro drawBlogSeriesTitle(month, year, topic, node) %}
-  <h1>
-    <span>
-      {# Draw card title if a topic or archive page. #}
-      {{ get_blog_series_title(month, year, topic, node) }}
-    </span>
+{% macro drawBlogSeriesTitle(year, topic, node) %}
+  <h1 class="nci-heading-h1">
+    {# Draw card title if a topic or archive page. #}
+    {{ get_blog_series_title(year, topic, node) }}
   </h1>
 {% endmacro %}
 
@@ -81,5 +79,18 @@
     {% trans with {'context':'Long month name'} %}February{% endtrans %}
   {% else %}
     {% trans with {'context':'Long month name'} %}January{% endtrans %}
+  {% endif %}
+{% endmacro %}
+
+{#
+# Render the subscribe link.
+# @param series
+#}
+{% macro drawSubscribeLink(series) %}
+  {% set feedburner_url = series.field_feedburner_url.value %}
+  {% if feedburner_url and feedburner_url matches '/^https?:\\/\\//i' %}
+    <div class="cgdp-blog-subscribe-link">
+      <a class="usa-link" href="{{ feedburner_url|e('html_attr') }}"><span>{% trans %}Subscribe{% endtrans %}</span></a>
+    </div>
   {% endif %}
 {% endmacro %}
