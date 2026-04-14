@@ -602,3 +602,21 @@ function cgov_blog_preprocess_views_view_unformatted(&$variables) {
   // Will be used in views-view-unformatted--cgov-block-blog-categories--block-cgdp-categories.html.twig.
   $variables['active_topic'] = trim((string) \Drupal::request()->query->get('topic', ''));
 }
+
+/**
+ * Implements hook_preprocess_node() for cgov_blog_series nodes.
+ */
+function cgov_blog_preprocess_field(&$variables) {
+  if (
+    $variables['field_name'] !== 'field_banner_image' ||
+    $variables['entity_type'] !== 'node' ||
+    $variables['element']['#bundle'] !== 'cgov_blog_series'
+  ) {
+    return;
+  }
+
+  $queryParameters = \Drupal::request()->query;
+  foreach (['topic', 'year'] as $param) {
+    $variables['get'][$param] = $queryParameters->get($param, '');
+  }
+}
