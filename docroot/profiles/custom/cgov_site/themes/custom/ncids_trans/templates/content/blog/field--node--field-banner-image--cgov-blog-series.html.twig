@@ -1,0 +1,7 @@
+{% if not (get.year or get.topic) and items|length %}
+  {% for item in items %}
+    <div class="cgdp-slim-hero">
+        {{ item.content }}
+    </div>
+  {% endfor %}
+{% endif %}
