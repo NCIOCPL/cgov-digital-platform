@@ -113,8 +113,6 @@ interface BlogManagerInterface {
   /**
    * Return the title for blog series.
    *
-   * @param string $month
-   *   Month value.
    * @param string $year
    *   Year value.
    * @param bool $includeTopic
@@ -125,6 +123,6 @@ interface BlogManagerInterface {
    * @return string
    *   Blog series title.
    */
-  public function getBlogSeriesTitle($month, $year, $includeTopic, $blog_series);
+  public function getBlogSeriesTitle($year, $includeTopic, $blog_series);
 
 }
