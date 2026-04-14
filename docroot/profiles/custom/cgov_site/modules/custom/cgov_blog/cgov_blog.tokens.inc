@@ -117,17 +117,13 @@ function _get_blog_post_path($node) {
 function _get_blog_series_title($node) {
   $hasTopic = \Drupal::request()->query->get('topic') != NULL;
   $year = \Drupal::request()->query->get('year');
-  $month = \Drupal::request()->query->get('month');
 
   // The only allowed characters in dates are numbers. Once we eliminate
   // everything else, there's no need to do further checks.
   if ($year != NULL && (!is_numeric($year) || $year < 0)) {
     throw new BadRequestHttpException('year is invalid');
   }
-  if ($month != NULL && (!is_numeric($month) || $month < 1 || $month > 12)) {
-    throw new BadRequestHttpException('month is invalid');
-  }
 
   $blogManager = \Drupal::service('cgov_blog.blog_manager');
-  return $blogManager->getBlogSeriesTitle($month, $year, $hasTopic, $node);
+  return $blogManager->getBlogSeriesTitle($year, $hasTopic, $node);
 }
