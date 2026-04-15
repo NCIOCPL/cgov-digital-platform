@@ -4,22 +4,13 @@
 <article>
   {{ blogMacros.drawBlogSeriesTitle(get.year, get.topic, node) }}
   {{ blogMacros.drawSubscribeLink(node) }}
+  {{ content.field_about_blog }}
   {{ content.field_banner_image }}
-
+  {% if (get.topic) %}
+    {{ drupal_block('cgov_blog_topic_intro', {label: get.topic}) }}
+  {% endif %}
   <div class="resize-content">
     <div id="cgvBody" class="{{ get.topic ? 'cgvtopicpage' : 'cgvblogseries' }} cgdpl">
-      <div class="slot-item first-SI">
-        {% if not (get.topic or get.year) %}
-          <div>
-            {{ content.field_about_blog }}
-          </div>
-          {{ content.field_image_article }}
-          {{ content.field_intro_text }}
-        {% endif %}
-        {% if (get.topic) %}
-          {{ drupal_block('cgov_blog_topic_intro', {label: get.topic}) }}
-        {% endif %}
-	    </div>
       <div class="slot-item last-SI">
         <div class="dynamic list has-images">
           <ul>

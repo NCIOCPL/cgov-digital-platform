@@ -620,3 +620,18 @@ function cgov_blog_preprocess_field(&$variables) {
     $variables['get'][$param] = $queryParameters->get($param, '');
   }
 }
+
+/**
+ * Implements hook_preprocess_node() for cgov_blog_series nodes.
+ */
+function cgov_blog_preprocess_node(&$variables) {
+  $node = $variables['node'] ?? $variables['elements']['#node'] ?? NULL;
+  if (!$node instanceof NodeInterface || $node->bundle() !== 'cgov_blog_series') {
+    return;
+  }
+
+  $queryParameters = \Drupal::request()->query;
+  foreach (['topic', 'year'] as $param) {
+    $variables['get'][$param] = $queryParameters->get($param, '');
+  }
+}
