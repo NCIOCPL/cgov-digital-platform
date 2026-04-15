@@ -7,12 +7,14 @@
     {{ node.label }}
   </h1>
   {{ blogMacros.drawSubscribeLink(series) }}
+  <div class="usa-prose">
+    <p>
+      {{ blogMacros.getByline(content) }}
+    </p>
+  </div>
+  {{ content.field_image_article }}
   <div class="resize-content">
     <div id="cgvBody" class="cgdpl cgvblogpost">
-      <p class="blog-post-publishing-info">
-        {{ blogMacros.getByline(content) }}
-      </p>
-      {{ content.field_image_article }}
       {{ content.field_intro_text }}
       {{ content.body }}
     </div>
