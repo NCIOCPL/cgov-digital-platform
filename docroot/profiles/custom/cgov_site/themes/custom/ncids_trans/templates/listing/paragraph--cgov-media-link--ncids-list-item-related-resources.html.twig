@@ -22,10 +22,11 @@
     {% set file_type = content.media_link_file_type['#plain_text']%}
     {% set file_size = content.media_link_file_size['#plain_text'] %}
     {% set file_ext = content.media_link_file_extension['#plain_text'] %}
-    {{ listItemMacros.ncids_list_item_related_resource(title, url, paragraph.bundle, media_type, file_type, file_size, file_ext) }}
+    {% set external_link_display = paragraph.field_external_link_display.value %}
+    {{ listItemMacros.ncids_list_item_related_resource(title, url, paragraph.bundle, external_link_display, media_type, file_type, file_size, file_ext) }}
 
   {% else %}
-    {{ listItemMacros.ncids_list_item_related_resource(title, url, paragraph.bundle, media_type) }}
+    {{ listItemMacros.ncids_list_item_related_resource(title, url, paragraph.bundle, external_link_display, media_type) }}
   {% endif %}
 
 {% endif %}
