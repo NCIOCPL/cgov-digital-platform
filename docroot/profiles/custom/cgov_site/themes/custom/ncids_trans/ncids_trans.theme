@@ -206,21 +206,6 @@ function ncids_trans_preprocess_html(&$variables) {
  * Implements hook_preprocess_node().
  */
 function ncids_trans_preprocess_node(&$variables) {
-  // URL query parameters.
-  $params = [
-    'month',
-    'topic',
-    'year',
-  ];
-
-  // Actual query parameters.
-  $queryParameters = \Drupal::request()->query;
-
-  // Add any parameter values to the $variables get property.
-  foreach ($params as $param) {
-    $variables['get'][$param] = $queryParameters->get($param, '');
-  }
-
   // is_front is normally only available in page templates.
   // This is to subvert that expectation.
   // (NOTE: An exception might be thrown.)
