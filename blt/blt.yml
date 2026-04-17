@@ -48,6 +48,8 @@ modules:
         cgov_caching_cdn,
         acquia_purge,
         akamai,
+        cgov_antivirus,
+        clamav,
       ]
   ci:
     enable:
@@ -59,7 +61,9 @@ modules:
         acquia_connector,
         shield,
         cgov_https_config,
-        akamai
+        akamai,
+        cgov_antivirus,
+        clamav,
       ]
   ode:
     enable:
@@ -75,7 +79,9 @@ modules:
         cgov_syslog,
         syslog,
         cgov_caching_cdn,
-        akamai
+        akamai,
+        cgov_antivirus,
+        clamav,
       ]
   dev:
     enable:
@@ -91,7 +97,9 @@ modules:
         cgov_syslog,
         syslog,
         cgov_caching_cdn,
-        akamai
+        akamai,
+        cgov_antivirus,
+        clamav,
       ]
   int:
     enable:
@@ -106,7 +114,9 @@ modules:
       [
         cgov_syslog,
         syslog,
-        cgov_caching_nocdn
+        cgov_caching_nocdn,
+        cgov_antivirus,
+        clamav,
       ]
   test:
     enable:
@@ -123,7 +133,9 @@ modules:
         syslog,
         devel,
         cgov_caching_cdn,
-        akamai
+        akamai,
+        cgov_antivirus,
+        clamav,
       ]
   ## We have no prod in ACE.
   meodev:
@@ -136,6 +148,7 @@ modules:
         cgov_https_config,
         cgov_caching_cdn,
         akamai,
+        cgov_antivirus,
       ]
     uninstall:
       [
@@ -152,6 +165,7 @@ modules:
         cgov_https_config,
         cgov_caching_cdn,
         akamai,
+        cgov_antivirus,
       ]
     uninstall:
       [
@@ -167,6 +181,7 @@ modules:
         cgov_https_config,
         cgov_caching_cdn,
         akamai,
+        cgov_antivirus,
       ]
     uninstall:
       [
