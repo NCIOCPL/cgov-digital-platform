@@ -10,9 +10,8 @@
 
 	// Seprator line for when an article page has public use
 	// and or Sindication active on a page
-	.cgdp-article-footer__seprator {
+	.cgdp-article-footer__separator {
 		@include u-border-top(1px, $theme-color-base);
-		@include u-margin-y(0);
 	}
 }
 
@@ -28,15 +27,5 @@
 	}
 	&:last-child {
 		@include u-margin-bottom(0);
-	}
-
-	// The sum of the spacing below should be 32px
-	// (the space between all components in the article footer)
-
-	&:has(+ .cgdp-article-footer__seprator) {
-		@include u-margin-bottom(1.5);
-		@include at-media('tablet') {
-			@include u-margin-bottom(2);
-		}
 	}
 }
