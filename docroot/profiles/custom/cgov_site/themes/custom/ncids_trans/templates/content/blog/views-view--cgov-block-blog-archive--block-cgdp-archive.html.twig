@@ -1,0 +1,24 @@
+{% if header %}
+  {{ header }}
+{% endif %}
+
+{{ exposed }}
+{{ attachment_before }}
+
+{% if rows %}
+  {{ rows }}
+{% elseif empty %}
+  {{ empty }}
+{% endif %}
+
+{{ pager }}
+{{ attachment_after }}
+{{ more }}
+
+{% if footer %}
+  {{ footer }}
+{% endif %}
+
+{% if feed_icons %}
+  {{ feed_icons }}
+{% endif %}
