@@ -38,3 +38,16 @@ function cgov_saml_auth_config_update_10001() {
     \Drupal::keyValue('system.schema')->delete('js_cookie');
   }
 }
+
+/**
+ * Add missing settings from autologout v1.7.0.
+ */
+function cgov_saml_auth_config_update_10002() {
+  // The autologout module v1.7.0 added two new settings.
+  $config = \Drupal::configFactory()->getEditable('autologout.settings');
+  $config->set('cookie_secure', TRUE);
+  // Autologout v1.7.0 forces this to false throughout the module, setting it
+  // false here as well to avoid confusion.
+  $config->set('cookie_httponly', FALSE);
+  $config->save();
+}
