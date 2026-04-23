@@ -1,0 +1,58 @@
+@forward 'usa-icon';
+@forward 'usa-link';
+@use 'uswds-core' as *;
+
+.cgdp-profile-box {
+	@include u-shadow(2);
+	@include u-radius('md');
+	padding: units(2.5) units(4);
+
+	@include at-media('tablet') {
+		padding: units(2) units(3);
+	}
+
+	img {
+		@include u-margin-bottom(2);
+		@include u-maxw('full');
+		@include u-height('auto');
+
+		@include at-media('tablet') {
+			@include u-margin-bottom(0);
+		}
+	}
+
+	.cgdp-profile-box__heading {
+		@include typeset-h1;
+		margin: 0 0 units(2);
+	}
+
+	.cgdp-profile-box__title {
+		font-size: size('body', 'sm');
+	}
+
+	.cgdp-profile-box__titles,
+	.cgdp-profile-box__org {
+		@include unstyled-list;
+		@include u-margin-y(2);
+	}
+
+	.cgdp-profile-box__publications {
+		@include u-display('block');
+	}
+
+	.cgdp-profile-box__address,
+	.cgdp-profile-box__phone,
+	.cgdp-profile-box__publications,
+	.cgdp-profile-box__website {
+		@include u-margin-y(2);
+	}
+
+	.usa-social-link {
+		background-color: transparent;
+		padding: 0;
+
+		.usa-icon {
+			font-size: 3rem;
+		}
+	}
+}
