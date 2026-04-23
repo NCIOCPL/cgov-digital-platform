@@ -243,6 +243,19 @@ function ncids_trans_preprocess_field(&$variables) {
     $nid = $variables['element']['#object']->id();
     $variables['node_id'] = $nid;
   }
+  // URL query parameters.
+  $params = [
+    'topic',
+    'year',
+  ];
+
+  // Actual query parameters.
+  $queryParameters = \Drupal::request()->query;
+
+  // Add any parameter values to the $variables get property.
+  foreach ($params as $param) {
+    $variables['get'][$param] = $queryParameters->get($param, '');
+  }
 }
 
 /**
