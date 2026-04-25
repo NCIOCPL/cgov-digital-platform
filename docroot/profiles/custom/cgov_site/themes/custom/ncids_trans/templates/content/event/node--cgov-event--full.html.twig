@@ -11,7 +11,7 @@
 	<div class="cgdp-inner-content-area">
 		{{ content.field_image_article }}
 		<div class="cgdp-event-info">
-			<h2 class="cgdp-event-info__series">{{ content.field_event_series }}</h2>
+			<h2 class="nci-heading-h2 cgdp-event-info__series">{{ content.field_event_series }}</h2>
 			<p class="cgdp-event-info__date-time">
 				{% if isValidEventDate %}
 					{% if isMultiYearEvent %}
@@ -52,13 +52,7 @@
 				<a href="/node/{{ node.id }}/icalendar" class="usa-link">Add to Outlook Calendar</a>
 			</p>
 		</div>
-		<div class="cgdpl">
-			<div class="contentzone">
-				<div id="cgvBody">
-					{{ content.body }}
-				</div>
-			</div>
-		</div>
+		{{ content.body }}
 	</div>
 	<footer class="cgdp-article-footer">
 		{{ content.field_related_resources }}
