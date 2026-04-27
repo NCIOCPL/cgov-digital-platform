@@ -335,3 +335,13 @@ function cgov_core_update_10016() {
   ];
   $siteHelper->addRolePermissions($perms);
 }
+
+/**
+ * Enable the mysql database driver module.
+ */
+function cgov_core_update_10017(): void {
+  $installer = \Drupal::service('module_installer');
+  if (!\Drupal::moduleHandler()->moduleExists('mysql')) {
+    $installer->install(['mysql']);
+  }
+}
