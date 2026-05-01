@@ -12,6 +12,27 @@ use Drupal\media\Entity\Media;
 use Drupal\node\Entity\Node;
 
 /**
+ * Checks if the bundle is in the migrated pages array.
+ *
+ * As we continue to migrate legacy inner pages to use ncids,
+ * we should be moving the node type out of the array and into
+ * the migrated inner page types array so that they use the updated
+ * twig template.
+ *
+ * @param string $bundle
+ *   The node bundle machine name, for example `cgov_event`.
+ *
+ * @return bool
+ *   Whether the bundle is a migrated inner page.
+ */
+function _ncids_trans_is_migrated_inner_page($bundle) {
+  return in_array($bundle, [
+    'cgov_article',
+    'cgov_event',
+  ]);
+}
+
+/**
  * Allows us to have node based page templates.
  *
  * @param array $suggestions
@@ -30,17 +51,10 @@ function ncids_trans_theme_suggestions_page_alter(array &$suggestions, array $va
     'cgov_biography',
     'cgov_cancer_center',
     'cgov_cancer_research',
-    'cgov_event',
     'cgov_press_release',
     'cgov_infographic',
     'cgov_video',
   ];
-
-  // As we continue to migrate legacy inner pages to use ncids,
-  // we should be moving the node type out of the array above and into
-  // the migrated inner page types array so that they use the updated
-  // twig template.
-  $ncids_inner_page_types_migrated = ['cgov_article'];
 
   if ($node = \Drupal::routeMatch()->getParameter('node')) {
 
@@ -55,7 +69,7 @@ function ncids_trans_theme_suggestions_page_alter(array &$suggestions, array $va
     if (in_array($content_type, $ncids_inner_page_types)) {
       $suggestions[] = 'page__ncids_inner_page';
     }
-    elseif (in_array($content_type, $ncids_inner_page_types_migrated)) {
+    elseif (_ncids_trans_is_migrated_inner_page($content_type)) {
       $suggestions[] = 'page__ncids_inner_page__migrated';
     }
 
@@ -82,7 +96,7 @@ function ncids_trans_theme_suggestions_page_alter(array &$suggestions, array $va
     if (in_array($content_type, $ncids_inner_page_types)) {
       $suggestions[] = 'page__ncids_inner_page';
     }
-    elseif (in_array($content_type, $ncids_inner_page_types_migrated)) {
+    elseif (_ncids_trans_is_migrated_inner_page($content_type)) {
       $suggestions[] = 'page__ncids_inner_page__migrated';
     }
 
@@ -168,6 +182,11 @@ function ncids_trans_theme_suggestions_node_alter(array &$suggestions, array $va
  */
 function ncids_trans_theme_suggestions_field_alter(array &$suggestions, array $variables) {
   $element = $variables['element'];
+
+  if (!empty($element['#bundle']) && _ncids_trans_is_migrated_inner_page($element['#bundle'])) {
+    $suggestions[] = 'field__' . $element['#field_name'] . '__ncids';
+  }
+
   $suggestions[] = 'field__' . $element['#field_name'] . '__' . $element['#view_mode'];
 }
 

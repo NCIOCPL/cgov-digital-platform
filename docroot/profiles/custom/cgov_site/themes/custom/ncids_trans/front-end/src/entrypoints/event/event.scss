@@ -3,19 +3,16 @@
 @forward '../cgdp-required';
 
 // Specific components on the page
-@forward '../../lib/components/cgdp-article-footer/';
+@forward '../../lib/components/cgdp-article-footer';
 @forward '../../lib/components/cgdp-related-resources';
 @forward '../../lib/components/cgdp-field-image-article';
-@forward '../../lib/components/wysiwyg/common/cgdp-embed-image';
-@forward '../../lib/components/wysiwyg/common/cgdp-embed-infographic';
-@forward '../../lib/components/wysiwyg/common/cgdp-embed-video';
-@forward '../../lib/components/wysiwyg/common/cgdp-embed-card/';
+@forward '../../lib/components/wysiwyg/editors/ncids-full-html';
+
+@forward '../../lib/components/cgdp-definition';
 
 @use 'uswds-core' as *;
-@use 'nci-heading' as heading;
 
 .cgdp-event-info__series {
-	@extend .nci-heading-h2;
 	clear: unset;
 	@include u-margin-top(2.5);
 	@include u-margin-bottom(2);
@@ -34,6 +31,6 @@ p.cgdp-event-info__location {
 	}
 }
 
-.nci-heading-h2+p {
+.nci-heading-h2 + p {
 	@include u-margin-top(1);
 }
