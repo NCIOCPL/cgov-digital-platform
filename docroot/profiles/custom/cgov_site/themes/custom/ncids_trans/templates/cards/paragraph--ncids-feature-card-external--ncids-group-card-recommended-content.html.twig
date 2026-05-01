@@ -1,0 +1,26 @@
+{% import '@ncids_trans/cards/ncids_card_macros.twig' as cardMacros %}
+
+{# This needs to parallel the feature card template. However, we
+ # get the title, description, image and URL from the paragraph fields.
+ #}
+
+{# ###### Setup Title ####### #}
+{% set title = content.field_override_card_title[0] %}
+
+{# ###### Setup URL ######## #}
+{% set url = content.field_featured_url[0]['#url'] ?? '' %}
+
+{# ###### Setup Img ######## #}
+{% set image = content.field_override_image_promotional %}
+
+{# ###### Render Card ###### #}
+{% set id = paragraph.id() %}
+{% set entity_type = paragraph.entityTypeID %}
+{% set suppress_external_icon = false %}
+{% if (paragraph.field_external_link_display.value == 'do_not_display') %}
+  {% set suppress_external_icon = true %}
+{% endif %}
+
+<li class="nci-card tablet-lg:grid-col-4">
+  {{ cardMacros.ncidsFeatureCard(title, null, image, url, directory, id, entity_type, 'External', suppress_external_icon) }}
+</li>

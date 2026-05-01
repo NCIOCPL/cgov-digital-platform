@@ -3,7 +3,7 @@
 
 <!-- ********************************* BEGIN Blog Post Page Full Content ********************************** -->
 <article>
-  <div class="resize-content">
+  <div class="cgdpl resize-content">
     <h1>
       {{ node.label }}
     </h1>
@@ -24,18 +24,15 @@
     </div>
   </div>
 
-  <footer class="article-footer">
+  <footer class="cgdp-article-footer">
     {{ content.field_citation }}
     {{ content.field_related_resources }}
     {{ drupal_block('cgov_blog_pager', {label: ''}) }}
-    {% if content.field_recommended_content[0] %}
-      <div id="blog-cards">
-        <h2 class="recommended-content__header">{{ series.field_recommended_content_header.value }}</h2>
-        {{ content.field_recommended_content }}
-      </div>
-    {% endif %}
+    {{ content.field_recommended_content }}
     {% if node.field_public_use.value == '1' %}
-      {{ drupal_region('public_use') }}
+      <div class="cgdp-article-footer__separator">
+        {{ drupal_region('public_use') }}
+      </div>
     {% endif %}
   </footer>
 </article>

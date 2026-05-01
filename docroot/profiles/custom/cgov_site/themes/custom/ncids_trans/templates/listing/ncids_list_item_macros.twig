@@ -129,13 +129,22 @@
   </li>
 {% endmacro %}
 
-{% macro ncids_list_item_related_resource(title, url, link_type, media_type = null, file_type = null, file_size = null, file_ext = null) %}
-  {% if media_type == "Video" or media_type == "Infographic" or media_type == "File" %}
-  <li class="cgdp-media-link">
-  {% else %}
-  <li>
+{% macro ncids_list_item_related_resource(title, url, link_type, external_link_display = '', media_type = null, file_type = null, file_size = null, file_ext = null) %}
+  {% set li_attributes = create_attribute({'class': []}) %}
+  {% set link_attributes = create_attribute() %}
+  {% set link_classes = create_attribute({'class': ['usa-link']}) %}
+  {% set link_attributes = link_attributes.setAttribute('data-list-item-type', link_type) %}
+  {% if (external_link_display == 'force_display') %}
+    {% set link_classes = link_classes.addClass('usa-link--external') %}
+  {% elseif (external_link_display == 'do_not_display') %}
+    {% set link_attributes = link_attributes.setAttribute('data-ncids-internal-link', 'true') %}
   {% endif %}
-    <a class="usa-link" href='{{ url }}' data-list-item-type="{{ link_type }}">{{ title }}</a>
+
+  {% if media_type == "Video" or media_type == "Infographic" or media_type == "File" %}
+    {% set li_attributes = li_attributes.addClass('cgdp-media-link') %}
+  {% endif %}
+  <li {{ li_attributes }}>
+    <a {{ link_classes }} href='{{ url }}' {{ link_attributes }}>{{ title }}</a>
     {% if media_type == "Video" or media_type == "Infographic" %}
       <span class="cgdp-media-link__mediatype">({{ media_type|trans }})</span>
     {% elseif media_type == "File" %}

@@ -18,7 +18,7 @@
 		{% set hasPublicUse = node.field_public_use.value == '1' %}
     {% set hasSyndication = node.field_hhs_syndication.value[0]['syndicate'] == '1' %}
     {% if hasPublicUse or hasSyndication %}
-      <div class="cgdp-article-footer__seprator">
+      <div class="cgdp-article-footer__separator">
       {% if hasPublicUse %}
         {{ drupal_region('public_use') }}
       {% endif %}

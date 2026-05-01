@@ -134,6 +134,18 @@ function _cgov_core_install_permissions(CgovCoreTools $siteHelper) {
       'Field list report',
       'regenerate urls',
       'administer responsive favicons',
+      // Editorial workflow publishing transitions (same as content_editor).
+      'use editorial_workflow transition approve_archive',
+      'use editorial_workflow transition approve',
+      'use editorial_workflow transition back_to_draft',
+      'use editorial_workflow transition back_to_editing',
+      'use editorial_workflow transition publish',
+      'use editorial_workflow transition reject_archive',
+      // Editorial workflow publishing transitions (same as advanced_editor).
+      'use editorial_workflow transition quick_publish_replace',
+      'use editorial_workflow transition quick_publish',
+      'use simple_workflow transition create_new_draft',
+      'use simple_workflow transition publish',
     ],
   ];
 
@@ -295,6 +307,30 @@ function cgov_core_update_10015() {
   $perms = [
     'admin_ui' => [
       'use text format ncids_full_html',
+    ],
+  ];
+  $siteHelper->addRolePermissions($perms);
+}
+
+/**
+ * Add publishing workflow permissions to site_admin role.
+ */
+function cgov_core_update_10016() {
+  $siteHelper = \Drupal::service('cgov_core.tools');
+  $perms = [
+    'site_admin' => [
+      // Editorial workflow publishing transitions (same as content_editor).
+      'use editorial_workflow transition approve_archive',
+      'use editorial_workflow transition approve',
+      'use editorial_workflow transition back_to_draft',
+      'use editorial_workflow transition back_to_editing',
+      'use editorial_workflow transition publish',
+      'use editorial_workflow transition reject_archive',
+      // Editorial workflow publishing transitions (same as advanced_editor).
+      'use editorial_workflow transition quick_publish_replace',
+      'use editorial_workflow transition quick_publish',
+      'use simple_workflow transition create_new_draft',
+      'use simple_workflow transition publish',
     ],
   ];
   $siteHelper->addRolePermissions($perms);

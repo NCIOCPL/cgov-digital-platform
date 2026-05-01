@@ -1,0 +1,26 @@
+@use 'uswds-core' as *;
+
+.cgdp-blog-post-pager {
+	@include grid-row;
+	> * {
+		@include grid-col(6);
+		p {
+			@include u-margin-top(1);
+			@include u-margin-bottom(0);
+		}
+	}
+
+	&--older {
+		@include u-padding-right(0.5);
+	}
+
+	&--newer {
+		@include u-padding-left(0.5);
+		@include u-text('right');
+
+		// If newer is the only pager item, keep it 6 cols and pin it right.
+		&:only-child {
+			@include u-margin-left('auto');
+		}
+	}
+}

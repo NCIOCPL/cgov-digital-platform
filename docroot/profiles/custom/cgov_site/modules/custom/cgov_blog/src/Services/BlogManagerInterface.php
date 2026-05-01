@@ -18,19 +18,6 @@ interface BlogManagerInterface {
   public function getBlogSeriesFromRoute();
 
   /**
-   * The URL path for the blog series.
-   *
-   * @param \Drupal\node\NodeInterface $blog_series
-   *   The blog series.
-   * @param mixed $queryParams
-   *   An associative array of the URL query parameter.
-   *
-   * @return string
-   *   The path to the blog series.
-   */
-  public function getSeriesPath(NodeInterface $blog_series, $queryParams = []);
-
-  /**
    * The topics associated to the blog series.
    *
    * @param \Drupal\node\NodeInterface $series
@@ -55,34 +42,12 @@ interface BlogManagerInterface {
   public function getTopicsBySeriesId($id, $langcode);
 
   /**
-   * Gets the filtered topics that have blog posts with them.
-   *
-   * @param \Drupal\node\NodeInterface $blog_series
-   *   The blog series.
-   *
-   * @return \Drupal\taxonomy\TermInterface[]
-   *   An array of filtered topics.
-   */
-  public function getFilteredTopicsBySeries(NodeInterface $blog_series);
-
-  /**
    * Gets the current entity.
    *
    * @return \Drupal\Core\Entity\ContentEntityInterface|false
    *   The current entity from route matcher.
    */
   public function getCurrentEntity();
-
-  /**
-   * Return query results based on date posted.
-   *
-   * @param string $type
-   *   Content type or bundle.
-   *
-   * @return \Drupal\node\Entity\Node[]
-   *   An array of all the nodes by posted dates.
-   */
-  public function getNodesByPostedDateDesc($type);
 
   /**
    * Get Blog Series topic based on field_pretty_url.
@@ -137,11 +102,13 @@ interface BlogManagerInterface {
    *
    * @param string $type
    *   Content type or bundle.
+   * @param int $series_id
+   *   The blog series id.
    *
    * @return string[]
    *   An array of ids.
    */
-  public function getNodesByPostedDateAsc($type);
+  public function getNodesByPostedDateAsc($type, $series_id);
 
   /**
    * Return the title for blog series.
