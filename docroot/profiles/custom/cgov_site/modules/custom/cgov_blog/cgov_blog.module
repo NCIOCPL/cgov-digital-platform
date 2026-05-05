@@ -635,3 +635,19 @@ function cgov_blog_preprocess_node(&$variables) {
     $variables['get'][$param] = $queryParameters->get($param, '');
   }
 }
+
+/**
+ * Implements hook_node_view().
+ */
+function cgov_blog_node_view(array &$build, NodeInterface $node, $display, $view_mode) {
+  if ($node->bundle() !== 'cgov_blog_series' || $view_mode !== 'lb_primary_content') {
+    return;
+  }
+  $show_thumbnails = (bool) $node->get('field_show_list_thumbnails')->value;
+  $build['blog_posts_list'] = [
+    '#type' => 'view',
+    '#name' => 'cgov_block_blog_posts',
+    '#display_id' => $show_thumbnails ? 'block_bp_list_th' : 'block_bp_list',
+    '#arguments' => [$node->id()],
+  ];
+}

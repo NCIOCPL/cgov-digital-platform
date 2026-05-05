@@ -9,11 +9,6 @@
   {% if (get.topic) %}
     {{ drupal_block('cgov_blog_topic_intro', {label: get.topic}) }}
   {% endif %}
-  {# Draw the appropriate view using twig_tweak. #}
-  {% if node.field_show_list_thumbnails.0.value %}
-    {{ drupal_view('cgov_block_blog_posts', 'block_bp_list_th', node.id) }}
-  {% else %}
-    {{ drupal_view('cgov_block_blog_posts', 'block_bp_list', node.id) }}
-  {% endif %}
+  {{ content.blog_posts_list }}
 </article>
 <!-- ********************************* END Series Page Full Content ********************************** -->
