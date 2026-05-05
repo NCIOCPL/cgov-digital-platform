@@ -1,14 +1,11 @@
 {% import '@ncids_trans/content/blog/blog_macros.twig' as blogMacros %}
 
 <!-- ********************************* BEGIN Series Page Full Content ********************************** -->
-<article>
-  {{ blogMacros.drawBlogSeriesTitle(get.year, get.topic, node) }}
-  {{ blogMacros.drawSubscribeLink(node) }}
-  {{ content.field_about_blog }}
-  {{ content.field_banner_image }}
-  {% if (get.topic) %}
-    {{ drupal_block('cgov_blog_topic_intro', {label: get.topic}) }}
-  {% endif %}
-  {{ content.blog_posts_list }}
-</article>
+{{ blogMacros.drawBlogSeriesTitle(get.month, get.year, get.topic, node) }}
+{{ blogMacros.drawSubscribeLink(node) }}
+{{ content.field_about_blog }}
+{{ content.field_banner_image }}
+{% if (get.topic) %}
+  {{ drupal_block('cgov_blog_topic_intro', {label: get.topic}) }}
+{% endif %}
 <!-- ********************************* END Series Page Full Content ********************************** -->
