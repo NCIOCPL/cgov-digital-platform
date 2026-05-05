@@ -1,16 +1,20 @@
 {% import '@ncids_trans/content/blog/blog_macros.twig' as blogMacros %}
 <!-- ********************** Blog Post List Item + Thumb ********************** -->
 {% if content %}
-  <li class="general-list-item general list-item">
-    <div class="title-and-desc title desc container">
-        <a class="title" href="{{ url }}" onclick="">{{ label }}</a>
-        <div class="description">
-          <div class="date-author">
-            {{ blogMacros.getByline(content) }}
-          </div>
-          <p>{{ content.field_list_description }}</p>
-          <p><a href="{{ url }}">{% trans with {'context':'CGov Blog'} %}Continue Reading{% endtrans %} &gt;</a></p>
-        </div>
+  <div class="usa-collection__body">
+    <div class="usa-collection__heading">
+      <a class="usa-link" href="{{ url }}" onclick="">{{ label }}</a>
     </div>
-  </li>
+    <div class="description">
+      <ul class="usa-collection__meta">
+        {% if content.field_author and content.field_author|length > 2 %}
+          <li class="usa-collection__meta-item">By {{content.field_author}}</li>
+        {% endif %}
+        {% if content.field_date_posted %}
+          <li class="usa-collection__meta-item">{{content.field_date_posted}}</li>
+        {% endif %}
+      </ul>
+      <p class="usa-collection__description">{{ content.field_list_description }}</p>
+    </div>
+  </div>
 {% endif %}

@@ -25,12 +25,26 @@
 #}
 {% macro getImage(content) %}
   {% if content.field_image_promotional and content.field_image_promotional[0] %}
-    {{content.field_image_promotional}}
+    {% set image_markup = content.field_image_promotional|render %}
+    {{- image_markup|replace({'<img ': '<img class="usa-collection__img" '})|raw -}}
   {% elseif content.field_image_article and content.field_image_article[0] %}
-    {{content.field_image_article}}
+    {% set image_markup = content.field_image_article|render %}
+    {{- image_markup|replace({'<img ': '<img class="usa-collection__img" '})|raw -}}
   {% else %}
-    {# TODO: Use old placeholder image. #}
+    <img class="usa-collection__img" src="{{ get_placeholder_image('ncids_featured_16x9') }}" alt="No Image Placeholder">
   {% endif %}
+{% endmacro %}
+
+{#
+# Gets placeholder image if no image is available.
+#}
+{% macro imagePlaceholder(image) %}
+	{% set renderImage = image|render %}
+	{% if renderImage %}
+    {{- renderImage|replace({'<img ': '<img class="usa-collection__img" '})|raw -}}
+	{% else %}
+    <img class="usa-collection__img" src="{{ get_placeholder_image('ncids_featured_16x9') }}" alt="No Image Placeholder">
+	{% endif %}
 {% endmacro %}
 
 {#
