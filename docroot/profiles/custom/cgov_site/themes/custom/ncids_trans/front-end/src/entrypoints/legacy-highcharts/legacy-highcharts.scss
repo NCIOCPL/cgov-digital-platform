@@ -17,9 +17,6 @@
 // We are moving foundation outside of legacy
 @import '../../legacy/styles/nci-foundation';
 
-@import '../../legacy/styles/jqueryui_overrides';
-@import '../../legacy/styles/jqueryui';
-
 // Highcharts override for popup styles
 // This is only ever used on article pages since factbook pages are
 // the only pages that use highcharts.
@@ -47,6 +44,161 @@
 			$theme-body-font-size,
 			$theme-body-line-height
 		);
+	}
+}
+
+// Minimal jQuery UI-compatible dialog styles used by the grants/contracts
+// Highcharts popup shell. This replaces the full jQuery UI stylesheet.
+.cgdp-highcharts-dialog {
+	background: #fff;
+	border: 1px solid #d3d3d3;
+	color: #222;
+	font-family: inherit;
+	font-size: inherit;
+	left: 0;
+	outline: 0;
+	padding: 0.2em;
+	top: 0;
+
+	&,
+	* {
+		box-sizing: border-box;
+	}
+
+	&.ui-corner-all,
+	.ui-corner-all {
+		border-radius: 4px;
+	}
+
+	.ui-helper-clearfix {
+		&::before,
+		&::after {
+			border-collapse: collapse;
+			content: '';
+			display: table;
+		}
+
+		&::after {
+			clear: both;
+		}
+	}
+
+	button {
+		font-family: inherit;
+		font-size: 1em;
+	}
+
+	.ui-dialog-titlebar {
+		background: #ccc;
+		border: 1px solid #aaa;
+		color: #222;
+		font-weight: bold;
+		padding: 0.4em 1em;
+		position: relative;
+	}
+
+	.ui-dialog-title {
+		float: left;
+		margin: 0.1em 0;
+		overflow: hidden;
+		text-overflow: ellipsis;
+		white-space: nowrap;
+		width: calc(100% - 2.5em);
+	}
+
+	.ui-dialog-titlebar-close {
+		height: 20px;
+		margin: -10px 0 0;
+		padding: 1px;
+		position: absolute;
+		right: 0.3em;
+		top: 50%;
+		width: 20px;
+	}
+
+	.ui-dialog-content {
+		background: none;
+		border: 0;
+		padding: 0.5em 1em;
+		position: relative;
+	}
+
+	.ui-button {
+		background: #e6e6e6;
+		border: 1px solid #d3d3d3;
+		color: #555;
+		cursor: pointer;
+		display: inline-block;
+		font-weight: normal;
+		line-height: normal;
+		margin-right: 0.1em;
+		overflow: visible;
+		position: absolute;
+		text-align: center;
+		text-decoration: none;
+		user-select: none;
+		vertical-align: middle;
+
+		&:hover,
+		&:focus {
+			background: #dadada;
+			border-color: #999;
+			color: #212121;
+		}
+	}
+
+	.ui-button-icon-only {
+		white-space: nowrap;
+	}
+
+	.ui-button-icon-space {
+		border: 0;
+		clip: rect(0 0 0 0);
+		height: 1px;
+		margin: -1px;
+		overflow: hidden;
+		padding: 0;
+		position: absolute;
+		width: 1px;
+	}
+
+	.ui-icon {
+		display: inline-block;
+		height: 16px;
+		left: 50%;
+		margin-left: -8px;
+		margin-top: -8px;
+		overflow: hidden;
+		position: absolute;
+		text-indent: -99999px;
+		top: 50%;
+		width: 16px;
+	}
+
+	.ui-icon-closethick {
+		&::before,
+		&::after {
+			background: currentColor;
+			content: '';
+			height: 2px;
+			left: 3px;
+			position: absolute;
+			top: 7px;
+			width: 10px;
+		}
+
+		&::before {
+			transform: rotate(45deg);
+		}
+
+		&::after {
+			transform: rotate(-45deg);
+		}
+	}
+
+	.ui-button:hover .ui-icon,
+	.ui-button:focus .ui-icon {
+		color: #212121;
 	}
 }
 
