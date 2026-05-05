@@ -16,6 +16,37 @@
   cursor: pointer
 }
 
+.cgdp-highcharts-dialog {
+  box-sizing: border-box;
+  max-width: 93vw;
+  max-height: 90vh;
+  overflow: hidden;
+  position: fixed;
+  resize: both;
+
+  &[hidden] {
+    display: none;
+  }
+
+  .ui-dialog-titlebar {
+    cursor: move;
+  }
+
+  .ui-dialog-titlebar-close {
+    cursor: pointer;
+  }
+
+  .ui-dialog-content {
+    box-sizing: border-box;
+    max-width: 100%;
+    overflow: hidden;
+  }
+
+  .no-results-message {
+    margin: 1.25em;
+  }
+}
+
 @media only print {
   .highcharts-map-navigation,
   .highcharts-contextbutton {

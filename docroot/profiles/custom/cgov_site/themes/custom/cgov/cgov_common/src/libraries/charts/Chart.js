@@ -37,7 +37,161 @@
  */
 
 // Module Constructor - matching Highcarts' arguments of target, options
-const $ = window.jQuery;
+const highchartsVersion = '11.4.0';
+const highchartsBaseURL = 'https://code.highcharts.com/' + highchartsVersion;
+const highchartsMapsBaseURL = 'https://code.highcharts.com/maps/' + highchartsVersion;
+const highchartsScripts = {
+  core: highchartsBaseURL + '/highcharts.js',
+  exporting: highchartsBaseURL + '/modules/exporting.js',
+  offlineExporting: highchartsBaseURL + '/modules/offline-exporting.js',
+  accessibility: highchartsBaseURL + '/modules/accessibility.js',
+  drilldown: highchartsBaseURL + '/modules/drilldown.js',
+  map: highchartsMapsBaseURL + '/modules/map.js'
+};
+
+const highchartsScriptPromises = {};
+let highchartsCorePromise;
+let highchartsBasePromise;
+
+function getHighcharts () {
+  return window.Highcharts;
+}
+
+function isPlainObject (value) {
+  return Object.prototype.toString.call(value) === '[object Object]';
+}
+
+function isSafeMergeKey (key) {
+  return key !== '__proto__' && key !== 'constructor' && key !== 'prototype';
+}
+
+function deepMerge (target, ...sources) {
+  sources.forEach(function (source) {
+    if (!source) {
+      return;
+    }
+
+    Object.keys(source).forEach(function (key) {
+      if (!Object.prototype.hasOwnProperty.call(source, key) || !isSafeMergeKey(key)) {
+        return;
+      }
+
+      const copy = source[key];
+
+      if (copy === target || typeof copy === 'undefined') {
+        return;
+      }
+
+      if (Array.isArray(copy)) {
+        target[key] = deepMerge(Array.isArray(target[key]) ? target[key] : [], copy);
+      } else if (isPlainObject(copy)) {
+        target[key] = deepMerge(isPlainObject(target[key]) ? target[key] : {}, copy);
+      } else {
+        target[key] = copy;
+      }
+    });
+  });
+
+  return target;
+}
+
+function loadScript (url) {
+  if (!highchartsScriptPromises[url]) {
+    highchartsScriptPromises[url] = new Promise(function (resolve, reject) {
+      const script = document.createElement('script');
+
+      script.async = true;
+      script.src = url;
+
+      script.addEventListener('load', function () {
+        resolve(getHighcharts());
+      });
+
+      script.addEventListener('error', function () {
+        delete highchartsScriptPromises[url];
+        reject(new Error('Unable to load Highcharts script "' + url + '".'));
+      });
+
+      document.head.appendChild(script);
+    });
+  }
+
+  return highchartsScriptPromises[url];
+}
+
+function loadHighchartsCore () {
+  if (getHighcharts()) {
+    return Promise.resolve(getHighcharts());
+  }
+
+  if (!highchartsCorePromise) {
+    highchartsCorePromise = loadScript(highchartsScripts.core)
+      .then(function () {
+        return getHighcharts();
+      })
+      .catch(function (error) {
+        highchartsCorePromise = null;
+        throw error;
+      });
+  }
+
+  return highchartsCorePromise;
+}
+
+function loadHighchartsBase () {
+  if (!highchartsBasePromise) {
+    highchartsBasePromise = loadHighchartsCore()
+      .then(function () {
+        return loadScript(highchartsScripts.exporting);
+      })
+      .then(function () {
+        return loadScript(highchartsScripts.offlineExporting);
+      })
+      .then(function () {
+        return getHighcharts();
+      })
+      .catch(function (error) {
+        highchartsBasePromise = null;
+        throw error;
+      });
+  }
+
+  return highchartsBasePromise;
+}
+
+function hasDrilldownSeries (settings) {
+  return settings.drilldown &&
+    Array.isArray(settings.drilldown.series) &&
+    settings.drilldown.series.length > 0;
+}
+
+function isMapChart (settings) {
+  return settings.chart && settings.chart.type === 'map';
+}
+
+function loadHighcharts (settings = {}) {
+  return loadHighchartsBase()
+    .then(function () {
+      const additionalModules = [];
+
+      if (hasDrilldownSeries(settings)) {
+        additionalModules.push(loadScript(highchartsScripts.drilldown));
+      }
+
+      if (isMapChart(settings)) {
+        additionalModules.push(loadScript(highchartsScripts.map));
+      }
+
+      return Promise.all(additionalModules);
+    })
+    .then(function () {
+      // Highcharts recommends loading accessibility after other modules.
+      return loadScript(highchartsScripts.accessibility);
+    })
+    .then(function () {
+      return getHighcharts();
+    });
+}
 
 function Chart (target, options) {
   this.defaultSettings = {
@@ -76,68 +230,23 @@ function Chart (target, options) {
   };
 
   // extend defaults with settings
-  this.settings = $.extend(true, {}, this.defaultSettings, options);
+  this.settings = deepMerge({}, this.defaultSettings, options);
   this.settings.target = target;
 
-  if (typeof window.fetchingHighcharts == "undefined") {
-      window.fetchingHighcharts = false;
-  }
+  this.ready = this.init();
+};
 
-  this.init();
+Chart.preload = function () {
+  return loadHighchartsBase();
 };
 
 // Module methods
 Chart.prototype = function () {
-  var loadHighcharts = function () {
-
-      var dfd = $.Deferred();
-
-    if (typeof Highcharts == 'undefined' && !window.fetchingHighcharts) {
-        window.fetchingHighcharts = true;
-        // Load Highcharts core library
-        $.getScript('https://code.highcharts.com/11.4.0/highcharts.js', function() {
-          // Load exporting module
-          $.getScript('https://code.highcharts.com/11.4.0/modules/exporting.js', function() {
-            // exporting module loaded
-            // Load offline-exporting module
-            $.getScript('https://code.highcharts.com/11.4.0/modules/offline-exporting.js', function() {
-              // offline-exporting module loaded
-              // Load accessibility module
-              $.getScript('https://code.highcharts.com/11.4.0/modules/accessibility.js', function() {
-                // accessibility module loaded
-                // Load drilldown module
-                $.getScript('https://code.highcharts.com/11.4.0/modules/drilldown.js', function() {
-                  // drilldown module loaded
-                  window.fetchingHighcharts = false;
-                  dfd.resolve();
-                });
-              });
-            });
-          })
-        })
-    } else {
-        function isHighchartsLoaded () {
-            if (typeof Highcharts == "undefined" || typeof Highcharts == "object" && window.fetchingHighcharts) {
-                setTimeout(function () {
-                    isHighchartsLoaded();
-                }, 100);
-            } else {
-                dfd.resolve();
-            }
-        }
-
-        isHighchartsLoaded();
-
-    }
-
-    return dfd.promise();
-  };
-
   var initialize = function () {
 
       var module = this;
 
-    $.when(loadHighcharts.call(module)).done(function () {
+    return loadHighcharts(module.settings).then(function () {
       baseTheme.call(module);
 
       if (module.settings.chart.type in module) {
@@ -145,22 +254,22 @@ Chart.prototype = function () {
       } else {
 
         if(module.settings.chart.type == 'map'){
-          // Load map module
           // GeoJSON map collection data in "./library/grants-contracts.js" is versioned separately
           // from Highcharts core and modules code.
-          $.getScript('https://code.highcharts.com/maps/11.4.0/modules/map.js', function() {
-            Highcharts.setOptions({
-              lang: {
-                numericSymbols: [ "k" , "M" , "B" , "T" , "P" , "E"],
-                thousandsSep: ","
-              }
-            });
-            module.instance = Highcharts.mapChart(module.settings.target, module.settings)
-          })
+          Highcharts.setOptions({
+            lang: {
+              numericSymbols: [ "k" , "M" , "B" , "T" , "P" , "E"],
+              thousandsSep: ","
+            }
+          });
+          module.instance = Highcharts.mapChart(module.settings.target, module.settings)
         } else {
           module.instance = Highcharts.chart(module.settings.target, module.settings)
         }
       }
+      return module.instance;
+    }).catch(function (error) {
+      console.error('Could not initialize Highcharts chart "' + module.settings.target + '".', error);
     });
   };
 
@@ -400,14 +509,14 @@ Chart.prototype = function () {
 
       if (Object.keys(this.settings.drilldown).length > 0) {
 
-          $.extend(this.settings.drilldown, moreDrilldownSettingsBecauseOfStupidFontStyles);
+          Object.assign(this.settings.drilldown, moreDrilldownSettingsBecauseOfStupidFontStyles);
 
           for (var i = 0; i < this.settings.drilldown.series.length; i++) {
-              $.extend(this.settings.drilldown.series[i], drilldownSettings);
+              Object.assign(this.settings.drilldown.series[i], drilldownSettings);
           }
       }
 
-      $.extend(true, this.settings.series[0], seriesSettings);
+      deepMerge(this.settings.series[0], seriesSettings);
 
       var presets = {
           tooltip: {
@@ -508,7 +617,7 @@ Chart.prototype = function () {
           }
       };
 
-      var chartSettings = $.extend(true, presets, this.settings);
+      var chartSettings = deepMerge(presets, this.settings);
 
       //force the chart type to pie
       chartSettings.chart.type = "pie";
@@ -544,7 +653,7 @@ Chart.prototype = function () {
           }
       };
 
-      var chartSettings = $.extend(true, presets, module.settings);
+      var chartSettings = deepMerge(presets, module.settings);
 
       //force the chart type to bar or column
       chartSettings.chart.type = this.settings.chart.type == 'NCI_bar' ? 'bar' : 'column';
@@ -608,7 +717,7 @@ Chart.prototype = function () {
           series: this.settings.series
       };
 
-      var chartSettings = $.extend(true, presets, module.settings);
+      var chartSettings = deepMerge(presets, module.settings);
 
       this.instance = Highcharts.chart(this.settings.target, chartSettings);
   };

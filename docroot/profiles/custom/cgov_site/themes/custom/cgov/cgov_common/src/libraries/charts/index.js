@@ -40,9 +40,14 @@ const init = () => {
 
       if (el) {
         const { chartRevision } = el.dataset;
-        getChartData(dataFileName, chartRevision, miscDataURL).then(
-          ({ data, miscData }) => initChart(Chart, data, miscData)
-        );
+        const highchartsPreload = Chart.preload();
+        const chartData = getChartData(dataFileName, chartRevision, miscDataURL);
+
+        Promise.all([chartData, highchartsPreload])
+          .then(([{ data, miscData }]) => initChart(Chart, data, miscData))
+          .catch((error) => {
+            console.error(`Could not initialize chart "${id}".`, error);
+          });
       }
     }
   }
