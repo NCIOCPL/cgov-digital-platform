@@ -66,11 +66,9 @@
   </li>
 {% endmacro %}
 
-{% macro ncids_dynamic_list_event_macro(title, startDate, endDate, description = '', url, series = '', allDay = '', venue = '', room = '', cityState = '') %}
-  {% set eventStart = startDate[0]['#attributes']["datetime"] %}
-  {% set eventEnd = endDate[0]['#attributes']["datetime"] %}
-  {% set isMultiDayEvent = eventStart|date('Y-m-d') < eventEnd|date('Y-m-d') %}
-  {% set isMultiYearEvent = eventStart|date('Y') <  eventEnd|date('Y') %}
+{% macro ncids_dynamic_list_event_macro(title, startDate, endDate, description = '', url, series = '', allDay = '', venue = '', room = '', cityState = '', eventStartLong = '', eventStartShort = '', eventStartTime = '', eventStartDate = '', eventStartYear = '', eventEndLong = '', eventEndTime = '', eventEndDate = '', eventEndYear = '') %}
+  {% set isMultiDayEvent = eventStartDate < eventEndDate %}
+  {% set isMultiYearEvent = eventStartYear < eventEndYear %}
   <li class="usa-collection__item">
     <div class="usa-collection__body">
       {# Title #}
@@ -89,21 +87,21 @@
           {# Date/time range #}
           {% if isMultiDayEvent %}
             {% if isMultiYearEvent %}
-              {{ eventStart|date('F j, Y') }}
+              {{ eventStartLong }}
               &ndash;
-              {{ eventEnd|date('F j, Y') }}
+              {{ eventEndLong }}
             {% else %}
-              {{ eventStart|date('F j') }}
+              {{ eventStartShort }}
               &ndash;
-              {{ eventEnd|date('F j, Y') }}
+              {{ eventEndLong }}
             {% endif %}
           {% else %}
-            {{ eventStart|date('F j, Y') }}
+            {{ eventStartLong }}
             {% if allDay != "On" %}
               &vert;
-              {{ eventStart|date('g:i A') }}
+              {{ eventStartTime }}
               &ndash;
-              {{ eventEnd|date('g:i A') }}
+              {{ eventEndTime }}
             {% endif %}
           {% endif %}
           <br />

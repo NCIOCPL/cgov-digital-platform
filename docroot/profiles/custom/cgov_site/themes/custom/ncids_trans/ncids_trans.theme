@@ -231,6 +231,33 @@ function ncids_trans_preprocess_node(&$variables) {
     // If the database is not yet available, set the default value.
     $variables['is_front'] = FALSE;
   }
+
+  // Pre-format event dates using the current interface language so that month
+  // names are localized. Twig's |date() filter always outputs English.
+  if ($variables['node']->getType() === 'cgov_event') {
+    $node = $variables['node'];
+    $langcode = \Drupal::languageManager()->getCurrentLanguage()->getId();
+    /** @var \Drupal\Core\Datetime\DateFormatterInterface $dateFormatter */
+    $dateFormatter = \Drupal::service('date.formatter');
+
+    $startValue = $node->get('field_event_start_date')->value;
+    $endValue = $node->get('field_event_end_date')->value;
+
+    if ($startValue && $endValue) {
+      $startTs = strtotime($startValue);
+      $endTs = strtotime($endValue);
+
+      $variables['event_start_long'] = $dateFormatter->format($startTs, 'custom', 'F j, Y', NULL, $langcode);
+      $variables['event_start_short'] = $dateFormatter->format($startTs, 'custom', 'F j', NULL, $langcode);
+      $variables['event_start_time'] = $dateFormatter->format($startTs, 'custom', 'g:i A', NULL, $langcode);
+      $variables['event_start_date'] = $dateFormatter->format($startTs, 'custom', 'Y-m-d', NULL, $langcode);
+      $variables['event_start_year'] = $dateFormatter->format($startTs, 'custom', 'Y', NULL, $langcode);
+      $variables['event_end_long'] = $dateFormatter->format($endTs, 'custom', 'F j, Y', NULL, $langcode);
+      $variables['event_end_time'] = $dateFormatter->format($endTs, 'custom', 'g:i A', NULL, $langcode);
+      $variables['event_end_date'] = $dateFormatter->format($endTs, 'custom', 'Y-m-d', NULL, $langcode);
+      $variables['event_end_year'] = $dateFormatter->format($endTs, 'custom', 'Y', NULL, $langcode);
+    }
+  }
 }
 
 /**
