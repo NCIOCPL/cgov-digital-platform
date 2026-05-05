@@ -1,5 +1,3 @@
-import $ from 'jQuery';
-
 const dataFileName = 'grants-contracts';
 const id = 'NCI-Chart__grants-contracts';
 /*
@@ -10,25 +8,214 @@ const geoDataURL = 'https://code.highcharts.com/mapdata/countries/us/custom/us-a
 
 function initChart(Chart, data, miscData = {}) {
   let dialogOffset = 0;
+  let dialogZIndex = 1000;
   const allocationData = data.series[0].data;
   const tooltipObj = data.tooltip;
 
 // store all our modal popups for manipulation later
   var popups = [];
+  var popupById = {};
 
-  function repositionModals(e) {
-    var windowWidth = window.document.body.getBoundingClientRect().width;
+  function keepPopupInViewport(popup) {
+    var popupElement = popup.element;
+    var popupDimensions = popupElement.getBoundingClientRect();
+    var windowWidth = window.innerWidth || document.documentElement.clientWidth;
+    var windowHeight = window.innerHeight || document.documentElement.clientHeight;
+    var left = popupDimensions.left;
+    var top = popupDimensions.top;
+
+    if (popupDimensions.right > windowWidth) {
+      left = Math.max(0, windowWidth - popupDimensions.width);
+    }
+
+    if (popupDimensions.left < 0) {
+      left = 0;
+    }
+
+    if (popupDimensions.bottom > windowHeight) {
+      top = Math.max(0, windowHeight - popupDimensions.height);
+    }
+
+    if (popupDimensions.top < 0) {
+      top = 0;
+    }
+
+    popupElement.style.left = Math.floor(left) + 'px';
+    popupElement.style.top = Math.floor(top) + 'px';
+  }
+
+  function repositionModals() {
     popups.forEach(function (popup) {
-      var popupElement = popup.get(0);
-      var popupDimensions = popupElement.getBoundingClientRect();
-      var overflowRight = windowWidth - popupDimensions.right;
-      if (overflowRight < 0) {
-        popup.css({ right: 0, left: 'auto' });
+      if (popup.isOpen()) {
+        keepPopupInViewport(popup);
       }
-      else {
-        popup.css({ right: '', left: Math.floor(popupDimensions.left) + 'px' });
+    });
+  }
+
+  function getDialogOffset() {
+    if (window.matchMedia("(min-width: 600px)").matches) {
+      var offset = dialogOffset;
+      dialogOffset += 20;
+      return offset;
+    }
+
+    dialogOffset = 0;
+    return 0;
+  }
+
+  function movePopupToTop(popup) {
+    popup.element.style.zIndex = dialogZIndex++;
+  }
+
+  function positionPopup(popup, offset) {
+    var windowWidth = window.innerWidth || document.documentElement.clientWidth;
+    var windowHeight = window.innerHeight || document.documentElement.clientHeight;
+    var width = Math.min(popup.minWidth, Math.floor(windowWidth * 0.93));
+
+    popup.element.style.width = width + 'px';
+
+    var popupDimensions = popup.element.getBoundingClientRect();
+    var left = Math.max(0, ((windowWidth - popupDimensions.width) / 2) + offset);
+    var top = Math.max(0, ((windowHeight - popupDimensions.height) / 2) + offset);
+
+    popup.element.style.left = Math.floor(left) + 'px';
+    popup.element.style.top = Math.floor(top) + 'px';
+    keepPopupInViewport(popup);
+  }
+
+  function makePopupDraggable(popup, titlebar) {
+    titlebar.addEventListener('pointerdown', function (event) {
+      if (event.button !== 0 || event.target.closest('button')) {
+        return;
       }
-    })
+
+      event.preventDefault();
+      movePopupToTop(popup);
+
+      var popupDimensions = popup.element.getBoundingClientRect();
+      var startX = event.clientX;
+      var startY = event.clientY;
+      var startLeft = popupDimensions.left;
+      var startTop = popupDimensions.top;
+
+      function drag(event) {
+        popup.element.style.left = Math.floor(startLeft + event.clientX - startX) + 'px';
+        popup.element.style.top = Math.floor(startTop + event.clientY - startY) + 'px';
+        keepPopupInViewport(popup);
+      }
+
+      function stopDragging() {
+        document.removeEventListener('pointermove', drag);
+        document.removeEventListener('pointerup', stopDragging);
+      }
+
+      document.addEventListener('pointermove', drag);
+      document.addEventListener('pointerup', stopDragging);
+    });
+  }
+
+  function observePopupResize(popup) {
+    if (typeof ResizeObserver === 'undefined') {
+      return;
+    }
+
+    var animationFrame;
+    var observer = new ResizeObserver(function () {
+      if (!popup.chart) {
+        return;
+      }
+
+      window.cancelAnimationFrame(animationFrame);
+      animationFrame = window.requestAnimationFrame(function () {
+        popup.chart.reflow();
+      });
+    });
+
+    observer.observe(popup.content);
+  }
+
+  function createPopup(options) {
+    var popupElement = document.createElement('div');
+    var titlebar = document.createElement('div');
+    var titleElement = document.createElement('span');
+    var closeButton = document.createElement('button');
+    var closeIcon = document.createElement('span');
+    var closeText = document.createElement('span');
+    var content = document.createElement('div');
+    var titleId = options.id + '_title';
+    var contentMinHeight = Math.max(0, options.minHeight - 48);
+
+    popupElement.className = 'ui-dialog ui-corner-all ui-widget ui-widget-content ui-front cgdp-highcharts-dialog';
+    popupElement.setAttribute('role', 'dialog');
+    popupElement.setAttribute('aria-labelledby', titleId);
+    popupElement.setAttribute('aria-modal', 'false');
+    popupElement.hidden = true;
+    popupElement.style.minHeight = options.minHeight + 'px';
+
+    titlebar.className = 'ui-dialog-titlebar ui-corner-all ui-widget-header ui-helper-clearfix';
+
+    titleElement.className = 'ui-dialog-title';
+    titleElement.id = titleId;
+    titleElement.textContent = options.title;
+
+    closeButton.className = 'ui-button ui-corner-all ui-widget ui-button-icon-only ui-dialog-titlebar-close';
+    closeButton.type = 'button';
+    closeButton.title = 'Close';
+
+    closeIcon.className = 'ui-button-icon ui-icon ui-icon-closethick';
+    closeText.className = 'ui-button-icon-space';
+    closeText.textContent = 'Close';
+
+    content.id = options.id;
+    content.className = 'ui-dialog-content ui-widget-content';
+    content.style.minHeight = contentMinHeight + 'px';
+
+    closeButton.appendChild(closeIcon);
+    closeButton.appendChild(closeText);
+    titlebar.appendChild(titleElement);
+    titlebar.appendChild(closeButton);
+    popupElement.appendChild(titlebar);
+    popupElement.appendChild(content);
+    document.body.appendChild(popupElement);
+
+    var popup = {
+      element: popupElement,
+      content: content,
+      minWidth: options.minWidth,
+      chart: null,
+      isOpen: function () {
+        return !popupElement.hidden;
+      },
+      open: function () {
+        popupElement.hidden = false;
+        popupElement.setAttribute('aria-hidden', 'false');
+        movePopupToTop(popup);
+        positionPopup(popup, getDialogOffset());
+      },
+      close: function () {
+        popupElement.hidden = true;
+        popupElement.setAttribute('aria-hidden', 'true');
+      },
+      moveToTop: function () {
+        movePopupToTop(popup);
+      },
+      setTitle: function (title) {
+        titleElement.textContent = title;
+      },
+      setChart: function (chart) {
+        popup.chart = chart;
+      }
+    };
+
+    closeButton.addEventListener('click', popup.close);
+    popupElement.addEventListener('mousedown', popup.moveToTop);
+    makePopupDraggable(popup, titlebar);
+    observePopupResize(popup);
+
+    popups.push(popup);
+    popupById[options.id] = popup;
+
+    return popup;
   }
 
   function buildChartSeries() {
@@ -42,11 +229,11 @@ function initChart(Chart, data, miscData = {}) {
               // if there are institutions for this state then render a PIE chart
               if (this.options.institutions) {
 
-                function renderPieChart(options) {
+                function renderPieChart(options, renderTo, isInteractive) {
                   // pie chart drill down showing institutions
                   const modalChart = new Highcharts.Chart({
                     chart: {
-                      renderTo: $modal[0],
+                      renderTo: renderTo,
                       type: 'pie'
                     },
                     colors: [
@@ -147,87 +334,59 @@ function initChart(Chart, data, miscData = {}) {
                   return modalChart;
                 }
 
-                var $modal;
                 var modalId = 'institution_' + this.options.code;
+                var popup = popupById[modalId];
 
-                if ($("#" + modalId)[0]) {
-                  $modal = $("#" + modalId);
-                  if ($modal.dialog("isOpen")) {
-                    $modal.dialog("moveToTop");
+                if (popup) {
+                  if (popup.isOpen()) {
+                    popup.moveToTop();
                   } else {
-                    $modal.dialog("open");
-                    // window.chart.redraw() not working as expected;
-                    //renderPieChart(this.options);
-                    //$modal.data("chart").reflow();
+                    popup.open();
+                    popup.chart.reflow();
                   }
 
                 } else {
-                  var $modal = $('<div id="' + modalId + '"></div>')
-                    .dialog({
-                      title: this.name,
-                      minWidth: 400,
-                      minHeight: 530,
-                      position: {
-                        my: "center",
-                        at: "center+" + dialogOffset + "px center+" +
-                          dialogOffset + "px",
-                        of: window
-                      },
-                      resize: function (event, ui) {
-                        $modal.data("chart").reflow();
-                      },
-                      open: function (event, ui) {
-                        if (window.matchMedia("(min-width: 600px)").matches) {
-                          dialogOffset += 20;
-                        } else {
-                          dialogOffset = 0;
-                        }
-                      }
-                    });
+                  popup = createPopup({
+                    id: modalId,
+                    title: this.name,
+                    minWidth: 400,
+                    minHeight: 530
+                  });
+                  popup.open();
 
-                  this.options.institutions.map(function (item) {
+                  this.options.institutions.forEach(function (item) {
                     item.drilldown = null
                   });
                   var isInteractive = this.options.institutions.length > 2;
 
-                  $modal.data("chart", renderPieChart(this.options));
-                  var $modalWrapper = $modal.closest('.ui-dialog');
-                  popups.push($modalWrapper);
+                  popup.setChart(renderPieChart(this.options, popup.content, isInteractive));
                 }
               } else {
                 // there are no institutions so render a popup notification
-                console.log("no institutions!");
-                var $modal;
                 var modalId = 'no_institutions';
+                var popup = popupById[modalId];
 
-                if ($("#" + modalId)[0]) {
-                  $modal = $("#" + modalId);
-                  $modal.dialog("option", { title: this.name });
-                  if ($modal.dialog("isOpen")) {
-                    $modal.dialog("moveToTop");
+                if (popup) {
+                  popup.setTitle(this.name);
+                  if (popup.isOpen()) {
+                    popup.moveToTop();
                   } else {
-                    $modal.dialog("open");
+                    popup.open();
                   }
                 } else {
                   var message = "This state/territory does not have any individual university or center receiving more than $15 million in NCI support.";
-                  var $modal = $('<div id="' + modalId + '"><p class="no-results-message">' + message + '</p></div>')
-                    .dialog({
-                      title: this.name,
-                      minWidth: 400,
-                      minHeight: 200,
-                      position: {
-                        my: "center",
-                        at: "center+" + dialogOffset + "px center+" + dialogOffset + "px",
-                        of: window
-                      },
-                      open: function (event, ui) {
-                        if (window.matchMedia("(min-width: 600px)").matches) {
-                          dialogOffset += 20;
-                        } else {
-                          dialogOffset = 0;
-                        }
-                      }
-                    });
+                  var messageElement = document.createElement('p');
+
+                  popup = createPopup({
+                    id: modalId,
+                    title: this.name,
+                    minWidth: 400,
+                    minHeight: 200
+                  });
+                  messageElement.className = 'no-results-message';
+                  messageElement.textContent = message;
+                  popup.content.appendChild(messageElement);
+                  popup.open();
                 }
               }
             }
@@ -263,10 +422,10 @@ function initChart(Chart, data, miscData = {}) {
   window.addEventListener('resize', repositionModals);
 
 
-  $.each(allocationData, function () {
-    this.code = this.code.toUpperCase();
+  allocationData.forEach(function (allocation) {
+    allocation.code = allocation.code.toUpperCase();
     // TODO: logarithmic values cannot be 0 or negative numbers
-    this.value = this.grants.amount + this.contracts.amount || 0.00001;
+    allocation.value = allocation.grants.amount + allocation.contracts.amount || 0.00001;
   });
 
   const chartType = { map: miscData, ...data.chartType };
