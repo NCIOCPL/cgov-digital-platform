@@ -1,628 +1,840 @@
-
 /**
- * This is a wrapper around the library Highcharts.js that creates custom settings
- * and functions for NCI use. In addition it loads the requisite 3rd party library files
- * only on being called.
+ * NCI wrapper around Highcharts.
  *
- * History: In the past, on Percussion, we would only include this file on specific pages. Those pages
- * include an inline script block (whereever a chart is desired) that calls this wrapper which it expects
- * to be on the window.
+ * The chart system is split across a small set of modules:
  *
- * In our new CMS implementation, we are not doing page by page JS files. To that end, the wrapper has received
- * it's own wrapper to only instantiate it on whitelisted pages. This is because we are now going to be including
- * it in Common.js so we need to create as light a processing footprint as possible
+ * a) index.js is the page-level coordinator. It imports chart.scss, checks route
+ * rules before doing DOM work, finds registered chart containers, fetches the
+ * chart JSON from the configured Fact Book data endpoint, and preloads shared
+ * Highcharts assets while data requests are in flight.
  *
- * TODO: Bigly refactor.
+ * b) library/*.js files are chart adapters. Each one maps a data file and a DOM
+ * id to an initChart function, transforms the fetched JSON into Highcharts
+ * options when needed, and instantiates this wrapper.
  *
- * There are a few things problematic with the current implementation.
+ * c) This file owns the rendering layer. It lazy-loads Highcharts core and
+ * modules from the pinned CDN version, shares those script-load Promises across
+ * chart instances, applies the NCI theme/defaults, merges chart-specific
+ * options, and creates either a built-in Highcharts chart or one of the legacy
+ * NCI_* chart presets below.
  *
- * a) This was written as a require module and with a bit of a hack/trick to create private classes. I've already
- * removed the module wrapper to allow us the standard import/export we are using for JS files that go through
- * our build system (these previously hadn't), but I have not refactored the 'class'. There will likely be future
- * fixes to this and moving to an ES6 class will greatly improve readibility for future devs who need to make fixes.
- * We won't have a real need for privacy as my comment below will be about removing the call to this class from
- * inline scripts.
+ * Important implementation constraints:
  *
- * b) The process by which charts are built is a bit tortuous. This class was loaded on the DOM, then inline scripts
- * instantiated it with custom settings, whereupon instantiation it made ajax calls to retrieve the Highcharts library
- * files from the highcharts site/cdn.  It would be much more ideal to have a configuration object baked into a DOM
- * element with all the config as attributes. However, that might not be possible as there are inline scripts and we don't
- * want to start running eval on strings on the page (though that is effectively what we are doing now anyway). It
- * would at least be a little cleaner if instead of the inline script block calling Chart, it instead simply had a config
- * object that would be located by the library either through crawling or broadcasting. Alternately, since there is code
- * involved it's hard to argue these are strictly content releases, and my preference would be new charts would be in the
- * repo and simply called by elements with data attributes identifying the chart (this will not fly I'm sure though.)
- * Either way, it would be worth reconsidering how we implement charts in the future. We may even want to control their
- * config creation through the CMS if that proves possible.
+ * a) Highcharts still attaches itself to window. This wrapper treats that global
+ * as the integration point while keeping script loading centralized and
+ * idempotent.
+ *
+ * b) Module load order affects Highcharts defaults. Shared modules load first;
+ * chart-specific modules such as maps and drilldown load before rendering; the
+ * accessibility module loads last, as recommended by Highcharts.
+ *
+ * c) Existing Fact Book charts depend on wrapper-level theme defaults and the
+ * legacy NCI_* presets. New adapters should pass plain Highcharts options and
+ * leave library loading, theme application, and error propagation to this file.
  */
 
-// Module Constructor - matching Highcarts' arguments of target, options
-const $ = window.jQuery;
-
-function Chart (target, options) {
-  this.defaultSettings = {
-      type: 'pie',
-      colors: [
-          '#40bfa2',
-          '#984e9b',
-          '#fb7830',
-          '#01acc8',
-          '#2A71A4',
-          '#82378C',
-          '#BB0E3C',
-          '#FE9F65',
-          '#7F99B4',
-          '#80DDC2',
-          '#329FBE',
-          '#706E6F',
-          '#1C4A79'
-      ],
-      bgColors: [
-          '#ffffff',
-          '#f0f0ff'
-      ],
-      font: {
-          dinCon: 'DIN Condensed, Arial Narrow, Arial, sans-serif',
-          din: 'DIN Regular, Arial, sans-serif',
-          museo: 'Museo, Montserrat, Arial, sans-serif'
-      },
-      title: {
-          color: '#62559f'
-      },
-      subtitle: {
-          color: '#62559f'
-      },
-      drilldown: {}
-  };
-
-  // extend defaults with settings
-  this.settings = $.extend(true, {}, this.defaultSettings, options);
-  this.settings.target = target;
-
-  if (typeof window.fetchingHighcharts == "undefined") {
-      window.fetchingHighcharts = false;
-  }
-
-  this.init();
+// Pinned Highcharts asset URLs loaded on demand by chart instances.
+const highchartsVersion = '11.4.0';
+const highchartsBaseURL = 'https://code.highcharts.com/' + highchartsVersion;
+const highchartsMapsBaseURL =
+  'https://code.highcharts.com/maps/' + highchartsVersion;
+const highchartsScripts = {
+  core: highchartsBaseURL + '/highcharts.js',
+  exporting: highchartsBaseURL + '/modules/exporting.js',
+  offlineExporting: highchartsBaseURL + '/modules/offline-exporting.js',
+  accessibility: highchartsBaseURL + '/modules/accessibility.js',
+  drilldown: highchartsBaseURL + '/modules/drilldown.js',
+  map: highchartsMapsBaseURL + '/modules/map.js',
 };
 
-// Module methods
-Chart.prototype = function () {
-  var loadHighcharts = function () {
+const highchartsScriptPromises = {};
+let highchartsCorePromise;
+let highchartsBasePromise;
 
-      var dfd = $.Deferred();
+/**
+ * Return the global Highcharts object after the CDN scripts have attached it.
+ */
+function getHighcharts() {
+  return window.Highcharts;
+}
 
-    if (typeof Highcharts == 'undefined' && !window.fetchingHighcharts) {
-        window.fetchingHighcharts = true;
-        // Load Highcharts core library
-        $.getScript('https://code.highcharts.com/11.4.0/highcharts.js', function() {
-          // Load exporting module
-          $.getScript('https://code.highcharts.com/11.4.0/modules/exporting.js', function() {
-            // exporting module loaded
-            // Load offline-exporting module
-            $.getScript('https://code.highcharts.com/11.4.0/modules/offline-exporting.js', function() {
-              // offline-exporting module loaded
-              // Load accessibility module
-              $.getScript('https://code.highcharts.com/11.4.0/modules/accessibility.js', function() {
-                // accessibility module loaded
-                // Load drilldown module
-                $.getScript('https://code.highcharts.com/11.4.0/modules/drilldown.js', function() {
-                  // drilldown module loaded
-                  window.fetchingHighcharts = false;
-                  dfd.resolve();
-                });
-              });
-            });
-          })
-        })
-    } else {
-        function isHighchartsLoaded () {
-            if (typeof Highcharts == "undefined" || typeof Highcharts == "object" && window.fetchingHighcharts) {
-                setTimeout(function () {
-                    isHighchartsLoaded();
-                }, 100);
-            } else {
-                dfd.resolve();
-            }
-        }
+/**
+ * Check whether a value can be recursively merged as a simple object.
+ */
+function isPlainObject(value) {
+  return Object.prototype.toString.call(value) === '[object Object]';
+}
 
-        isHighchartsLoaded();
+/**
+ * Prevent prototype pollution keys from being assigned during deep merges.
+ */
+function isSafeMergeKey(key) {
+  return key !== '__proto__' && key !== 'constructor' && key !== 'prototype';
+}
 
+/**
+ * Recursively merge chart configuration objects while preserving arrays and functions.
+ */
+function deepMerge(target, ...sources) {
+  sources.forEach(function (source) {
+    if (!source) {
+      return;
     }
 
-    return dfd.promise();
-  };
+    Object.keys(source).forEach(function (key) {
+      if (
+        !Object.prototype.hasOwnProperty.call(source, key) ||
+        !isSafeMergeKey(key)
+      ) {
+        return;
+      }
 
-  var initialize = function () {
+      const copy = source[key];
 
-      var module = this;
+      if (copy === target || typeof copy === 'undefined') {
+        return;
+      }
 
-    $.when(loadHighcharts.call(module)).done(function () {
-      baseTheme.call(module);
-
-      if (module.settings.chart.type in module) {
-        module[module.settings.chart.type].call(module);
+      if (Array.isArray(copy)) {
+        target[key] = deepMerge(
+          Array.isArray(target[key]) ? target[key] : [],
+          copy
+        );
+      } else if (isPlainObject(copy)) {
+        target[key] = deepMerge(
+          isPlainObject(target[key]) ? target[key] : {},
+          copy
+        );
       } else {
-
-        if(module.settings.chart.type == 'map'){
-          // Load map module
-          // GeoJSON map collection data in "./library/grants-contracts.js" is versioned separately
-          // from Highcharts core and modules code.
-          $.getScript('https://code.highcharts.com/maps/11.4.0/modules/map.js', function() {
-            Highcharts.setOptions({
-              lang: {
-                numericSymbols: [ "k" , "M" , "B" , "T" , "P" , "E"],
-                thousandsSep: ","
-              }
-            });
-            module.instance = Highcharts.mapChart(module.settings.target, module.settings)
-          })
-        } else {
-          module.instance = Highcharts.chart(module.settings.target, module.settings)
-        }
+        target[key] = copy;
       }
     });
-  };
+  });
 
-  var baseTheme = function () {
-      // theme settings for NCI
-      var theme = {
-          colors: this.settings.colors,
-          chart: {
-              backgroundColor: {
-                  linearGradient: [0, 0, 500, 500],
-                  stops: [
-                      [0, this.settings.bgColors[0]],
-                      [1, this.settings.bgColors[1]]
-                  ]
-              },
-              style: {
-                  color: '#62559f'
-              }
-          },
-          exporting: {
-            chartOptions: {
-              chart: {
-                backgroundColor: '#FFF',
-                spacingLeft: 60,
-                spacingRight: 60
-              },
-              title: {
-                style: {
-                  fontSize: '1em'
-                }
-              },
-              subtitle: {
-                style: {
-                  fontSize: '0.75em'
-                }
-              },
-              colorAxis:{
-                min:10000000,
-                type:"logarithmic",
-                minColor:"#BDDDE6",
-                maxColor:"#004250"
-              },
-            },
-            sourceHeight: 450,
-            sourceWidth: 995
-          },
-          plotOptions: {
-              pie: {
-                  dataLabels: {
-                      connectorColor: '#58595b'
-                  }
-              }
-          },
-          title: {
-              text: this.settings.title.text,
-              style: {
-                  color: this.settings.title.color,
-                fontFamily: this.settings.font.dinCon,
-                fontSize: '32px',
-                fontWeight: 'bold'
-              }
-          },
-          subtitle: {
-              text: this.settings.subtitle.text,
-              style: {
-                  color: this.settings.subtitle.color,
-                fontFamily: this.settings.font.dinCon,
-                  fontSize: '22px',
-                  fontWeight: 'normal'
-              }
-          },
-          labels: {
-              style: {
-                extOutline: false,
-                fontSize: '18px',
-                fontFamily: this.settings.font.din,
-                color: '#58595b'
-              }
-          },
-          legend: {
-              itemStyle: {
-                  color: '#706F6F',
-                fontSize: '14px',
-                fontFamily: this.settings.font.din,
-                  fontWeight: 'bold'
-              }
-          },
-          credits: {
-              text: 'cancer.gov',
-              href: 'http://www.cancer.gov',
-              style: {
-                  color: '#959595',
-                  fontFamily: this.settings.font.dinCon,
-                  fontSize: '13px',
-                  fontWeight: 'bold'
-              },
-              position: {
-                  y: -10
-              }
-          },
-          lang: {
-              thousandsSep: ','
-          },
-          tooltip: {
-              backgroundColor: 'rgba(247,247,247,0.95)',
-              hideDelay: 150,
-              followTouchMove: false,
-              style: {
-                  fontFamily: this.settings.font.din
-              },
-              headerFormat: '<span style="font-size: 12px; font-weight:bold">{point.key}</span><br/>',
-              pointFormat: '<span style="color:{point.color}">\u25CF</span> {series.name}: {point.y}<br/>'
-          },
-          drilldown: {
-              activeAxisLabelStyle: {
-                  fontStyle: 'normal',
-                color: '#58595b'
-              },
-              activeDataLabelStyle: {
-                  fontWeight: 'normal',
-                  color: '#58595b'
-              },
-              drillUpButton: {
-                  position: {
-                      y: 80
-                  },
-                  relativeTo: 'spacingBox'
-              }
-          },
-          // making axis labels and titles gray
-          xAxis: {
-              labels: {
-                  style: {
-                      color: '#706F6F',
-                      fontFamily: this.settings.font.museo
-                  }
-              },
-              title: {
-                  style: {
-                      color: '#706F6F',
-                    fontFamily: this.settings.font.din,
-                      textTransform: 'uppercase'
-                  }
-              },
-              lineWidth: 1,
-              lineColor: '#e6e6e6'
-          },
-          yAxis: {
-              labels: {
-                  style: {
-                      color: '#706F6F',
-                    fontFamily: this.settings.font.museo
-                  }
-              },
-              title: {
-                  style: {
-                      color: '#706F6F',
-                    fontFamily: this.settings.font.din,
-                    textTransform: 'uppercase'
-                  }
-              },
-              lineWidth: 1,
-              lineColor: '#e6e6e6'
-          },
-          zAxis: {
-              labels: {
-                  style: {
-                      color: '#706F6F',
-                    fontFamily: this.settings.font.museo
-                  }
-              },
-              title: {
-                  style: {
-                      color: '#706F6F',
-                    fontFamily: this.settings.font.din,
-                    textTransform: 'uppercase'
-                  }
-              }
-          },
-          navigation: {
-            buttonOptions: {
-              x: 5
-            }
-          }
-      };
+  return target;
+}
 
-      // Apply the theme
-      Highcharts.setOptions(theme);
-  };
+/**
+ * Load a remote script once and share the same Promise with every chart instance.
+ */
+function loadScript(url) {
+  if (!highchartsScriptPromises[url]) {
+    highchartsScriptPromises[url] = new Promise(function (resolve, reject) {
+      const script = document.createElement('script');
 
+      script.async = true;
+      script.src = url;
 
+      script.addEventListener('load', function () {
+        resolve(getHighcharts());
+      });
 
-  var generateDrilldownColors = function(drilldown){
+      script.addEventListener('error', function () {
+        delete highchartsScriptPromises[url];
+        reject(new Error('Unable to load Highcharts script "' + url + '".'));
+      });
 
-      if(typeof drilldown.series == "object") {
+      document.head.appendChild(script);
+    });
+  }
 
-          for (var i = 0; i < drilldown.series.length; i++) {
-              var obj = drilldown.series[i];
-              if (typeof obj.data == "object" && typeof obj.colors == "undefined") {
+  return highchartsScriptPromises[url];
+}
 
-                var colors = [],
-                  base = base || Highcharts.getOptions().colors[0],
-                  i;
+/**
+ * Load Highcharts core, or reuse the existing global if another script already loaded it.
+ */
+function loadHighchartsCore() {
+  if (getHighcharts()) {
+    return Promise.resolve(getHighcharts());
+  }
 
-                for (i = 0; i < 10; i += 1) {
-                  // Start out with a darkened base color (negative brighten), and end
-                  // up with a much brighter color
-                  colors.push(Highcharts.Color(base).brighten((i - 3) / 7).get());
-                }
-                obj.colors = colors;
-              }
-          }
+  if (!highchartsCorePromise) {
+    highchartsCorePromise = loadScript(highchartsScripts.core)
+      .then(function () {
+        return getHighcharts();
+      })
+      .catch(function (error) {
+        highchartsCorePromise = null;
+        throw error;
+      });
+  }
+
+  return highchartsCorePromise;
+}
+
+/**
+ * Load modules required by every chart before chart-specific modules are requested.
+ */
+function loadHighchartsBase() {
+  if (!highchartsBasePromise) {
+    highchartsBasePromise = loadHighchartsCore()
+      .then(function () {
+        return loadScript(highchartsScripts.exporting);
+      })
+      .then(function () {
+        return loadScript(highchartsScripts.offlineExporting);
+      })
+      .then(function () {
+        return getHighcharts();
+      })
+      .catch(function (error) {
+        highchartsBasePromise = null;
+        throw error;
+      });
+  }
+
+  return highchartsBasePromise;
+}
+
+/**
+ * Determine whether the chart settings need the Highcharts drilldown module.
+ */
+function hasDrilldownSeries(settings) {
+  return (
+    settings.drilldown &&
+    Array.isArray(settings.drilldown.series) &&
+    settings.drilldown.series.length > 0
+  );
+}
+
+/**
+ * Determine whether the chart settings need the Highcharts map module.
+ */
+function isMapChart(settings) {
+  return settings.chart && settings.chart.type === 'map';
+}
+
+/**
+ * Load Highcharts core, shared modules, and any modules required by this chart.
+ */
+function loadHighcharts(settings = {}) {
+  return loadHighchartsBase()
+    .then(function () {
+      const additionalModules = [];
+
+      if (hasDrilldownSeries(settings)) {
+        additionalModules.push(loadScript(highchartsScripts.drilldown));
       }
 
-      return drilldown;
-
-  };
-
-  var NCI_pie = function () {
-
-
-      var module = this;
-
-      var seriesSettings = {
-          innerSize: '60%'
-      };
-      var drilldownSettings = {
-          innerSize: '60%'
-      };
-      var moreDrilldownSettingsBecauseOfStupidFontStyles = {
-          activeDataLabelStyle: {
-              fontWeight: 'bold'
-          }
+      if (isMapChart(settings)) {
+        additionalModules.push(loadScript(highchartsScripts.map));
       }
 
-      var totalText;
+      return Promise.all(additionalModules);
+    })
+    .then(function () {
+      // Highcharts recommends loading accessibility after other modules.
+      return loadScript(highchartsScripts.accessibility);
+    })
+    .then(function () {
+      return getHighcharts();
+    });
+}
 
-      if (Object.keys(this.settings.drilldown).length > 0) {
-
-          $.extend(this.settings.drilldown, moreDrilldownSettingsBecauseOfStupidFontStyles);
-
-          for (var i = 0; i < this.settings.drilldown.series.length; i++) {
-              $.extend(this.settings.drilldown.series[i], drilldownSettings);
-          }
-      }
-
-      $.extend(true, this.settings.series[0], seriesSettings);
-
-      var presets = {
-          tooltip: {
-              formatter: function () {
-                  return '<b>' + this.point.name + '</b><br/>Budget: $' + Highcharts.numberFormat(this.y, 0);
-              }
-          },
-          chart: {
-              type: 'pie',
-              events: {
-                  load: function (chart) {
-
-                      if(module.settings.showTotal) {
-
-                          var pie = this.series[0],
-                              left = this.plotLeft + pie.center[0],
-                              top = this.plotTop + pie.center[1] - 4;
-
-                          totalText = this.renderer.text("TOTAL BUDGET<br/>$" + Highcharts.numberFormat(pie.total, 0));
-
-                          totalText.attr({
-                              'text-anchor': 'middle',
-                              id: 'donutText',
-                              x: left,
-                              y: top,
-                              style: 'color:#585757;font:22px/30px;font-weight:bold; ' + module.settings.font.dinCon + ';'
-                          }).add();
-                          // move the budget number down a bit
-                          totalText.element.children[1].setAttribute('dy', 22);
-
-                      }
-                  },
-                  redraw: function () {
-                      if(module.settings.showTotal) {
-                          var pie = this.series[0],
-                              left = this.plotLeft + pie.center[0],
-                              top = this.plotTop + pie.center[1] - 4;
-
-                          if (typeof totalText != 'undefined') {
-
-                              totalText.element.lastChild.innerHTML = "$" + Highcharts.numberFormat(this.series[0].data[0].total, 0);
-                              totalText.attr({
-                                  x: left,
-                                  y: top
-                              })
-                          }
-                      }
-                  }
-              }
-          },
-          legend: {
-              layout: 'vertical',
-              align: 'right',
-              verticalAlign: 'middle',
-              itemMarginBottom: 3
-          },
-
-          series: this.settings.series,
-          drilldown: generateDrilldownColors.call(this, this.settings.drilldown),
-
-          plotOptions: {
-              pie: {
-                  dataLabels: {
-                      enabled: true,
-                      distance: 15,
-                      crop: true,
-                      overflow: 'none',
-                      allowOverlap: true,
-                      y: -6,
-                      formatter: function (label) {
-                          return '<span>' + Highcharts.numberFormat(this.percentage, 1) + '%</span>';
-                      },
-                    style: {
-                      fontSize: '14px',
-                      fontFamily: this.settings.font.museo,
-                      fontWeight: 'bold',
-                      color: '#58595b'
-                    }
-                  },
-                  showInLegend: true
-              }
-          },
-          responsive: {
-              rules: [{
-                  condition: {
-                      maxWidth: 500
-                  },
-                  chartOptions: {
-                      spacingLeft: 0,
-                      spacingRight: 0,
-                      legend: {
-                          align: 'center',
-                          verticalAlign: 'bottom',
-                          layout: 'vertical'
-                      }
-                  }
-              }]
-          }
-      };
-
-      var chartSettings = $.extend(true, presets, this.settings);
-
-      //force the chart type to pie
-      chartSettings.chart.type = "pie";
-
-      this.instance = Highcharts.chart(this.settings.target, chartSettings);
-
+/**
+ * Build the NCI chart wrapper settings and immediately start initialization.
+ */
+function Chart(target, options) {
+  this.defaultSettings = {
+    type: 'pie',
+    colors: [
+      '#40bfa2',
+      '#984e9b',
+      '#fb7830',
+      '#01acc8',
+      '#2A71A4',
+      '#82378C',
+      '#BB0E3C',
+      '#FE9F65',
+      '#7F99B4',
+      '#80DDC2',
+      '#329FBE',
+      '#706E6F',
+      '#1C4A79',
+    ],
+    bgColors: ['#ffffff', '#f0f0ff'],
+    font: {
+      dinCon: 'DIN Condensed, Arial Narrow, Arial, sans-serif',
+      din: 'DIN Regular, Arial, sans-serif',
+      museo: 'Museo, Montserrat, Arial, sans-serif',
+    },
+    title: {
+      color: '#62559f',
+    },
+    subtitle: {
+      color: '#62559f',
+    },
+    drilldown: {},
   };
 
-  var NCI_bar = function () {
+  // Clone defaults before merging adapter options; several presets mutate settings.
+  this.settings = deepMerge({}, this.defaultSettings, options);
+  this.settings.target = target;
 
-      var module = this;
+  this.ready = this.init();
+}
 
-      var presets = {
-          chart: {
-              type: 'column'
-          },
-          legend: {
-              enabled: true,
+/**
+ * Begin loading shared Highcharts assets before chart data is ready.
+ */
+Chart.preload = function () {
+  return loadHighchartsBase();
+};
 
-          },
-          plotOptions: {
-              column: {
-                  pointPadding: 0.2,
-                  borderWidth: 0
-              }
-          },
-          tooltip: {
-              headerFormat: '<span style="font-size:20px; font-weight:bold">{point.key}</span><div class="flexTable--2cols">',
-              pointFormat: '<div><span style="color:{point.color}">\u25CF</span> {series.name}: </div><div>{point.y}</div>',
-              footerFormat: '</div>',
-              shared: true,
-              useHTML: true
-          }
-      };
+// Preserve the existing wrapper API while keeping implementation details private.
+Chart.prototype = (function () {
+  /**
+   * Load Highcharts, apply NCI defaults, and create the correct chart type.
+   */
+  var initialize = function () {
+    var module = this;
 
-      var chartSettings = $.extend(true, presets, module.settings);
+    return loadHighcharts(module.settings)
+      .then(function () {
+        baseTheme.call(module);
 
-      //force the chart type to bar or column
-      chartSettings.chart.type = this.settings.chart.type == 'NCI_bar' ? 'bar' : 'column';
-
-      this.instance = Highcharts.chart(this.settings.target, chartSettings);
-  };
-
-  var NCI_averageCost = function () {
-
-      var module = this;
-
-      function calcSpline () {
-          var spline = {
-              type: 'spline',
-              name: 'Average (thousands)',
-              yAxis: 2,
-              data: (function () {
-                      var data = [];
-                      var awardData = module.settings.series[0].data;
-                      var fundingData = module.settings.series[1].data;
-                      for (var i = 0; i < awardData.length; i++) {
-                        data[i] = [];
-                        data[i].push(Math.round(fundingData[i] / awardData[i])); //average
-                      }
-                      return data;
-                  }()
-              ),
-              marker: {
-                  lineWidth: 2,
-                  lineColor: Highcharts.getOptions().colors[3],
-                  fillColor: 'white'
+        if (module.settings.chart.type in module) {
+          module[module.settings.chart.type].call(module);
+        } else {
+          if (module.settings.chart.type == 'map') {
+            // Map topology comes from chart adapters and is versioned separately
+            // from the pinned Highcharts Maps scripts.
+            Highcharts.setOptions({
+              lang: {
+                numericSymbols: ['k', 'M', 'B', 'T', 'P', 'E'],
+                thousandsSep: ',',
               },
-              tooltip: {
-                  pointFormat: '<div><span style="color:{point.color}">\u25CF</span> {series.name}: </div><div>${point.y:,.0f}</div>'
-              }
-          };
-
-          return spline;
-      }
-
-      // Caluculate Avergate and Generate Spline
-      module.settings.series.push(calcSpline());
-
-      var presets = {
-          labels: {
-              items: [{
-                  style: {
-                      left: '50px',
-                      top: '18px',
-                      color: (Highcharts.theme && Highcharts.theme.textColor) || 'black'
-                  }
-              }]
-          },
-          tooltip: {
-              headerFormat: '<span style="font-size:10px; font-weight:bold">{point.key}</span><div class="flexTable--2cols">',
-              pointFormat: '<div><span style="color:{point.color}">\u25CF</span> {series.name}: </div><div>{point.y}</div>',
-              footerFormat: '</div>',
-              shared: true,
-              useHTML: true
-          },
-          series: this.settings.series
-      };
-
-      var chartSettings = $.extend(true, presets, module.settings);
-
-      this.instance = Highcharts.chart(this.settings.target, chartSettings);
+            });
+            module.instance = Highcharts.mapChart(
+              module.settings.target,
+              module.settings
+            );
+          } else {
+            module.instance = Highcharts.chart(
+              module.settings.target,
+              module.settings
+            );
+          }
+        }
+        return module.instance;
+      })
+      .catch(function (error) {
+        console.error(
+          'Could not initialize Highcharts chart "' +
+            module.settings.target +
+            '".',
+          error
+        );
+        throw error;
+      });
   };
 
   /**
-   * Exposed functions of this module.
+   * Apply the shared NCI visual theme to Highcharts before rendering a chart.
+   */
+  var baseTheme = function () {
+    // Shared NCI theme defaults. Chart adapters can override these in options.
+    var theme = {
+      colors: this.settings.colors,
+      chart: {
+        backgroundColor: {
+          linearGradient: [0, 0, 500, 500],
+          stops: [
+            [0, this.settings.bgColors[0]],
+            [1, this.settings.bgColors[1]],
+          ],
+        },
+        style: {
+          color: '#62559f',
+        },
+      },
+      exporting: {
+        chartOptions: {
+          chart: {
+            backgroundColor: '#FFF',
+            spacingLeft: 60,
+            spacingRight: 60,
+          },
+          title: {
+            style: {
+              fontSize: '1em',
+            },
+          },
+          subtitle: {
+            style: {
+              fontSize: '0.75em',
+            },
+          },
+          colorAxis: {
+            min: 10000000,
+            type: 'logarithmic',
+            minColor: '#BDDDE6',
+            maxColor: '#004250',
+          },
+        },
+        sourceHeight: 450,
+        sourceWidth: 995,
+      },
+      plotOptions: {
+        pie: {
+          dataLabels: {
+            connectorColor: '#58595b',
+          },
+        },
+      },
+      title: {
+        text: this.settings.title.text,
+        style: {
+          color: this.settings.title.color,
+          fontFamily: this.settings.font.dinCon,
+          fontSize: '32px',
+          fontWeight: 'bold',
+        },
+      },
+      subtitle: {
+        text: this.settings.subtitle.text,
+        style: {
+          color: this.settings.subtitle.color,
+          fontFamily: this.settings.font.dinCon,
+          fontSize: '22px',
+          fontWeight: 'normal',
+        },
+      },
+      labels: {
+        style: {
+          extOutline: false,
+          fontSize: '18px',
+          fontFamily: this.settings.font.din,
+          color: '#58595b',
+        },
+      },
+      legend: {
+        itemStyle: {
+          color: '#706F6F',
+          fontSize: '14px',
+          fontFamily: this.settings.font.din,
+          fontWeight: 'bold',
+        },
+      },
+      credits: {
+        text: 'cancer.gov',
+        href: 'http://www.cancer.gov',
+        style: {
+          color: '#959595',
+          fontFamily: this.settings.font.dinCon,
+          fontSize: '13px',
+          fontWeight: 'bold',
+        },
+        position: {
+          y: -10,
+        },
+      },
+      lang: {
+        thousandsSep: ',',
+      },
+      tooltip: {
+        backgroundColor: 'rgba(247,247,247,0.95)',
+        hideDelay: 150,
+        followTouchMove: false,
+        style: {
+          fontFamily: this.settings.font.din,
+        },
+        headerFormat:
+          '<span style="font-size: 12px; font-weight:bold">{point.key}</span><br/>',
+        pointFormat:
+          '<span style="color:{point.color}">\u25CF</span> {series.name}: {point.y}<br/>',
+      },
+      drilldown: {
+        activeAxisLabelStyle: {
+          fontStyle: 'normal',
+          color: '#58595b',
+        },
+        activeDataLabelStyle: {
+          fontWeight: 'normal',
+          color: '#58595b',
+        },
+        drillUpButton: {
+          position: {
+            y: 80,
+          },
+          relativeTo: 'spacingBox',
+        },
+      },
+      // Axis typography defaults shared by Cartesian charts and map legends.
+      colorAxis: {
+        labels: {
+          style: {
+            color: '#706F6F',
+            fontFamily: this.settings.font.museo,
+          },
+        },
+      },
+      xAxis: {
+        labels: {
+          style: {
+            color: '#706F6F',
+            fontFamily: this.settings.font.museo,
+          },
+        },
+        title: {
+          style: {
+            color: '#706F6F',
+            fontFamily: this.settings.font.din,
+            textTransform: 'uppercase',
+          },
+        },
+        lineWidth: 1,
+        lineColor: '#e6e6e6',
+      },
+      yAxis: {
+        labels: {
+          style: {
+            color: '#706F6F',
+            fontFamily: this.settings.font.museo,
+          },
+        },
+        title: {
+          style: {
+            color: '#706F6F',
+            fontFamily: this.settings.font.din,
+            textTransform: 'uppercase',
+          },
+        },
+        lineWidth: 1,
+        lineColor: '#e6e6e6',
+      },
+      zAxis: {
+        labels: {
+          style: {
+            color: '#706F6F',
+            fontFamily: this.settings.font.museo,
+          },
+        },
+        title: {
+          style: {
+            color: '#706F6F',
+            fontFamily: this.settings.font.din,
+            textTransform: 'uppercase',
+          },
+        },
+      },
+      navigation: {
+        buttonOptions: {
+          x: 5,
+        },
+      },
+    };
+
+    // Apply after optional modules load so module-specific defaults are themed.
+    Highcharts.setOptions(theme);
+  };
+
+  /**
+   * Generate fallback color palettes for drilldown series that do not define colors.
+   */
+  var generateDrilldownColors = function (drilldown) {
+    if (typeof drilldown.series == 'object') {
+      for (
+        var seriesIndex = 0;
+        seriesIndex < drilldown.series.length;
+        seriesIndex += 1
+      ) {
+        var obj = drilldown.series[seriesIndex];
+        if (typeof obj.data == 'object' && typeof obj.colors == 'undefined') {
+          var colors = [];
+          var base = Highcharts.getOptions().colors[0];
+
+          for (var colorIndex = 0; colorIndex < 10; colorIndex += 1) {
+            // Start out with a darkened base color (negative brighten), and end
+            // up with a much brighter color
+            colors.push(
+              Highcharts.Color(base)
+                .brighten((colorIndex - 3) / 7)
+                .get()
+            );
+          }
+          obj.colors = colors;
+        }
+      }
+    }
+
+    return drilldown;
+  };
+
+  /**
+   * Render an NCI donut/pie chart with shared legend, tooltip, and drilldown behavior.
+   */
+  var NCI_pie = function () {
+    var module = this;
+
+    var seriesSettings = {
+      innerSize: '60%',
+    };
+    var drilldownSettings = {
+      innerSize: '60%',
+    };
+    var drilldownActiveLabelSettings = {
+      activeDataLabelStyle: {
+        fontWeight: 'bold',
+      },
+    };
+
+    var totalText;
+
+    if (Object.keys(this.settings.drilldown).length > 0) {
+      Object.assign(this.settings.drilldown, drilldownActiveLabelSettings);
+
+      for (var i = 0; i < this.settings.drilldown.series.length; i++) {
+        Object.assign(this.settings.drilldown.series[i], drilldownSettings);
+      }
+    }
+
+    deepMerge(this.settings.series[0], seriesSettings);
+
+    var presets = {
+      tooltip: {
+        formatter: function () {
+          return (
+            '<b>' +
+            this.point.name +
+            '</b><br/>Budget: $' +
+            Highcharts.numberFormat(this.y, 0)
+          );
+        },
+      },
+      chart: {
+        type: 'pie',
+        events: {
+          load: function (chart) {
+            if (module.settings.showTotal) {
+              var pie = this.series[0],
+                left = this.plotLeft + pie.center[0],
+                top = this.plotTop + pie.center[1] - 4;
+
+              totalText = this.renderer.text(
+                'TOTAL BUDGET<br/>$' + Highcharts.numberFormat(pie.total, 0)
+              );
+
+              totalText
+                .attr({
+                  'text-anchor': 'middle',
+                  id: 'donutText',
+                  x: left,
+                  y: top,
+                  style:
+                    'color:#585757;font:22px/30px;font-weight:bold; ' +
+                    module.settings.font.dinCon +
+                    ';',
+                })
+                .add();
+              // Offset the budget value below the TOTAL BUDGET label.
+              totalText.element.children[1].setAttribute('dy', 22);
+            }
+          },
+          redraw: function () {
+            if (module.settings.showTotal) {
+              var pie = this.series[0],
+                left = this.plotLeft + pie.center[0],
+                top = this.plotTop + pie.center[1] - 4;
+
+              if (typeof totalText != 'undefined') {
+                totalText.element.lastChild.innerHTML =
+                  '$' +
+                  Highcharts.numberFormat(this.series[0].data[0].total, 0);
+                totalText.attr({
+                  x: left,
+                  y: top,
+                });
+              }
+            }
+          },
+        },
+      },
+      legend: {
+        layout: 'vertical',
+        align: 'right',
+        verticalAlign: 'middle',
+        itemMarginBottom: 3,
+      },
+
+      series: this.settings.series,
+      drilldown: generateDrilldownColors.call(this, this.settings.drilldown),
+
+      plotOptions: {
+        pie: {
+          dataLabels: {
+            enabled: true,
+            distance: 15,
+            crop: true,
+            overflow: 'none',
+            allowOverlap: true,
+            y: -6,
+            formatter: function (label) {
+              return (
+                '<span>' +
+                Highcharts.numberFormat(this.percentage, 1) +
+                '%</span>'
+              );
+            },
+            style: {
+              fontSize: '14px',
+              fontFamily: this.settings.font.museo,
+              fontWeight: 'bold',
+              color: '#58595b',
+            },
+          },
+          showInLegend: true,
+        },
+      },
+      responsive: {
+        rules: [
+          {
+            condition: {
+              maxWidth: 500,
+            },
+            chartOptions: {
+              spacingLeft: 0,
+              spacingRight: 0,
+              legend: {
+                align: 'center',
+                verticalAlign: 'bottom',
+                layout: 'vertical',
+              },
+            },
+          },
+        ],
+      },
+    };
+
+    var chartSettings = deepMerge(presets, this.settings);
+
+    // Keep the legacy NCI_pie preset rendering as a native Highcharts pie.
+    chartSettings.chart.type = 'pie';
+
+    this.instance = Highcharts.chart(this.settings.target, chartSettings);
+  };
+
+  /**
+   * Render an NCI bar or column chart using the shared tooltip and column settings.
+   */
+  var NCI_bar = function () {
+    var module = this;
+
+    var presets = {
+      chart: {
+        type: 'column',
+      },
+      legend: {
+        enabled: true,
+      },
+      plotOptions: {
+        column: {
+          pointPadding: 0.2,
+          borderWidth: 0,
+        },
+      },
+      tooltip: {
+        headerFormat:
+          '<span style="font-size:20px; font-weight:bold">{point.key}</span><div class="flexTable--2cols">',
+        pointFormat:
+          '<div><span style="color:{point.color}">\u25CF</span> {series.name}: </div><div>{point.y}</div>',
+        footerFormat: '</div>',
+        shared: true,
+        useHTML: true,
+      },
+    };
+
+    var chartSettings = deepMerge(presets, module.settings);
+
+    // Translate legacy NCI_* preset names to native Highcharts chart types.
+    chartSettings.chart.type =
+      this.settings.chart.type == 'NCI_bar' ? 'bar' : 'column';
+
+    this.instance = Highcharts.chart(this.settings.target, chartSettings);
+  };
+
+  /**
+   * Render the RPG cost-per-award chart with a derived average-cost spline series.
+   */
+  var NCI_averageCost = function () {
+    var module = this;
+
+    /**
+     * Calculate the average funding per award and return it as a spline series.
+     */
+    function calcSpline() {
+      var spline = {
+        type: 'spline',
+        name: 'Average (thousands)',
+        yAxis: 2,
+        data: (function () {
+          var data = [];
+          var awardData = module.settings.series[0].data;
+          var fundingData = module.settings.series[1].data;
+          for (var i = 0; i < awardData.length; i++) {
+            data[i] = [];
+            data[i].push(Math.round(fundingData[i] / awardData[i]));
+          }
+          return data;
+        })(),
+        marker: {
+          lineWidth: 2,
+          lineColor: Highcharts.getOptions().colors[3],
+          fillColor: 'white',
+        },
+        tooltip: {
+          pointFormat:
+            '<div><span style="color:{point.color}">\u25CF</span> {series.name}: </div><div>${point.y:,.0f}</div>',
+        },
+      };
+
+      return spline;
+    }
+
+    // Add the derived average-cost series before merging final chart settings.
+    module.settings.series.push(calcSpline());
+
+    var presets = {
+      labels: {
+        items: [
+          {
+            style: {
+              left: '50px',
+              top: '18px',
+              color:
+                (Highcharts.theme && Highcharts.theme.textColor) || 'black',
+            },
+          },
+        ],
+      },
+      tooltip: {
+        headerFormat:
+          '<span style="font-size:10px; font-weight:bold">{point.key}</span><div class="flexTable--2cols">',
+        pointFormat:
+          '<div><span style="color:{point.color}">\u25CF</span> {series.name}: </div><div>{point.y}</div>',
+        footerFormat: '</div>',
+        shared: true,
+        useHTML: true,
+      },
+      series: this.settings.series,
+    };
+
+    var chartSettings = deepMerge(presets, module.settings);
+
+    this.instance = Highcharts.chart(this.settings.target, chartSettings);
+  };
+
+  /**
+   * Methods available to chart adapters and legacy preset dispatch.
    */
   return {
-      init: initialize,
-      NCI_pie: NCI_pie,
-      NCI_bar: NCI_bar,
-      NCI_column: NCI_bar,
-      NCI_averageCost: NCI_averageCost
-  }
-}();
+    init: initialize,
+    NCI_pie: NCI_pie,
+    NCI_bar: NCI_bar,
+    NCI_column: NCI_bar,
+    NCI_averageCost: NCI_averageCost,
+  };
+})();
 
 export default Chart;
