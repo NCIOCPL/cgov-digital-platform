@@ -5,55 +5,55 @@
 {% set isMultiYearEvent = event_start_year < event_end_year %}
 
 <article>
-	<h1 class="nci-heading-h1">{{ node.label }}</h1>
-	<div class="cgdp-inner-content-area">
-		{{ content.field_image_article }}
-		<div class="cgdp-event-info">
-			<h2 class="nci-heading-h2 cgdp-event-info__series">{{ content.field_event_series }}</h2>
-			<p class="cgdp-event-info__date-time">
-				{% if isValidEventDate %}
-					{% if isMultiYearEvent %}
-						{{ event_start_long }}
-						&ndash;
-						{{ event_end_long }}
-					{% else %}
-						{{ event_start_short }}
-						&ndash;
-						{{ event_end_long }}
-					{% endif %}
-				{% else %}
-					{{ event_start_long }}
-					{% if not is_all_day_event %}
-						&vert;
-						{{ event_start_time }}
-						&ndash;
-						{{ event_end_time }}
-					{% endif %}
-				{% endif %}
-			</p>
+  <h1 class="nci-heading-h1">{{ node.label }}</h1>
+  <div class="cgdp-inner-content-area">
+    {{ content.field_image_article }}
+    <div class="cgdp-event-info">
+      <h2 class="nci-heading-h2 cgdp-event-info__series">{{ content.field_event_series }}</h2>
+      <p class="cgdp-event-info__date-time">
+        {% if isValidEventDate %}
+          {% if isMultiYearEvent %}
+            {{ event_start_long }}
+            &ndash;
+            {{ event_end_long }}
+          {% else %}
+            {{ event_start_short }}
+            &ndash;
+            {{ event_end_long }}
+          {% endif %}
+        {% else %}
+          {{ event_start_long }}
+          {% if not is_all_day_event %}
+            &vert;
+            {{ event_start_time }}
+            &ndash;
+            {{ event_end_time }}
+          {% endif %}
+        {% endif %}
+      </p>
 
-			{% if content.field_venue|field_value or content.field_room|field_value or content.field_city_state|field_value %}
-				<p class="cgdp-event-info__location">
-					{% if content.field_venue|field_value %}
-						<span class="cgdp-event-info__venue">{{ content.field_venue }}</span>
-					{% endif %}
-					{% if content.field_room|field_value %}
-						<span class="cgdp-event-info__room">{{ content.field_room }}</span>
-					{% endif %}
-					{% if content.field_city_state|field_value %}
-						<span class="cgdp-event-info__city-state">{{ content.field_city_state }}</span>
-					{% endif %}
-				</p>
-			{% endif %}
+      {% if content.field_venue|field_value or content.field_room|field_value or content.field_city_state|field_value %}
+        <p class="cgdp-event-info__location">
+          {% if content.field_venue|field_value %}
+            <span class="cgdp-event-info__venue">{{ content.field_venue }}</span>
+          {% endif %}
+          {% if content.field_room|field_value %}
+            <span class="cgdp-event-info__room">{{ content.field_room }}</span>
+          {% endif %}
+          {% if content.field_city_state|field_value %}
+            <span class="cgdp-event-info__city-state">{{ content.field_city_state }}</span>
+          {% endif %}
+        </p>
+      {% endif %}
 
-			<p>
-				<a href="/node/{{ node.id }}/icalendar" class="usa-link">Add to Outlook Calendar</a>
-			</p>
-		</div>
-		{{ content.body }}
-	</div>
-	<footer class="cgdp-article-footer">
-		{{ content.field_related_resources }}
-		{{ contentPageMacros.ncidsDisplayDates(node, content) }}
-	</footer>
+      <p>
+        <a href="{{ path('cgov_event.icalendar', {'nid': node.id}) }}" class="usa-link">{{ 'Add to Outlook Calendar'|t }}</a>
+      </p>
+    </div>
+    {{ content.body }}
+  </div>
+  <footer class="cgdp-article-footer">
+    {{ content.field_related_resources }}
+    {{ contentPageMacros.ncidsDisplayDates(node, content) }}
+  </footer>
 </article>
