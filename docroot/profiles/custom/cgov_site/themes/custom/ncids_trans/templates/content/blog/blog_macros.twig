@@ -25,11 +25,11 @@
 #}
 {% macro getImage(content) %}
   {% if content.field_image_promotional and content.field_image_promotional[0] %}
-    {{content.field_image_promotional}}
+    {{- content.field_image_promotional -}}
   {% elseif content.field_image_article and content.field_image_article[0] %}
-    {{content.field_image_article}}
+    {{- content.field_image_article -}}
   {% else %}
-    {# TODO: Use old placeholder image. #}
+    <img class="usa-collection__img" src="{{ get_placeholder_image('ncids_collections_media_4x3') }}" alt="No Image Placeholder">
   {% endif %}
 {% endmacro %}
 

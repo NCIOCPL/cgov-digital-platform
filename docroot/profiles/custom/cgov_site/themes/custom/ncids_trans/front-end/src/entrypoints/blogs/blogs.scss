@@ -18,6 +18,7 @@
 @forward '../../lib/components/wysiwyg/common/cgdp-embed-card/';
 
 @use 'uswds-core' as *;
+@forward 'usa-collection';
 
 .cgdp-article-footer-citation {
 	@include u-margin-bottom(0);
@@ -29,4 +30,11 @@
 
 .cgdp-blog-topic-intro {
 	@include u-margin-y(3);
+}
+
+.cgdp-block-blog-posts {
+	@include u-margin-top(3);
+	@include at-media('tablet-lg') {
+		@include u-margin-top(4);
+	}
 }

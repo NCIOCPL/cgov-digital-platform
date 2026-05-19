@@ -102,7 +102,7 @@ class BlogPager extends BlockBase implements ContainerFactoryPluginInterface {
       ];
       $build['#cache'] = [
         'tags' => [
-          'node:' . $series_nid,
+          'cgov_blog_list:' . $series_nid,
         ],
       ];
     }
