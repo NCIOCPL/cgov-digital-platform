@@ -2,6 +2,7 @@
 
 namespace Drupal\ncids_html_transformer\Drush\Commands;
 
+use Drupal\Core\Entity\EntityFieldManagerInterface;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\StringTranslation\StringTranslationTrait;
 use Drupal\ncids_html_transformer\Services\NcidsHtmlTransformerManager;
@@ -25,18 +26,44 @@ class CgovMigrateToNcidsCommands extends DrushCommands {
    *
    * @param \Drupal\Core\Entity\EntityTypeManagerInterface $entityTypeManager
    *   The entity type manager.
+   * @param \Drupal\Core\Entity\EntityFieldManagerInterface $entityFieldManager
+   *   The entity field manager.
    */
-  public function __construct(protected EntityTypeManagerInterface $entityTypeManager) {
+  public function __construct(
+    protected EntityTypeManagerInterface $entityTypeManager,
+    protected EntityFieldManagerInterface $entityFieldManager,
+  ) {
     parent::__construct();
   }
 
   /**
-   * Update HTML in cgov_article content items.
+   * Update node body HTML in the specified content type bundle to NCIDS format.
    */
-  #[CLI\Command(name: 'cgov:migrate-article-to-ncids', aliases: ['cgov:m-a-ncids'])]
+  #[CLI\Command(name: 'cgov:migrate-body-to-ncids', aliases: ['cgov:m-b-ncids'])]
   #[CLI\Bootstrap(level: DrupalBootLevels::FULL)]
-  #[CLI\Usage(name: 'cgov:migrate-article-to-ncids', description: 'Migrate cgov_article content to NCIDS format')]
-  public function migrateArticleToNcids() {
+  #[CLI\Usage(name: 'cgov:migrate-body-to-ncids cgov_event', description: 'Migrate cgov_event body node to NCIDS format')]
+  public function migrateBodyToNcids(string $bundle): void {
+    /*
+     * Guard against running this command on content types
+     * that either do not exist or do not have a body field,
+     * otherwise we will just be doing a lot of unnecessary
+     * work loading nodes and then skipping them.
+     **/
+    $node_type = $this->entityTypeManager->getStorage('node_type')->load($bundle);
+    if (!$node_type) {
+      $this->logger()->error('The content type {node_type} does not exist.', [
+        'node_type' => $bundle,
+      ]);
+      return;
+    }
+
+    $field_definitions = $this->entityFieldManager->getFieldDefinitions('node', $bundle);
+    if (!isset($field_definitions['body'])) {
+      $this->logger()->error('The content type {node_type} does not have a body field.', [
+        'node_type' => $bundle,
+      ]);
+      return;
+    }
 
     /* @todo Check to make sure there are no pages in workflow states other
      * than published. This is harder than one might initially think because
@@ -51,12 +78,12 @@ class CgovMigrateToNcidsCommands extends DrushCommands {
     // show as an error and archived nodes are skipped.
     $nids = $this->entityTypeManager->getStorage('node')
       ->getQuery()
-      ->condition('type', 'cgov_article')
+      ->condition('type', $bundle)
       ->accessCheck(FALSE)
       ->execute();
 
     $batch = [
-      'title' => $this->t('Updating HTML in cgov_article content items'),
+      'title' => $this->t('Updating HTML in @bundle content items', ['@bundle' => $bundle]),
       'operations' => [],
       'init_message' => $this->t('Initializing'),
       'progress_message' => $this->t('Processed @current out of @total.'),
@@ -67,14 +94,14 @@ class CgovMigrateToNcidsCommands extends DrushCommands {
 
     foreach ($nids as $nid) {
       $batch['operations'][] = [
-        [static::class, 'processArticle'],
+        [static::class, 'processBodyNode'],
         [$nid],
       ];
     }
 
     $this->logger()->notice('Enqueuing {count} nodes of type {node_type} for migration.', [
       'count' => count($nids),
-      'node_type' => 'cgov_article',
+      'node_type' => $bundle,
     ]);
 
     batch_set($batch);
@@ -89,7 +116,7 @@ class CgovMigrateToNcidsCommands extends DrushCommands {
    * @param array $context
    *   The batch context array, passed by reference.
    */
-  public static function processArticle($nid, &$context): void {
+  public static function processBodyNode($nid, &$context): void {
     if (empty($context['sandbox'])) {
       $context['sandbox']['progress'] = 0;
       $context['sandbox']['max'] = 1;
@@ -99,7 +126,7 @@ class CgovMigrateToNcidsCommands extends DrushCommands {
       $context['results']['skipped'] = 0;
       $context['results']['failed'] = 0;
       $context['results']['progress'] = 0;
-      $context['results']['process'] = 'Article migration batch completed';
+      $context['results']['process'] = 'Body Node migration batch completed';
     }
 
     try {
@@ -225,35 +252,32 @@ class CgovMigrateToNcidsCommands extends DrushCommands {
    */
   private static function processNode(Node $node, $transformer): bool {
 
-    $article_body = $node->get('field_article_body')->getValue();
+    // Guard against nodes that do not have a body field.
+    if (!$node->hasField('body')) {
+      \Drupal::logger('ncids_migration')->warning('Skipping nid: {nid}, language: {lang} because it has no body field.', [
+        'nid' => $node->id(),
+        'lang' => $node->language()->getId(),
+      ]);
+      return FALSE;
+    }
+
+    $field_data = $node->get('body')->getValue();
     $updated = FALSE;
 
-    foreach ($article_body as $paragraph_reference) {
-      /** @var \Drupal\Core\Entity\RevisionableStorageInterface $paragraphStorage */
-      $paragraphStorage = \Drupal::entityTypeManager()->getStorage('paragraph');
-      /** @var \Drupal\paragraphs\Entity\Paragraph $paragraph */
-      $paragraph = $paragraphStorage->loadRevision($paragraph_reference['target_revision_id']);
-
-      if (!$paragraph || $paragraph->getType() !== 'body_section') {
-        continue;
-      }
-
-      $field_data = $paragraph->get('field_body_section_content')->getValue();
-      /* Only process values exist */
-      // @todo See if this should not just be a count check.
-      if (empty($field_data[0])) {
-        continue;
-      }
-
-      $transformed_content = $transformer->transformAll($field_data[0]['value']);
-
-      $paragraph->set('field_body_section_content', [
-        'value' => $transformed_content,
-        'format' => 'ncids_full_html',
-      ]);
-      $paragraph->save();
-      $updated = TRUE;
+    /* Only process values exist */
+    // @todo See if this should not just be a count check.
+    if (empty($field_data[0])) {
+      return $updated;
     }
+
+    $transformed_content = $transformer->transformAll($field_data[0]['value']);
+
+    $node->set('body', [
+      'value' => $transformed_content,
+      'format' => 'ncids_full_html',
+    ]);
+    $node->save();
+    $updated = TRUE;
 
     return $updated;
   }
@@ -297,11 +321,13 @@ class CgovMigrateToNcidsCommands extends DrushCommands {
       // handles all possible errors.
       $error_operation = reset($operations);
       if ($error_operation) {
-        \Drupal::logger('ncids_migration')->error('An error occurred while processing {error_operation} with arguments: {arguments}',
-        [
-          'error_operation' => print_r($error_operation[0], TRUE),
-          'arguments' => print_r($error_operation[1], TRUE),
-        ]);
+        \Drupal::logger('ncids_migration')->error(
+          'An error occurred while processing {error_operation} with arguments: {arguments}',
+          [
+            'error_operation' => print_r($error_operation[0], TRUE),
+            'arguments' => print_r($error_operation[1], TRUE),
+          ]
+        );
       }
     }
   }
