@@ -2,35 +2,37 @@
 {% import '@ncids_trans/content_page_macros.twig' as contentPageMacros %}
 <!-- ********************************* BEGIN Page Content ********************************** -->
 <article>
-	<div class="cgdp-press-release-title-block">
-		{% if content.field_press_release_type|field_value %}
-			<div>
-				{{ content.field_press_release_type }}
-			</div>
-		{% endif %}
-		<h1 class="nci-heading-h1">
-			{{ node.label }}
-		</h1>
-		<div class="cgdp-press-release-title-block__release-info">
-			{{ contentPageMacros.ncidsDisplayDates(node,content) }}
-			{{ drupal_region('press_release_contact') }}
-		</div>
-	</div>
-	<div class="cgdp-inner-content-area">
-		{{ content.field_image_article }}
-		<div class="cgdpl">
-			<div class="contentzone">
-				<div id="cgvBody">
-					{{ content.body }}
-				</div>
-			</div>
-		</div>
-	</div>
-	<footer class="cgdp-article-footer">
-		{{ content.field_citation }}
-		{{ content.field_related_resources }}
-		{% if node.field_public_use.value == '1' %}
-			{{ drupal_region('public_use') }}
-		{% endif %}
-	</footer>
+  <div class="cgdp-press-release-title-block">
+    {% if content.field_press_release_type|field_value %}
+      <div>
+        {{ content.field_press_release_type }}
+      </div>
+    {% endif %}
+    <h1 class="nci-heading-h1">
+      {{ node.label }}
+    </h1>
+    <div class="cgdp-press-release-title-block__release-info">
+      {{ contentPageMacros.ncidsDisplayDates(node,content) }}
+      {{ drupal_region('press_release_contact') }}
+    </div>
+  </div>
+  <div class="cgdp-inner-content-area">
+    {{ content.field_image_article }}
+    <div class="cgdpl">
+      <div class="contentzone">
+        <div id="cgvBody">
+          {{ content.body }}
+        </div>
+      </div>
+    </div>
+  </div>
+  <footer class="cgdp-article-footer">
+    {{ content.field_citation }}
+    {{ content.field_related_resources }}
+    {% if node.field_public_use.value == '1' %}
+      <div class="cgdp-article-footer__separator">
+        {{ drupal_region('public_use') }}
+      </div>
+    {% endif %}
+  </footer>
 </article>
