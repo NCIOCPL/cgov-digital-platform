@@ -81,9 +81,6 @@ class BlogPager extends BlockBase implements ContainerFactoryPluginInterface {
     // the view. This plugin is currently being used by Blog Posts only.
     if ($content_type === 'cgov_blog_post') {
       $post = $this->drawBlogPostOlderNewer($content_id, $content_type);
-      // Get series nid for the block.
-      $blog_series = $this->blogManager->getBlogSeriesFromRoute();
-      $series_nid = $blog_series->id();
       $langcode = $curr_entity->language()->getId();
       $prev_nid = $post['prev_nid'] ?? '';
       $prev_title = $post['prev_title'] ?? '';
@@ -91,7 +88,6 @@ class BlogPager extends BlockBase implements ContainerFactoryPluginInterface {
       $next_nid = $post['next_nid'] ?? '';
       $next_title = $post['next_title'] ?? '';
       $next_link = $this->blogManager->getBlogPathFromNid($next_nid, $langcode);
-      // Build the render array & cache tags.
       $build['#cgov_block_data'] = [
         'prev_nid' => $prev_nid,
         'prev_title' => $prev_title,
@@ -99,11 +95,6 @@ class BlogPager extends BlockBase implements ContainerFactoryPluginInterface {
         'next_nid' => $next_nid,
         'next_title' => $next_title,
         'next_link' => $next_link,
-      ];
-      $build['#cache'] = [
-        'tags' => [
-          'cgov_blog_list:' . $series_nid,
-        ],
       ];
     }
 

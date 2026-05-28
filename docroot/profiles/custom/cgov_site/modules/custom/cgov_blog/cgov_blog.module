@@ -370,6 +370,11 @@ function cgov_blog_theme($existing, $type, $theme, $path) {
  * Implements hook_entity_update().
  */
 function cgov_blog_entity_update($entity) {
+  if ($entity->getEntityTypeId() === 'node' && $entity->bundle() === "cgov_blog_series") {
+    Cache::invalidateTags(['cgov_blog_list:' . $entity->id()]);
+    return;
+  }
+
   // Verify that the node type is blog post.
   if ($entity->getEntityTypeId() === 'node' && $entity->bundle() === "cgov_blog_post") {
     // Get the blog series nid and invalidate cache tag.
