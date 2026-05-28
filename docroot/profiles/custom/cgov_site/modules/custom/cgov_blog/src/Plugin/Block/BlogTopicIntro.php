@@ -74,15 +74,21 @@ class BlogTopicIntro extends BlockBase implements ContainerFactoryPluginInterfac
       return $build;
     }
     $topic_intro = $this->getTopicIntro($blog_series);
-    $build = [
+    return [
       'topic_intro' => $topic_intro,
-      '#cache' => [
-        'tags' => [
-          'cgov_blog_list:' . $blog_series->id(),
-        ],
-      ],
     ];
-    return $build;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function getCacheTags() {
+    $tags = parent::getCacheTags();
+    $blog_series = $this->blogManager->getBlogSeriesFromRoute();
+    if (isset($blog_series)) {
+      $tags = Cache::mergeTags($tags, ['cgov_blog_list:' . $blog_series->id()]);
+    }
+    return $tags;
   }
 
   /**

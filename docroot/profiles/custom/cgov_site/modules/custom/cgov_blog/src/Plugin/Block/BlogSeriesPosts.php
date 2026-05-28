@@ -4,6 +4,7 @@ namespace Drupal\cgov_blog\Plugin\Block;
 
 use Drupal\cgov_blog\Services\BlogManagerInterface;
 use Drupal\Core\Block\BlockBase;
+use Drupal\Core\Cache\Cache;
 use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
 use Drupal\node\NodeInterface;
 use Drupal\views\Views;
@@ -77,6 +78,30 @@ class BlogSeriesPosts extends BlockBase implements ContainerFactoryPluginInterfa
     }
 
     return $view->buildRenderable($display_id, [$blog_series->id()]);
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function getCacheContexts() {
+    return Cache::mergeContexts(parent::getCacheContexts(), [
+      'route',
+      'url.query_args:page',
+      'url.query_args:topic',
+      'url.query_args:year',
+    ]);
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function getCacheTags() {
+    $tags = parent::getCacheTags();
+    $blog_series = $this->blogManager->getBlogSeriesFromRoute();
+    if ($blog_series instanceof NodeInterface && $blog_series->bundle() === 'cgov_blog_series') {
+      $tags = Cache::mergeTags($tags, ['cgov_blog_list:' . $blog_series->id()]);
+    }
+    return $tags;
   }
 
 }
