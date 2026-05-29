@@ -119,7 +119,7 @@ jobs:
           mysql -u root -proot --protocol=TCP -e "CREATE DATABASE IF NOT EXISTS simpletest"
           mysql -u root -proot --protocol=TCP -e "GRANT ALL ON simpletest.* to 'simpletest'@'%' IDENTIFIED BY 'simpletest'"
           ## We don't set git info for right now as we are in the NCIOCPL origin right now.
-      - name DEBUG
+      - name: DEBUG
         run: |
           composer validate --no-check-all --ansi -vvv
       - name: Validate
