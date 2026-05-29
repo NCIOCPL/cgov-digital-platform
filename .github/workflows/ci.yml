@@ -121,7 +121,7 @@ jobs:
           ## We don't set git info for right now as we are in the NCIOCPL origin right now.
       - name: Validate
         run: |
-          blt validate --define drush.alias='${drush.aliases.ci}' --ansi --verbose --no-interaction
+          blt validate --define drush.alias='${drush.aliases.ci}' --ansi -vvv --no-interaction
       - name: Setup App
         env:
           NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
