@@ -17,6 +17,13 @@ use Drupal\taxonomy\TermInterface;
 use Drupal\views\ViewExecutable;
 
 /**
+ * Implements hook_entity_type_build().
+ */
+function cgov_blog_entity_type_build(array &$entity_types) {
+  $entity_types['node']->addConstraint('UniqueBlogPostUrl');
+}
+
+/**
  * Implements hook_form_alter().
  */
 function cgov_blog_form_alter(&$form, FormStateInterface $form_state, $form_id) {
