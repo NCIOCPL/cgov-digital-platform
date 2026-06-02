@@ -345,3 +345,13 @@ function cgov_core_update_10017(): void {
     $installer->install(['mysql']);
   }
 }
+
+/**
+ * Uninstall admin_toolbar_links_access_filter (duplicated by Drupal 10.3 core).
+ */
+function cgov_core_update_10018(): void {
+  $installer = \Drupal::service('module_installer');
+  if (\Drupal::moduleHandler()->moduleExists('admin_toolbar_links_access_filter')) {
+    $installer->uninstall(['admin_toolbar_links_access_filter']);
+  }
+}
