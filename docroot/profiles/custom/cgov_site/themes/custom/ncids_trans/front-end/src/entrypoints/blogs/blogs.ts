@@ -1,5 +1,4 @@
 import './blogs.scss';
-import './blogs-legacy.scss';
 
 import cgdpBlogArchiveInit from '../../lib/components/cgdp-blog-archive';
 import cgdpRelatedResourcesInit from '../../lib/components/cgdp-related-resources';

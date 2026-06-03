@@ -12,10 +12,7 @@
 @forward '../../lib/components/cgdp-slim-hero/';
 @forward '../../lib/components/cgdp-field-image-article/';
 @forward '../../lib/components/cgdp-blog-categories/';
-@forward '../../lib/components/wysiwyg/common/cgdp-embed-image/';
-@forward '../../lib/components/wysiwyg/common/cgdp-embed-infographic/';
-@forward '../../lib/components/wysiwyg/common/cgdp-embed-video';
-@forward '../../lib/components/wysiwyg/common/cgdp-embed-card/';
+@forward '../../lib/components/wysiwyg/editors/ncids-full-html';
 
 @use 'uswds-core' as *;
 @forward 'usa-collection';
@@ -33,6 +30,14 @@
 }
 
 .cgdp-block-blog-posts {
+	@include u-margin-top(3);
+	@include at-media('tablet-lg') {
+		@include u-margin-top(4);
+	}
+}
+
+.cgdp-field-intro-text,
+.usa-prose--ncids-full-html {
 	@include u-margin-top(3);
 	@include at-media('tablet-lg') {
 		@include u-margin-top(4);
