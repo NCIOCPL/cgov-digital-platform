@@ -92,11 +92,12 @@ class CgovCoreTools {
   private $cgovLangTypes = [
     'language_interface' => [
       'enabled' => [
-        'language-user-admin' => "-10",
+        'cgov-admin-english' => "-12",
         'language-url' => "-8",
         'language-selected' => "12",
       ],
       'method_weights' => [
+        'cgov-admin-english' => "-12",
         'language-user-admin' => "-10",
         'language-url' => "-8",
         'language-session' => "-4",

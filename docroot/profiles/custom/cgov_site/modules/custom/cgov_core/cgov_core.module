@@ -18,6 +18,7 @@ use Drupal\Core\Entity\EntityTypeInterface;
 use Drupal\Core\Field\FieldDefinitionInterface;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Language\Language;
+use Drupal\Core\Language\LanguageInterface;
 use Drupal\Core\Render\Element;
 use Drupal\Core\Session\AccountInterface;
 use Drupal\Core\Site\Settings;
@@ -58,6 +59,12 @@ function cgov_core_block_build_alter(array &$build, BlockPluginInterface $block)
     else {
       $build['#cache']['max_age'] = 0;
     }
+  }
+
+  // Language switcher blocks must vary by content language so the correct
+  // link is removed when interface language is decoupled from content language.
+  if (str_starts_with($block->getPluginId(), 'language_block:')) {
+    $build['#cache']['contexts'][] = 'languages:language_content';
   }
 }
 
@@ -402,7 +409,7 @@ function cgov_core_theme_suggestions_entity_embed_container(array $variables) {
  * We fix this, but still leverage the OOB language block.
  */
 function cgov_core_language_switch_links_alter(array &$links, $type, Url $url) {
-  $language_interface = \Drupal::languageManager()->getCurrentLanguage();
+  $language_interface = \Drupal::languageManager()->getCurrentLanguage(LanguageInterface::TYPE_CONTENT);
 
   // First remove the current language no matter what. This applies to all
   // links.
