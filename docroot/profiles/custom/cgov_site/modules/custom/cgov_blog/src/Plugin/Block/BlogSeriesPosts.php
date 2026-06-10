@@ -6,28 +6,30 @@ use Drupal\cgov_blog\Services\BlogManagerInterface;
 use Drupal\Core\Block\BlockBase;
 use Drupal\Core\Cache\Cache;
 use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
+use Drupal\node\NodeInterface;
+use Drupal\views\Views;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
- * Provides a Featured Posts Block.
+ * Provides a conditional blog series posts block for Layout Builder.
  *
  * @Block(
- *   id = "cgov_blog_topic_intro",
- *   admin_label = @Translation("Cgov Blog Category About"),
- *   category = @Translation("Cgov Digital Platform"),
+ *  id = "cgov_blog_series_posts",
+ *  admin_label = @Translation("Cgov Blog Series Posts"),
+ *  category = @Translation("Cgov Digital Platform"),
  * )
  */
-class BlogTopicIntro extends BlockBase implements ContainerFactoryPluginInterface {
+class BlogSeriesPosts extends BlockBase implements ContainerFactoryPluginInterface {
 
   /**
-   * The BlogManager object.
+   * The blog manager.
    *
    * @var \Drupal\cgov_blog\Services\BlogManagerInterface
    */
-  public $blogManager;
+  protected $blogManager;
 
   /**
-   * Constructs a blog entity object.
+   * Constructs a BlogSeriesPosts block.
    *
    * @param array $configuration
    *   A configuration array containing information about the plugin instance.
@@ -36,10 +38,9 @@ class BlogTopicIntro extends BlockBase implements ContainerFactoryPluginInterfac
    * @param mixed $plugin_definition
    *   The plugin implementation definition.
    * @param \Drupal\cgov_blog\Services\BlogManagerInterface $blog_manager
-   *   A blog manager object.
+   *   The blog manager service.
    */
   public function __construct(
-    // Constructor with args.
     array $configuration,
     $plugin_id,
     $plugin_definition,
@@ -53,7 +54,6 @@ class BlogTopicIntro extends BlockBase implements ContainerFactoryPluginInterfac
    * {@inheritdoc}
    */
   public static function create(ContainerInterface $container, array $configuration, $plugin_id, $plugin_definition) {
-    // Create an instance of this plugin with the blog_manager service.
     return new static(
       $configuration,
       $plugin_id,
@@ -63,32 +63,21 @@ class BlogTopicIntro extends BlockBase implements ContainerFactoryPluginInterfac
   }
 
   /**
-   * Create HTML.
-   *
    * {@inheritdoc}
    */
   public function build() {
-    $build = [];
     $blog_series = $this->blogManager->getBlogSeriesFromRoute();
-    if (!isset($blog_series)) {
-      return $build;
+    if (!$blog_series instanceof NodeInterface || $blog_series->bundle() !== 'cgov_blog_series') {
+      return [];
     }
-    $topic_intro = $this->getTopicIntro($blog_series);
-    return [
-      'topic_intro' => $topic_intro,
-    ];
-  }
 
-  /**
-   * {@inheritdoc}
-   */
-  public function getCacheTags() {
-    $tags = parent::getCacheTags();
-    $blog_series = $this->blogManager->getBlogSeriesFromRoute();
-    if (isset($blog_series)) {
-      $tags = Cache::mergeTags($tags, ['cgov_blog_list:' . $blog_series->id()]);
+    $display_id = !empty($blog_series->field_show_list_thumbnails->value) ? 'block_bp_list_th' : 'block_bp_list';
+    $view = Views::getView('cgov_block_blog_posts');
+    if (!$view) {
+      return [];
     }
-    return $tags;
+
+    return $view->buildRenderable($display_id, [$blog_series->id()]);
   }
 
   /**
@@ -97,23 +86,22 @@ class BlogTopicIntro extends BlockBase implements ContainerFactoryPluginInterfac
   public function getCacheContexts() {
     return Cache::mergeContexts(parent::getCacheContexts(), [
       'route',
+      'url.query_args:page',
       'url.query_args:topic',
+      'url.query_args:year',
     ]);
   }
 
   /**
-   * Get category description for intro text.
-   *
-   * @param \Drupal\node\NodeInterface $blog_series
-   *   The current blog series.
-   *
-   * @return string
-   *   The topic description or an empty string.
+   * {@inheritdoc}
    */
-  private function getTopicIntro($blog_series) {
-    $topic = $this->blogManager->getSeriesTopicByUrl($blog_series);
-    $intro = $topic->description->value ?? '';
-    return $intro;
+  public function getCacheTags() {
+    $tags = parent::getCacheTags();
+    $blog_series = $this->blogManager->getBlogSeriesFromRoute();
+    if ($blog_series instanceof NodeInterface && $blog_series->bundle() === 'cgov_blog_series') {
+      $tags = Cache::mergeTags($tags, ['cgov_blog_list:' . $blog_series->id()]);
+    }
+    return $tags;
   }
 
 }

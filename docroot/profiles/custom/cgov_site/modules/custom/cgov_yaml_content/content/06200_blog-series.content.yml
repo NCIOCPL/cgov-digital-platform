@@ -17,7 +17,9 @@
   field_search_engine_restrictions:
     value: IncludeSearch
   field_about_blog:
-    value: 'A blog featuring news and research updates from the National Cancer Institute.'
+    - format: "ncids_streamlined_no_headings"
+      value: |
+        <p>A blog featuring news and research updates from the National Cancer Institute.</p>
   field_site_section:
     - '#process':
         callback: 'reference'
@@ -66,7 +68,9 @@
             filename: 'ras-blog-banner.__v400106190.jpg'
       alt: 'Join the Discussion text with image of gears'
   field_about_blog__ES:
-    value: 'Blog que presenta las noticias y las últimas investigaciones del Instituto Nacional del Cáncer.'
+    - format: "ncids_streamlined_no_headings"
+      value: |
+        <p>Blog que presenta las noticias y las últimas investigaciones del Instituto Nacional del Cáncer.</p>
   field_feedburner_url__ES:
     value: 'https://feedburner-test.cancer.gov/cancercurrents?lang=es'
 
@@ -95,4 +99,7 @@
           - 'taxonomy_term'
           - vid: 'cgov_site_sections'
             computed_path: '/research/key-initiatives/ras/ras-central/blog'
-  field_about_blog: 'Join the discussion! Post comments, ask questions, and share information with RAS experts. Subscribe to receive notifications when a new RAS Dialogue article is posted.'
+  field_about_blog:
+    - format: "ncids_streamlined_no_headings"
+      value: |
+        <p>Join the discussion! Post comments, ask questions, and share information with RAS experts. Subscribe to receive notifications when a new RAS Dialogue article is posted.</p>

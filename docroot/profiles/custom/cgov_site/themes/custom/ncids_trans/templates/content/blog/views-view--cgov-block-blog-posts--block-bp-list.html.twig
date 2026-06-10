@@ -1,0 +1,20 @@
+{# No wrapper element on purpose. #}
+{{ title_prefix }}
+{% if title %}{{ title }}{% endif %}
+{{ title_suffix }}
+
+{% if header %}{{ header }}{% endif %}
+{% if exposed %}{{ exposed }}{% endif %}
+{% if attachment_before %}{{ attachment_before }}{% endif %}
+
+{% if rows %}
+  {{ rows }}
+{% elseif empty %}
+  {{ empty }}
+{% endif %}
+
+{% if pager %}{{ pager }}{% endif %}
+{% if attachment_after %}{{ attachment_after }}{% endif %}
+{% if more %}{{ more }}{% endif %}
+{% if footer %}{{ footer }}{% endif %}
+{% if feed_icons %}{{ feed_icons }}{% endif %}
