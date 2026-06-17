@@ -19,12 +19,12 @@ function cgov_metatag_entity_presave($entity) {
 
       if ($restriction[0]['value'] == 'IncludeSearch') {
         // e.g 'robots' => 'noindex, nofollow, noarchive, nosnippet, noodp'.
-        $entity->set('field_meta_tags', serialize([
+        $entity->set('field_meta_tags', json_encode([
           'robots' => 'index',
         ]));
       }
       elseif ($restriction[0]['value'] == 'ExcludeSearch') {
-        $entity->set('field_meta_tags', serialize([
+        $entity->set('field_meta_tags', json_encode([
           'robots' => 'noindex',
         ]));
       }
