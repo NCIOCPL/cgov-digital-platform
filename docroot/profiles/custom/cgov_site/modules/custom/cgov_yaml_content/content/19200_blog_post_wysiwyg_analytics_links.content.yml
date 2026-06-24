@@ -1,0 +1,69 @@
+## Blog post with all WYSIWYG link analytics types for QA automation
+- entity: "node"
+  type: "cgov_blog_post"
+  title: "Test Blog Post: WYSIWYG Analytics Link Types"
+  langcode: en
+  status: 1
+  moderation_state:
+    value: 'published'
+  field_author:
+    value: 'NCI Staff'
+  field_blog_series:
+    - target_type: 'node'
+      '#process':
+        callback: 'reference'
+        args:
+          - 'node'
+          - type: 'cgov_blog_series'
+            title: 'Cancer Currents Blog'
+  body:
+    - format: "ncids_full_html"
+      value: |
+            <p>This blog post is a QA fixture for automated WYSIWYG analytics validation of all tracked link types.</p>
+            <h2 id="analytics-link-types">Analytics Link Types</h2>
+            <p>
+              External: <a href="https://www.google.com">Google external link</a><br>
+              Internal (unmanaged): <a href="/about-cancer">About Cancer internal link</a><br>
+              Internal (managed): <a data-entity-substitution="canonical" data-entity-type="node" data-entity-uuid="#process" data-cgov-yaml-query-type="cgov_home_landing" data-cgov-yaml-query-title="About Cancer">Managed internal link</a><br>
+              Email: <a href="mailto:test@example.org">test@example.org</a><br>
+              Media: <a data-entity-substitution="canonical" data-entity-type="media" data-entity-uuid="#process" data-cgov-yaml-query-bundle="cgov_file" data-cgov-yaml-query-name="Test PDF File name">Managed media link</a><br>
+              Glossified: <nci-definition data-gloss-id="45164" data-gloss-dictionary="Cancer.gov" data-gloss-audience="Patient" data-gloss-lang="en">biopsy</nci-definition><br>
+              Other protocol: <a href="tel:+18005551212">1-800-555-1212</a>
+            </p>
+  field_browser_title:
+    value: 'Test Blog Post: WYSIWYG Analytics Link Types'
+  field_card_title:
+    value: 'WYSIWYG Analytics Link Types'
+  field_feature_card_description:
+    value: 'QA fixture blog post with all analytics link types.'
+  field_intro_text:
+    - format: "ncids_streamlined_no_headings"
+      value: |
+        <p>Use this page to validate analytics for External, Internal, Email, Media, Glossified, and Other-protocol links.</p>
+  field_image_article:
+    - target_type: 'media'
+      '#process':
+        callback: 'reference'
+        args:
+          - 'media'
+          - bundle: 'cgov_image'
+            name: 'Promo Placeholder'
+  field_image_promotional:
+    - target_type: 'media'
+      '#process':
+        callback: 'reference'
+        args:
+          - 'media'
+          - bundle: 'cgov_image'
+            name: 'Promo Placeholder'
+  field_list_description:
+    value: 'QA blog post for analytics link type automation.'
+  field_page_description:
+    value: 'Blog post containing all WYSIWYG analytics link types for testing.'
+  field_date_posted:
+    value: "2026-06-30"
+  field_pretty_url:
+    value: "test-blog-wysiwyg-analytics-link-types"
+  field_public_use: 1
+  field_search_engine_restrictions:
+    value: IncludeSearch
