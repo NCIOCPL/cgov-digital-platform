@@ -12,6 +12,7 @@ import {
 	blogRightRailAnalyticsHelper,
 	blogSeriesListAnalyticsHelper,
 } from '../../lib/core/analytics/blog-analytics-helper';
+import { blogAnalyticsHelper } from '../../lib/core/analytics/blog-analytics-helper';
 
 let blogsBodyAnalyticsInit = false;
 
@@ -46,6 +47,7 @@ const onDOMContentLoaded = () => {
 	cgdpBodyAnalyticsInit();
 	blogSeriesListAnalyticsHelper();
 	blogRightRailAnalyticsHelper();
+	blogAnalyticsHelper();
 };
 
 document.addEventListener('DOMContentLoaded', onDOMContentLoaded);

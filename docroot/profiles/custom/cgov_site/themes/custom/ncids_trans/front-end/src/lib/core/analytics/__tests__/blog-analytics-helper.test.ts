@@ -4,6 +4,8 @@ import { fireEvent, screen } from '@testing-library/dom';
 
 import * as eddlUtil from '../eddl-util';
 import {
+	blogAnalyticsHelper,
+	blogPagerAnalyticsHelper,
 	blogRightRailAnalyticsHelper,
 	blogSeriesListAnalyticsHelper,
 } from '../blog-analytics-helper';
@@ -87,6 +89,68 @@ const blogRightRailDom = `
 	</div>
 `;
 
+const blogPostPagerDom = `
+	<div class="cgdp-blog-post-pager">
+		<div class="cgdp-blog-post-pager--older">
+			<a class="usa-link" href="/blog/older-post">&lt; Older Post</a>
+			<p><i>Older blog post title</i></p>
+		</div>
+		<div class="cgdp-blog-post-pager--newer">
+			<a class="usa-link" href="/blog/newer-post">Newer Post &gt;</a>
+			<p><i>Newer blog post title</i></p>
+		</div>
+	</div>
+`;
+
+const blogSeriesPagerDom = `
+	<main class="cgdp-blog-series"></main>
+	<div class="cgdp-blog-post-pager">
+		<a class="cgdp-blog-post-pager--older usa-link" href="/blog?page=1">&lt; Older Posts</a>
+		<a class="cgdp-blog-post-pager--newer usa-link" href="/blog?page=0">Newer Posts &gt;</a>
+	</div>
+`;
+
+describe('Blog analytics helper', () => {
+	afterEach(() => {
+		document.body.innerHTML = '';
+		document.head.innerHTML = '';
+		jest.resetAllMocks();
+	});
+
+	it('initializes all blog analytics helpers', () => {
+		const trackOtherSpy = jest.spyOn(eddlUtil, 'trackOther');
+		document.head.insertAdjacentHTML(
+			'beforeend',
+			'<meta name="dcterms.type" content="cgvBlogPost">'
+		);
+		document.body.insertAdjacentHTML(
+			'beforeend',
+			`${blogSeriesListDom}${blogPostPagerDom}${blogRightRailDom}`
+		);
+
+		blogAnalyticsHelper();
+		fireEvent.click(screen.getByRole('link', { name: longTitle }));
+		fireEvent.click(screen.getByRole('link', { name: '< Older Post' }));
+		fireEvent.click(screen.getByRole('link', { name: 'Clinical Trials' }));
+
+		expect(trackOtherSpy).toHaveBeenCalledWith(
+			'BlogSeries:List:LinkClick',
+			'BlogSeries:List:LinkClick',
+			expect.any(Object)
+		);
+		expect(trackOtherSpy).toHaveBeenCalledWith(
+			'Blog:Pager:LinkClick',
+			'Blog:Pager:LinkClick',
+			expect.any(Object)
+		);
+		expect(trackOtherSpy).toHaveBeenCalledWith(
+			'Blog:RightRail:LinkClick',
+			'Blog:RightRail:LinkClick',
+			expect.any(Object)
+		);
+	});
+});
+
 describe('Blog series list analytics helper', () => {
 	afterEach(() => {
 		document.body.innerHTML = '';
@@ -149,6 +213,125 @@ describe('Blog series list analytics helper', () => {
 		blogSeriesListAnalyticsHelper();
 		blogSeriesListAnalyticsHelper();
 		fireEvent.click(screen.getByRole('link', { name: longTitle }));
+
+		expect(trackOtherSpy).toHaveBeenCalledTimes(1);
+	});
+});
+
+describe('Blog pager analytics helper', () => {
+	afterEach(() => {
+		document.body.innerHTML = '';
+		document.head.innerHTML = '';
+		jest.resetAllMocks();
+	});
+
+	it('does not blow up when blog pager links do not exist', () => {
+		expect(() => blogPagerAnalyticsHelper()).not.toThrow();
+	});
+
+	it('tracks older post clicks on blog post pages', () => {
+		const trackOtherSpy = jest.spyOn(eddlUtil, 'trackOther');
+		document.head.insertAdjacentHTML(
+			'beforeend',
+			'<meta name="dcterms.type" content="cgvBlogPost">'
+		);
+		document.body.insertAdjacentHTML('beforeend', blogPostPagerDom);
+
+		blogPagerAnalyticsHelper();
+		fireEvent.click(screen.getByRole('link', { name: '< Older Post' }));
+
+		expect(trackOtherSpy).toHaveBeenCalledWith(
+			'Blog:Pager:LinkClick',
+			'Blog:Pager:LinkClick',
+			{
+				location: 'Body',
+				componentType: 'Blog Pager',
+				pageType: 'Blog Post',
+				olderNewer: 'Older',
+			}
+		);
+	});
+
+	it('tracks newer post clicks on blog post pages', () => {
+		const trackOtherSpy = jest.spyOn(eddlUtil, 'trackOther');
+		document.head.insertAdjacentHTML(
+			'beforeend',
+			'<meta name="dcterms.type" content="cgvBlogPost">'
+		);
+		document.body.insertAdjacentHTML('beforeend', blogPostPagerDom);
+
+		blogPagerAnalyticsHelper();
+		fireEvent.click(screen.getByRole('link', { name: 'Newer Post >' }));
+
+		expect(trackOtherSpy).toHaveBeenCalledWith(
+			'Blog:Pager:LinkClick',
+			'Blog:Pager:LinkClick',
+			{
+				location: 'Body',
+				componentType: 'Blog Pager',
+				pageType: 'Blog Post',
+				olderNewer: 'Newer',
+			}
+		);
+	});
+
+	it('tracks older posts clicks on blog series pages', () => {
+		const trackOtherSpy = jest.spyOn(eddlUtil, 'trackOther');
+		document.head.insertAdjacentHTML(
+			'beforeend',
+			'<meta name="dcterms.type" content="cgvBlogSeries">'
+		);
+		document.body.insertAdjacentHTML('beforeend', blogSeriesPagerDom);
+
+		blogPagerAnalyticsHelper();
+		fireEvent.click(screen.getByRole('link', { name: '< Older Posts' }));
+
+		expect(trackOtherSpy).toHaveBeenCalledWith(
+			'Blog:Pager:LinkClick',
+			'Blog:Pager:LinkClick',
+			{
+				location: 'Body',
+				componentType: 'Blog Pager',
+				pageType: 'Blog Series',
+				olderNewer: 'Older',
+			}
+		);
+	});
+
+	it('tracks newer posts clicks on blog series pages', () => {
+		const trackOtherSpy = jest.spyOn(eddlUtil, 'trackOther');
+		document.head.insertAdjacentHTML(
+			'beforeend',
+			'<meta name="dcterms.type" content="cgvBlogSeries">'
+		);
+		document.body.insertAdjacentHTML('beforeend', blogSeriesPagerDom);
+
+		blogPagerAnalyticsHelper();
+		fireEvent.click(screen.getByRole('link', { name: 'Newer Posts >' }));
+
+		expect(trackOtherSpy).toHaveBeenCalledWith(
+			'Blog:Pager:LinkClick',
+			'Blog:Pager:LinkClick',
+			{
+				location: 'Body',
+				componentType: 'Blog Pager',
+				pageType: 'Blog Series',
+				olderNewer: 'Newer',
+			}
+		);
+	});
+
+	it('does not attach duplicate click handlers to pager links', () => {
+		const trackOtherSpy = jest.spyOn(eddlUtil, 'trackOther');
+		document.head.insertAdjacentHTML(
+			'beforeend',
+			'<meta name="dcterms.type" content="cgvBlogPost">'
+		);
+		document.body.insertAdjacentHTML('beforeend', blogPostPagerDom);
+
+		blogPagerAnalyticsHelper();
+		blogPagerAnalyticsHelper();
+		fireEvent.click(screen.getByRole('link', { name: '< Older Post' }));
 
 		expect(trackOtherSpy).toHaveBeenCalledTimes(1);
 	});
