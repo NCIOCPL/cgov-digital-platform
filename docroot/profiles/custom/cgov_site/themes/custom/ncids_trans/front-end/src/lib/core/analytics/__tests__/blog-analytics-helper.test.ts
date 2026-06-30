@@ -3,7 +3,10 @@ import '@testing-library/jest-dom/extend-expect';
 import { fireEvent, screen } from '@testing-library/dom';
 
 import * as eddlUtil from '../eddl-util';
-import { blogSeriesListAnalyticsHelper } from '../blog-analytics-helper';
+import {
+	blogRightRailAnalyticsHelper,
+	blogSeriesListAnalyticsHelper,
+} from '../blog-analytics-helper';
 
 jest.mock('../eddl-util');
 
@@ -51,6 +54,37 @@ const blogSeriesListDom = `
 			</ul>
 		</div>
 	</main>
+`;
+
+const blogRightRailDom = `
+	<div class="tablet-lg:grid-col-3">
+		<div class="cgdp-blog-categories">
+			<div class="usa-summary-box">
+				<div class="usa-summary-box__body">
+					<div class="usa-summary-box__heading">Categories</div>
+					<div class="usa-summary-box__text">
+						<ul class="usa-list usa-list--unstyled">
+							<li><a href="/blog?topic=clinical-trials">Clinical Trials</a></li>
+							<li><a href="/blog?topic=prevention">Prevention</a></li>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="cgdp-blog-archive">
+			<div class="usa-accordion usa-accordion--bordered">
+				<div class="usa-accordion__heading">
+					<button class="usa-accordion__button" type="button">Archive</button>
+				</div>
+				<div class="usa-accordion__content" id="blog-archive-content">
+					<ul class="usa-list usa-list--unstyled">
+						<li><a href="/blog?year=2025">2025<span class="cgdp-blog-archive__total"> (12)</span></a></li>
+						<li><a href="/blog?year=2024">2024</a></li>
+					</ul>
+				</div>
+			</div>
+		</div>
+	</div>
 `;
 
 describe('Blog series list analytics helper', () => {
@@ -115,6 +149,101 @@ describe('Blog series list analytics helper', () => {
 		blogSeriesListAnalyticsHelper();
 		blogSeriesListAnalyticsHelper();
 		fireEvent.click(screen.getByRole('link', { name: longTitle }));
+
+		expect(trackOtherSpy).toHaveBeenCalledTimes(1);
+	});
+});
+
+describe('Blog right rail analytics helper', () => {
+	afterEach(() => {
+		document.body.innerHTML = '';
+		document.head.innerHTML = '';
+		jest.resetAllMocks();
+	});
+
+	it('does not blow up when blog right rail links do not exist', () => {
+		expect(() => blogRightRailAnalyticsHelper()).not.toThrow();
+	});
+
+	it('tracks category clicks on blog post pages', () => {
+		const trackOtherSpy = jest.spyOn(eddlUtil, 'trackOther');
+		document.head.insertAdjacentHTML(
+			'beforeend',
+			'<meta name="dcterms.type" content="cgvBlogPost">'
+		);
+		document.body.insertAdjacentHTML('beforeend', blogRightRailDom);
+
+		blogRightRailAnalyticsHelper();
+		fireEvent.click(screen.getByRole('link', { name: 'Clinical Trials' }));
+
+		expect(trackOtherSpy).toHaveBeenCalledWith(
+			'Blog:RightRail:LinkClick',
+			'Blog:RightRail:LinkClick',
+			{
+				location: 'Right Rail',
+				componentType: 'Category Box',
+				pageType: 'Blog Post',
+				linkText: 'Clinical Trials',
+			}
+		);
+	});
+
+	it('tracks archive clicks on blog series pages', () => {
+		const trackOtherSpy = jest.spyOn(eddlUtil, 'trackOther');
+		document.head.insertAdjacentHTML(
+			'beforeend',
+			'<meta name="dcterms.type" content="cgvBlogSeries">'
+		);
+		document.body.insertAdjacentHTML('beforeend', blogRightRailDom);
+
+		blogRightRailAnalyticsHelper();
+		fireEvent.click(screen.getByRole('link', { name: '2025 (12)' }));
+
+		expect(trackOtherSpy).toHaveBeenCalledWith(
+			'Blog:RightRail:LinkClick',
+			'Blog:RightRail:LinkClick',
+			{
+				location: 'Right Rail',
+				componentType: 'Archive Box',
+				pageType: 'Blog Series',
+				linkText: '2025',
+			}
+		);
+	});
+
+	it('uses the blog series layout as a page type fallback', () => {
+		const trackOtherSpy = jest.spyOn(eddlUtil, 'trackOther');
+		document.body.insertAdjacentHTML(
+			'beforeend',
+			`<main class="cgdp-blog-series"></main>${blogRightRailDom}`
+		);
+
+		blogRightRailAnalyticsHelper();
+		fireEvent.click(screen.getByRole('link', { name: 'Prevention' }));
+
+		expect(trackOtherSpy).toHaveBeenCalledWith(
+			'Blog:RightRail:LinkClick',
+			'Blog:RightRail:LinkClick',
+			{
+				location: 'Right Rail',
+				componentType: 'Category Box',
+				pageType: 'Blog Series',
+				linkText: 'Prevention',
+			}
+		);
+	});
+
+	it('does not attach duplicate click handlers to right rail links', () => {
+		const trackOtherSpy = jest.spyOn(eddlUtil, 'trackOther');
+		document.head.insertAdjacentHTML(
+			'beforeend',
+			'<meta name="dcterms.type" content="cgvBlogPost">'
+		);
+		document.body.insertAdjacentHTML('beforeend', blogRightRailDom);
+
+		blogRightRailAnalyticsHelper();
+		blogRightRailAnalyticsHelper();
+		fireEvent.click(screen.getByRole('link', { name: '2024' }));
 
 		expect(trackOtherSpy).toHaveBeenCalledTimes(1);
 	});
