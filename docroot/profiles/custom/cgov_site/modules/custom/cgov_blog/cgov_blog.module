@@ -48,17 +48,44 @@ function cgov_blog_form_alter(&$form, FormStateInterface $form_state, $form_id) 
         'event' => 'change',
         'method' => 'replace',
       ];
+      // Get the current entity from the form to
+      // figure out the active form language code.
+      $form_object = $form_state->getFormObject();
+      $entity = method_exists($form_object, 'getEntity') ? $form_object->getEntity() : NULL;
+      $langcode = $entity ? $entity->language()->getId() : \Drupal::languageManager()->getCurrentLanguage()->getId();
 
-      $series_id = $form_state->getValue("field_blog_series");
+      $user_input = $form_state->getUserInput();
       $blog_manager = \Drupal::service('cgov_blog.blog_manager');
-      // When creating a translation form state does not have the series
-      // information yet.
-      if ($series_id == NULL) {
-        $series_id = $form['field_blog_series']['widget']['#default_value'];
-        $series_nid = $series_id[0];
+
+      // 1. Check raw active user input
+      // (prioritizing AJAX changes across languages).
+      if (!empty($user_input['field_blog_series'])) {
+        $series_input = $user_input['field_blog_series'];
+        $series_nid = is_array($series_input) ? ($series_input[$langcode][0]['target_id'] ?? $series_input[0]['target_id'] ?? NULL) : $series_input;
       }
       else {
-        $series_nid = $series_id[0]['target_id'];
+        // 2. Fall back to form state values
+        // (checking language nested key first, then flat).
+        $series_state = $form_state->getValue('field_blog_series');
+        if (!empty($series_state)) {
+          if (isset($series_state[$langcode])) {
+            $series_nid = $series_state[$langcode][0]['target_id'] ?? NULL;
+          }
+          else {
+            $series_nid = $series_state[0]['target_id'] ?? $series_state['target_id'] ?? NULL;
+          }
+        }
+        // 3. Fall back to default widget values
+        else {
+          $default_value = $form['field_blog_series']['widget']['#default_value'] ?? NULL;
+          $series_nid = is_array($default_value) ? ($default_value[0]['target_id'] ?? $default_value[0] ?? NULL) : $default_value;
+        }
+      }
+
+      // Ensure $series_nid is safely normalized to a
+      // clean scalar value if it's still an array.
+      if (is_array($series_nid)) {
+        $series_nid = $series_nid['target_id'] ?? $series_nid[0] ?? NULL;
       }
 
       $langcode = \Drupal::languageManager()->getCurrentLanguage()->getId();
