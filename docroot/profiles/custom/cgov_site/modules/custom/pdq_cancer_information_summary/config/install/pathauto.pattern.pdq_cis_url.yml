@@ -1,17 +1,18 @@
 langcode: en
 status: true
 dependencies:
+  config:
+    - node.type.pdq_cancer_information_summary
   module:
     - node
 id: pdq_cis_url
 label: 'PDQ Summary URL'
 type: 'canonical_entities:node'
-pattern: '[node:field_pdq_url:value]'
+pattern: '/[node:field_pdq_url:value]'
 selection_criteria:
   6d81fb7c-9081-47ab-97e2-f333cc5a6fcc:
     id: 'entity_bundle:node'
     negate: false
-    uuid: 6d81fb7c-9081-47ab-97e2-f333cc5a6fcc
     context_mapping:
       node: node
     bundles:

@@ -1,6 +1,8 @@
 langcode: en
 status: true
 dependencies:
+  config:
+    - node.type.cgov_event
   module:
     - node
 id: event_url
@@ -11,7 +13,6 @@ selection_criteria:
   ef804804-ab78-4ada-918b-5df04f096255:
     id: 'entity_bundle:node'
     negate: false
-    uuid: ef804804-ab78-4ada-918b-5df04f096255
     context_mapping:
       node: node
     bundles:
