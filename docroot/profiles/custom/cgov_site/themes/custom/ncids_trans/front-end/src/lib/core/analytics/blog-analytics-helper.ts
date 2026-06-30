@@ -2,6 +2,7 @@ import { trackOther } from './eddl-util';
 
 const BLOG_SERIES_LIST_EVENT_NAME = 'BlogSeries:List:LinkClick';
 const BLOG_RIGHT_RAIL_EVENT_NAME = 'Blog:RightRail:LinkClick';
+const BLOG_PAGER_EVENT_NAME = 'Blog:Pager:LinkClick';
 const BLOG_SERIES_LIST_SELECTOR =
 	'.cgdp-blog-series .cgdp-block-blog-posts .usa-collection, .cgdp-blog-series .cgdp-block-blog-posts.usa-collection';
 const COLLECTION_ITEM_SELECTOR = '.usa-collection__item';
@@ -91,6 +92,29 @@ const blogRightRailClickHandler = (evt: Event): void => {
 	});
 };
 
+const getOlderNewer = (linkClicked: HTMLElement): string => {
+	if (linkClicked.closest('.cgdp-blog-post-pager--older')) {
+		return 'Older';
+	}
+
+	if (linkClicked.closest('.cgdp-blog-post-pager--newer')) {
+		return 'Newer';
+	}
+
+	return '_ERROR_';
+};
+
+const blogPagerClickHandler = (evt: Event): void => {
+	const target = evt.currentTarget as HTMLElement;
+
+	trackOther(BLOG_PAGER_EVENT_NAME, BLOG_PAGER_EVENT_NAME, {
+		location: 'Body',
+		componentType: 'Blog Pager',
+		pageType: getBlogPageType(),
+		olderNewer: getOlderNewer(target),
+	});
+};
+
 export const blogSeriesListAnalyticsHelper = (
 	context: ParentNode = document
 ): void => {
@@ -138,4 +162,27 @@ export const blogRightRailAnalyticsHelper = (
 		link.dataset.blogRightRailAnalyticsInit = 'true';
 		link.addEventListener('click', blogRightRailClickHandler);
 	});
+};
+
+export const blogPagerAnalyticsHelper = (
+	context: ParentNode = document
+): void => {
+	const pagerLinks = Array.from(
+		context.querySelectorAll(BLOG_PAGER_LINK_SELECTOR)
+	) as HTMLElement[];
+
+	pagerLinks.forEach((link) => {
+		if (link.dataset.blogPagerAnalyticsInit === 'true') {
+			return;
+		}
+
+		link.dataset.blogPagerAnalyticsInit = 'true';
+		link.addEventListener('click', blogPagerClickHandler);
+	});
+};
+
+export const blogAnalyticsHelper = (context: ParentNode = document): void => {
+	blogSeriesListAnalyticsHelper(context);
+	blogRightRailAnalyticsHelper(context);
+	blogPagerAnalyticsHelper(context);
 };
