@@ -109,17 +109,19 @@ $(document).ready(function () {
 
   // Track dynamic list link clicks.
   // Used by dynamic lists on mini landing pages (press release archive and upcoming/past events)
-  $(".dynamic.list .general-list-item").each(function (i, el) {
-    let $this = $(this);
-    let $title = $("article h1").text().trim();
-    let $listTitle = $this.closest(".dynamic.list").find("h2").text().trim();
-    let $index = i + 1;
+  $(".dynamic.list .general-list-item")
+    .not(".blog-series .dynamic.list .general-list-item")
+    .each(function (i, el) {
+      let $this = $(this);
+      let $title = $("article h1").text().trim();
+      let $listTitle = $this.closest(".dynamic.list").find("h2").text().trim();
+      let $index = i + 1;
 
-    $(el).on("click.analytics", "a", function () {
-      $title = $listTitle || $title;
-      NCIAnalytics.DynamicListItemClick($this, $title, $index);
+      $(el).on("click.analytics", "a", function () {
+        $title = $listTitle || $title;
+        NCIAnalytics.DynamicListItemClick($this, $title, $index);
+      });
     });
-  });
 
   // This is for cancer type hompage tracking.
   $(".cthp-card-container .cthpCard").each(function (i, el) {
