@@ -3,7 +3,7 @@
     margin:0
   }
 
-  // Bugfix #3997/#4288 (Remove stray bullet added by legacy styling)
+  // Legacy list styling can add decorative bullets to Highcharts menus.
   .highcharts-a11y-proxy-group-legend, .highcharts-contextmenu {
     ul > li:before {
       content: "";
@@ -13,10 +13,44 @@
 
 .highcharts-data-label,
 .highcharts-point {
+  // These chart elements open drilldowns, popups, or linked data views.
   cursor: pointer
 }
 
+.cgdp-highcharts-dialog {
+  // Minimal dialog behavior for grants/contracts popups without jQuery UI.
+  box-sizing: border-box;
+  max-width: 93vw;
+  max-height: 90vh;
+  overflow: hidden;
+  position: fixed;
+  resize: both;
+
+  &[hidden] {
+    display: none;
+  }
+
+  .ui-dialog-titlebar {
+    cursor: move;
+  }
+
+  .ui-dialog-titlebar-close {
+    cursor: pointer;
+  }
+
+  .ui-dialog-content {
+    box-sizing: border-box;
+    max-width: 100%;
+    overflow: hidden;
+  }
+
+  .no-results-message {
+    margin: 1.25em;
+  }
+}
+
 @media only print {
+  // Hide interactive controls and normalize legend weight in exported print views.
   .highcharts-map-navigation,
   .highcharts-contextbutton {
     display: none
@@ -27,6 +61,7 @@
 }
 
 @media only screen and (max-width: 415px) {
+  // Preserve the legacy K Awards pie layout on narrow screens.
   #NCI-Chart__kawards-pie {
     .highcharts-root {
       .highcharts-data-labels,

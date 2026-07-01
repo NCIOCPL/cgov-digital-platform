@@ -6,6 +6,9 @@ import { getShouldLoadChartWrapper } from './utilities';
 
 let isInitialized = false;
 
+/**
+ * Preserve useful fetch response details when chart data requests fail.
+ */
 class ChartHttpError extends Error {
   constructor(response) {
     super(`HTTP ${response.status}: ${response.statusText} — ${response.url}`);
@@ -13,15 +16,13 @@ class ChartHttpError extends Error {
     this.status = response.status;
     this.statusText = response.statusText;
     this.url = response.url;
-    this.response = response; // preserve for body access if needed
+    this.response = response; // Keep the raw response available to callers.
   }
 }
 
 /**
- * We want to spare DOM crawling as much as possible. We'll first test whether the route matches one
- * that could contain a high chart. Following that, we'll then check the DOM for IDs on elements that match
- * stored charts.
- *
+ * Initialize known legacy charts once per page load.
+ * Route rules let us avoid scanning the DOM on pages that cannot contain these charts.
  */
 const init = () => {
   if (isInitialized) {
@@ -34,24 +35,35 @@ const init = () => {
   const shouldCheckForChartHooks = getShouldLoadChartWrapper(pathName, rules);
 
   if (shouldCheckForChartHooks) {
+    // Only registered chart IDs are checked, keeping the DOM work bounded.
     for (let i = 0; i < charts.length; i++) {
       const { dataFileName, id, initChart, miscDataURL } = charts[i];
       const el = document.getElementById(id);
 
       if (el) {
         const { chartRevision } = el.dataset;
-        getChartData(dataFileName, chartRevision, miscDataURL).then(
-          ({ data, miscData }) => initChart(Chart, data, miscData)
-        );
+        // Start Highcharts loading while chart data fetches to reduce startup time.
+        const highchartsPreload = Chart.preload();
+        const chartData = getChartData(dataFileName, chartRevision, miscDataURL);
+
+        Promise.all([chartData, highchartsPreload])
+          .then(([{ data, miscData }]) => initChart(Chart, data, miscData))
+          .catch((error) => {
+            console.error(`Could not initialize chart "${id}".`, error);
+          });
       }
     }
   }
 };
 
+/**
+ * Fetch chart JSON and any supplemental data, such as map topology.
+ */
 const getChartData = async (dataFileName, chartRevision, miscDataURL) => {
   const { chartData } = window.CDEConfig || {};
   const { factBook } = chartData || {};
   const { baseUrl, dataType } = factBook || {};
+
   if (!chartRevision) {
     console.warn(
       `Could not find data attribute "chart-revision" within custom block. There could be updated chart data available not displayed. Ensure data attribute is present within custom block to obtain most recent data.`
@@ -65,9 +77,10 @@ const getChartData = async (dataFileName, chartRevision, miscDataURL) => {
   }
 
   try {
+    // Fetch primary and supplemental chart data concurrently.
     const requests = requestURLArray.map((requestURL) =>
       fetch(requestURL).then((res) => {
-        // Throw custom error with response details.
+        // Preserve HTTP response metadata for initialization error logging.
         if (!res.ok) {
           throw new ChartHttpError(res);
         }
@@ -79,11 +92,12 @@ const getChartData = async (dataFileName, chartRevision, miscDataURL) => {
     return { data, miscData };
   } catch (error) {
     if (error instanceof TypeError) {
-      // Network error
+      // The Fetch API rejects with TypeError for network-layer failures.
       throw new Error(`Couldn't retrieve data for chart ${dataFileName}`);
     }
     if (error instanceof ChartHttpError) {
-      throw error; // Re-throw ChartHttpError for caller to handle
+      // Keep status, URL, and response details intact for callers.
+      throw error;
     }
     throw new Error(`Couldn't retrieve data for chart ${dataFileName}`);
   }

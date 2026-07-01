@@ -7,6 +7,7 @@
 
 use Drupal\Core\Access\AccessResult;
 use Drupal\Core\Cache\Cache;
+use Drupal\Core\Entity\Display\EntityViewDisplayInterface;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Link;
 use Drupal\Core\Render\Markup;
@@ -15,6 +16,13 @@ use Drupal\node\NodeInterface;
 use Drupal\taxonomy\Entity\Term;
 use Drupal\taxonomy\TermInterface;
 use Drupal\views\ViewExecutable;
+
+/**
+ * Implements hook_entity_type_build().
+ */
+function cgov_blog_entity_type_build(array &$entity_types) {
+  $entity_types['node']->addConstraint('UniqueBlogPostUrl');
+}
 
 /**
  * Implements hook_form_alter().
@@ -253,6 +261,30 @@ function cgov_blog_views_pre_render(ViewExecutable $view) {
 }
 
 /**
+ * Implements hook_ENTITY_TYPE_view().
+ */
+function cgov_blog_node_view(array &$build, NodeInterface $node, EntityViewDisplayInterface $display, $view_mode) {
+  if ($node->bundle() !== 'cgov_blog_series' || !in_array($view_mode, ['full', 'lb_primary_content'])) {
+    return;
+  }
+
+  $contexts = ['url.query_args:topic', 'url.query_args:year'];
+  $build['#cache']['contexts'] = Cache::mergeContexts(
+    $build['#cache']['contexts'] ?? [],
+    $contexts
+  );
+
+  foreach (['field_about_blog', 'field_banner_image'] as $field_name) {
+    if (isset($build[$field_name])) {
+      $build[$field_name]['#cache']['contexts'] = Cache::mergeContexts(
+        $build[$field_name]['#cache']['contexts'] ?? [],
+        $contexts
+      );
+    }
+  }
+}
+
+/**
  * Check if the current form is in the draft or review state.
  */
 function _cgov_blog_is_selectable(array $form) {
@@ -323,7 +355,7 @@ function cgov_blog_taxonomy_term_update($term_entity) {
     $owner_blog = $term_entity->field_owner_blog;
     // Invalidate the cache tag for blog series node.
     if ($owner_blog->target_id > 0) {
-      Cache::invalidateTags(['node:' . $owner_blog->target_id]);
+      Cache::invalidateTags(['cgov_blog_list:' . $owner_blog->target_id]);
     }
   }
 }
@@ -345,6 +377,11 @@ function cgov_blog_theme($existing, $type, $theme, $path) {
  * Implements hook_entity_update().
  */
 function cgov_blog_entity_update($entity) {
+  if ($entity->getEntityTypeId() === 'node' && $entity->bundle() === "cgov_blog_series") {
+    Cache::invalidateTags(['cgov_blog_list:' . $entity->id()]);
+    return;
+  }
+
   // Verify that the node type is blog post.
   if ($entity->getEntityTypeId() === 'node' && $entity->bundle() === "cgov_blog_post") {
     // Get the blog series nid and invalidate cache tag.
@@ -353,7 +390,7 @@ function cgov_blog_entity_update($entity) {
     $current_state = $translated_entity->get('moderation_state')->value;
     $blog_series_target_id = $translated_entity->get("field_blog_series")->target_id;
     if ($current_state === "published" && $blog_series_target_id > 0) {
-      Cache::invalidateTags(['node:' . $blog_series_target_id]);
+      Cache::invalidateTags(['cgov_blog_list:' . $blog_series_target_id]);
     }
   }
 }
@@ -442,7 +479,7 @@ function cgov_blog_node_delete($entity) {
     $translated_entity = $entity->getTranslation($current_entity_lang);
     $blog_series_target_id = $translated_entity->field_blog_series->target_id;
     if (!empty($blog_series_target_id)) {
-      Cache::invalidateTags(['node:' . $blog_series_target_id]);
+      Cache::invalidateTags(['cgov_blog_list:' . $blog_series_target_id]);
     }
   }
 }
@@ -601,4 +638,56 @@ function cgov_blog_preprocess_views_view_unformatted(&$variables) {
   // based on the query parameter.
   // Will be used in views-view-unformatted--cgov-block-blog-categories--block-cgdp-categories.html.twig.
   $variables['active_topic'] = trim((string) \Drupal::request()->query->get('topic', ''));
+}
+
+/**
+ * Implements hook_preprocess_node() for cgov_blog_series nodes.
+ */
+function cgov_blog_preprocess_field(&$variables) {
+  if (
+    $variables['entity_type'] !== 'node' ||
+    $variables['element']['#bundle'] !== 'cgov_blog_series'
+  ) {
+    return;
+  }
+
+  $supported_fields = ['field_banner_image', 'field_about_blog'];
+  if (!in_array($variables['field_name'], $supported_fields)) {
+    return;
+  }
+
+  $queryParameters = \Drupal::request()->query;
+  foreach (['topic', 'year'] as $param) {
+    $variables['get'][$param] = $queryParameters->get($param, '');
+  }
+}
+
+/**
+ * Implements hook_preprocess_node() for cgov_blog_series nodes.
+ */
+function cgov_blog_preprocess_node(&$variables) {
+  $node = $variables['node'] ?? $variables['elements']['#node'] ?? NULL;
+  if (!$node instanceof NodeInterface || $node->bundle() !== 'cgov_blog_series') {
+    return;
+  }
+
+  $queryParameters = \Drupal::request()->query;
+  foreach (['topic', 'year'] as $param) {
+    $variables['get'][$param] = $queryParameters->get($param, '');
+  }
+}
+
+/**
+ * Implements hook_entity_insert().
+ */
+function cgov_blog_entity_insert($entity) {
+  if ($entity->getEntityTypeId() === 'node' && $entity->bundle() === 'cgov_blog_post') {
+    $current_entity_lang = $entity->get('langcode')->value;
+    $translated_entity = $entity->getTranslation($current_entity_lang);
+    $current_state = $translated_entity->get('moderation_state')->value;
+    $blog_series_target_id = $translated_entity->get('field_blog_series')->target_id;
+    if ($current_state === 'published' && $blog_series_target_id > 0) {
+      Cache::invalidateTags(['cgov_blog_list:' . $blog_series_target_id]);
+    }
+  }
 }

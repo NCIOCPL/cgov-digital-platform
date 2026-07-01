@@ -4,6 +4,7 @@ namespace Drupal\cgov_blog\Plugin\Block;
 
 use Drupal\cgov_blog\Services\BlogManagerInterface;
 use Drupal\Core\Block\BlockBase;
+use Drupal\Core\Cache\Cache;
 use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
@@ -73,15 +74,31 @@ class BlogTopicIntro extends BlockBase implements ContainerFactoryPluginInterfac
       return $build;
     }
     $topic_intro = $this->getTopicIntro($blog_series);
-    $build = [
+    return [
       'topic_intro' => $topic_intro,
-      '#cache' => [
-        'tags' => [
-          'node_list',
-        ],
-      ],
     ];
-    return $build;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function getCacheTags() {
+    $tags = parent::getCacheTags();
+    $blog_series = $this->blogManager->getBlogSeriesFromRoute();
+    if (isset($blog_series)) {
+      $tags = Cache::mergeTags($tags, ['cgov_blog_list:' . $blog_series->id()]);
+    }
+    return $tags;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function getCacheContexts() {
+    return Cache::mergeContexts(parent::getCacheContexts(), [
+      'route',
+      'url.query_args:topic',
+    ]);
   }
 
   /**

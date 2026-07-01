@@ -1,18 +1,14 @@
 /**
- * Ascertain whether a path that matches the current base rule should be excluded based on sub rules.
- *
- * NOTE: This is the same function as the one in floatingDelighter and could be made more agnostic
- * to be shared across the site as a general utility function (if the data structure of rules is standardized as
- * well).
+ * Determine whether a matched chart route should be skipped by exclusion rules.
  *
  * @param {String} pathName Path of current page.
- * @param {Array<RegeExp|Object>} exclusions Exclusion rules for paths to be excluded by base rule match.
+ * @param {Array<RegExp|Object>} exclusions Exclusion rules for paths to skip.
  * @returns {boolean} true if current path should be excluded, else false.
  */
 export const checkExclusions = (pathName, exclusions) => {
 
     const exclusionMatches = exclusions.map(exclusion => {
-        // Exclusions can either be a simple RegExp or an object with the shape { rule: RegExp, whitelist: Array }
+        // Object exclusions allow specific paths back in through `whitelist`.
         if (exclusion instanceof RegExp) {
             const isOnExclusionList = pathName.match(exclusion) ? true : false;
             return isOnExclusionList;
@@ -29,17 +25,14 @@ export const checkExclusions = (pathName, exclusions) => {
 }
 
 /**
- * Test whether a rule exists that matches a given pathname, which determines
- * whether we add Chart to the window.
+ * Test whether chart initialization should inspect the current page.
  *
- * @param {String} pathName
- * @param {Object[]} rules
- * @returns {Boolean}
+ * @param {String} pathName Path of current page.
+ * @param {Object[]} rules Route rules from charts/rules.js.
+ * @returns {Boolean} true when the page may contain registered chart hooks.
  */
 export const getShouldLoadChartWrapper = (pathName, rules) => {
-    // Test for path partial match in Map, if a perfect match is found or a partial map with no exclusion rules
-    // return the appropriate delighter settings immediately. Otherwise we need to map through the exclusion list rules
-    // and their possible associated whitelist paths.
+    // Stop at the first matching base rule; rule ordering is intentional.
     for(let i = 0; i < rules.length; i++) {
         const config = rules[i]
         const basePathRule = config.rule;
@@ -59,11 +52,11 @@ export const getShouldLoadChartWrapper = (pathName, rules) => {
 };
 
 /**
- * buildAxisData - Builds out axis data labels by running against provided formatter
+ * Replace formatter placeholders from JSON with executable axis label formatters.
  *
- * @param {[]} axisData
- * @param labelFormatter
- * @returns {*}
+ * @param {Array} axisData Axis configuration from a chart data file.
+ * @param {Array} labelFormatter Formatter functions keyed by axis index.
+ * @returns {Array} Axis configuration with formatter functions attached.
  */
 export function buildAxisData(axisData, labelFormatter) {
   for (let i = 0; i < axisData.length; i++) {

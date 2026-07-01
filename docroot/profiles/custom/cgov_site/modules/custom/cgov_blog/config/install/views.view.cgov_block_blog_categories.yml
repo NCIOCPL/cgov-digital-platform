@@ -7,6 +7,7 @@ dependencies:
     - node.type.cgov_blog_series
     - taxonomy.vocabulary.cgov_blog_topics
   module:
+    - cgov_blog
     - node
     - taxonomy
     - user
@@ -175,7 +176,7 @@ display:
         options:
           perm: 'access content'
       cache:
-        type: tag
+        type: cgov_blog_list
         options: {  }
       empty: {  }
       sorts: {  }

@@ -2,18 +2,15 @@
 
 namespace Drupal\cgov_event\Controller;
 
+use Drupal\Core\Cache\CacheableResponse;
 use Drupal\Core\Controller\ControllerBase;
+use Drupal\Core\Datetime\DrupalDateTime;
 use Drupal\Core\Entity\EntityStorageInterface;
-use Drupal\Core\File\FileExists;
-use Drupal\Core\File\FileSystem;
 use Drupal\Core\Session\AccountProxy;
-use Drupal\file\FileRepositoryInterface;
 use Eluceo\iCal\Component\Calendar;
 use Eluceo\iCal\Component\Event;
 use Symfony\Component\DependencyInjection\ContainerInterface;
-use Symfony\Component\HttpFoundation\BinaryFileResponse;
 use Symfony\Component\HttpFoundation\RequestStack;
-use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 /**
  * The iCalendar controller.
@@ -32,17 +29,6 @@ class ICalendarController extends ControllerBase {
    * {@inheritdoc}
    */
   public $request;
-  /**
-   * {@inheritdoc}
-   */
-  protected $file;
-
-  /**
-   * The file repository service.
-   *
-   * @var \Drupal\file\FileRepositoryInterface
-   */
-  protected $fileRepository;
 
   /**
    * Constructs an ICalendar Controller object.
@@ -53,17 +39,11 @@ class ICalendarController extends ControllerBase {
    *   The current user.
    * @param \Symfony\Component\HttpFoundation\RequestStack $request
    *   The request stack.
-   * @param \Drupal\Core\File\FileSystem $fileStorage
-   *   The file system.
-   * @param \Drupal\file\FileRepositoryInterface $file_repository
-   *   The file repository service.
    */
-  public function __construct(EntityStorageInterface $entityStorage, AccountProxy $currentUser, RequestStack $request, FileSystem $fileStorage, FileRepositoryInterface $file_repository) {
+  public function __construct(EntityStorageInterface $entityStorage, AccountProxy $currentUser, RequestStack $request) {
     $this->entity = $entityStorage;
     $this->currentUser = $currentUser;
     $this->request = $request;
-    $this->file = $fileStorage;
-    $this->fileRepository = $file_repository;
   }
 
   /**
@@ -74,44 +54,48 @@ class ICalendarController extends ControllerBase {
       $container->get('entity_type.manager')->getStorage('node'),
       $container->get('current_user'),
       $container->get('request_stack'),
-      $container->get('file_system'),
-      $container->get('file.repository')
     );
 
   }
 
   /**
-   * Borrowed from Simple ICS.
-   *
-   * Project https://www.drupal.org/project/simple_ics.
+   * Generates an iCalendar file for a given event node.
    */
   public function download($nid) {
-    // Load event node.
+    // Use the injected storage property instead of entityTypeManager lookup.
     /** @var \Drupal\node\NodeInterface */
-    $node = $this->entityTypeManager()->getStorage('node')->load($nid);
+    $node = $this->entity->load($nid);
+
     if ($node === NULL || $node->bundle() !== 'cgov_event') {
-      // Throwing 404 if node ID doesn't exist.
-      throw new NotFoundHttpException();
+      $message = '';
+      if ($node === NULL) {
+        $message = 'iCalendar download failed: requested Node ID @nid does not exist.';
+      }
+      elseif ($node->bundle() !== 'cgov_event') {
+        $message = 'iCalendar download failed: requested Node ID @nid is not a cgov_event bundle.';
+      }
+
+      $this->getLogger('cgov_event')->warning($message, ['@nid' => $nid]);
+
+      $error_html = '<h1>iCalendar Error</h1><p>iCalendar Error, please contact the System Administrator</p>';
+      return new CacheableResponse($error_html, 400, ['Content-Type' => 'text/html; charset=utf-8']);
     }
 
     $start_date = NULL;
     $end_date = NULL;
 
-    if ($node->hasField('field_event_start_date') && !empty($node->get('field_event_start_date')->first())) {
-      // Retrieve date value and convert to the necessary format.
-      /** @var \Drupal\Core\TypedData\Plugin\DataType\DateTimeIso8601 */
-      $date_value = $node->get('field_event_start_date')->first()->get('value');
-      $start_date = $date_value->getDateTime()->format(
-        'Y-m-d H:i:s'
-      );
+    // Use DrupalDateTime to parse field strings to
+    // avoid typed data formatting bugs.
+    if ($node->hasField('field_event_start_date') && !$node->get('field_event_start_date')->isEmpty()) {
+      $raw_start = $node->get('field_event_start_date')->value;
+      $date = new DrupalDateTime($raw_start, 'UTC');
+      $start_date = $date->format('Y-m-d H:i:s');
     }
 
-    if ($node->hasField('field_event_end_date') && !empty($node->get('field_event_end_date')->first())) {
-      /** @var \Drupal\Core\TypedData\Plugin\DataType\DateTimeIso8601 */
-      $date_value = $node->get('field_event_end_date')->first()->get('value');
-      $end_date = $date_value->getDateTime()->format(
-        'Y-m-d H:i:s'
-      );
+    if ($node->hasField('field_event_end_date') && !$node->get('field_event_end_date')->isEmpty()) {
+      $raw_end = $node->get('field_event_end_date')->value;
+      $date = new DrupalDateTime($raw_end, 'UTC');
+      $end_date = $date->format('Y-m-d H:i:s');
     }
 
     // Get Host.
@@ -123,54 +107,43 @@ class ICalendarController extends ControllerBase {
     // 2. Create an Event object.
     $vEvent = new Event();
 
-    // 3. Add your information to the Event.
-    $vEvent
-      ->setDtStart(new \DateTime($start_date, new \DateTimeZone('UTC')))
-      ->setDtEnd(new \DateTime($end_date, new \DateTimeZone('UTC')))
-      ->setSummary($node->getTitle())
-      ->setLocation($node->get('field_city_state')->value)
-      ->setDescription($node->get('field_page_description')->value);
+    // 3. Add information to the Event.
+    if ($start_date) {
+      $vEvent->setDtStart(new \DateTime($start_date, new \DateTimeZone('UTC')));
+    }
+    if ($end_date) {
+      $vEvent->setDtEnd(new \DateTime($end_date, new \DateTimeZone('UTC')));
+    }
+
+    // MANDATORY RFC 5545 REQUIREMENT: Set a unique ID for calendar tracking.
+    $vEvent->setUniqueId('cgov-event-' . $nid . '@' . $host);
+
+    $vEvent->setSummary($node->getTitle());
+
+    if ($node->hasField('field_city_state') && !$node->get('field_city_state')->isEmpty()) {
+      $vEvent->setLocation($node->get('field_city_state')->value);
+    }
+
+    if ($node->hasField('field_page_description') && !$node->get('field_page_description')->isEmpty()) {
+      $vEvent->setDescription($node->get('field_page_description')->value);
+    }
 
     // 4. Add Event to Calendar.
     $vCalendar->addComponent($vEvent);
 
-    // 5. Send output.
-    $filename = 'cal-' . $nid . '.ics';
-    $uri = 'public://' . $filename;
+    // 5. Render directly to string.
     $content = $vCalendar->render();
-    $file = $this->fileRepository->writeData($content, $uri, FileExists::Replace);
-    $mimetype = 'text/calendar';
-    $scheme = 'public';
-    $parts = explode('://', $uri);
-    $file_directory = $this->file->realpath(
-      $scheme . "://"
-    );
-    $filepath = $file_directory . '/' . $parts[1];
-    $filename = $file->getFilename();
+    $filename = 'cal-' . $nid . '.ics';
 
-    // File doesn't exist
-    // This may occur if the download path is used outside of a formatter
-    // and the file path is wrong or file is gone.
-    if (!file_exists($filepath)) {
-      throw new NotFoundHttpException();
-    }
-
+    // 6. Return an in-memory HTTP response.
     $headers = [
-      'Content-Type' => $mimetype,
+      'Content-Type' => 'text/calendar; charset=utf-8',
       'Content-Disposition' => 'attachment; filename="' . $filename . '"',
-      'Content-Length' => $file->getSize(),
-      'Content-Transfer-Encoding' => 'binary',
-      'Pragma' => 'no-cache',
-      'Cache-Control' => 'must-revalidate, post-check=0, pre-check=0',
-      'Expires' => '0',
-      'Accept-Ranges' => 'bytes',
     ];
 
-    // \Drupal\Core\EventSubscriber\FinishResponseSubscriber::onRespond()
-    // sets response as not cacheable if the Cache-Control header is not
-    // already modified. We pass in FALSE for non-private schemes for the
-    // $public parameter to make sure we don't change the headers.
-    return new BinaryFileResponse($uri, 200, $headers, $scheme !== 'private');
+    $response = new CacheableResponse($content, 200, $headers);
+    $response->addCacheableDependency($node);
+    return $response;
   }
 
 }
