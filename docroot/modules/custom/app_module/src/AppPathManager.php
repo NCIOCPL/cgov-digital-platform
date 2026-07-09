@@ -4,7 +4,6 @@ namespace Drupal\app_module;
 
 use Drupal\Component\Datetime\TimeInterface;
 use Drupal\Core\Cache\CacheBackendInterface;
-use Drupal\Core\CacheDecorator\CacheDecoratorInterface;
 use Drupal\Core\Entity\ContentEntityInterface;
 use Drupal\Core\Entity\EntityInterface;
 use Drupal\Core\Entity\EntityMalformedException;
@@ -19,7 +18,7 @@ use Drupal\path_alias\PathAliasInterface;
 /**
  * The default app path manager implementation.
  */
-class AppPathManager implements AppPathManagerInterface, CacheDecoratorInterface {
+class AppPathManager implements AppPathManagerInterface {
 
   /**
    * The alias manager service.
@@ -250,7 +249,10 @@ class AppPathManager implements AppPathManagerInterface, CacheDecoratorInterface
   }
 
   /**
-   * {@inheritdoc}
+   * Specify the key to use when writing the cache.
+   *
+   * @param string $key
+   *   The cache key.
    */
   public function setCacheKey($key) {
     // Prefix the cache key to avoid clashes with other caches.
@@ -516,7 +518,7 @@ class AppPathManager implements AppPathManagerInterface, CacheDecoratorInterface
   }
 
   /**
-   * {@inheritdoc}
+   * Write the cache.
    *
    * Cache an array of the paths available on each page. We assume that aliases
    * will be needed for the majority of these paths during subsequent requests,
