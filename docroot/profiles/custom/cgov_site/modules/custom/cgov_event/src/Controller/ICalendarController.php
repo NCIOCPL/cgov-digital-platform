@@ -66,26 +66,43 @@ class ICalendarController extends ControllerBase {
     /** @var \Drupal\node\NodeInterface */
     $node = $this->entity->load($nid);
 
-    if ($node === NULL || $node->bundle() !== 'cgov_event') {
+    if ($node === NULL || $node->bundle() !== 'cgov_event' || !$node->isPublished()) {
       $message = '';
+      $error_code = 400;
+
       if ($node === NULL) {
         $message = 'iCalendar download failed: requested Node ID @nid does not exist.';
+        $error_code = 404;
       }
       elseif ($node->bundle() !== 'cgov_event') {
         $message = 'iCalendar download failed: requested Node ID @nid is not a cgov_event bundle.';
+        $error_code = 400;
+      }
+      elseif (!$node->isPublished()) {
+        $message = 'iCalendar download failed: requested Node ID @nid is unpublished.';
+        // Security Obfuscation: Return a 404 so public users
+        // can't guess that an unreleased draft exists.
+        $error_code = 404;
       }
 
       $this->getLogger('cgov_event')->warning($message, ['@nid' => $nid]);
 
       $error_html = '<h1>iCalendar Error</h1><p>iCalendar Error, please contact the System Administrator</p>';
-      return new CacheableResponse($error_html, 400, ['Content-Type' => 'text/html; charset=utf-8']);
-    }
+      $response = new CacheableResponse($error_html, $error_code, ['Content-Type' => 'text/html; charset=utf-8']);
+      // Attach the node dependency so the cache instantly clears
+      // the second an editor hits "Publish" in the admin panel.
+      if ($node !== NULL) {
+        $response->addCacheableDependency($node);
+      }
 
+      return $response;
+    }
     $start_date = NULL;
     $end_date = NULL;
 
-    // Use DrupalDateTime to parse field strings to
-    // avoid typed data formatting bugs.
+    // Check if the All Day Event flag is checked.
+    $is_all_day = $node->hasField('field_all_day_event') && (bool) $node->get('field_all_day_event')->value;
+
     if ($node->hasField('field_event_start_date') && !$node->get('field_event_start_date')->isEmpty()) {
       $raw_start = $node->get('field_event_start_date')->value;
       $date = new DrupalDateTime($raw_start, 'UTC');
@@ -113,6 +130,12 @@ class ICalendarController extends ControllerBase {
     }
     if ($end_date) {
       $vEvent->setDtEnd(new \DateTime($end_date, new \DateTimeZone('UTC')));
+    }
+
+    // Tell the library to format properties
+    // as VALUE=DATE instead of VALUE=DATE-TIME.
+    if ($is_all_day) {
+      $vEvent->setNoTime(TRUE);
     }
 
     // MANDATORY RFC 5545 REQUIREMENT: Set a unique ID for calendar tracking.
