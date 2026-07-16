@@ -143,8 +143,17 @@ function cgov_blog_views_pre_view(ViewExecutable $view, $display_id, array &$arg
     // Only applies to cgov_block_blog_posts, not blog_rss.
     if ($view->id() === 'cgov_block_blog_posts' && !empty($args[0])) {
       $node = \Drupal::entityTypeManager()->getStorage('node')->load((int) $args[0]);
-      if ($node instanceof NodeInterface && $node->bundle() === 'cgov_blog_series' && isset($node->field_num_display_posts)) {
-        $view->setItemsPerPage($node->field_num_display_posts->value);
+
+      if ($node instanceof NodeInterface && $node->bundle() === 'cgov_blog_series') {
+        /** @var \Drupal\node\NodeInterface&\Drupal\Core\TypedData\TranslatableInterface $node */
+        // If this is a translation, load the default/original translation.
+        if (!$node->isDefaultTranslation()) {
+          $node = $node->getUntranslated();
+        }
+
+        if ($node->hasField('field_num_display_posts') && !$node->get('field_num_display_posts')->isEmpty()) {
+          $view->setItemsPerPage((int) $node->get('field_num_display_posts')->value);
+        }
       }
     }
 
