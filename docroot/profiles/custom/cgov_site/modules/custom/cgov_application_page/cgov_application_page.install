@@ -112,3 +112,13 @@ function cgov_application_page_update_8008() {
     $installer->uninstall(['cgov_sitewide_search'], FALSE);
   }
 }
+
+/**
+ * Disable the drupal-based R4R module.
+ */
+function cgov_application_page_update_10001(): void {
+  if (\Drupal::moduleHandler()->moduleExists('cgov_r4r')) {
+    $installer = \Drupal::service('module_installer');
+    $installer->uninstall(['cgov_r4r'], FALSE);
+  }
+}
