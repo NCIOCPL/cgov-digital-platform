@@ -9,7 +9,6 @@
 @import '../../legacy/styles/variables';
 @import '../../legacy/styles/breakpoint-mixins';
 @import '~Styles/sprites/svg-sprite';
-@import '~Core/styles/profile-panel';
 
 // Override wrapper styles for embedded images
 // (Specifically the figure and caption/credit/enlarge styles
@@ -18,3 +17,24 @@
 @import '../../legacy/transition-hacks/inner-page-embed-feature-card-hack';
 @import '../../legacy/transition-hacks/inner-page-embed-entity-hack';
 @import '../../legacy/transition-hacks/inner-page-embed-infographic-hack';
+
+// Styles for press contact that was located in profile-panel
+.press-contact {
+	background: $white;
+	border: 1px solid $yetAnotherGrey;
+	box-shadow: 0 0 9px 1px rgba(0, 0, 0, 0.15);
+	margin: 1.3em 0 1.5em 0;
+	padding: 15px;
+
+	h2 {
+		color: $dgrey00;
+		font-size: 23px;
+		margin-top: 0;
+	}
+
+	p {
+		&:last-child {
+			margin-bottom: 0;
+		}
+	}
+}
