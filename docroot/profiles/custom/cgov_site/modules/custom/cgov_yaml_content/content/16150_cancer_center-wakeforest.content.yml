@@ -1,0 +1,154 @@
+### TESTS:
+# Cancer Center content type
+- entity: "media"
+  bundle: "cgov_image"
+  name: "Atrium Health Wake Forest Baptist Comprehensive Cancer Center"
+  langcode: en
+  status: 1
+  moderation_state:
+    value: 'published'
+  field_media_image:
+    - '#process':
+        callback: 'file'
+        args:
+          - 'image'
+          - type: 'module'
+            filename: 'wakeforest.jpg'
+      alt: 'Atrium Health Wake Forest Baptist Comprehensive Cancer Center'
+      image_crop:
+        crop_wrapper:
+          freeform:
+            crop_container:
+              values:
+                crop_applied: 1
+                x: 0
+                y: 0
+                width: 4912
+                height: 3456
+          thumbnail:
+            crop_container:
+              values:
+                crop_applied: 1
+                x: 152
+                y: 0
+                width: 4608
+                height: 3456
+          4x3:
+            crop_container:
+              values:
+                crop_applied: 1
+                x: 152
+                y: 0
+                width: 4608
+                height: 3456
+          3x4:
+            crop_container:
+              values:
+                crop_applied: 1
+                x: 1160
+                y: 0
+                width: 2592
+                height: 3456
+          1x1:
+            crop_container:
+              values:
+                crop_applied: 1
+                x: 728
+                y: 0
+                width: 3456
+                height: 3456
+          16x9:
+            crop_container:
+              values:
+                crop_applied: 1
+                x: 0
+                y: 346
+                width: 4912
+                height: 2763
+          9x16:
+            crop_container:
+              values:
+                crop_applied: 1
+                x: 1484
+                y: 0
+                width: 1944
+                height: 3456
+- entity: "node"
+  type: "cgov_cancer_center"
+  langcode: en
+  status: 1
+  moderation_state:
+    value: 'published'
+  field_site_section:
+    - '#process':
+        callback: 'reference'
+        args:
+          - 'taxonomy_term'
+          - vid: 'cgov_site_sections'
+            name: 'Learning to Relax'
+  title: "Atrium Health Wake Forest Baptist Comprehensive Cancer Center"
+  field_sort_title:
+    value: "Atrium Health Wake Forest Baptist Comprehensive Cancer Center"
+  field_browser_title:
+    value: "Atrium Health Wake Forest Baptist Comprehensive Cancer Center"
+  field_page_description:
+    value: "Information about the Atrium Health Wake Forest Baptist Comprehensive Cancer Center."
+  field_image_promotional:
+    - target_type: 'media'
+      '#process':
+        callback: 'reference'
+        args:
+          - 'media'
+          - bundle: 'cgov_image'
+            name: 'Atrium Health Wake Forest Baptist Comprehensive Cancer Center'
+  field_parent_institution:
+    value: ""
+  field_institution_type:
+    - '#process':
+        callback: 'reference'
+        args:
+          - 'taxonomy_term'
+          - vid: 'cgov_cancer_center_types'
+            name: 'Comprehensive Cancer Center'
+  field_org_head_name:
+    value: "Ruben A. Mesa, MD, FACP"
+  field_org_head_title:
+    value: "Executive Director"
+  field_address:
+    - address_line1: ""
+      address_line2: ""
+      locality: "Winston-Salem"
+      administrative_area: "NC"
+      postal_code: ""
+      country_code: "US"
+  field_region:
+    - '#process':
+        callback: 'reference'
+        args:
+          - 'taxonomy_term'
+          - vid: 'cgov_cancer_center_regions'
+            name: 'South Atlantic'
+  field_phone_label_1:
+    value: "Main"
+  field_phone_number_1:
+    value: "(336) 716-7971"
+  field_website_title:
+    value: "Visit Website"
+  field_website_url:
+    value: "https://www.wakehealth.edu/Locations/Facilities/Comprehensive-Cancer-Center"
+  body:
+    - format: "full_html"
+      value: |
+        <p>The Wake Forest Baptist Comprehensive Cancer Center (WFBCCC) became an NCI-Designated Cancer Center in 1974. Offering nine cancer care locations across the Wake Forest Health Network, the center provides access to cancer care and expertise to the Piedmont and southern Appalachian region, an area of 58 contiguous counties in North Carolina, Virginia, and West Virginia. This region has significant health disparities compared with national averages.</p>
+         <br />
+        <p><i>* This profile was provided by the Duke Cancer Institute.</i></p>
+  field_date_posted:
+    value: "2012-07-26"
+  field_date_reviewed:
+    value: "2012-07-26"
+  field_date_updated:
+    value: "2015-01-09"
+  field_date_display_mode:
+    - value: 'updated'
+  field_pretty_url:
+    value: "wakeforest"

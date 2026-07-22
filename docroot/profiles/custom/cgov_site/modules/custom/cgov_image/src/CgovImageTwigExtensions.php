@@ -66,6 +66,9 @@ class CgovImageTwigExtensions extends AbstractExtension {
     $test = new CgovImageTools();
     $crop = $test->findCropByStyle($image_style);
     $uri = 'module://cgov_image/img/placeholder-' . $crop . '.png';
+    if ($image_style === "ncids_profile_box_1x1") {
+      $uri = 'module://cgov_image/img/placeholder-profile.png';
+    }
     $image_style = $this->entityTypeManager->getStorage('image_style')->load($image_style);
     $absolute_path = $this->fileUrlGenerator->transformRelative($image_style->buildUrl($uri));
     return $absolute_path;

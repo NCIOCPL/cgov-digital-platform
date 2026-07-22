@@ -86,8 +86,16 @@ function cgov_image_media_view(array &$build, EntityInterface $entity, EntityVie
       $display
     );
   }
-  if (preg_match('/^ncids_aspect_ratio_/', $view_mode)) {
-    // Call your custom function or handle the logic here.
+
+  if ($view_mode === 'ncids_image_display_profile_box') {
+    _cgov_image_handle_ncids_image(
+      $build,
+      $entity,
+      $display,
+      $view_mode
+    );
+  }
+  if (preg_match('/^ncids_image_display_image_/', $view_mode)) {
     _cgov_image_handle_ncids_image(
       $build,
       $entity,
@@ -534,6 +542,7 @@ function _cgov_image_handle_ncids_image(array &$build, EntityInterface $entity, 
     "ncids_image_display_image_1x1" => 'field_ncids_promo_art_1x1',
     "ncids_image_display_image_4x3" => 'field_ncids_promo_art_4x3',
     "ncids_image_display_image_16x9" => 'field_ncids_promo_art_16x9',
+    "ncids_image_display_profile_box" => 'field_ncids_promo_art_1x1',
   ];
 
   // Check if the view mode exists in the mapping.
