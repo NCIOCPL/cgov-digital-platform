@@ -69,7 +69,7 @@ class RedirectImport extends FormBase {
       '#title' => $this->t('CSV Redirect File'),
       '#description' => $this->t('Please upload a CSV redirect file.'),
       '#upload_validators' => [
-        'file_validate_extensions' => ['csv'],
+        'FileExtension' => ['extensions' => 'csv'],
       ],
       '#prefix' => '<p id="redirect-import">Upload a new CSV file.</p>',
       '#suffix' => '<p>CSV file should be formatted:<ul>

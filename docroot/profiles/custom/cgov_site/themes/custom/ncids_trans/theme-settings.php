@@ -16,7 +16,7 @@ function ncids_trans_form_system_theme_settings_alter(&$form) {
   // So while the Drupal community argues if SVGs *can* be used, we will
   // *only* allow them. (SVGs scale better and use less bandwith)
   $form['logo']['settings']['logo_upload']['#upload_validators'] = [
-    'file_validate_extensions' => ['svg'],
+    'FileExtension' => ['extensions' => 'svg'],
   ];
 
   /* ------------ 'Has Translations' button ----------- */

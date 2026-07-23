@@ -703,7 +703,7 @@ class NcidsHeader extends BlockBase implements ContainerFactoryPluginInterface {
       '#title' => $this->t('Upload desktop logo image'),
       '#description' => $this->t("Use this field to upload your desktop logo."),
       '#upload_validators' => [
-        'file_validate_extensions' => ['svg'],
+        'FileExtension' => ['extensions' => 'svg'],
       ],
       '#upload_location' => 'public://ncids_header/logos/',
     ];
@@ -716,7 +716,7 @@ class NcidsHeader extends BlockBase implements ContainerFactoryPluginInterface {
       '#title' => $this->t('Upload mobile logo image'),
       '#description' => $this->t("Use this field to upload your mobile logo."),
       '#upload_validators' => [
-        'file_validate_extensions' => ['svg'],
+        'FileExtension' => ['extensions' => 'svg'],
       ],
       '#upload_location' => 'public://ncids_header/logos/',
     ];
