@@ -91,21 +91,11 @@ export const getMetaData = (metaTags, document) => {
 
 /**
  * TODO: Extend with extra checks, this is very specific to CGOV.
- * @param {HTMLElement} [document=window.document]
+ * @param {Document} [document=window.document]
  * @return {string}
  */
 export const getDocumentLanguage = (document = window.document) => {
-  // MIGRATION NOTE:
-  // The fallback values were added during migration because a content-language attribute was not available
-  // at the time this file was ported.
-  const language = document.querySelector('meta[name="content-language"]')
-    ? document
-        .querySelector('meta[name="content-language"]')
-        .getAttribute("content")
-    : document.documentElement.lang
-    ? document.documentElement.lang
-    : "en";
-  return language;
+  return document.documentElement.lang || "en";
 };
 
 /**
