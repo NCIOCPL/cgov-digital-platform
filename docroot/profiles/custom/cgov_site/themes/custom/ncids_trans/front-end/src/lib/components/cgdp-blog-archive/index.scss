@@ -2,7 +2,10 @@
 @forward "usa-accordion";
 
 .cgdp-blog-archive {
-	@include u-margin-y(3);
+	@include u-margin-bottom(3);
+	&:not(:first-child) {
+		@include u-margin-top(3);
+	}
 	.usa-list {
 		li > a {
 			text-decoration: none;

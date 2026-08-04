@@ -14,6 +14,9 @@
 @forward '../../lib/components/wysiwyg/common/cgdp-embed-video';
 @forward '../../lib/components/wysiwyg/common/cgdp-embed-card/';
 
+@forward '../../lib/components/wysiwyg/editors/ncids-full-html';
+@forward '../../lib/components/cgdp-definition';
+
 @use 'uswds-core' as *;
 
 .cgdp-press-release-title-block {
@@ -22,8 +25,11 @@
 	div > .usa-list {
 		@include u-line-height('body', 5);
 	}
+	& > .usa-prose {
+		@include u-margin-bottom(2);
+	}
 	.nci-heading-h1 {
-		@include u-margin-top(2);
+		@include u-margin-top(0);
 	}
 	&__release-info {
 		@include at-media('tablet') {
@@ -50,10 +56,6 @@
 				@include at-media('tablet') {
 					@include u-margin-left(2);
 					@include u-text-align('right');
-				}
-				.cgdp-media-contact__info p {
-					@include u-margin-y(0);
-					@include u-line-height('body', 5);
 				}
 			}
 		}
