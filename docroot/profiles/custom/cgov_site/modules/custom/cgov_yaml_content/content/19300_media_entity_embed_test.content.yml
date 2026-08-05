@@ -1,0 +1,62 @@
+## Regression fixture for ticket #5326. Intentionally keeps the legacy
+## Percussion-migration data-embed-button="media_entity_embed" value on the
+## embedded image below so upper environments have a page to verify the
+## pencil-icon edit fix against. Do not "correct" the button ID here.
+- entity: "node"
+  type: "cgov_press_release"
+  title: "Media Entity Embed Test"
+  langcode: en
+  status: 1
+  field_site_section:
+    - '#process':
+        callback: 'reference'
+        args:
+          - 'taxonomy_term'
+          - vid: 'cgov_site_sections'
+            computed_path: '/test'
+  field_pretty_url:
+    value: 'entity-embed-test'
+  moderation_state:
+    value: 'published'
+  field_browser_title:
+    value: "Media Entity Embed Test"
+  field_feature_card_description:
+    value: "Regression fixture for ticket #5326."
+  field_card_title:
+    value: "Media Entity Embed Test"
+  field_press_release_type:
+    value: 'NCI Press Release'
+  field_date_display_mode:
+    - value: 'posted'
+  field_list_description:
+    value: "Regression fixture for ticket #5326."
+  field_page_description:
+    value: "Regression fixture for ticket #5326 - legacy embedded image button."
+  field_date_posted:
+    value: "2026-08-07"
+  field_date_reviewed:
+    value: "2026-08-07"
+  field_date_updated:
+    value: "2026-08-07"
+  field_image_article:
+    - target_type: 'media'
+      '#process':
+        callback: 'reference'
+        args:
+          - 'media'
+          - bundle: 'cgov_image'
+            name: 'Porcupine Test Image - with Caption & Enlarge Button'
+  body:
+    - format: "ncids_full_html"
+      value: |
+        <p>This page intentionally keeps the legacy migration embed button ID on the image below. It exists to verify the fix for ticket #5326 (error editing inline images on migrated content) on this and upper environments.</p>
+        <drupal-entity
+          data-align="left"
+          data-caption=""
+          data-embed-button="media_entity_embed"
+          data-entity-embed-display="view_mode:media.image_display_article_medium"
+          data-entity-type="media"
+          data-entity-uuid="#process"
+          data-cgov-yaml-query-bundle="cgov_image"
+          data-cgov-yaml-query-name="Porcupine Test Image - with Caption & Enlarge Button"
+        ></drupal-entity>
