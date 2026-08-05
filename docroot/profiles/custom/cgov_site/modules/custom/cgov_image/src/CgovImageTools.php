@@ -8,6 +8,40 @@ namespace Drupal\cgov_image;
 class CgovImageTools {
 
   /**
+   * The stale embed button ID left over from the Percussion migration.
+   */
+  const LEGACY_IMAGE_EMBED_BUTTON = 'media_entity_embed';
+
+  /**
+   * The embed button ID that is actually configured on this platform.
+   */
+  const CURRENT_IMAGE_EMBED_BUTTON = 'cgov_image_button';
+
+  /**
+   * Rewrites migrated embedded-image markup to use the real embed button.
+   *
+   * Content migrated from Percussion stores inline images with
+   * data-embed-button="media_entity_embed", a button ID that was never
+   * actually configured on this platform. Entity Embed resolves its
+   * "Edit" dialog by loading the embed_button config entity named in that
+   * attribute, so editing these images errors out because no such config
+   * entity exists. Swapping in the real button ID lets the dialog resolve.
+   *
+   * @param string $text
+   *   The field value to rewrite.
+   *
+   * @return string
+   *   The rewritten field value.
+   */
+  public function fixLegacyImageEmbedButton(string $text): string {
+    return str_replace(
+      'data-embed-button="' . self::LEGACY_IMAGE_EMBED_BUTTON . '"',
+      'data-embed-button="' . self::CURRENT_IMAGE_EMBED_BUTTON . '"',
+      $text
+    );
+  }
+
+  /**
    * Helper function to get the crop name from the image style.
    *
    * @param string $image_style
