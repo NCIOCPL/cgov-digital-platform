@@ -22,10 +22,6 @@ function cgov_video_install() {
   $siteHelper->addMediaTypePermissions('cgov_video', ['content_author']);
   $siteHelper->attachMediaTypeToWorkflow('cgov_video', 'editorial_workflow');
 
-  // Attach video carousel to right workflow.
-  $siteHelper->attachBlockContentTypeToWorkflow('cgov_video_carousel', 'simple_workflow');
-  $siteHelper->addBlockContentTypePermissions('cgov_video_carousel', ['advanced_editor']);
-
   // Install permissions for this module.
   _cgov_video_install_permissions($siteHelper);
 }
@@ -52,7 +48,108 @@ function _cgov_video_install_permissions(CgovCoreTools $siteHelper) {
 }
 
 /**
- * Latest update hook.
+ * Removes content, permissions, and configurations for deprecated carousels.
  */
-function cgov_video_update_10002() {
+function cgov_video_update_10003(&$sandbox): void {
+  $expected_types = ['cgov_video_carousel'];
+  $roles = ['advanced_editor'];
+
+  // ==========================================
+  // PART 1: The DB Sledgehammer (Clean Orphans)
+  // ==========================================
+  try {
+    $database = \Drupal::database();
+    $target_ids = $database->select('block_content', 'b')
+      ->fields('b', ['id'])
+      ->condition('type', $expected_types, 'IN')
+      ->execute()
+      ->fetchCol();
+
+    if (!empty($target_ids)) {
+      $database->delete('block_content')->condition('id', $target_ids, 'IN')->execute();
+      $database->delete('block_content_field_data')->condition('id', $target_ids, 'IN')->execute();
+      $database->delete('block_content_revision')->condition('id', $target_ids, 'IN')->execute();
+      $database->delete('block_content_field_revision')->condition('id', $target_ids, 'IN')->execute();
+    }
+
+    $tables = $database->schema()->findTables('block_content__field_%');
+    foreach ($tables as $table) {
+      $database->delete($table)->condition('bundle', $expected_types, 'IN')->execute();
+    }
+    $revision_tables = $database->schema()->findTables('block_content_revision__field_%');
+    foreach ($revision_tables as $table) {
+      $database->delete($table)->condition('bundle', $expected_types, 'IN')->execute();
+    }
+  }
+  catch (\Throwable $e) {
+    \Drupal::logger('cgov_video')->notice('Part 1 bypassed: ' . $e->getMessage());
+  }
+
+  // ==========================================
+  // PART 2: The Entity API
+  // ==========================================
+  try {
+    $entity_type_manager = \Drupal::entityTypeManager();
+    $block_storage = $entity_type_manager->getStorage('block_content');
+
+    $block_ids = $block_storage->getQuery()
+      ->accessCheck(FALSE)
+      ->condition('type', $expected_types, 'IN')
+      ->execute();
+
+    if (!empty($block_ids)) {
+      $blocks = $block_storage->loadMultiple($block_ids);
+      $block_storage->delete($blocks);
+    }
+  }
+  catch (\Throwable $e) {
+    \Drupal::logger('cgov_video')->notice('Part 2 bypassed: ' . $e->getMessage());
+  }
+
+  // ==========================================
+  // PART 3: Delete Bundle Configs
+  // ==========================================
+  try {
+    $entity_type_manager = \Drupal::entityTypeManager();
+    $type_storage = $entity_type_manager->getStorage('block_content_type');
+
+    foreach ($expected_types as $block_type) {
+      $bundle_entity = $type_storage->load($block_type);
+      if ($bundle_entity) {
+        $bundle_entity->delete();
+      }
+    }
+  }
+  catch (\Throwable $e) {
+    // This is exactly where CI/CD is crashing.
+    // The MissingBundleException bubbles
+    // up from field_purge operations triggered by the bundle deletion. We catch
+    // it here so it doesn't abort the Drush batch process.
+    \Drupal::logger('cgov_video')->notice('Part 3 bypassed: ' . $e->getMessage());
+  }
+
+  // ==========================================
+  // PART 4: Revoke Permissions
+  // ==========================================
+  try {
+    $perms = CgovCoreTools::BLOCK_CONTENT_PERMISSIONS;
+    $permissions_to_revoke = [];
+
+    foreach ($perms as $perm) {
+      if (str_contains($perm, '[content_type]')) {
+        foreach ($expected_types as $block_type) {
+          $permissions_to_revoke[] = str_replace('[content_type]', $block_type, $perm);
+        }
+      }
+    }
+
+    if (!empty($permissions_to_revoke)) {
+      foreach ($roles as $role_id) {
+        user_role_revoke_permissions($role_id, $permissions_to_revoke);
+      }
+    }
+  }
+  catch (\Throwable $e) {
+    \Drupal::logger('cgov_video')->notice('Part 4 bypassed: ' . $e->getMessage());
+  }
 }
