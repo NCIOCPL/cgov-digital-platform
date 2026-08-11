@@ -108,3 +108,25 @@ EOMarkup;
   }
 
 }
+
+/**
+ * Updates biography body field format to ncids_full_html.
+ */
+function cgov_biography_update_8001() {
+  $db = \Drupal::database();
+  $bundle = 'cgov_biography';
+
+  // Node table updates.
+  $db->update('node__body')
+    ->fields(['body_format' => 'ncids_full_html'])
+    ->condition('bundle', $bundle)
+    ->condition('body_format', 'full_html')
+    ->execute();
+
+  // Node revision table updates.
+  $db->update('node_revision__body')
+    ->fields(['body_format' => 'ncids_full_html'])
+    ->condition('bundle', $bundle)
+    ->condition('body_format', 'full_html')
+    ->execute();
+}
