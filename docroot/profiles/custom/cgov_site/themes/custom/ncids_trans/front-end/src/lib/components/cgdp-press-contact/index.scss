@@ -1,31 +1,25 @@
 @use 'uswds-core' as *;
 
-// From /docroot/profiles/custom/cgov_site/themes/custom/cgov/src/styles/_colors.scss
-// these cgov colors should be replaced with ncids tokens eventually,
-// but for now, we are using them to maintain the current look and feel.
-$cgovWhite: #FFFFFF;
-$cgovGrey: #818181;
-$cgovdgrey00: #606060;
-
-// Styles taken from profile-panel.scss to maintain the current look and feel.
-// Should probably be refactored to use ncids tokens / styles eventually.
 .cgdp-press-contact {
-  background: $cgovWhite;
-  border: 1px solid $cgovGrey;
-  box-shadow: 0 0 9px 1px rgba(0, 0, 0, 0.15);
-  margin: 1.3em 0 1.5em 0;
-  padding: 15px;
+	@include u-bg('white');
+	@include u-border(1px, $theme-color-base-light);
+	@include u-shadow(1);
+	@include u-margin-top(3);
+	@include u-margin-bottom(3);
+	@include u-padding(2);
 	clear: both;
+	// Set the maximum width based on the theme's text measure (to align with usa-prose,
+	// since usa-prose won't alter a div's max width like it limits text content.)
+	max-width: measure($theme-text-measure);
 
-  h2 {
-    color: $cgovdgrey00;
-    font-size: 23px;
-    margin-top: 0;
-  }
+	h2 {
+		@include u-color($theme-color-base-darkest);
+		@include u-margin-top(0);
+	}
 
-  p {
-    &:last-child {
-      margin-bottom: 0;
-    }
-  }
+	p {
+		&:last-child {
+			@include u-margin-bottom(0);
+		}
+	}
 }
