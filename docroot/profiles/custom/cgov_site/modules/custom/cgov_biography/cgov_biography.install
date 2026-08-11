@@ -36,10 +36,7 @@ function cgov_biography_themes_installed(array $theme_list) {
   $block_label = 'Press Information for Journalists';
   $block_html = <<<EOMarkup
     <h2>Press Contacts</h2>
-    <p>To request an interview with NCI researchers, contact the NCI Office of Media Relations.<br />
-      <a href="mailto:ncipressofficers@mail.nih.gov" class="press-contact-email">ncipressofficers@mail.nih.gov</a><br />
-      <span class="press-contact-phone">240-760-6600</span>
-    </p>
+    <p>To request an interview with NCI researchers, contact the NIH Press Office: <a href="mailto:nihpress@nih.gov" class="press-contact-email">nihpress@nih.gov</a>.</p>
 EOMarkup;
 
   $block_content_entities = \Drupal::entityTypeManager()
@@ -64,7 +61,7 @@ EOMarkup;
       continue;
     }
 
-    $block_id = 'bio_press_info';
+    $block_id = 'press_information_for_journalists__biography';
     if (Block::load($block_id)) {
       continue;
     }
