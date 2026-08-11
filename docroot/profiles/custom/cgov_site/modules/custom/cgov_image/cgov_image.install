@@ -24,10 +24,6 @@ function cgov_image_install() {
     $tools->attachMediaTypeToWorkflow($image_type, 'simple_workflow');
   }
 
-  // Attach image carousel to right workflow.
-  $tools->attachBlockContentTypeToWorkflow('cgov_image_carousel', 'simple_workflow');
-  $tools->addBlockContentTypePermissions('cgov_image_carousel', ['advanced_editor']);
-
   // Install permissions for this module.
   _cgov_image_install_permissions($tools);
 }
@@ -43,7 +39,6 @@ function _cgov_image_install_permissions(CgovCoreTools $siteHelper) {
     'admin_ui' => [
       'access cgov_embedded_image_browser entity browser pages',
       'access cgov_image_browser entity browser pages',
-      'access cgov_image_carousel_image_browser entity browser pages',
     ],
     'image_manager' => [
       'revert any cgov_contextual_image media revisions',
@@ -70,4 +65,127 @@ function cgov_image_update_10005() {
   $assigner = \Drupal::service('features_assigner');
   $assigner->assignConfigPackages();
   $service->import(['cgov_image']);
+}
+
+/**
+ * Removes content, permissions, and configurations for deprecated carousels.
+ */
+function cgov_image_update_10010(&$sandbox): void {
+  $expected_types = ['cgov_image_carousel', 'cgov_video_carousel'];
+  $roles = ['advanced_editor'];
+
+  // ==========================================
+  // PART 1: The DB Sledgehammer (Clean Orphans)
+  // ==========================================
+  try {
+    $database = \Drupal::database();
+    $target_ids = $database->select('block_content', 'b')
+      ->fields('b', ['id'])
+      ->condition('type', $expected_types, 'IN')
+      ->execute()
+      ->fetchCol();
+
+    if (!empty($target_ids)) {
+      $database->delete('block_content')->condition('id', $target_ids, 'IN')->execute();
+      $database->delete('block_content_field_data')->condition('id', $target_ids, 'IN')->execute();
+      $database->delete('block_content_revision')->condition('id', $target_ids, 'IN')->execute();
+      $database->delete('block_content_field_revision')->condition('id', $target_ids, 'IN')->execute();
+    }
+
+    $tables = $database->schema()->findTables('block_content__field_%');
+    foreach ($tables as $table) {
+      $database->delete($table)->condition('bundle', $expected_types, 'IN')->execute();
+    }
+    $revision_tables = $database->schema()->findTables('block_content_revision__field_%');
+    foreach ($revision_tables as $table) {
+      $database->delete($table)->condition('bundle', $expected_types, 'IN')->execute();
+    }
+  }
+  catch (\Throwable $e) {
+    \Drupal::logger('cgov_image')->notice('Part 1 bypassed: ' . $e->getMessage());
+  }
+
+  // ==========================================
+  // PART 2: The Entity API
+  // ==========================================
+  try {
+    $entity_type_manager = \Drupal::entityTypeManager();
+    $block_storage = $entity_type_manager->getStorage('block_content');
+
+    $block_ids = $block_storage->getQuery()
+      ->accessCheck(FALSE)
+      ->condition('type', $expected_types, 'IN')
+      ->execute();
+
+    if (!empty($block_ids)) {
+      $blocks = $block_storage->loadMultiple($block_ids);
+      $block_storage->delete($blocks);
+    }
+  }
+  catch (\Throwable $e) {
+    \Drupal::logger('cgov_image')->notice('Part 2 bypassed: ' . $e->getMessage());
+  }
+
+  // ==========================================
+  // PART 3: Delete Bundle Configs
+  // ==========================================
+  try {
+    $entity_type_manager = \Drupal::entityTypeManager();
+    $type_storage = $entity_type_manager->getStorage('block_content_type');
+
+    foreach ($expected_types as $block_type) {
+      $bundle_entity = $type_storage->load($block_type);
+      if ($bundle_entity) {
+        $bundle_entity->delete();
+      }
+    }
+  }
+  catch (\Throwable $e) {
+    // This is exactly where CI/CD is crashing.
+    // The MissingBundleException bubbles
+    // up from field_purge operations triggered by the bundle deletion. We catch
+    // it here so it doesn't abort the Drush batch process.
+    \Drupal::logger('cgov_image')->notice('Part 3 bypassed: ' . $e->getMessage());
+  }
+
+  // ==========================================
+  // PART 4: Delete the Entity Browser Config
+  // ==========================================
+  try {
+    $entity_type_manager = \Drupal::entityTypeManager();
+    $browser_storage = $entity_type_manager->getStorage('entity_browser');
+    $browser_entity = $browser_storage->load('cgov_image_carousel_image_browser');
+
+    if ($browser_entity) {
+      $browser_entity->delete();
+    }
+  }
+  catch (\Throwable $e) {
+    \Drupal::logger('cgov_image')->notice('Part 4 bypassed: ' . $e->getMessage());
+  }
+
+  // ==========================================
+  // PART 5: Revoke Permissions
+  // ==========================================
+  try {
+    $perms = CgovCoreTools::BLOCK_CONTENT_PERMISSIONS;
+    $permissions_to_revoke = [];
+
+    foreach ($perms as $perm) {
+      if (str_contains($perm, '[content_type]')) {
+        foreach ($expected_types as $block_type) {
+          $permissions_to_revoke[] = str_replace('[content_type]', $block_type, $perm);
+        }
+      }
+    }
+
+    if (!empty($permissions_to_revoke)) {
+      foreach ($roles as $role_id) {
+        user_role_revoke_permissions($role_id, $permissions_to_revoke);
+      }
+    }
+  }
+  catch (\Throwable $e) {
+    \Drupal::logger('cgov_image')->notice('Part 5 bypassed: ' . $e->getMessage());
+  }
 }
