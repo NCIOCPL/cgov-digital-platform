@@ -693,4 +693,134 @@ class CgovCoreTools {
     }
   }
 
+  /**
+   * Revokes block content type permissions for specified roles.
+   *
+   * @param string $bundle
+   *   The block content type machine name.
+   * @param array $roles
+   *   An array of role IDs to revoke permissions from.
+   *
+   * @throws \Exception
+   */
+  public static function revokeBlockContentTypePermissions(string $bundle, array $roles = ['advanced_editor']): void {
+    $perms = self::BLOCK_CONTENT_PERMISSIONS;
+    $permissions_to_revoke = [];
+
+    foreach ($perms as $perm) {
+      if (str_contains($perm, '[content_type]')) {
+        $permissions_to_revoke[] = str_replace('[content_type]', $bundle, $perm);
+      }
+    }
+
+    if (!empty($permissions_to_revoke)) {
+      foreach ($roles as $role_id) {
+        user_role_revoke_permissions($role_id, $permissions_to_revoke);
+      }
+    }
+  }
+
+  /**
+   * Completely purges a block content type, its content, and config.
+   *
+   * @param string $bundle
+   *   The block content type machine name.
+   * @param array $roles
+   *   Roles from which to revoke permissions.
+   * @param array $extra_config
+   *   An array of additional config entities to delete, keyed by entity type.
+   */
+  public static function purgeBlockContentBundle(string $bundle, array $roles = ['advanced_editor'], array $extra_config = []): void {
+    $entity_type_manager = \Drupal::entityTypeManager();
+
+    // 1. Delete all block content entities via EntityStorageBase::delete.
+    $block_storage = $entity_type_manager->getStorage('block_content');
+    $block_ids = $block_storage->getQuery()
+      ->accessCheck(FALSE)
+      ->condition('type', $bundle)
+      ->execute();
+
+    if (!empty($block_ids)) {
+      $blocks = $block_storage->loadMultiple($block_ids);
+      $block_storage->delete($blocks);
+    }
+
+    // 2. Explicitly delete language content settings via Entity API.
+    if ($entity_type_manager->hasDefinition('language_content_settings')) {
+      $lang_storage = $entity_type_manager->getStorage('language_content_settings');
+      $lang_config = $lang_storage->load("block_content.{$bundle}");
+      if ($lang_config) {
+        $lang_config->delete();
+      }
+    }
+
+    // 3. Delete any explicitly passed associated
+    // config entities (like entity_browsers).
+    foreach ($extra_config as $entity_type => $entity_ids) {
+      if ($entity_type_manager->hasDefinition($entity_type)) {
+        $storage = $entity_type_manager->getStorage($entity_type);
+        $entities = $storage->loadMultiple($entity_ids);
+        if (!empty($entities)) {
+          $storage->delete($entities);
+        }
+      }
+    }
+
+    // 4. Delete the Block Content Type bundle
+    // config directly via ConfigFactory.
+    // (Bypassing $bundle_entity->delete() prevents
+    // the MissingBundleException in CI).
+    $config_factory = \Drupal::configFactory();
+    $bundle_config = $config_factory->getEditable("block_content.type.{$bundle}");
+    if (!$bundle_config->isNew()) {
+      $bundle_config->delete();
+    }
+
+    // 5. Scrub the field map synchronously.
+    self::purgeBundleFromFieldMap('block_content', $bundle);
+
+    // 6. Revoke Permissions.
+    self::revokeBlockContentTypePermissions($bundle, $roles);
+
+    // 7. Clear caches.
+    $entity_type_manager->clearCachedDefinitions();
+    \Drupal::service('entity_type.bundle.info')->clearCachedBundles();
+  }
+
+  /**
+   * Removes a bundle's references from an entity type's field map.
+   *
+   * @param string $entity_type
+   *   The entity type ID (e.g., 'block_content').
+   * @param string $bundle
+   *   The bundle machine name to purge.
+   */
+  public static function purgeBundleFromFieldMap(string $entity_type, string $bundle): void {
+    $key_value = \Drupal::keyValue('entity.definitions.bundle_field_map');
+    $map = $key_value->get($entity_type);
+
+    if (is_array($map)) {
+      $changed = FALSE;
+
+      foreach ($map as $field_name => &$field_info) {
+        if (isset($field_info['bundles'][$bundle])) {
+          unset($field_info['bundles'][$bundle]);
+          $changed = TRUE;
+        }
+
+        if (empty($field_info['bundles'])) {
+          unset($map[$field_name]);
+          $changed = TRUE;
+        }
+      }
+
+      if ($changed) {
+        $key_value->set($entity_type, $map);
+      }
+    }
+
+    // Clear the cached field definitions so Views and the UI pick up the fix.
+    \Drupal::service('entity_field.manager')->clearCachedFieldDefinitions();
+  }
+
 }
