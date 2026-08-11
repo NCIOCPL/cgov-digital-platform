@@ -1,0 +1,30 @@
+@use 'uswds-core' as *;
+
+// From /docroot/profiles/custom/cgov_site/themes/custom/cgov/src/styles/_colors.scss
+// these cgov colors should be replaced with ncids tokens eventually,
+// but for now, we are using them to maintain the current look and feel.
+$cgovWhite: #FFFFFF;
+$cgovGrey: #818181;
+$cgovdgrey00: #606060;
+
+// Styles taken from profile-panel.scss to maintain the current look and feel.
+// Should probably be refactored to use ncids tokens / styles eventually.
+.cgdp-press-contact {
+  background: $cgovWhite;
+  border: 1px solid $cgovGrey;
+  box-shadow: 0 0 9px 1px rgba(0, 0, 0, 0.15);
+  margin: 1.3em 0 1.5em 0;
+  padding: 15px;
+
+  h2 {
+    color: $cgovdgrey00;
+    font-size: 23px;
+    margin-top: 0;
+  }
+
+  p {
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
+}
