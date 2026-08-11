@@ -29,6 +29,7 @@ use Drupal\node\Entity\Node;
 function _ncids_trans_is_migrated_inner_page($bundle) {
   return in_array($bundle, [
     'cgov_article',
+    'cgov_biography',
     'cgov_event',
     'cgov_blog_post',
     'cgov_press_release',
@@ -51,7 +52,6 @@ function ncids_trans_theme_suggestions_page_alter(array &$suggestions, array $va
   // determine which types should get a suggestion of
   // page--ncids-inner-page.html.twig.
   $ncids_inner_page_types = [
-    'cgov_biography',
     'cgov_cancer_center',
     'cgov_cancer_research',
     'cgov_infographic',
