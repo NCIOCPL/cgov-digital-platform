@@ -6,6 +6,7 @@
  */
 
 use Drupal\cgov_core\CgovCoreTools;
+use Drupal\Core\Utility\UpdateException;
 
 /**
  * Implements hook_install().
@@ -21,10 +22,6 @@ function cgov_video_install() {
   // Add content type permissions.
   $siteHelper->addMediaTypePermissions('cgov_video', ['content_author']);
   $siteHelper->attachMediaTypeToWorkflow('cgov_video', 'editorial_workflow');
-
-  // Attach video carousel to right workflow.
-  $siteHelper->attachBlockContentTypeToWorkflow('cgov_video_carousel', 'simple_workflow');
-  $siteHelper->addBlockContentTypePermissions('cgov_video_carousel', ['advanced_editor']);
 
   // Install permissions for this module.
   _cgov_video_install_permissions($siteHelper);
@@ -55,4 +52,17 @@ function _cgov_video_install_permissions(CgovCoreTools $siteHelper) {
  * Latest update hook.
  */
 function cgov_video_update_10002() {
+}
+
+/**
+ * Removes content, permissions, and configurations for video carousel.
+ */
+function cgov_video_update_10004(&$sandbox): void {
+  try {
+    CgovCoreTools::purgeBlockContentBundle('cgov_video_carousel');
+  }
+  catch (\Throwable $e) {
+    \Drupal::logger('cgov_video')->error('Video carousel purge failed: ' . $e->getMessage());
+    throw new UpdateException('Failed to purge video carousel: ' . $e->getMessage(), $e->getCode(), $e);
+  }
 }
