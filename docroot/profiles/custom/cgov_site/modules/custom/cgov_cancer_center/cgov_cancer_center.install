@@ -19,3 +19,25 @@ function cgov_cancer_center_install() {
   // Add content type permissions.
   $siteHelper->addContentTypePermissions('cgov_cancer_center', ['content_author']);
 }
+
+/**
+ * Updates cancer center body field format to ncids_full_html.
+ */
+function cgov_cancer_center_update_8001() {
+  $db = \Drupal::database();
+  $bundle = 'cgov_cancer_center';
+
+  // Node table updates.
+  $db->update('node__body')
+    ->fields(['body_format' => 'ncids_full_html'])
+    ->condition('bundle', $bundle)
+    ->condition('body_format', 'full_html')
+    ->execute();
+
+  // Node revision table updates.
+  $db->update('node_revision__body')
+    ->fields(['body_format' => 'ncids_full_html'])
+    ->condition('bundle', $bundle)
+    ->condition('body_format', 'full_html')
+    ->execute();
+}
