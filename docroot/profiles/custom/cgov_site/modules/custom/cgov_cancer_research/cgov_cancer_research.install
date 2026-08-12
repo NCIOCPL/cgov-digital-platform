@@ -6,16 +6,21 @@
  */
 
 /**
- * Implements hook_install().
- *
- * Perform actions to set up the site for this profile.
- *
- * @see system_install()
+ * Remove Cancer Research Listing Page permissions from content authors.
  */
-function cgov_cancer_research_install() {
-  // Get our helper.
-  $siteHelper = \Drupal::service('cgov_core.tools');
+function cgov_cancer_research_update_10001(): void {
+  $permissions = [
+    'content_author' => [
+      'create cgov_cancer_research content',
+      'delete any cgov_cancer_research content',
+      'delete own cgov_cancer_research content',
+      'edit any cgov_cancer_research content',
+      'edit own cgov_cancer_research content',
+      'revert cgov_cancer_research revisions',
+      'translate cgov_cancer_research node',
+      'view cgov_cancer_research revisions',
+    ],
+  ];
 
-  // Add content type permissions.
-  $siteHelper->addContentTypePermissions('cgov_cancer_research', ['content_author']);
+  \Drupal::service('cgov_core.tools')->removeRolePermissions($permissions);
 }
