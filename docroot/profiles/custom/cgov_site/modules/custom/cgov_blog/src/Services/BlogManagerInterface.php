@@ -8,6 +8,20 @@ use Drupal\node\NodeInterface;
  * Methods for retrieving a related Blog Series.
  */
 interface BlogManagerInterface {
+  /**
+   * Title mode: Prioritize legacy card titles (Card -> Browser -> Node).
+   */
+  public const TITLE_CARD = 'cardTitle';
+
+  /**
+   * Title mode: Prioritize browser title field (Browser -> Node).
+   */
+  public const TITLE_BROWSER = 'browserTitle';
+
+  /**
+   * Title mode: Use the native node title strictly.
+   */
+  public const TITLE_NODE = 'nodeTitle';
 
   /**
    * Get Blog Series from the current route.
@@ -119,10 +133,14 @@ interface BlogManagerInterface {
    *   Should the title include the topic?
    * @param \Drupal\node\Entity\Node $blog_series
    *   Node object.
+   * @param string $titleMode
+   *   (optional) Determines the base title strategy. Use one of the
+   *   TITLE_* constants defined in this interface.
+   *   Defaults to self::TITLE_CARD.
    *
    * @return string
    *   Blog series title.
    */
-  public function getBlogSeriesTitle($year, $includeTopic, $blog_series);
+  public function getBlogSeriesTitle($year, $includeTopic, $blog_series, $titleMode = self::TITLE_CARD);
 
 }

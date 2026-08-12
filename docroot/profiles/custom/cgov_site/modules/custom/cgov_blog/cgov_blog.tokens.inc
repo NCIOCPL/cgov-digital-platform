@@ -5,10 +5,11 @@
  * {@inheritdoc}
  */
 
+use Drupal\cgov_blog\Services\BlogManagerInterface;
 use Drupal\Core\Render\BubbleableMetadata;
 use Drupal\node\Entity\Node;
+use Drupal\node\NodeInterface;
 use Drupal\taxonomy\Entity\Term;
-use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 
 /**
  * Implements hook_token_info().
@@ -53,8 +54,13 @@ function cgov_blog_tokens($type, $tokens, array $data, array $options, Bubbleabl
         break;
 
       case 'blog-series-title':
+      case 'blog-series-og-title':
         if (!empty($data['node'])) {
-          $replacements[$original] = _get_blog_series_title($data['node']);
+          $replacements[$original] = _get_blog_series_title($data['node'], $name);
+
+          // Tell Drupal to vary the cache of this token
+          // based on these query arguments.
+          $bubbleable_metadata->addCacheContexts(['url.query_args:topic', 'url.query_args:year']);
         }
         break;
 
@@ -114,16 +120,29 @@ function _get_blog_post_path($node) {
 /**
  * Get the blog series title base of the url params.
  */
-function _get_blog_series_title($node) {
-  $hasTopic = \Drupal::request()->query->get('topic') != NULL;
-  $year = \Drupal::request()->query->get('year');
+function _get_blog_series_title(NodeInterface $node, string $name): string {
+  $request = \Drupal::request();
+  $topic = $request->query->get('topic');
+  $hasTopic = ($topic !== NULL && trim((string) $topic) !== '');
+  $year = $request->query->get('year');
 
-  // The only allowed characters in dates are numbers. Once we eliminate
-  // everything else, there's no need to do further checks.
-  if ($year != NULL && (!is_numeric($year) || $year < 0)) {
-    throw new BadRequestHttpException('year is invalid');
+  // Stricter validation: Ensure it is exactly a 4-digit number.
+  if ($year !== NULL && !preg_match('/^\d{4}$/', $year)) {
+    // Graceful fallback instead of throwing a BadRequestHttpException,
+    // to prevent fatal errors if tokens are generated via CLI/Cron.
+    $year = NULL;
   }
 
+  /** @var \Drupal\cgov_blog\Services\BlogManagerInterface $blogManager */
   $blogManager = \Drupal::service('cgov_blog.blog_manager');
-  return $blogManager->getBlogSeriesTitle($year, $hasTopic, $node);
+
+  $titleMode = BlogManagerInterface::TITLE_BROWSER;
+
+  if ($name === 'blog-series-og-title') {
+    $titleMode = ($year || $hasTopic)
+      ? BlogManagerInterface::TITLE_CARD
+      : BlogManagerInterface::TITLE_NODE;
+  }
+
+  return $blogManager->getBlogSeriesTitle($year, $hasTopic, $node, $titleMode);
 }

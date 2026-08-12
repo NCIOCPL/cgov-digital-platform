@@ -698,6 +698,14 @@ function cgov_blog_preprocess_node(&$variables) {
     return;
   }
 
+  // Tell Drupal this node's render array varies by these query parameters.
+  // This ensures a unique cache variation is
+  // created for different years/topics.
+  $variables['elements']['#cache']['contexts'] = Cache::mergeContexts(
+    $variables['elements']['#cache']['contexts'] ?? [],
+    ['url.query_args:topic', 'url.query_args:year'],
+  );
+
   $queryParameters = \Drupal::request()->query;
   foreach (['topic', 'year'] as $param) {
     $variables['get'][$param] = $queryParameters->get($param, '');
