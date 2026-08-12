@@ -24,10 +24,6 @@ function cgov_image_install() {
     $tools->attachMediaTypeToWorkflow($image_type, 'simple_workflow');
   }
 
-  // Attach image carousel to right workflow.
-  $tools->attachBlockContentTypeToWorkflow('cgov_image_carousel', 'simple_workflow');
-  $tools->addBlockContentTypePermissions('cgov_image_carousel', ['advanced_editor']);
-
   // Install permissions for this module.
   _cgov_image_install_permissions($tools);
 }
@@ -43,7 +39,6 @@ function _cgov_image_install_permissions(CgovCoreTools $siteHelper) {
     'admin_ui' => [
       'access cgov_embedded_image_browser entity browser pages',
       'access cgov_image_browser entity browser pages',
-      'access cgov_image_carousel_image_browser entity browser pages',
     ],
     'image_manager' => [
       'revert any cgov_contextual_image media revisions',

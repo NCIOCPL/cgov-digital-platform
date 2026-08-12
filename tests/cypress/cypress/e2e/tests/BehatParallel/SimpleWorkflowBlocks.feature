@@ -5,5 +5,4 @@ Feature: Perform all Behat Content Workflow tasks using Cypress
             | URLs                          | users         |
             | block/add/content_block       | simple_blocks |
             | block/add/raw_html_block      | simple_blocks |
-            | block/add/cgov_image_carousel | simple_blocks |
             | block/add/cgov_video_carousel | simple_blocks |

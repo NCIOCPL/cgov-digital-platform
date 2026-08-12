@@ -38,7 +38,7 @@ function cgov_embedded_block_form_alter(&$form, FormStateInterface $form_state, 
     if (isset($form[$filter_field_name])) {
       if (isset($form[$filter_field_name]['#options'])) {
         // Define the options you want to remove.
-        $options_to_remove = ['cgov_image_carousel', 'cgov_video_carousel'];
+        $options_to_remove = ['cgov_video_carousel'];
         foreach ($options_to_remove as $value) {
           unset($form[$filter_field_name]['#options'][$value]);
         }
@@ -133,7 +133,7 @@ function cgov_embedded_block_theme_suggestions_block_content(array $variables) {
 function cgov_embedded_block_views_query_alter(ViewExecutable $view, QueryPluginBase $query) {
   // Check that we are altering the correct view.
   if ($view->id() == 'block_content_browser') {
-    $excluded_values = ['cgov_image_carousel', 'cgov_video_carousel'];
+    $excluded_values = ['cgov_video_carousel'];
     if ($view->current_display == 'content_block_raw_html_browser') {
       $excluded_values[] = 'cgov_external_link_block';
       $excluded_values[] = 'ncids_mega_menu_content';
