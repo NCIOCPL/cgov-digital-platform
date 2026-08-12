@@ -3,7 +3,7 @@
 namespace Drupal\cgov_blog;
 
 use Drupal\cgov_blog\Services\BlogManagerInterface;
-use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
+use Drupal\node\NodeInterface;
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFunction;
 
@@ -43,30 +43,37 @@ class CgovBlogTwigExtensions extends AbstractExtension {
   }
 
   /**
-   * Determine whether any real text content exists.
+   * Retrieves the appropriate blog series title based on context.
    *
-   * @param string $year
-   *   Year value.
-   * @param string $topic
-   *   Topic ID if present.
-   * @param object $node
-   *   Node object.
+   * @param string|null $year
+   *   The 4-digit year value, if present.
+   * @param string|null $topic
+   *   The topic ID, if present.
+   * @param \Drupal\node\NodeInterface $node
+   *   The node object.
    *
-   * @return bool
-   *   Field has text content.
+   * @return string
+   *   The formatted blog series title.
    */
-  public function getBlogSeriesTitle($year, $topic, $node) {
+  public function getBlogSeriesTitle(?string $year, ?string $topic, NodeInterface $node): string {
 
-    // The only allowed characters in dates are numbers. Once we eliminate
-    // everything else, there's no need to do further checks.
-    if ($year != NULL && (!is_numeric($year) || $year < 0)) {
-      throw new BadRequestHttpException('year is invalid');
+    // Stricter validation: Ensure it is exactly a 4-digit number.
+    if ($year !== NULL && !preg_match('/^\d{4}$/', $year)) {
+      // Fail gracefully instead of throwing an exception so Twig
+      // can continue rendering without crashing the page.
+      $year = NULL;
     }
 
     // When called from a twig template, $topic may be an empty string.
-    $includeTopic = (strlen(trim($topic)) > 0);
+    $includeTopic = ($topic !== NULL && trim($topic) !== '');
 
-    return $this->blogManager->getBlogSeriesTitle($year, $includeTopic, $node);
+    // If there is a topic or a valid year filter, default to Card Title.
+    // Otherwise, default to the standard Node Title.
+    $titleMode = ($year || $includeTopic)
+      ? BlogManagerInterface::TITLE_CARD
+      : BlogManagerInterface::TITLE_NODE;
+
+    return $this->blogManager->getBlogSeriesTitle($year, $includeTopic, $node, $titleMode);
   }
 
 }

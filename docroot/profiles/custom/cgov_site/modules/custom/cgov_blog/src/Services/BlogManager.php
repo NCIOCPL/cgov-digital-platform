@@ -2,6 +2,7 @@
 
 namespace Drupal\cgov_blog\Services;
 
+use Drupal\Core\Entity\ContentEntityInterface;
 use Drupal\Core\Entity\EntityRepositoryInterface;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\Language\LanguageManagerInterface;
@@ -9,6 +10,7 @@ use Drupal\Core\Routing\RouteMatchInterface;
 use Drupal\node\Entity\Node;
 use Drupal\node\NodeInterface;
 use Drupal\path_alias\AliasManagerInterface;
+use Drupal\taxonomy\TermInterface;
 use Symfony\Component\HttpFoundation\RequestStack;
 
 /**
@@ -149,34 +151,88 @@ class BlogManager implements BlogManagerInterface {
    * {@inheritdoc}
    */
   public function getSeriesTopicByUrl(NodeInterface $blog_series) {
-
-    // Retrieve the collection of associated topics and filter to match
-    // against the topic query string parameter.
-    $rtn = NULL;
     $filter = $this->requestStack->getCurrentRequest()->query->get('topic');
+    if (empty($filter)) {
+      return NULL;
+    }
+
+    $raw_filter = trim((string) $filter);
+    $clean_filter_name = str_replace('-', ' ', $raw_filter);
+    $term_storage = $this->entityTypeManager->getStorage('taxonomy_term');
+
+    // 1. Fetch the collection of associated topic terms mapped to this series.
     $topics = $this->getTopicsBySeries($blog_series);
 
-    // Get Blog Topic taxonomy terms in English and Spanish.
-    foreach ($topics as $topic) {
-      $tid = $topic->id();
-
-      /*
-       * If a filter match is found, return topic with the matching pretty URL.
-       * LoadBlogTopic() returns the term matching the current node language.
-       */
-      $urlEn = $this->loadBlogTopic($tid, 'en')->field_topic_pretty_url->value ?? $tid;
-      if ($urlEn === $filter) {
-        $rtn = $this->loadBlogTopic($tid);
-        break;
+    // 2. GLOBAL FALLBACK: If the node isn't tagged with
+    // the term, load it globally from the vocabulary!
+    if (empty($topics)) {
+      if (is_numeric($raw_filter)) {
+        // Path A: Load directly by numeric ID if provided.
+        $global_term = $term_storage->load((int) $raw_filter);
+        if ($global_term && $global_term->bundle() === 'cgov_blog_topics') {
+          $topics = [$global_term];
+        }
       }
-      $urlEs = $this->loadBlogTopic($tid, 'es')->field_topic_pretty_url->value ?? $tid;
-      if ($urlEs === $filter) {
-        $rtn = $this->loadBlogTopic($tid);
-        break;
-      }
+      else {
+        // Path B: Query globally across the pretty URL field first.
+        $tids = $term_storage->getQuery()
+          ->accessCheck(FALSE)
+          ->condition('vid', 'cgov_blog_topics')
+          ->condition('field_topic_pretty_url', $raw_filter)
+          ->execute();
+        // Path C: Fall back to querying globally by name.
+        if (empty($tids)) {
+          $tids = $term_storage->getQuery()
+            ->accessCheck(FALSE)
+            ->condition('vid', 'cgov_blog_topics')
+            ->condition('name', $clean_filter_name)
+            ->execute();
+        }
 
+        if (!empty($tids)) {
+          $topics = $term_storage->loadMultiple($tids);
+        }
+      }
     }
-    return $rtn;
+
+    // 3. Scan the resolved terms to evaluate language variations.
+    if (!empty($topics)) {
+      foreach ($topics as $topic) {
+        if (!$topic instanceof TermInterface) {
+          continue;
+        }
+
+        $term_variants = [$topic];
+        if ($topic instanceof ContentEntityInterface) {
+          foreach ($topic->getTranslationLanguages() as $langcode => $language) {
+            $term_variants[] = $topic->getTranslation($langcode);
+          }
+        }
+
+        foreach ($term_variants as $variant) {
+          // Strict Numeric ID match.
+          if (is_numeric($raw_filter) && (int) $variant->id() === (int) $raw_filter) {
+            return $topic;
+          }
+
+          // Pretty URL field match.
+          if ($variant->hasField('field_topic_pretty_url') && !$variant->get('field_topic_pretty_url')->isEmpty()) {
+            $pretty_url = trim((string) $variant->get('field_topic_pretty_url')->value);
+            if (strcasecmp($pretty_url, $raw_filter) === 0) {
+              return $topic;
+            }
+          }
+
+          // Direct name or slug match.
+          $term_name = trim((string) $variant->getName());
+          if (strcasecmp($term_name, $clean_filter_name) === 0 || strcasecmp(str_replace('-', ' ', $term_name), $clean_filter_name) === 0) {
+            return $topic;
+          }
+        }
+      }
+    }
+
+    return NULL;
   }
 
   /**
@@ -256,33 +312,76 @@ class BlogManager implements BlogManagerInterface {
   /**
    * {@inheritdoc}
    */
-  public function getBlogSeriesTitle($year, $includeTopic, $blog_series) {
-
-    $title = "";
-    // If url has topic or year add them to the title.
-    if ($includeTopic or $year) {
-      if ($year) {
-        $title .= ' ' . $year . ' - ';
-        $title .= ($blog_series->field_card_title->value) ? $blog_series->field_card_title->value : $blog_series->field_browser_title->value;
+  public function getBlogSeriesTitle($year, $includeTopic, $blog_series, $titleMode = self::TITLE_CARD) {
+    // 1. Resolve Multilingual Translation Context.
+    if ($blog_series instanceof ContentEntityInterface) {
+      $langcode = $this->languageManager->getCurrentLanguage()->getId();
+      if ($blog_series->hasTranslation($langcode)) {
+        $blog_series = $blog_series->getTranslation($langcode);
       }
-      if ($includeTopic) {
-        $topic_text = $this->getSeriesTopicByUrl($blog_series);
-        if (isset($topic_text)) {
-          $title .= $topic_text->getName() . ' - ';
-          // Show card title if not empty. Otherwise show browser title field.
-          $title .= ($blog_series->field_card_title->value) ? $blog_series->field_card_title->value : $blog_series->field_browser_title->value;
+    }
+
+    // 2. CHOOSE BASE TITLE ROUTE BASED ON TITLE MODE:
+    $base_title = '';
+
+    switch ($titleMode) {
+      case self::TITLE_BROWSER:
+        // Prioritize Browser Title field, fall back to native Title.
+        if ($blog_series->hasField('field_browser_title') && !$blog_series->get('field_browser_title')->isEmpty()) {
+          $base_title = $blog_series->get('field_browser_title')->value;
         }
         else {
-          // Show card title if not empty. Otherwise show browser title field.
-          $title = ($blog_series->field_card_title->value) ? $blog_series->field_card_title->value : $blog_series->field_browser_title->value;
-          $title .= " - Error: Category Does Not Exist";
+          $base_title = $blog_series->getTitle();
         }
+        break;
+
+      case self::TITLE_NODE:
+        // Use the standard native node title directly.
+        $base_title = $blog_series->getTitle();
+        break;
+
+      case self::TITLE_CARD:
+      default:
+        // Maintain exact historical priority for Cards
+        // (Card Title -> Browser Title -> Native Title).
+        if ($blog_series->hasField('field_card_title') && !$blog_series->get('field_card_title')->isEmpty()) {
+          $base_title = $blog_series->get('field_card_title')->value;
+        }
+        elseif ($blog_series->hasField('field_browser_title') && !$blog_series->get('field_browser_title')->isEmpty()) {
+          $base_title = $blog_series->get('field_browser_title')->value;
+        }
+        else {
+          $base_title = $blog_series->getTitle();
+        }
+        break;
+    }
+
+    // 3. Process Topic/Category matching rules if included in URL params.
+    $prepend_items = [];
+    if ($includeTopic) {
+      $topic_text = $this->getSeriesTopicByUrl($blog_series);
+      if (isset($topic_text)) {
+        if ($topic_text instanceof ContentEntityInterface && $topic_text->hasTranslation($langcode)) {
+          $topic_text = $topic_text->getTranslation($langcode);
+        }
+        $prepend_items[] = $topic_text->getName();
+      }
+      else {
+        $base_title .= " - Error: Category Does Not Exist";
       }
     }
-    else {
-      $title = $blog_series->getTitle();
+
+    // 4. Process Year configuration parameters.
+    if ($year) {
+      $clean_year = preg_replace('/[^0-9]/', '', (string) $year);
+      if (!empty($clean_year)) {
+        $prepend_items[] = $clean_year;
+      }
     }
-    return $title;
+
+    // 5. Build queue and implode.
+    $prepend_items[] = $base_title;
+    return implode(' - ', $prepend_items);
   }
 
 }
