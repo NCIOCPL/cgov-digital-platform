@@ -1,5 +1,5 @@
 - entity: "node"
-  type: "cgov_cancer_research"
+  type: "cgov_mini_landing"
   langcode: en
   status: 1
   moderation_state:
@@ -19,20 +19,27 @@
   field_pretty_url:
     value: "unpublished-page"
   ### English Contents
-  field_selected_research:
-    - entity: 'paragraph'
-      type: "cgov_internal_link"
-      field_internal_link:
-        - target_type: 'node'
-          '#process':
-            callback: 'reference'
-            args:
-              - 'node'
-              - type: 'cgov_article'
-                title: 'Unpublished Page'
+  field_mlp_page_style:
+    - value: "ncids_default"
+  field_landing_contents:
+    - entity: "paragraph"
+      type: "cgov_list"
+      field_list_item_style:
+        - value: "ncids_list_item_title_desc_date"
+      field_list_items:
+        - entity: 'paragraph'
+          type: "cgov_internal_link"
+          field_internal_link:
+            - target_type: 'node'
+              '#process':
+                callback: 'reference'
+                args:
+                  - 'node'
+                  - type: 'cgov_article'
+                    title: 'Unpublished Page'
 
 - entity: "node"
-  type: "cgov_cancer_research"
+  type: "cgov_mini_landing"
   langcode: en
   status: 1
   moderation_state:
@@ -52,14 +59,21 @@
   field_pretty_url:
     value: "bad-page"
   ### English Contents
-  field_selected_research:
-    - entity: 'paragraph'
-      type: "cgov_internal_link"
-      field_internal_link:
-        value: 9999999
+  field_mlp_page_style:
+    - value: "ncids_default"
+  field_landing_contents:
+    - entity: "paragraph"
+      type: "cgov_list"
+      field_list_item_style:
+        - value: "ncids_list_item_title_desc_date"
+      field_list_items:
+        - entity: 'paragraph'
+          type: "cgov_internal_link"
+          field_internal_link:
+            value: 9999999
 
 - entity: "node"
-  type: "cgov_cancer_research"
+  type: "cgov_mini_landing"
   langcode: en
   status: 1
   moderation_state:
@@ -79,13 +93,20 @@
   field_pretty_url:
     value: "no-page"
   ### English Contents
-  field_selected_research:
-    - entity: 'paragraph'
-      type: "cgov_internal_link"
+  field_mlp_page_style:
+    - value: "ncids_default"
+  field_landing_contents:
+    - entity: "paragraph"
+      type: "cgov_list"
+      field_list_item_style:
+        - value: "ncids_list_item_title_desc_date"
+      field_list_items:
+        - entity: 'paragraph'
+          type: "cgov_internal_link"
 
 
 - entity: "node"
-  type: "cgov_cancer_research"
+  type: "cgov_mini_landing"
   langcode: en
   status: 1
   moderation_state:
@@ -105,20 +126,27 @@
   field_pretty_url:
     value: "unpublished-file"
   ### English Contents
-  field_selected_research:
-    - entity: 'paragraph'
-      type: "cgov_media_link"
-      field_media_link:
-        - target_type: 'media'
-          '#process':
-            callback: 'reference'
-            args:
-              - 'media'
-              - bundle: 'cgov_file'
-                name: 'Unpublished File'
+  field_mlp_page_style:
+    - value: "ncids_default"
+  field_landing_contents:
+    - entity: "paragraph"
+      type: "cgov_list"
+      field_list_item_style:
+        - value: "ncids_list_item_title_desc_date"
+      field_list_items:
+        - entity: 'paragraph'
+          type: "cgov_media_link"
+          field_media_link:
+            - target_type: 'media'
+              '#process':
+                callback: 'reference'
+                args:
+                  - 'media'
+                  - bundle: 'cgov_file'
+                    name: 'Unpublished File'
 
 - entity: "node"
-  type: "cgov_cancer_research"
+  type: "cgov_mini_landing"
   langcode: en
   status: 1
   moderation_state:
@@ -138,14 +166,21 @@
   field_pretty_url:
     value: "bad-file"
   ### English Contents
-  field_selected_research:
-    - entity: 'paragraph'
-      type: "cgov_media_link"
-      field_media_link:
-        value: 9999999
+  field_mlp_page_style:
+    - value: "ncids_default"
+  field_landing_contents:
+    - entity: "paragraph"
+      type: "cgov_list"
+      field_list_item_style:
+        - value: "ncids_list_item_title_desc_date"
+      field_list_items:
+        - entity: 'paragraph'
+          type: "cgov_media_link"
+          field_media_link:
+            value: 9999999
 
 - entity: "node"
-  type: "cgov_cancer_research"
+  type: "cgov_mini_landing"
   langcode: en
   status: 1
   moderation_state:
@@ -165,6 +200,13 @@
   field_pretty_url:
     value: "no-file"
   ### English Contents
-  field_selected_research:
-    - entity: 'paragraph'
-      type: "cgov_media_link"
+  field_mlp_page_style:
+    - value: "ncids_default"
+  field_landing_contents:
+    - entity: "paragraph"
+      type: "cgov_list"
+      field_list_item_style:
+        - value: "ncids_list_item_title_desc_date"
+      field_list_items:
+        - entity: 'paragraph'
+          type: "cgov_media_link"
