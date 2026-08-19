@@ -10,6 +10,7 @@ use Drupal\Core\Render\BubbleableMetadata;
 use Drupal\node\Entity\Node;
 use Drupal\node\NodeInterface;
 use Drupal\taxonomy\Entity\Term;
+use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 
 /**
  * Implements hook_token_info().
@@ -126,11 +127,16 @@ function _get_blog_series_title(NodeInterface $node, string $name): string {
   $hasTopic = ($topic !== NULL && trim((string) $topic) !== '');
   $year = $request->query->get('year');
 
-  // Stricter validation: Ensure it is exactly a 4-digit number.
-  if ($year !== NULL && !preg_match('/^\d{4}$/', $year)) {
-    // Graceful fallback instead of throwing a BadRequestHttpException,
-    // to prevent fatal errors if tokens are generated via CLI/Cron.
+  // Normalize an empty string to NULL.
+  if ($year === '') {
     $year = NULL;
+  }
+
+  // Guard against non-scalars (e.g., arrays) and validate the 4-digit format.
+  if ($year !== NULL) {
+    if (!is_scalar($year) || !preg_match('/^\d{4}$/', (string) $year)) {
+      throw new BadRequestHttpException('year is invalid');
+    }
   }
 
   /** @var \Drupal\cgov_blog\Services\BlogManagerInterface $blogManager */
