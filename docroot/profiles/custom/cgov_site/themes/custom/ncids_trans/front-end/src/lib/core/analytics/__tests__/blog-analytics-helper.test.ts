@@ -8,6 +8,7 @@ import {
 	blogPagerAnalyticsHelper,
 	blogRightRailAnalyticsHelper,
 	blogSeriesListAnalyticsHelper,
+	blogSubscribeAnalyticsHelper,
 } from '../blog-analytics-helper';
 
 jest.mock('../eddl-util');
@@ -110,6 +111,12 @@ const blogSeriesPagerDom = `
 	</div>
 `;
 
+const blogSubscribeDom = `
+	<div class="cgdp-blog-subscribe-link">
+		<a class="usa-link" href="https://example.com/subscribe"><span>Subscribe</span></a>
+	</div>
+`;
+
 describe('Blog analytics helper', () => {
 	afterEach(() => {
 		document.body.innerHTML = '';
@@ -125,13 +132,14 @@ describe('Blog analytics helper', () => {
 		);
 		document.body.insertAdjacentHTML(
 			'beforeend',
-			`${blogSeriesListDom}${blogPostPagerDom}${blogRightRailDom}`
+			`${blogSeriesListDom}${blogPostPagerDom}${blogRightRailDom}${blogSubscribeDom}`
 		);
 
 		blogAnalyticsHelper();
 		fireEvent.click(screen.getByRole('link', { name: longTitle }));
 		fireEvent.click(screen.getByRole('link', { name: '< Older Post' }));
 		fireEvent.click(screen.getByRole('link', { name: 'Clinical Trials' }));
+		fireEvent.click(screen.getByRole('link', { name: 'Subscribe' }));
 
 		expect(trackOtherSpy).toHaveBeenCalledWith(
 			'BlogSeries:List:LinkClick',
@@ -148,6 +156,82 @@ describe('Blog analytics helper', () => {
 			'Blog:RightRail:LinkClick',
 			expect.any(Object)
 		);
+		expect(trackOtherSpy).toHaveBeenCalledWith(
+			'Blog:Subscribe:LinkClick',
+			'Blog:Subscribe:LinkClick',
+			expect.any(Object)
+		);
+	});
+});
+
+describe('Blog subscribe analytics helper', () => {
+	afterEach(() => {
+		document.body.innerHTML = '';
+		document.head.innerHTML = '';
+		jest.resetAllMocks();
+	});
+
+	it('does not blow up when blog subscribe links do not exist', () => {
+		expect(() => blogSubscribeAnalyticsHelper()).not.toThrow();
+	});
+
+	it('tracks subscribe clicks on blog post pages', () => {
+		const trackOtherSpy = jest.spyOn(eddlUtil, 'trackOther');
+		document.head.insertAdjacentHTML(
+			'beforeend',
+			'<meta name="dcterms.type" content="cgvBlogPost">'
+		);
+		document.body.insertAdjacentHTML('beforeend', blogSubscribeDom);
+
+		blogSubscribeAnalyticsHelper();
+		fireEvent.click(screen.getByRole('link', { name: 'Subscribe' }));
+
+		expect(trackOtherSpy).toHaveBeenCalledWith(
+			'Blog:Subscribe:LinkClick',
+			'Blog:Subscribe:LinkClick',
+			{
+				location: 'Body',
+				componentType: 'Subscribe',
+				pageType: 'Blog Post',
+			}
+		);
+	});
+
+	it('tracks subscribe clicks on blog series pages', () => {
+		const trackOtherSpy = jest.spyOn(eddlUtil, 'trackOther');
+		document.head.insertAdjacentHTML(
+			'beforeend',
+			'<meta name="dcterms.type" content="cgvBlogSeries">'
+		);
+		document.body.insertAdjacentHTML('beforeend', blogSubscribeDom);
+
+		blogSubscribeAnalyticsHelper();
+		fireEvent.click(screen.getByRole('link', { name: 'Subscribe' }));
+
+		expect(trackOtherSpy).toHaveBeenCalledWith(
+			'Blog:Subscribe:LinkClick',
+			'Blog:Subscribe:LinkClick',
+			{
+				location: 'Body',
+				componentType: 'Subscribe',
+				pageType: 'Blog Series',
+			}
+		);
+	});
+
+	it('does not attach duplicate click handlers to subscribe links', () => {
+		const trackOtherSpy = jest.spyOn(eddlUtil, 'trackOther');
+		document.head.insertAdjacentHTML(
+			'beforeend',
+			'<meta name="dcterms.type" content="cgvBlogPost">'
+		);
+		document.body.insertAdjacentHTML('beforeend', blogSubscribeDom);
+
+		blogSubscribeAnalyticsHelper();
+		blogSubscribeAnalyticsHelper();
+		fireEvent.click(screen.getByRole('link', { name: 'Subscribe' }));
+
+		expect(trackOtherSpy).toHaveBeenCalledTimes(1);
 	});
 });
 
