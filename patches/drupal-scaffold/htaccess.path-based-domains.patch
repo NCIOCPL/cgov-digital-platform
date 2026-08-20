@@ -1,0 +1,45 @@
+diff --git docroot/.htaccess docroot/.htaccess
+index c86cfcba..d7d9f1ec 100644
+--- docroot/.htaccess
++++ docroot/.htaccess
+@@ -135,6 +135,40 @@ AddEncoding gzip svgz
+   # Rewrite install.php during installation to see if mod_rewrite is working
+   RewriteRule ^core/install\.php core/install.php?rewrite=ok [QSA,L]
+
++  # --- BEGIN path-based multisite symlink normalization ---
++  # We use path-based multisite by symlinking top-level directories
++  # (e.g. "foo", "bar", "bazz") back to the docroot, combined with sites.php
++  # matching on those path prefixes. Because every such symlink resolves back
++  # to the same docroot, a URL like /foo/bar/bazz/about is filesystem-walkable
++  # through all three segments, which corrupts Drupal's SCRIPT_NAME-based
++  # base path autodetection: Drupal ends up treating "foo/bar/bazz" as the
++  # base path instead of just "foo", leaving only "/about" as the internal
++  # routed path.
++  #
++  # To fix this, detect when the first URL segment is itself a symlink
++  # (rather than a normal directory) and, if the full request does not
++  # correspond to a real file on disk (i.e. it's not a static asset that
++  # already resolves correctly), force the request through that top-level
++  # segment's own index.php directly. This collapses SCRIPT_NAME back down
++  # to a single segment (e.g. /foo/index.php) so Drupal computes the correct
++  # base path, regardless of how many extra symlinked segments follow it in
++  # the URL.
++  #
++  # Real static assets (CSS/JS aggregates, images, etc.) are left completely
++  # untouched by the "!-f" check below and continue to be served directly by
++  # Apache, even if their URL happens to contain extra symlinked segments.
++
++  # Capture the first path segment into %1.
++  RewriteCond %{REQUEST_URI} ^/([^/]+)(/.*)?$
++  # Only act when that first segment is a symlink (our multisite prefixes),
++  # not a normal real directory (core, sites, modules, themes, etc.).
++  RewriteCond %{DOCUMENT_ROOT}/%1 -L
++  # Only act when the request does NOT correspond to a real file on disk,
++  # so aggregated CSS/JS and other static assets keep being served as-is.
++  RewriteCond %{REQUEST_FILENAME} !-f
++  RewriteRule ^ /%1/index.php [L]
++  # --- END path-based multisite symlink normalization ---
++
+   # Pass all requests not referring directly to files in the filesystem to
+   # index.php.
+   RewriteCond %{REQUEST_FILENAME} !-f
