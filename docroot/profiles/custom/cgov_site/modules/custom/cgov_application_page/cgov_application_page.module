@@ -122,6 +122,21 @@ function cgov_application_page_theme_suggestions_page_alter(array &$suggestions,
 }
 
 /**
+ * Implements hook_theme_suggestions_HOOK_alter().
+ */
+function cgov_application_page_theme_suggestions_app_module_alter(array &$suggestions, array $variables) {
+  $entity = _cgov_application_page_get_curr_entity();
+  if ($entity instanceof NodeInterface && $entity->bundle() === "cgov_application_page") {
+    $app_module_id = $variables['elements']['#app_module_id'];
+    $content_type = $entity->bundle();
+    $page_template = $entity->get('field_app_module_page_template')->value;
+    if ($page_template !== NULL && str_starts_with($page_template, 'ncids')) {
+      $suggestions[] = 'app_module__' . $app_module_id . '__' . $content_type . '__' . $page_template;
+    }
+  }
+}
+
+/**
  * Gets the current entity if there is one.
  *
  * @return Drupal\Core\Entity\ContentEntityInterface
