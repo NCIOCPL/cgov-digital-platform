@@ -3,6 +3,7 @@ import { trackOther } from './eddl-util';
 const BLOG_SERIES_LIST_EVENT_NAME = 'BlogSeries:List:LinkClick';
 const BLOG_RIGHT_RAIL_EVENT_NAME = 'Blog:RightRail:LinkClick';
 const BLOG_PAGER_EVENT_NAME = 'Blog:Pager:LinkClick';
+const BLOG_SUBSCRIBE_EVENT_NAME = 'Blog:Subscribe:LinkClick';
 const BLOG_SERIES_LIST_SELECTOR =
 	'.cgdp-blog-series .cgdp-block-blog-posts .usa-collection, .cgdp-blog-series .cgdp-block-blog-posts.usa-collection';
 const COLLECTION_ITEM_SELECTOR = '.usa-collection__item';
@@ -10,6 +11,7 @@ const TRACKED_LINK_SELECTOR = '.usa-collection__heading a';
 const BLOG_RIGHT_RAIL_LINK_SELECTOR =
 	'.cgdp-blog-categories a, .cgdp-blog-archive a';
 const BLOG_PAGER_LINK_SELECTOR = '.cgdp-blog-post-pager a';
+const BLOG_SUBSCRIBE_LINK_SELECTOR = '.cgdp-blog-subscribe-link a';
 const BLOG_ARCHIVE_TOTAL_SELECTOR = '.cgdp-blog-archive__total';
 
 const blogSeriesListClickHandler =
@@ -115,6 +117,15 @@ const blogPagerClickHandler = (evt: Event): void => {
 	});
 };
 
+const blogSubscribeClickHandler = (): void => {
+	console.log('Blog subscribe clicked');
+	trackOther(BLOG_SUBSCRIBE_EVENT_NAME, BLOG_SUBSCRIBE_EVENT_NAME, {
+		location: 'Body',
+		componentType: 'Subscribe',
+		pageType: getBlogPageType(),
+	});
+};
+
 export const blogSeriesListAnalyticsHelper = (
 	context: ParentNode = document
 ): void => {
@@ -181,8 +192,26 @@ export const blogPagerAnalyticsHelper = (
 	});
 };
 
+export const blogSubscribeAnalyticsHelper = (
+	context: ParentNode = document
+): void => {
+	const subscribeLinks = Array.from(
+		context.querySelectorAll(BLOG_SUBSCRIBE_LINK_SELECTOR)
+	) as HTMLElement[];
+
+	subscribeLinks.forEach((link) => {
+		if (link.dataset.blogSubscribeAnalyticsInit === 'true') {
+			return;
+		}
+
+		link.dataset.blogSubscribeAnalyticsInit = 'true';
+		link.addEventListener('click', blogSubscribeClickHandler);
+	});
+};
+
 export const blogAnalyticsHelper = (context: ParentNode = document): void => {
 	blogSeriesListAnalyticsHelper(context);
 	blogRightRailAnalyticsHelper(context);
 	blogPagerAnalyticsHelper(context);
+	blogSubscribeAnalyticsHelper(context);
 };
