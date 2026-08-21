@@ -7,6 +7,7 @@ import {
 	cgdpEmbedCardEmptyTitle,
 	cgdpEmbedCardImageless,
 	cgdpEmbedCardRight,
+	cgdpRecommendedContentCards,
 } from './cgdp-embed-card.dom';
 
 jest.mock('../../../../../core/analytics/eddl-util', () => ({
@@ -128,5 +129,62 @@ describe('Embedded Card Analytics Behavior', () => {
 				cardAlignment: 'None',
 			})
 		);
+	});
+
+	it('should track internal recommended content feature card clicks', () => {
+		document.body.innerHTML = cgdpRecommendedContentCards;
+		initialize();
+
+		const card = document.querySelector(
+			'.cgdp-recommended-content [data-eddl-landing-item="feature_card"]'
+		) as HTMLElement;
+		fireEvent.click(card);
+
+		expect(trackOther).toHaveBeenCalledWith(
+			'Body:EmbeddedCard:LinkClick',
+			'Body:EmbeddedCard:LinkClick',
+			{
+				location: 'Body',
+				componentType: 'Recommended Content',
+				linkType: 'Internal',
+				cardType: 'Feature',
+				cardTitle: 'Internal Recommended Card',
+			}
+		);
+	});
+
+	it('should track external recommended content imageless card clicks', () => {
+		document.body.innerHTML = cgdpRecommendedContentCards;
+		initialize();
+
+		const card = document.querySelector(
+			'.cgdp-recommended-content [data-eddl-landing-item="imageless_card"]'
+		) as HTMLElement;
+		fireEvent.click(card);
+
+		expect(trackOther).toHaveBeenCalledWith(
+			'Body:EmbeddedCard:LinkClick',
+			'Body:EmbeddedCard:LinkClick',
+			{
+				location: 'Body',
+				componentType: 'Recommended Content',
+				linkType: 'External',
+				cardType: 'Imageless',
+				cardTitle: 'External Recommended Card',
+			}
+		);
+	});
+
+	it('should not attach duplicate recommended content click handlers', () => {
+		document.body.innerHTML = cgdpRecommendedContentCards;
+		initialize();
+		initialize();
+
+		const card = document.querySelector(
+			'.cgdp-recommended-content [data-eddl-landing-item="feature_card"]'
+		) as HTMLElement;
+		fireEvent.click(card);
+
+		expect(trackOther).toHaveBeenCalledTimes(1);
 	});
 });
