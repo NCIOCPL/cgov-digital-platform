@@ -5,6 +5,8 @@
  * Contains cgov_home_landing.install.
  */
 
+use Drupal\field\Entity\FieldConfig;
+use Drupal\field\Entity\FieldStorageConfig;
 use Drupal\node\Entity\Node;
 
 /**
@@ -184,4 +186,43 @@ function cgov_home_landing_update_10004() {
   }
   drupal_flush_all_caches();
   _cgov_home_landing_remove_existing_field_list_value('field_mlp_page_style', 'standard');
+}
+
+/**
+ * Remove the field_hero_banner field.
+ */
+function cgov_home_landing_update_10006() {
+  $field_name = 'field_hero_banner';
+  $entity_type = 'node';
+  $bundle = 'cgov_home_landing';
+
+  // 1. Load and delete the field instance from the specific content type.
+  $field = FieldConfig::loadByName($entity_type, $bundle, $field_name);
+  if ($field) {
+    $field->delete();
+  }
+
+  // 2. Delete the field storage (marks field data for purge).
+  // The storage tables (e.g. node__field_hero_banner and
+  // node_revision__field_hero_banner) are dropped when field purge runs.
+  $field_storage = FieldStorageConfig::loadByName($entity_type, $field_name);
+  if ($field_storage) {
+    // Only delete storage if no other content types are using this field.
+    $bundles = $field_storage->getBundles();
+    if (empty($bundles) || (count($bundles) === 1 && isset($bundles[$bundle]))) {
+      $storage_uuid = $field_storage->uuid();
+      $field_storage->delete();
+
+      // 3. Purge data and drop tables.
+      // Drupal unsets the storage UUID from state once tables are dropped.
+      $deleted_storages = \Drupal::state()->get('field.storage.deleted', []);
+      // Guardrail: max 12,500 records before yielding.
+      $max_batches = 50;
+
+      while (isset($deleted_storages[$storage_uuid]) && $max_batches-- > 0) {
+        field_purge_batch(250);
+        $deleted_storages = \Drupal::state()->get('field.storage.deleted', []);
+      }
+    }
+  }
 }
