@@ -188,7 +188,7 @@ const initialize = (): void => {
 	const emailInput = footerElement.querySelector(
 		'input.usa-input[type=email]'
 	) as HTMLInputElement;
-	emailInput.addEventListener('click', footerSubscribeStartHandler());
+	emailInput?.addEventListener('click', footerSubscribeStartHandler());
 
 	// Sign up form - submit event
 	const form = footerElement.querySelector('form') as HTMLFormElement;
