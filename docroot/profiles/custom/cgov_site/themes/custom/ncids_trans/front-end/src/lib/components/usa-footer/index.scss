@@ -1,1 +1,15 @@
 @forward 'usa-footer';
+
+// Temporary fix for error message in footer not being hidden.
+// This is due to the specificity of the style in the usa-footer component
+// coming from NCIDS. This can be removed when the footer component
+// has been updated appropriately to reduce the specificity of those styles.
+// (Specifically, the .usa-error-message.hidden style in NCIDS must be within
+// an element with class .usa-form-group to get hidden properly.)
+.usa-footer--nci-big {
+	.usa-error-message {
+		&.hidden {
+			display: none;
+		}
+	}
+}
