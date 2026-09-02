@@ -7,6 +7,7 @@ dependencies:
     - field.field.node.pdq_drug_information_summary.field_browser_title
     - field.field.node.pdq_drug_information_summary.field_date_display_mode
     - field.field.node.pdq_drug_information_summary.field_date_posted
+    - field.field.node.pdq_drug_information_summary.field_date_reviewed
     - field.field.node.pdq_drug_information_summary.field_date_updated
     - field.field.node.pdq_drug_information_summary.field_meta_tags
     - field.field.node.pdq_drug_information_summary.field_page_description
@@ -15,6 +16,7 @@ dependencies:
     - field.field.node.pdq_drug_information_summary.field_pdq_pronunciation_key
     - field.field.node.pdq_drug_information_summary.field_pdq_url
     - field.field.node.pdq_drug_information_summary.field_public_use
+    - field.field.node.pdq_drug_information_summary.field_related_resources
     - node.type.pdq_drug_information_summary
   module:
     - user
@@ -24,20 +26,21 @@ bundle: pdq_drug_information_summary
 mode: teaser
 content:
   content_moderation_control:
-    weight: -20
     settings: {  }
     third_party_settings: {  }
+    weight: -20
     region: content
   links:
-    weight: 100
     settings: {  }
     third_party_settings: {  }
+    weight: 100
     region: content
 hidden:
   body: true
   field_browser_title: true
   field_date_display_mode: true
   field_date_posted: true
+  field_date_reviewed: true
   field_date_updated: true
   field_meta_tags: true
   field_page_description: true
@@ -46,4 +49,5 @@ hidden:
   field_pdq_pronunciation_key: true
   field_pdq_url: true
   field_public_use: true
+  field_related_resources: true
   langcode: true
