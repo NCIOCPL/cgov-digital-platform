@@ -29,11 +29,6 @@ module.exports = {
 		__dirname,
 		'src/entrypoints/ckeditor/ckeditor-ncids.js'
 	),
-	article: path.resolve(__dirname, 'src/entrypoints/article/article.ts'),
-	'home-landing': path.resolve(
-		__dirname,
-		'src/entrypoints/home-landing/home-landing.ts'
-	),
 	'special-report': path.resolve(
 		__dirname,
 		'src/entrypoints/special-report/special-report.ts'
@@ -41,11 +36,6 @@ module.exports = {
 	'ncids-home-landing': path.resolve(
 		__dirname,
 		'src/entrypoints/ncids-home-landing/ncids-home-landing.ts'
-	),
-	pdq: path.resolve(__dirname, 'src/entrypoints/pdq/pdq.ts'),
-	'mini-landing': path.resolve(
-		__dirname,
-		'src/entrypoints/mini-landing/mini-landing.ts'
 	),
 	'ncids-mini-landing': path.resolve(
 		__dirname,
