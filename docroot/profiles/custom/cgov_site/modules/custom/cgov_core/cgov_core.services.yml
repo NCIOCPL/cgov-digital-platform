@@ -63,8 +63,6 @@ services:
       - { name: event_subscriber }
   cache_context.nci_primary_nav_active_path:
     class: Drupal\cgov_core\NciPrimaryNavCacheContext
-    calls:
-      - [setContainer, ['@service_container']]
-    arguments: ['@request_stack']
+    arguments: ['@request_stack', '@cgov_core.cgov_navigation_manager']
     tags:
       - { name: cache.context}
