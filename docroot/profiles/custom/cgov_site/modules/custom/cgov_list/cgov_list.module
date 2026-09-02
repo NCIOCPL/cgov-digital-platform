@@ -87,6 +87,7 @@ function cgov_list_allowed_values_function(
     'list_item_title_desc_image_alternating' => 'Title, Description, and Alternating Image',
     'ncids_list_item_title_desc' => 'NCIDS Title and Description',
     'ncids_list_item_title_desc_image' => 'NCIDS Title, Description, and Image',
+    'ncids_list_item_title_desc_date' => 'NCIDS Title, Description, and Date',
   ];
 
   return $options;
@@ -117,6 +118,86 @@ function cgov_list_paragraph_view(array &$build, EntityInterface $entity, Entity
           'view_mode' => $list_item_mode,
         ],
       ]);
+    }
+  }
+
+  // Add the appropriate date to NCIDS list items which reference content.
+  if (
+    in_array($bundle, ['cgov_internal_link', 'cgov_media_link']) &&
+    $view_mode === 'ncids_list_item_title_desc_date'
+  ) {
+    $date_to_display = NULL;
+
+    // When grabbing the entity we need to get the correct translation.
+    $lang = \Drupal::languageManager()->getCurrentLanguage()->getId();
+    $reference_field = $bundle === 'cgov_internal_link' ? 'field_internal_link' : 'field_media_link';
+    $node = $build[$reference_field]['#items']->entity;
+    $node = \Drupal::service('entity.repository')->getTranslationFromContext($node, $lang);
+
+    if ($node->bundle() === "cgov_blog_post") {
+      $date_to_display = $node->field_date_posted->view([
+        'type' => 'datetime_default',
+        'settings' => [
+          'timezone_override' => '',
+          'format_type' => 'cgov_display_date',
+        ],
+      ]);
+      $date_to_display['#title'] = t('Posted', [], ['context' => 'CGov UI']);
+    }
+    elseif ($node->field_date_display_mode !== NULL) {
+      $date_posted = $node->field_date_posted;
+      if ($date_posted !== NULL) {
+        $date_posted = $node->field_date_posted->view([
+          'type' => 'cgov_date_formatter',
+          'settings' => [
+            'timezone_override' => '',
+            'format_type' => 'cgov_display_date',
+            'display_strategy' => 'latest',
+          ],
+        ]);
+      }
+
+      $date_reviewed = $node->field_date_reviewed;
+      if ($date_reviewed !== NULL) {
+        $date_reviewed = $node->field_date_reviewed->view([
+          'type' => 'cgov_date_formatter',
+          'settings' => [
+            'timezone_override' => '',
+            'format_type' => 'cgov_display_date',
+            'display_strategy' => 'latest',
+          ],
+        ]);
+      }
+
+      $date_updated = $node->field_date_updated;
+      if ($date_updated !== NULL) {
+        $date_updated = $node->field_date_updated->view([
+          'type' => 'cgov_date_formatter',
+          'settings' => [
+            'timezone_override' => '',
+            'format_type' => 'cgov_display_date',
+            'display_strategy' => 'latest',
+          ],
+        ]);
+      }
+
+      if (array_key_exists('#field_name', $date_posted)) {
+        $date_to_display = $date_posted;
+        $date_to_display['#title'] = t('Posted', [], ['context' => 'CGov UI']);
+      }
+      elseif (array_key_exists('#field_name', $date_reviewed)) {
+        $date_to_display = $date_reviewed;
+        $date_to_display['#title'] = t('Reviewed', [], ['context' => 'CGov UI']);
+      }
+      elseif (array_key_exists('#field_name', $date_updated)) {
+        $date_to_display = $date_updated;
+        $date_to_display['#title'] = t('Updated', [], ['context' => 'CGov UI']);
+      }
+    }
+
+    if ($date_to_display !== NULL) {
+      $date_to_display['#field_name'] = 'field_display_date';
+      $build['field_display_date'] = $date_to_display;
     }
   }
 

@@ -1,0 +1,162 @@
+### TESTS:
+# Biography content type
+
+- entity: "media"
+  bundle: "cgov_image"
+  name: "Lindsay Morton, Ph.D."
+  langcode: en
+  status: 1
+  moderation_state:
+    value: 'published'
+  field_media_image:
+    - '#process':
+        callback: 'file'
+        args:
+          - 'image'
+          - type: 'module'
+            filename: 'morton-lindsay.jpg'
+      alt: 'Lindsay Morton, Ph.D.'
+      image_crop:
+        crop_wrapper:
+          freeform:
+            crop_container:
+              values:
+                crop_applied: 1
+                x: 0
+                y: 0
+                width: 609
+                height: 762
+          thumbnail:
+            crop_container:
+              values:
+                crop_applied: 1
+                x: 0
+                y: 39
+                width: 609
+                height: 457
+          4x3:
+            crop_container:
+              values:
+                crop_applied: 1
+                x: 0
+                y: 33
+                width: 609
+                height: 457
+          3x4:
+            crop_container:
+              values:
+                crop_applied: 1
+                x: 19
+                y: 0
+                width: 571
+                height: 762
+          1x1:
+            crop_container:
+              values:
+                crop_applied: 1
+                x: 0
+                y: 21
+                width: 609
+                height: 609
+          16x9:
+            crop_container:
+              values:
+                crop_applied: 1
+                x: 0
+                y: 127
+                width: 609
+                height: 342
+          9x16:
+            crop_container:
+              values:
+                crop_applied: 1
+                x: 90
+                y: 0
+                width: 428
+                height: 762
+- entity: "node"
+  type: "cgov_biography"
+  langcode: en
+  status: 1
+  moderation_state:
+    value: 'published'
+  title: "Lindsay Morton, Ph.D."
+  field_site_section:
+    - '#process':
+        callback: 'reference'
+        args:
+          - 'taxonomy_term'
+          - vid: 'cgov_site_sections'
+            name: 'Learning to Relax'
+  field_pretty_url:
+    value: "morton-lindsay"
+  field_card_title:
+    value: "Lindsay Morton, Ph.D."
+  field_browser_title:
+    value: "Lindsay Morton, Ph.D., biographical sketch and research interests"
+  field_page_description:
+    value: "Lindsay Morton, Ph.D., biographical sketch and research interests"
+  field_list_description:
+    value: "Lindsay Morton, Ph.D., biographical sketch and research interests"
+  field_feature_card_description:
+    value: "Lindsay Morton, Ph.D., biographical sketch and research interests"
+  field_first_name:
+    value: "Lindsay"
+  field_middle_name:
+    value: ""
+  field_last_name:
+    value: "Morton"
+  field_suffix:
+    value: "Ph.D."
+  field_title:
+    value: "Director"
+  field_org_name_1:
+    value: "Radiation Epidemiology Branch"
+  field_org_url_1:
+    value: "https://dceg.cancer.gov/about/organization/tdrp/reb"
+  field_org_name_2:
+    value: "Cancer Survivorship Research Unit"
+  field_org_url_2:
+    value: "https://dceg.cancer.gov/about/organization/tdrp/reb/cancer-survivorship-research-unit"
+  field_campus:
+    - '#process':
+        callback: 'reference'
+        args:
+          - 'taxonomy_term'
+          - vid: 'cgov_biography_campuses'
+            name: 'NCI Shady Grove Campus'
+  field_office_location:
+    value: "Room 7E454"
+  field_phone_number:
+    value: "240-276-7377 "
+  field_email_address:
+    value: "mortonli@mail.nih.gov"
+  field_twitter_handle:
+    value: ""
+  field_scientific_publications:
+    value: "https://dceg2.cancer.gov/publications/#/?author=%7B%22query%22%3A%5B%22morton%20lm%22%5D,%22operator%22%3A%22or%22%7D"
+  field_date_posted:
+    value: "2019-02-07"
+  field_date_reviewed:
+    value: "2019-02-07"
+  field_date_updated:
+    value: "2019-02-07"
+  field_date_display_mode:
+    value: "updated"
+  body:
+  - format: "ncids_full_html"
+    value: |
+      <p>Dr. Stephen Chanock is a leading expert in the discovery and characterization of cancer susceptibility regions in the human genome. He has received numerous awards for his scientific contributions to our understanding of common inherited genetic variants associated with cancer risk and outcomes.</p>
+      <p>Dr. Chanock received his M.D. from Harvard Medical School in 1983 and completed clinical training in pediatrics, pediatric infectious diseases, and pediatric hematology/oncology and research training in molecular genetics at Boston Children&rsquo;s Hospital and the Dana-Farber Cancer Institute, Boston. Since 1995, Dr. Chanock has served as the Medical Director for <a href="http://www.speciallove.org/index.php?option=com_content&amp;view=article&amp;id=46&amp;Itemid=67" target="_blank" rel="noopener noreferrer">Camp Fantastic</a>, a week-long recreational camp for pediatric cancer patients, which is a joint venture of the NCI and Special Love, Inc.</p>
+      <p>From 2001-2007, he was a tenured investigator in the Genomic Variation Section of the Pediatric Oncology Branch in the NCI Center for Cancer Research. He also served as co-chair of NCI's Genetics, Genomics and Proteomics Faculty for five years. In 2001, he was appointed as Chief of the Cancer Genomics Research Laboratory (formerly Core Genotyping Facility), and in 2007 as Chief of the Laboratory of Translational Genomics, both within the NCI Division of Cancer Epidemiology and Genetics (DCEG). Dr. Chanock co-led the Cancer Genetic Markers of Susceptibility project. From 2012 to 2013, he also served as Acting Co-Director of the NCI Center for Cancer Genomics. Dr. Chanock was appointed Director of DCEG in August 2013.&nbsp;</p>
+      <p>For more information on Dr. Chanock's research interests, please see the <a href="https://dceg.cancer.gov/about/organization/lgs">Laboratory of Genetic Susceptibility</a> page. Follow Dr. Chanock on Twitter <a href="https://twitter.com/NCIChanock">@NCIChanock</a>.</p>
+  field_image_promotional:
+    - target_type: 'media'
+      '#process':
+        callback: 'reference'
+        args:
+          - 'media'
+          - bundle: 'cgov_image'
+            name: 'Lindsay Morton, Ph.D.'
+  field_search_engine_restrictions:
+    value: IncludeSearch

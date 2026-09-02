@@ -30,67 +30,103 @@ function cgov_biography_install() {
  *
  * @see system_themes_installed()
  */
-function cgov_biography_themes_installed() {
-  // Create Press Information for Journalists block for Biographies.
-  $block_theme = \Drupal::config('system.theme')->get('default');
+function cgov_biography_themes_installed(array $theme_list) {
+  $supported_themes = ['ncids_trans'];
   $block_region = 'bio_press_info';
   $block_label = 'Press Information for Journalists';
   $block_html = <<<EOMarkup
-    <div class="press-contact">
-      <h2>Press Contacts</h2>
-      <p>To request an interview with NCI researchers, contact the NCI Office of Media Relations.<br />
-        <a href="mailto:ncipressofficers@mail.nih.gov" class="press-contact-email">ncipressofficers@mail.nih.gov</a><br />
-        <span class="press-contact-phone">240-760-6600</span>
-      </p>
-    </div>
+    <h2>Press Contacts</h2>
+    <p>To request an interview with NCI researchers, contact the NIH Press Office: <a href="mailto:nihpress@nih.gov" class="press-contact-email">nihpress@nih.gov</a>.</p>
 EOMarkup;
 
-  // Create block content.
-  $block_content = BlockContent::create([
-    'type' => 'raw_html_block',
-    'info' => $block_label,
-    'field_raw_html' => ['value' => $block_html, 'format' => 'raw_html'],
-  ]);
-  $block_content->save();
+  $block_content_entities = \Drupal::entityTypeManager()
+    ->getStorage('block_content')
+    ->loadByProperties(['info' => $block_label]);
 
-  // Assign block to Region.
-  $data = [
-    'id' => 'press_information_for_journalists__biography',
-    'plugin' => 'block_content:' . $block_content->uuid(),
-    'region' => $block_region,
-    'provider' => 'block_content',
-    'weight' => 0,
-    'theme' => $block_theme,
-    'visibility' => [
-      'entity_bundle:node' =>
-        [
-          'id' => 'entity_bundle:node',
-          'negate' => FALSE,
-          'context_mapping' => [
-            'node' => '@node.node_route_context:node',
-          ],
-          'bundles' => [
-            'cgov_biography' => 'cgov_biography',
-          ],
-        ],
-      'language' =>
-        [
-          'id' => 'language',
-          'langcodes' => ['en' => 'en'],
-          'negate' => FALSE,
-          'context_mapping' =>
-            [
-              'language' => '@language.current_language_context:language_interface',
+  if (empty($block_content_entities)) {
+    $block_content = BlockContent::create([
+      'type' => 'raw_html_block',
+      'info' => $block_label,
+      'field_raw_html' => ['value' => $block_html, 'format' => 'raw_html'],
+    ]);
+    $block_content->save();
+  }
+  else {
+    $block_content = reset($block_content_entities);
+  }
+
+  foreach ($theme_list as $theme) {
+    if (!in_array($theme, $supported_themes, TRUE)) {
+      // Skip doing this if a non-supported theme is being installed.
+      continue;
+    }
+
+    $block_id = 'press_information_for_journalists__biography';
+    if (Block::load($block_id)) {
+      continue;
+    }
+
+    // Assign block to region for each supported theme as it is installed.
+    $data = [
+      'id' => $block_id,
+      'plugin' => 'block_content:' . $block_content->uuid(),
+      'region' => $block_region,
+      'provider' => 'block_content',
+      'weight' => 0,
+      'theme' => $theme,
+      'visibility' => [
+        'entity_bundle:node' =>
+          [
+            'id' => 'entity_bundle:node',
+            'negate' => FALSE,
+            'context_mapping' => [
+              'node' => '@node.node_route_context:node',
             ],
-        ],
-    ],
-    'settings' => [
-      'label' => $block_label,
-      'label_display' => '0',
-    ],
-  ];
+            'bundles' => [
+              'cgov_biography' => 'cgov_biography',
+            ],
+          ],
+        'language' =>
+          [
+            'id' => 'language',
+            'langcodes' => ['en' => 'en'],
+            'negate' => FALSE,
+            'context_mapping' =>
+              [
+                'language' => '@language.current_language_context:language_interface',
+              ],
+          ],
+      ],
+      'settings' => [
+        'label' => $block_label,
+        'label_display' => '0',
+      ],
+    ];
 
-  $block = Block::create($data);
-  $block->save();
+    $block = Block::create($data);
+    $block->save();
+  }
 
+}
+
+/**
+ * Updates biography body field format to ncids_full_html.
+ */
+function cgov_biography_update_8001() {
+  $db = \Drupal::database();
+  $bundle = 'cgov_biography';
+
+  // Node table updates.
+  $db->update('node__body')
+    ->fields(['body_format' => 'ncids_full_html'])
+    ->condition('bundle', $bundle)
+    ->condition('body_format', 'full_html')
+    ->execute();
+
+  // Node revision table updates.
+  $db->update('node_revision__body')
+    ->fields(['body_format' => 'ncids_full_html'])
+    ->condition('bundle', $bundle)
+    ->condition('body_format', 'full_html')
+    ->execute();
 }

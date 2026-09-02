@@ -82,7 +82,7 @@ class ImageRedirectProcessor implements OutboundPathProcessorInterface {
       return $this->getEditingPath($entity);
     }
     else {
-      return $this->getEntityFilepath($entity);
+      return $this->getEntityFilepath($entity, $options);
     }
 
   }
@@ -92,13 +92,17 @@ class ImageRedirectProcessor implements OutboundPathProcessorInterface {
    *
    * @param mixed $entity
    *   The media item to find the path of.
+   * @param array $options
+   *   The path options, passed by reference so that overriding the
+   *   language here also affects the outbound path processors that run
+   *   after this one (e.g. the language path processor's /espanol prefix).
    *
    * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
    *
    * @return string
    *   The path to where the physical file is located.
    */
-  private function getEntityFilepath($entity) {
+  private function getEntityFilepath($entity, array &$options) {
     // We don't want '/espanol' getting tacked on
     // to a file path. We'll create a language object for
     // english to prevent any language processors using

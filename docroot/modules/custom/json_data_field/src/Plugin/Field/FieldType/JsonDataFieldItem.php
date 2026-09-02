@@ -78,7 +78,7 @@ class JsonDataFieldItem extends FieldItemBase {
       '#title' => $this->t('JSON Schema File'),
       '#upload_location' => $upload_location,
       '#upload_validators' => [
-        'file_validate_extensions' => ['json'],
+        'FileExtension' => ['extensions' => 'json'],
       /* @todo some day validate this as JSONSchema */
       ],
     ];

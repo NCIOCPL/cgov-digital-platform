@@ -1,0 +1,38 @@
+{% import '@ncids_trans/listing/ncids_list_item_macros.twig' as listItemMacros %}
+
+{% if content.field_internal_link[0] %}
+  {#
+   # Since we never output content.field_internal_link directly,
+   # we need to bubble the cache tag
+  #}
+  {{ bubble_cache(content.field_internal_link[0]["#node"]) }}
+
+  {# ###### Setup Title ####### #}
+  {% if content.field_override_title|field_value %}
+    {% set title = content.field_override_title|field_value %}
+  {% else %}
+    {% set title = content.field_internal_link[0]["#node"].title.value %}
+  {% endif %}
+
+  {# ###### Setup Date ####### #}
+  {% set date = null %}
+  {% if content.field_display_date[0] %}
+    {% set date = content.field_display_date %}
+  {% endif %}
+
+  {# ###### Setup Description ####### #}
+  {% if content.field_override_list_description|field_value %}
+    {% set description = content.field_override_list_description|field_value %}
+  {% elseif content.field_internal_link[0]["#node"].field_list_description[0] %}
+    {% set description = content.field_internal_link[0]["#node"].field_list_description[0].value %}
+  {% elseif content.field_internal_link[0]["#node"].field_page_description[0] %}
+    {% set description = content.field_internal_link[0]["#node"].field_page_description[0].value %}
+  {% else %}
+  {# Else no description #}
+  {% endif %}
+
+  {# ###### Setup the URL ###### #}
+  {% set url = path('entity.node.canonical', {'node':  content.field_internal_link[0]["#node"].nid[0].value}) %}
+  {{ listItemMacros.ncids_list_macro_with_date(title, date, description, url, "Title, Description, and Date") }}
+
+{% endif %}

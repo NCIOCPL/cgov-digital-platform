@@ -8,7 +8,6 @@ Feature: Perform all Behat Content Workflow tasks using Cypress
             | node/add/cgov_biography        | editorial_nodes_2 |
             | node/add/cgov_blog_post        | editorial_nodes_2 |
             | node/add/cgov_blog_series      | editorial_nodes_3 |
-            | node/add/cgov_cancer_research  | editorial_nodes_2 |
             | node/add/cgov_cancer_center    | editorial_nodes_2 |
             | node/add/cgov_event            | editorial_nodes_2 |
             | node/add/cgov_home_landing     | editorial_nodes_2 |

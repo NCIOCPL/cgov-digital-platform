@@ -1,0 +1,154 @@
+### TESTS:
+# Cancer Center content type
+- entity: "media"
+  bundle: "cgov_image"
+  name: "Winship Cancer Institute"
+  langcode: en
+  status: 1
+  moderation_state:
+    value: 'published'
+  field_media_image:
+    - '#process':
+        callback: 'file'
+        args:
+          - 'image'
+          - type: 'module'
+            filename: 'emorywinship.jpg'
+      alt: 'Winship Cancer Institute'
+      image_crop:
+        crop_wrapper:
+          freeform:
+            crop_container:
+              values:
+                crop_applied: 1
+                x: 0
+                y: 0
+                width: 2100
+                height: 1500
+          thumbnail:
+            crop_container:
+              values:
+                crop_applied: 1
+                x: 50
+                y: 0
+                width: 2000
+                height: 1500
+          4x3:
+            crop_container:
+              values:
+                crop_applied: 1
+                x: 50
+                y: 0
+                width: 2000
+                height: 1500
+          3x4:
+            crop_container:
+              values:
+                crop_applied: 1
+                x: 487
+                y: 0
+                width: 1125
+                height: 1500
+          1x1:
+            crop_container:
+              values:
+                crop_applied: 1
+                x: 300
+                y: 0
+                width: 1500
+                height: 1500
+          16x9:
+            crop_container:
+              values:
+                crop_applied: 1
+                x: 0
+                y: 159
+                width: 2100
+                height: 1181
+          9x16:
+            crop_container:
+              values:
+                crop_applied: 1
+                x: 628
+                y: 0
+                width: 844
+                height: 1500
+- entity: "node"
+  type: "cgov_cancer_center"
+  langcode: en
+  status: 1
+  moderation_state:
+    value: 'published'
+  field_site_section:
+    - '#process':
+        callback: 'reference'
+        args:
+          - 'taxonomy_term'
+          - vid: 'cgov_site_sections'
+            name: 'Learning to Relax'
+  title: "Winship Cancer Institute"
+  field_sort_title:
+    value: "Winship Cancer Institute"
+  field_browser_title:
+    value: "Winship Cancer Institute"
+  field_page_description:
+    value: "Information about the Winship Cancer Institute."
+  field_image_promotional:
+    - target_type: 'media'
+      '#process':
+        callback: 'reference'
+        args:
+          - 'media'
+          - bundle: 'cgov_image'
+            name: 'Winship Cancer Institute'
+  field_parent_institution:
+    value: "Emory University"
+  field_institution_type:
+    - '#process':
+        callback: 'reference'
+        args:
+          - 'taxonomy_term'
+          - vid: 'cgov_cancer_center_types'
+            name: 'Comprehensive Cancer Center'
+  field_org_head_name:
+    value: "Suresh S. Ramalingam, MD., FASCO"
+  field_org_head_title:
+    value: "Executive Director"
+  field_address:
+    - address_line1: "Box 2714"
+      address_line2: "2424 Erwin Road"
+      locality: "Durham"
+      administrative_area: "NC"
+      postal_code: "27710"
+      country_code: "US"
+  field_region:
+    - '#process':
+        callback: 'reference'
+        args:
+          - 'taxonomy_term'
+          - vid: 'cgov_cancer_center_regions'
+            name: 'South Atlantic'
+  field_phone_label_1:
+    value: "Main"
+  field_phone_number_1:
+    value: "404-778-1900"
+  field_website_title:
+    value: "Visit Website"
+  field_website_url:
+    value: "http://winshipcancer.emory.edu/"
+  body:
+    - format: "ncids_full_html"
+      value: |
+        <p>Winship first received its NCI designation in 2009 and earned NCI-Designated Comprehensive Cancer Center status in 2017. Winship Cancer Institute of Emory University is at the forefront of cancer research and discovery and is the only NCI-Designated Comprehensive Cancer Center in the state of Georgia.</p>
+         <br />
+        <p><i>* This profile was provided by the Duke Cancer Institute.</i></p>
+  field_date_posted:
+    value: "2012-07-26"
+  field_date_reviewed:
+    value: "2012-07-26"
+  field_date_updated:
+    value: "2015-01-09"
+  field_date_display_mode:
+    - value: 'updated'
+  field_pretty_url:
+    value: "emorywinship"

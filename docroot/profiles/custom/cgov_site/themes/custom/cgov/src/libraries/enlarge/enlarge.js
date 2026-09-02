@@ -269,8 +269,8 @@ $.fn.overflowEnlarge = function( options ) {
     var settings = $.extend({
         text: "Default Text",
         color: null,
-        enlargeTxt : ($('meta[name="content-language"]').attr('content') == 'es') ? "Ampliar" : "Enlarge",
-        collapseTxt : ($('meta[name="content-language"]').attr('content') == 'es') ? "Cerrar" : "Close",
+        enlargeTxt : (document.documentElement.lang === 'es') ? "Ampliar" : "Enlarge",
+        collapseTxt : (document.documentElement.lang === 'es') ? "Cerrar" : "Close",
         thresholdForEnlarge : 1024,
         xlThreshold: 1440, //This is when the browser goes into XL mode and the body is wider.
         dialogLRMargin : 20,

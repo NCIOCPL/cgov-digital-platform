@@ -1,0 +1,25 @@
+@use 'uswds-core' as *;
+
+.cgdp-press-contact {
+	@include u-bg('white');
+	@include u-border(1px, $theme-color-base-light);
+	@include u-shadow(1);
+	@include u-margin-top(3);
+	@include u-margin-bottom(3);
+	@include u-padding(2);
+	clear: both;
+	// Set the maximum width based on the theme's text measure (to align with usa-prose,
+	// since usa-prose won't alter a div's max width like it limits text content.)
+	max-width: measure($theme-text-measure);
+
+	h2 {
+		@include u-color($theme-color-base-darkest);
+		@include u-margin-top(0);
+	}
+
+	p {
+		&:last-child {
+			@include u-margin-bottom(0);
+		}
+	}
+}

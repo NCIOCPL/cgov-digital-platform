@@ -46,3 +46,32 @@
         - format: "raw_html"
           value: |
             <h2>This page left intentionally blank</h2>
+
+- entity: "node"
+  type: "cgov_home_landing"
+  langcode: en
+  status: 1
+  moderation_state:
+    value: 'published'
+  title: "Resources for Researchers"
+  field_page_description:
+    value: "Resources for Researchers"
+  field_browser_title:
+    value: "Resources for Researchers"
+  field_site_section:
+    - '#process':
+        callback: 'reference'
+        args:
+          - 'taxonomy_term'
+          - vid: 'cgov_site_sections'
+            computed_path: '/research/resources'
+  ### English Contents
+  field_landing_contents:
+    ######## Begin Feature Row ###########
+    - entity: 'paragraph'
+      type: "cgov_card_raw_html"
+      field_raw_html:
+        - format: "raw_html"
+          value: |
+            <h2>This page left intentionally blank</h2>
+
