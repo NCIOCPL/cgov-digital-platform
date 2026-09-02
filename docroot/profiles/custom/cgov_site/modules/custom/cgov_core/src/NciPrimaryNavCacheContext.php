@@ -2,11 +2,11 @@
 
 namespace Drupal\cgov_core;
 
+use Drupal\cgov_core\Services\CgovNavigationManager;
 use Drupal\Core\Cache\CacheableMetadata;
 use Drupal\Core\Cache\Context\CacheContextInterface;
 use Drupal\Core\Cache\Context\RequestStackCacheContextBase;
-use Symfony\Component\DependencyInjection\ContainerAwareInterface;
-use Symfony\Component\DependencyInjection\ContainerAwareTrait;
+use Symfony\Component\HttpFoundation\RequestStack;
 
 /**
  * Defines a service for primary navigation active state caching.
@@ -20,9 +20,27 @@ use Symfony\Component\DependencyInjection\ContainerAwareTrait;
  *
  * Cache context ID: 'nci_primary_nav_active_path'
  */
-class NciPrimaryNavCacheContext extends RequestStackCacheContextBase implements CacheContextInterface, ContainerAwareInterface {
+class NciPrimaryNavCacheContext extends RequestStackCacheContextBase implements CacheContextInterface {
 
-  use ContainerAwareTrait;
+  /**
+   * The CGOV navigation manager.
+   *
+   * @var \Drupal\cgov_core\Services\CgovNavigationManager
+   */
+  protected $navigationManager;
+
+  /**
+   * Constructs a new NciPrimaryNavCacheContext class.
+   *
+   * @param \Symfony\Component\HttpFoundation\RequestStack $request_stack
+   *   The request stack.
+   * @param \Drupal\cgov_core\Services\CgovNavigationManager $navigation_manager
+   *   The CGOV navigation manager.
+   */
+  public function __construct(RequestStack $request_stack, CgovNavigationManager $navigation_manager) {
+    parent::__construct($request_stack);
+    $this->navigationManager = $navigation_manager;
+  }
 
   /**
    * {@inheritdoc}
@@ -35,10 +53,7 @@ class NciPrimaryNavCacheContext extends RequestStackCacheContextBase implements 
    * {@inheritdoc}
    */
   public function getContext() {
-    $activePath = $this->container
-      ->get('cgov_core.cgov_navigation_manager')
-      ->getPrimaryNavActivePath();
-    return $activePath;
+    return $this->navigationManager->getPrimaryNavActivePath();
   }
 
   /**
