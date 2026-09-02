@@ -59,14 +59,6 @@ parameters:
       path: docroot/modules/custom/app_module/src/AppPathManager.php
       reportUnmatched: false
     -
-      ## This ignore is for the deprecated CacheDecoratorInterface module.
-      message: "#Class Drupal\\\\cgov_core\\\\NciPrimaryNavCacheContext implements deprecated interface#"
-      reportUnmatched: false
-    -
-      ## This ignore is for the deprecated CacheDecoratorInterface module.
-      message: "#Usage of deprecated trait Symfony\\\\Component\\\\DependencyInjection\\\\ContainerAwareTrait in class#"
-      reportUnmatched: false
-    -
       # This ignore is for the specific weirdness in CgovVocabManagerForm.php where properties are set in
       # loadTermsByStubs() that are not part of TermInterface.
       message: "#Access to an undefined property Drupal\\\\taxonomy\\\\TermInterface::\\$(parents|depth)#"
