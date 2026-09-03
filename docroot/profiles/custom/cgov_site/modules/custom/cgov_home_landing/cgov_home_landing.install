@@ -5,6 +5,8 @@
  * Contains cgov_home_landing.install.
  */
 
+use Drupal\field\Entity\FieldConfig;
+use Drupal\field\Entity\FieldStorageConfig;
 use Drupal\node\Entity\Node;
 
 /**
@@ -184,4 +186,27 @@ function cgov_home_landing_update_10004() {
   }
   drupal_flush_all_caches();
   _cgov_home_landing_remove_existing_field_list_value('field_mlp_page_style', 'standard');
+}
+
+/**
+ * Remove the field_hero_banner field.
+ */
+function cgov_home_landing_update_10005() {
+  $field_name = 'field_hero_banner';
+  $entity_type = 'node';
+  $bundle = 'cgov_home_landing';
+
+  // 1. Load and delete the field instance from the specific content type.
+  $field = FieldConfig::loadByName($entity_type, $bundle, $field_name);
+  if ($field) {
+    $field->delete();
+  }
+
+  // 2. Load and delete the field storage.
+  // (This removes the database tables
+  // node__field_hero_banner and node_revision...)
+  $field_storage = FieldStorageConfig::loadByName($entity_type, $field_name);
+  if ($field_storage) {
+    $field_storage->delete();
+  }
 }
