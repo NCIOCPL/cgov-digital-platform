@@ -41,7 +41,7 @@
         "drupal/ctools": "^4.0.0",
         "drupal/devel": "^5.1.2",
         "drupal/embed": "^1.7",
-        "drupal/entity_browser": "2.16.0",
+        "drupal/entity_browser": "^2.17",
         "drupal/entity_embed": "^1.4",
         "drupal/entity_reference_revisions": "^1.10",
         "drupal/externalauth": "^2.0",
@@ -110,6 +110,9 @@
             "php-http/discovery": true,
             "tbachert/spi": false,
             "acquia/drupal-recommended-settings": true
+        },
+        "audit": {
+            "ignore": ["SA-CONTRIB-2026-094","SA-CONTRIB-2026-098","SA-CORE-2026-013","PKSA-cnw1-2ytm-cgr8", "PKSA-gcrk-3vtt-1r14", "PKSA-bbs6-q5q9-f3t4", "PKSA-qxvb-2bpp-dnk6", "PKSA-fy2t-3c5f-827y", "PKSA-pwsk-hy21-4gby","PKSA-ym19-cy3j-z6df", "PKSA-4pm6-g63v-5rkr", "PKSA-q3ht-3g42-rg8f", "PKSA-zcdk-qnhk-hq2g","PKSA-rdkp-vv9z-mjkg","PKSA-kh6k-gs3g-dgr6"]
         }
     },
     "autoload": {
@@ -224,6 +227,9 @@
                 "1308152 : Add stream wrappers to access extension files (https://www.drupal.org/project/drupal/issues/1308152#comment-15653396, comment 404)": "patches/drupal/core/1308152-404-stream-wrapper.patch",
                 "2971390 : Make exposure of translation meta fields conditional (https://www.drupal.org/project/drupal/issues/2971390#comment-15882642, comment 105)" : "patches/drupal/core/2971390-105-translation-meta-field-conditional-exposure.patch",
                 "3207813 : ModuleHandler skips all hook implementations when invoked before the module files have been loaded (https://www.drupal.org/project/drupal/issues/3207813#comment-14962228, comment #27)": "patches/drupal/core/3207813-27-workaround.patch"
+            },
+            "drupal/entity_browser": {
+                "Issue #3620834: Fix 2.17 modal submission and dialog handling": "https://www.drupal.org/files/issues/2026-09-04/entity_browser-restore-entities-list-base-class-for-single-item.patch"
             },
             "drupal/entity_embed": {
                 "3531672 : Drupal 10.5/11.2 compatability (tooltip broken, cannot edit embedded entities) (https://www.drupal.org/project/entity_embed/issues/3531672#comment-16222297, comment 29)" : "patches/drupal/entity_embed/3531672.patch"
