@@ -142,3 +142,11 @@ And('user enters {string} into app config text field', (value) => {
 And('{string} user password is changed to {string}', (username, password) => {
     cy.exec(`drush user:password ${username} '${password}'`)
 });
+
+Then('I should not see a link to {string}', (path) => {
+    cy.get(`a[href="${path}"]`).should('not.exist');
+});
+
+And('I should see a link to {string}', (path) => {
+    cy.get(`a[href="${path}"]`).should('exist');
+});
