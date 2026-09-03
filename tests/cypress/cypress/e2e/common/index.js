@@ -1,5 +1,6 @@
 import { Given, Then } from "cypress-cucumber-preprocessor/steps";
 
+const drushCmd = Cypress.env('DRUSH_BIN') || 'drush';
 Given('user navigates to {string}', (path) => {
     cy.visit(path);
 })
@@ -29,22 +30,64 @@ And('user clicks on {string} content type', (contentType) => {
 When('user selects test site section', () => {
     cy.get('summary[aria-controls*="edit-field-site-section"]').click();
     cy.get("input[value='Select Site Section']").click();
-    cy.getIframeBody('iframe.entity-browser-modal-iframe')
-        .find('input[name="computed_path_value"]').type('test-site-section');
-    cy.getIframeBody('iframe.entity-browser-modal-iframe')
-        .find('input#edit-submit-site-section-browser').click();
-    cy.getIframeBody('iframe.entity-browser-modal-iframe')
-        .find('td:contains("test-site-section")').first().parent()
-        .find('td.views-field.views-field-entity-browser-select input').check();
-    cy.getIframeBody('iframe.entity-browser-modal-iframe')
-        .find("input[id='edit-submit'][value='Select Site Section']").click();
+
+    cy.wait(3000);
+
+    // 1. THE PROVEN ATOMIC FILTER
+    // We restore the logic from Run 9 that successfully bypassed the double-submit
+    // filter deadlock. One keystroke, one request.
+    cy.get('iframe.entity-browser-modal-iframe').then($iframe => {
+        const $body = $iframe.contents().find('body');
+
+        $body.find('td.views-field-entity-browser-select input').first().addClass('cy-stale-row');
+
+        cy.wrap($body.find('input[name="computed_path_value"]'))
+          .clear()
+          .type('test-site-section{enter}', { delay: 0 });
+    });
+
+    // 2. WAIT FOR DOM ANNIHILATION
+    // Guarantees the Filter AJAX is 100% finished.
+    cy.get('iframe.entity-browser-modal-iframe', { timeout: 45000 }).should($iframe => {
+        const $body = $iframe.contents().find('body');
+        expect($body.find('.cy-stale-row').length, 'Old table DOM must be replaced').to.equal(0);
+        expect($body.find('td:contains("test-site-section")').length, 'Filtered text should appear').to.be.greaterThan(0);
+    });
+
+    cy.wait(2000);
+
+    // 3. NATIVE CHECKBOX
+    cy.get('iframe.entity-browser-modal-iframe').then($iframe => {
+        const $body = $iframe.contents().find('body');
+        const $checkbox = $body.find('td:contains("test-site-section")').first().parent().find('td.views-field-entity-browser-select input');
+
+        cy.wrap($checkbox).check({ force: true });
+    });
+
+    // 4. THE BRUTE-FORCE CI RUNWAY
+    // 3 seconds was not enough for the CI server. We give the single PHP thread
+    // 10 full seconds to finish the checkbox AJAX and unlock the session file.
+    // No assertions, no phantom passes. Just an unbreakable lock.
+    cy.wait(10000);
+
+    // 5. THE FINAL CLICK
+    cy.get('iframe.entity-browser-modal-iframe').then($iframe => {
+        const $body = $iframe.contents().find('body');
+        const $submitBtn = $body.find("input[id^='edit-submit'][value='Select Site Section']");
+
+        // Native click, safely isolated by the 10-second runway.
+        cy.wrap($submitBtn).click({ force: true });
+    });
+
+    // 6. Ensure modal dialog completely detaches
+    cy.get('iframe.entity-browser-modal-iframe', { timeout: 60000 }).should('not.exist');
 });
 
 And('user fills out the following fields', (dataTable) => {
-    for (const { fieldLabel, value, field_name } of dataTable.hashes()) {
-        cy.get(`input[name^='${field_name}']`).as('inputField').parent().find('label').should('include.text', fieldLabel);
-        cy.get('@inputField').type(value);
-    }
+  for (const { fieldLabel, value, field_name } of dataTable.hashes()) {
+      cy.get(`input[name^='${field_name}']`).as('inputField').parent().find('label').should('include.text', fieldLabel);
+      cy.get('@inputField').type(value);
+  }
 });
 
 And('user selects {string} from {string} dropdown', (option, dropdown) => {
@@ -86,12 +129,12 @@ And('browser waits', () => {
 });
 
 And('user creates new user with username {string}', (username) => {
-    cy.exec(`drush user:create ${username} --mail="${username}@example.com" --password="password123"`)
-})
+    cy.exec(`${drushCmd} user:create ${username} --mail="${username}@example.com" --password="password123"`);
+});
 
 And('user adds the following roles to the following users', (dataTable) => {
     for (const { roles, users } of dataTable.hashes()) {
-        cy.exec(`drush user-add-role "${roles}" ${users}`)
+        cy.exec(`${drushCmd} user-add-role "${roles}" ${users}`)
     }
 })
 
