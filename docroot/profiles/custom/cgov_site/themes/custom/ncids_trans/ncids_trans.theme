@@ -34,6 +34,7 @@ function _ncids_trans_is_migrated_inner_page($bundle) {
     'cgov_event',
     'cgov_blog_post',
     'cgov_press_release',
+    'cgov_infographic',
   ]);
 }
 
@@ -54,7 +55,6 @@ function ncids_trans_theme_suggestions_page_alter(array &$suggestions, array $va
   // page--ncids-inner-page.html.twig.
   $ncids_inner_page_types = [
     'cgov_cancer_research',
-    'cgov_infographic',
     'cgov_video',
   ];
 
@@ -190,6 +190,14 @@ function ncids_trans_theme_suggestions_field_alter(array &$suggestions, array $v
   }
 
   $suggestions[] = 'field__' . $element['#field_name'] . '__' . $element['#view_mode'];
+
+  if (
+    $element['#entity_type'] === 'media'
+    && $element['#bundle'] === 'cgov_infographic'
+    && $element['#field_name'] === 'body'
+  ) {
+    $suggestions[] = 'field__media__body__cgov_infographic';
+  }
 }
 
 /**
