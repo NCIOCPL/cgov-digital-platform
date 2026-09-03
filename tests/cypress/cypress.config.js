@@ -10,6 +10,7 @@ module.exports = defineConfig({
       // implement node event listeners here
     },
     defaultCommandTimeout: 20000,
+    pageLoadTimeout: 60000,
     cacheAcrossSpecs: true,
     // Spec is required, even when provided on command line.
     specPattern: 'cypress/e2e/**/*.feature',
