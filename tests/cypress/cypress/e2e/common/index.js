@@ -38,6 +38,7 @@ When('user selects test site section', () => {
         .find('td.views-field.views-field-entity-browser-select input').check();
     cy.getIframeBody('iframe.entity-browser-modal-iframe')
         .find("input[id='edit-submit'][value='Select Site Section']").click();
+      cy.get('[id*="edit-field-site-section-current-items"]').eq(0).should('include.text','Test')
 });
 
 And('user fills out the following fields', (dataTable) => {
@@ -142,3 +143,54 @@ And('user enters {string} into app config text field', (value) => {
 And('{string} user password is changed to {string}', (username, password) => {
     cy.exec(`drush user:password ${username} '${password}'`)
 });
+
+And('user selects {string} from style dropdown', (option) => {
+    cy.get('select[name="field_page_style"]').select(option);
+});
+
+And('browser waits', () => {
+  cy.wait(2000);
+});
+
+And('user selects {string} from content dropdown', (dropDown) => {
+    cy.get(`input[value="${dropDown}"]`).click({ force: true });
+})
+
+And('user selects {string} theme for {int} block', (option, index) => {
+    cy.get('select[name*="theme"]').eq(index-1).select(option)
+});
+And('user selects {string} image position for {int} block', (option, index) => {
+    cy.get('select[name*="image_position"]').eq(index - 1).select(option)
+});
+
+And('user clicks on {string} in {string} section', (featItemLink, section) => {
+    cy.get(`summary[aria-expanded="false"]:contains("${featItemLink}")`).click();
+});
+
+And('user clicks on {string} button item', (selectContent) => {
+    cy.get(`input[value="${selectContent}"]`).trigger("click")
+})
+
+And('user selects {string} item from the list', (title) => {
+    cy.getIframeBody('iframe#entity_browser_iframe_cgov_content_browser').find(`td:contains(${title})`).parent().find('input').click({ force: true });
+});
+
+And('user clicks on {string} button to select item', (selectContent) => {
+    cy.getIframeBody('iframe#entity_browser_iframe_cgov_content_browser').find(`input[id='edit-submit'][value='${selectContent}']`).click({ force: true });
+});
+
+And('only {int} promo block with link {string} is displayed',(count,href)=>{
+cy.get('.nci-promo-block').should('be.visible').and("have.length", count);
+cy.get('.nci-promo-block').find('a').should('have.attr','href',href)
+
+})
+
+And('message that {string} has been created appears',(txt)=>{
+cy.get("div[role='contentinfo']").should('include.text',txt)
+})
+
+And('user logs out',()=>{
+    cy.get('#toolbar-item-user').click()
+    cy.get('a[href*="/user/logout"]').eq(1).click()
+
+})
