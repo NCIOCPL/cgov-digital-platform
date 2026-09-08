@@ -27,3 +27,23 @@ export const cgdpVideoDom = () => {
 
 	return div;
 };
+
+export const cgdpVideoWrapperTitleDom = () => {
+	const div = document.createElement('div');
+
+	div.innerHTML = `
+	<div class="usa-section" data-eddl-landing-row>
+		<div data-eddl-landing-item="video" data-video-title="Wrapper Title">
+			<figure class="cgdp-video">
+				<div class="cgdp-video__media">
+					<div class="flex-video rendered" data-video-url="/media/oembed">
+						<div class="video-preview__container" role="button" aria-label="Play video"></div>
+					</div>
+				</div>
+			</figure>
+		</div>
+	</div>
+	`;
+
+	return div;
+};

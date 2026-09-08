@@ -1,14 +1,30 @@
 import './video.scss';
-import './video-legacy.scss';
 
 import cgdpRelatedResourcesInit from '../../lib/components/cgdp-related-resources';
-import cgdpInfographicInit from '../../lib/components/cgdp-infographic';
-import cgdpEmbedVideoInit from '../../lib/components/wysiwyg/common/cgdp-embed-video';
-import cgdpEmbedCardInit from '../../lib/components/wysiwyg/common/cgdp-embed-card';
+import cgdpVideoInit from '../../lib/components/cgdp-video';
+import cgdpDefinitionInit from '../../lib/components/cgdp-definition';
+
+import { bodyLinkAnalyticsHelper } from '../../lib/core/analytics/inner-page-analytics-tracker';
+
+let videoBodyAnalyticsInit = false;
+
+const cgdpBodyAnalyticsInit = (): void => {
+	if (!videoBodyAnalyticsInit) {
+		const videoBodySection = document.querySelector(
+			'.usa-prose--ncids-streamlined'
+		);
+		const videoBodyParent = videoBodySection?.parentElement;
+
+		if (videoBodySection && videoBodyParent) {
+			bodyLinkAnalyticsHelper(videoBodyParent as HTMLElement, 0);
+			videoBodyAnalyticsInit = true;
+		}
+	}
+};
 
 document.addEventListener('DOMContentLoaded', () => {
 	cgdpRelatedResourcesInit();
-	cgdpInfographicInit();
-	cgdpEmbedVideoInit();
-	cgdpEmbedCardInit();
+	cgdpVideoInit();
+	cgdpDefinitionInit();
+	cgdpBodyAnalyticsInit();
 });
