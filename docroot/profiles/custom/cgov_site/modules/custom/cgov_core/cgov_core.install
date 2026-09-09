@@ -169,6 +169,52 @@ function _cgov_core_remove_permissions(CgovCoreTools $siteHelper) {
 }
 
 /**
+ * Creates and places the PDQ Drug Information Summary disclaimer block.
+ *
+ * @param string $theme
+ *   The theme in which the block should be placed.
+ */
+function _cgov_core_create_pdq_drug_disclaimer_block(string $theme): void {
+  $block_content_storage = \Drupal::entityTypeManager()
+    ->getStorage('block_content');
+  $block_content = $block_content_storage->loadByProperties([
+    'info' => 'PDQ Drug Disclaimer',
+  ]);
+
+  if ($block_content) {
+    $block_content = reset($block_content);
+  }
+  else {
+    $block_html = <<<EOMarkup
+      <p><strong>Important:</strong> The drug information on this page is meant to be educational. It is not a substitute for medical advice. The information may not cover all possible uses, actions, interactions, or side effects of this drug, or precautions to be taken while using it. Please see your health care professional for more information about your specific medical condition and the use of this drug.</p>
+      EOMarkup;
+
+    $block_content = BlockContent::create([
+      'type' => 'content_block',
+      'info' => 'PDQ Drug Disclaimer',
+      'body' => ['value' => $block_html, 'format' => 'full_html'],
+    ]);
+    $block_content->save();
+  }
+
+  if (!Block::load('pdq_drug_disclaimer')) {
+    $block = Block::create([
+      'id' => 'pdq_drug_disclaimer',
+      'plugin' => 'block_content:' . $block_content->uuid(),
+      'region' => 'pdq_drug_disclaimer',
+      'provider' => 'block_content',
+      'weight' => 0,
+      'theme' => $theme,
+      'settings' => [
+        'label' => 'PDQ Drug Disclaimer',
+        'label_display' => '0',
+      ],
+    ]);
+    $block->save();
+  }
+}
+
+/**
  * Implements hook_themes_installed().
  *
  * Perform actions to set up the site for this profile.
@@ -216,6 +262,10 @@ function cgov_core_themes_installed($theme_list) {
 
       $block = Block::create($data);
       $block->save();
+    }
+
+    if ($theme === 'ncids_trans') {
+      _cgov_core_create_pdq_drug_disclaimer_block($theme);
     }
   }
 }
@@ -353,5 +403,15 @@ function cgov_core_update_10018(): void {
   $installer = \Drupal::service('module_installer');
   if (\Drupal::moduleHandler()->moduleExists('admin_toolbar_links_access_filter')) {
     $installer->uninstall(['admin_toolbar_links_access_filter']);
+  }
+}
+
+/**
+ * Add the PDQ Drug Information Summary disclaimer block.
+ */
+function cgov_core_update_10019(): void {
+  $themes = \Drupal::service('theme_handler')->listInfo();
+  if (isset($themes['ncids_trans'])) {
+    _cgov_core_create_pdq_drug_disclaimer_block('ncids_trans');
   }
 }
