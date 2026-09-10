@@ -373,8 +373,7 @@ Chart.prototype = (function () {
             maxColor: '#004250',
           },
         },
-        sourceHeight: 450,
-        sourceWidth: 995,
+        sourceWidth: 600,
       },
       plotOptions: {
         pie: {
