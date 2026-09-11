@@ -1,9 +1,18 @@
 {{ attach_library('ncids_trans/pdq-dis') }}
 {% import '@ncids_trans/content_page_macros.twig' as contentPageMacros %}
+{% import '@ncids_trans/content/pdq/pdq_macros.twig' as pdqMacros %}
 <!-- ********************************* BEGIN Page Content ********************************** -->
 
 <article>
   <h1 class="nci-heading-h1">{{- node.label -}}</h1>
+
+  {# Setup Macro Parameters #}
+  {% set audio_id = node.field_pdq_audio_id.value ?? null %}
+  {% set pronunciation_key = node.field_pdq_pronunciation_key.value ?? null %}
+  {# End Setup Macro Parameters #}
+
+  {# Render Macro #}
+  {{ pdqMacros.pronunciation(audio_id, pronunciation_key) }}
   <div class="cgdpl resize-content">
     <div id="cgvBody" class="pdqdruginfosummary">
       {{ content.body }}
