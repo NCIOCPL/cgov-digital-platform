@@ -74,7 +74,7 @@ const ModalContentSnippet: React.FunctionComponent<CgdpModalProps> = ({
 					{termPronounced && <span> {termPronounced} </span>}
 					{audioLink && (
 						<button
-							className="cgdp_audiofile"
+							className="cgdp-audiofile cgdp-audiofile--small"
 							onClick={() => {
 								const audio = document.getElementById(
 									'definition-audio'
