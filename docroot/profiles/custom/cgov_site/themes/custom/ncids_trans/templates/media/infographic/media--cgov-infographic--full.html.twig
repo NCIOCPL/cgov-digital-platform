@@ -5,13 +5,7 @@
 <!-- ********************************* BEGIN Page Content ********************************** -->
 <article>
   <h1 class="nci-heading-h1">{{ name }}</h1>
-  <div class="cgdpl">
-    <div class="contentzone">
-      <div id="cgvBody">
-        {{ content.body }}
-      </div>
-    </div>
-  </div>
+  {{ content.body }}
   {{ infographicMacros.ncidsInfographicImage(content) }}
   <footer class="cgdp-article-footer">
     {{ contentPageMacros.ncidsDisplayDates(media,content) }}
