@@ -2,7 +2,7 @@
 
 // Some definitions have images in their glossification content
 @forward '../../cgdp-image';
-
+@forward '../../cgdp-audiofile';
 @use 'uswds-core' as *;
 
 .usa-modal__main {
@@ -23,30 +23,10 @@
 	.cgdp-image {
 		@include u-margin-top(2);
 	}
-}
 
-.cgdp_audiofile {
-	// Removes button styles
-	-webkit-appearance: none;
-	-moz-appearance: none;
-	background: none;
-	border: none;
-	margin-left: 0.5rem;
-
-	$svg-size: 30;
-	@include place-icon(
-		(
-			'name': 'volume_on',
-			'svg-height': $svg-size,
-			'svg-width': $svg-size,
-			'height': 2ex,
-			'color': 'cerulean-60v',
-		),
-		'after',
-		'1px',
-		middle,
-		'white'
-	);
+	.cgdp-audiofile {
+		@include u-margin-left(1);
+	}
 }
 
 .cgdp-definition__heading {

@@ -1,4 +1,3 @@
-import linkAudioPlayer from 'Core/libraries/linkAudioPlayer/linkAudioPlayer';
 import './pdq-dis-legacy.scss';
 import './pdq-dis.scss';
 
@@ -19,37 +18,12 @@ declare global {
 }
 
 const onDOMContentLoaded = () => {
-	buildAudioLinks();
+	initializePdqAudio();
 	citAnchorLinks();
 	cgdpRelatedResourcesInit();
 };
 
 document.addEventListener('DOMContentLoaded', onDOMContentLoaded);
-
-const buildAudioLinks = () => {
-	const audioEl = document.querySelector(
-		'[templatename="pdqSnMediaAudioPlayer"]'
-	);
-	const audioId = audioEl?.getAttribute('objectid')?.replace(/^CDR0+/i, '');
-
-	const server = window.CDEConfig?.general?.mediaServer;
-	if (!audioId || !server || !audioEl?.parentElement) return;
-
-	const audioPath = `${server}/pdq/media/audio/${audioId}.mp3`;
-	const audioPronunciation = audioEl.parentElement.textContent?.replace(
-		'Placeholder slot\n',
-		''
-	);
-
-	audioEl.parentElement.innerHTML =
-		`<a href="${audioPath}" class="CDR_audiofile">` +
-		'<span class="show-for-sr">listen</span></a>' +
-		audioPronunciation;
-
-	// The global audio-player setup has already run, so initialize only the
-	// dynamically generated PDQ link.
-	linkAudioPlayer('.pdqdruginfosummary .CDR_audiofile');
-};
 
 // Fix citation anchor links. Slashes in the original fragment can cause
 // analytics code to treat the fragment as an invalid selector.
@@ -60,5 +34,38 @@ const citAnchorLinks = () => {
 			event.preventDefault();
 			window.location.hash = anchor.hash.replace('#cit/', '');
 		}
+	});
+};
+
+// Find pronunciation blocks on the page and wire up their auidio playback.
+const initializePdqAudio = () => {
+	const server = window.CDEConfig?.general?.mediaServer;
+
+	if (!server) return;
+
+	const pronunciations = document.querySelectorAll<HTMLElement>(
+		'[data-pdq-pronunciation]'
+	);
+
+	pronunciations.forEach((pronunciation) => {
+		const audioEl =
+			pronunciation.querySelector<HTMLAudioElement>('[data-pdq-audio]');
+		const buttonEl = pronunciation.querySelector<HTMLButtonElement>(
+			'[data-pdq-audio-trigger]'
+		);
+
+		const audioId =
+			audioEl?.dataset.pdqAudioId?.replace(/^CDR0+/i, '').replace(/\D/g, '') ??
+			'';
+
+		if (!audioEl || !buttonEl || !audioId) return;
+
+		audioEl.src = `${server}/pdq/media/audio/${audioId}.mp3`;
+		buttonEl.addEventListener('click', () => {
+			audioEl.currentTime = 0;
+			audioEl.play().catch((error) => {
+				console.error('Unable to play PDQ pronunciation audio.', error);
+			});
+		});
 	});
 };

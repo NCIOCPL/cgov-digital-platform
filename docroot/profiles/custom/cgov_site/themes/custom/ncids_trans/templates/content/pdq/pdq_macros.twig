@@ -1,0 +1,37 @@
+{#
+/**
+ * @file
+ * Theme macros for PDQ content.
+ */
+#}
+
+{% macro pronunciation(audio_id, pronunciation_key) -%}
+  {%- set audio_id = audio_id|default('')|trim -%}
+  {%- set pronunciation_key = pronunciation_key|default('')|trim -%}
+  {%- if audio_id or pronunciation_key -%}
+    <div class="cgdp-pdq-pronunciation" data-pdq-pronunciation>
+      {% if audio_id %}
+        <audio
+          preload="none"
+          data-pdq-audio
+          data-pdq-audio-id="{{ audio_id }}"
+        ></audio>
+      {% endif %}
+      <p>
+        {% if pronunciation_key %}
+          ({{ pronunciation_key }})
+        {% endif %}
+
+        {% if audio_id %}
+          <button
+            type="button"
+            class="cgdp-audiofile cgdp-audiofile--large"
+            data-pdq-audio-trigger
+          >
+            <span class="usa-sr-only">{{ 'Listen to pronunciation'|t }}</span>
+          </button>
+        {% endif %}
+      </p>
+    </div>
+  {%- endif -%}
+{%- endmacro %}

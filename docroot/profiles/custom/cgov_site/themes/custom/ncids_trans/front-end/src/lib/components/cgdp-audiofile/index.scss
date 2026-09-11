@@ -1,0 +1,34 @@
+@use 'uswds-core' as *;
+
+@mixin audiofile-icon($height, $spacing, $alignment) {
+	@include place-icon(
+		(
+			'name': 'volume_on',
+			'svg-height': 30,
+			'svg-width': 30,
+			'height': $height,
+			'color': 'cerulean-60v',
+		),
+		'after',
+		$spacing,
+		$alignment,
+		'white'
+	);
+}
+
+.cgdp-audiofile {
+	// Removes button styles
+	-webkit-appearance: none;
+	-moz-appearance: none;
+	@include u-bg('transparent');
+	@include u-border(0);
+	@include u-padding-x(0);
+
+	&--large {
+		@include audiofile-icon(3ex, 'none', middle);
+	}
+
+	&--small {
+		@include audiofile-icon(2ex, '1px', middle);
+	}
+}
