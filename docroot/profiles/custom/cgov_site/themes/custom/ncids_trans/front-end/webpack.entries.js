@@ -42,7 +42,8 @@ module.exports = {
 		__dirname,
 		'src/entrypoints/ncids-home-landing/ncids-home-landing.ts'
 	),
-	pdq: path.resolve(__dirname, 'src/entrypoints/pdq/pdq.ts'),
+  'pdq-dis': path.resolve(__dirname, 'src/entrypoints/pdq-dis/pdq-dis.ts'),
+  'pdq-cis': path.resolve(__dirname, 'src/entrypoints/pdq-cis/pdq-cis.ts'),
 	'mini-landing': path.resolve(
 		__dirname,
 		'src/entrypoints/mini-landing/mini-landing.ts'
