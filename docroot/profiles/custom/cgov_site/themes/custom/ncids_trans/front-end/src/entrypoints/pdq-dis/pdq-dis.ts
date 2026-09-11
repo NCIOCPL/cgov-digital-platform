@@ -20,6 +20,7 @@ declare global {
 
 const onDOMContentLoaded = () => {
 	buildAudioLinks();
+	initializePdqAudio();
 	citAnchorLinks();
 	cgdpRelatedResourcesInit();
 };
@@ -60,5 +61,38 @@ const citAnchorLinks = () => {
 			event.preventDefault();
 			window.location.hash = anchor.hash.replace('#cit/', '');
 		}
+	});
+};
+
+// Find the element that has the ID we are targetting and just do it for that one
+// Shouldn't have a foreach as there is just one on the page
+const initializePdqAudio = () => {
+	const server = window.CDEConfig?.general?.mediaServer;
+
+	if (!server) return;
+
+	const pronunciations = document.querySelectorAll<HTMLElement>(
+		'[data-pdq-pronunciation]'
+	);
+
+	pronunciations.forEach((pronunciation) => {
+		const audioEl =
+			pronunciation.querySelector<HTMLAudioElement>('[data-pdq-audio]');
+		const buttonEl = pronunciation.querySelector<HTMLButtonElement>(
+			'[data-pdq-audio-trigger]'
+		);
+
+		const audioId = audioEl?.dataset.pdqAudioId?.replace(/^CDR0+/i, '');
+
+		if (!audioEl || !buttonEl) return;
+
+		audioEl.src = `${server}/pdq/media/audio/${audioId}.mp3`;
+
+		buttonEl.addEventListener('click', () => {
+			audioEl.currentTime = 0;
+			audioEl.play().catch((error) => {
+				console.error('Unable to play PDQ pronunciation audio.', error);
+			});
+		});
 	});
 };
