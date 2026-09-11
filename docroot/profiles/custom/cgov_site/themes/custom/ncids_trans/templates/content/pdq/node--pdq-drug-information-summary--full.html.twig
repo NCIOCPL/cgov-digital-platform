@@ -1,19 +1,23 @@
-{{ attach_library('ncids_trans/pdq') }}
+{{ attach_library('ncids_trans/pdq-dis') }}
 {% import '@ncids_trans/content_page_macros.twig' as contentPageMacros %}
 <!-- ********************************* BEGIN Page Content ********************************** -->
 
 <article>
-  <div class="resize-content">
-    <h1>{{- node.label -}}</h1>
+  <h1 class="nci-heading-h1">{{- node.label -}}</h1>
+  <div class="cgdpl resize-content">
     <div id="cgvBody" class="pdqdruginfosummary">
       {{ content.body }}
     </div>
   </div>
 
-  <footer class="article-footer">
-    {{- contentPageMacros.displayDates(node, content) -}}
+  <footer class="cgdp-article-footer">
+    {{ content.field_related_resources }}
+    {{ drupal_region('pdq_drug_disclaimer') }}
+    {{- contentPageMacros.ncidsDisplayDates(node, content) -}}
     {% if node.field_public_use.value == '1' %}
-      {{ drupal_region('public_use') }}
+      <div class="cgdp-article-footer__separator">
+        {{ drupal_region('public_use') }}
+      </div>
     {% endif %}
   </footer>
 </article>

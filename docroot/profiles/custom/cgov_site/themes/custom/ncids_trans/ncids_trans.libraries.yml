@@ -107,12 +107,21 @@ special-report:
   dependencies:
     - ncids_trans/ncids-global
 
-pdq:
+pdq-dis:
   css:
     theme:
-      dist/css/pdq.css: { preprocess: false }
+      dist/css/pdq-dis.css: { preprocess: false }
   js:
-    dist/js/pdq.js: { preprocess: false }
+    dist/js/pdq-dis.js: { preprocess: false }
+  dependencies:
+    - ncids_trans/ncids-trans-common
+
+pdq-cis:
+  css:
+    theme:
+      dist/css/pdq-cis.css: { preprocess: false }
+  js:
+    dist/js/pdq-cis.js: { preprocess: false }
   dependencies:
     - ncids_trans/ncids-global
 
