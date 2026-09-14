@@ -4,6 +4,8 @@ namespace Drupal\Tests\pdq_drug_information_summary\Functional;
 
 use CgovPlatform\Tests\CgovSchemaExclusions;
 use Drupal\Core\Url;
+use Drupal\node\Entity\Node;
+use Drupal\taxonomy\Entity\Term;
 use Drupal\Tests\BrowserTestBase;
 
 /**
@@ -88,6 +90,9 @@ class ApiTest extends BrowserTestBase {
     static::$configSchemaCheckerExclusions = CgovSchemaExclusions::$configSchemaCheckerExclusions;
     parent::setUp();
 
+    // Create the site section used by the imported drug summary URL.
+    $this->createSiteSectionPath('/about-cancer/treatment/drugs');
+
     // Build the URLs for the API requests.
     $url = Url::fromUri('base:pdq/api/dis');
     $this->disUrl = $url->setAbsolute(TRUE)->toString();
@@ -118,6 +123,7 @@ class ApiTest extends BrowserTestBase {
     $values = $this->fetchNode($nid);
     $this->assertEquals(0, $values['published'], 'Not yet published');
     $this->checkValues($values);
+    $this->checkUrlFields($nid);
 
     // Store a modified revision (still unpublished).
     $this->drug['description'] = 'Revised drug description';
@@ -306,7 +312,7 @@ class ApiTest extends BrowserTestBase {
    * The idea here is that the mnemonic ("pretty") URL should get the same
    * HTML back as the canonical URL using the node ID. This happens because
    * we have registered a rule which tells the `pathauto` module to use the
-   * value of our new `pdq_url` field in constructing the "pretty" URL.
+   * site section and pretty URL fields in constructing the URL.
    *
    * @param array $drug
    *   Values for the drug summary to be visited.
@@ -320,6 +326,65 @@ class ApiTest extends BrowserTestBase {
     $actual = $this->drupalGet($url);
     $this->assertSession()->statusCodeEquals(200);
     $this->assertEquals($actual, $expected);
+  }
+
+  /**
+   * Creates the site-section hierarchy needed by the test drug URL.
+   *
+   * @param string $path
+   *   The complete site-section path.
+   */
+  private function createSiteSectionPath(string $path): void {
+    $storage = \Drupal::entityTypeManager()->getStorage('taxonomy_term');
+    $parent = 0;
+    $computed_path = '';
+    foreach (explode('/', trim($path, '/')) as $segment) {
+      $computed_path .= "/$segment";
+      $matches = $storage->loadByProperties([
+        'vid' => 'cgov_site_sections',
+        'computed_path' => $computed_path,
+        'langcode' => 'en',
+      ]);
+      if ($matches) {
+        $parent = reset($matches)->id();
+        continue;
+      }
+
+      $term = Term::create([
+        'vid' => 'cgov_site_sections',
+        'name' => $segment,
+        'field_pretty_url' => $segment,
+        'parent' => ['target_id' => $parent],
+      ]);
+      $term->save();
+      $parent = $term->id();
+    }
+  }
+
+  /**
+   * Confirms that the imported URL was stored in the replacement fields.
+   *
+   * @param int $nid
+   *   The PDQ Drug Information Summary node ID.
+   */
+  private function checkUrlFields(int $nid): void {
+    $node = Node::load($nid);
+    $site_section = $node->get('field_site_section')->entity;
+    $this->assertInstanceOf(
+      Term::class,
+      $site_section,
+      'Site section was stored as a taxonomy term'
+    );
+    $this->assertEquals(
+      '/about-cancer/treatment/drugs',
+      $site_section->get('computed_path')->value,
+      'Site section path is correct'
+    );
+    $this->assertEquals(
+      'test',
+      $node->get('field_pretty_url')->value,
+      'Pretty URL is correct'
+    );
   }
 
 }
