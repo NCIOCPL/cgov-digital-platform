@@ -6,8 +6,15 @@
   field_browser_title: 'Imatinib Mesylate'
   moderation_state:
     value: published
-  field_pdq_url:
-    value: /about-cancer/treatment/drugs/imatinibmesylate
+  field_site_section:
+    - '#process':
+        callback: 'reference'
+        args:
+          - 'taxonomy_term'
+          - vid: 'cgov_site_sections'
+            computed_path: '/about-cancer/treatment/drugs'
+  field_pretty_url:
+    value: imatinibmesylate
   field_pdq_cdr_id:
     value: 487488
   field_date_posted:
@@ -49,8 +56,15 @@
   field_browser_title: 'AC-T regimen'
   moderation_state:
     value: published
-  field_pdq_url:
-    value: /about-cancer/treatment/drugs/ac-t
+  field_site_section:
+    - '#process':
+        callback: 'reference'
+        args:
+          - 'taxonomy_term'
+          - vid: 'cgov_site_sections'
+            computed_path: '/about-cancer/treatment/drugs'
+  field_pretty_url:
+    value: ac-t
   field_pdq_cdr_id:
     value: 630806
   field_date_posted:
