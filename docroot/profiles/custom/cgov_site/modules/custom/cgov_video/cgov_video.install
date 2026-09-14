@@ -22,10 +22,6 @@ function cgov_video_install() {
   $siteHelper->addMediaTypePermissions('cgov_video', ['content_author']);
   $siteHelper->attachMediaTypeToWorkflow('cgov_video', 'editorial_workflow');
 
-  // Attach video carousel to right workflow.
-  $siteHelper->attachBlockContentTypeToWorkflow('cgov_video_carousel', 'simple_workflow');
-  $siteHelper->addBlockContentTypePermissions('cgov_video_carousel', ['advanced_editor']);
-
   // Install permissions for this module.
   _cgov_video_install_permissions($siteHelper);
 }
@@ -52,7 +48,110 @@ function _cgov_video_install_permissions(CgovCoreTools $siteHelper) {
 }
 
 /**
- * Latest update hook.
+ * Removes content, permissions, and configurations for video carousel.
  */
-function cgov_video_update_10002() {
+function cgov_video_update_10004(&$sandbox): void {
+  $bundle = 'cgov_video_carousel';
+  $roles = ['advanced_editor'];
+  $database = \Drupal::database();
+  $entity_type_manager = \Drupal::entityTypeManager();
+  $config_factory = \Drupal::configFactory();
+
+  // 1. Delete all block content entities cleanly via Entity Storage first
+  try {
+    $block_storage = $entity_type_manager->getStorage('block_content');
+    $block_ids = $block_storage->getQuery()
+      ->accessCheck(FALSE)
+      ->condition('type', $bundle)
+      ->execute();
+
+    if (!empty($block_ids)) {
+      $blocks = $block_storage->loadMultiple($block_ids);
+      $block_storage->delete($blocks);
+    }
+  }
+  catch (\Throwable $e) {
+    \Drupal::logger('cgov_video')->warning('Entity API delete fallback: ' . $e->getMessage());
+  }
+
+  // 2. Clean up any lingering DB records / revisions
+  $target_ids = $database->select('block_content', 'b')
+    ->fields('b', ['id'])
+    ->condition('type', $bundle)
+    ->execute()
+    ->fetchCol();
+
+  if (!empty($target_ids)) {
+    $database->delete('block_content')->condition('id', $target_ids, 'IN')->execute();
+    $database->delete('block_content_field_data')->condition('id', $target_ids, 'IN')->execute();
+    $database->delete('block_content_revision')->condition('id', $target_ids, 'IN')->execute();
+    $database->delete('block_content_field_revision')->condition('id', $target_ids, 'IN')->execute();
+  }
+
+  // Clean field tables for this bundle.
+  $tables = $database->schema()->findTables('block_content__field_%');
+  foreach ($tables as $table) {
+    $database->delete($table)->condition('bundle', $bundle)->execute();
+  }
+  $revision_tables = $database->schema()->findTables('block_content_revision__field_%');
+  foreach ($revision_tables as $table) {
+    $database->delete($table)->condition('bundle', $bundle)->execute();
+  }
+
+  // 3. Delete all related configuration directly via ConfigFactory
+  // (Bypassing $bundle_entity->delete() prevents
+  // MissingBundleException in field_purge_batch)
+  $config_prefixes = [
+    "core.entity_view_display.block_content.{$bundle}",
+    "core.entity_form_display.block_content.{$bundle}",
+    "field.field.block_content.{$bundle}",
+  ];
+
+  foreach ($config_prefixes as $prefix) {
+    $matching_configs = $config_factory->listAll($prefix);
+    foreach ($matching_configs as $config_name) {
+      $config_factory->getEditable($config_name)->delete();
+    }
+  }
+
+  // 4. Delete the Block Content Type bundle config
+  $bundle_config = $config_factory->getEditable("block_content.type.{$bundle}");
+  if (!$bundle_config->isNew()) {
+    $bundle_config->delete();
+  }
+
+  // 5. Delete placed block plugin instances (if any exist in the theme)
+  $placed_blocks = $config_factory->listAll('block.block.');
+  foreach ($placed_blocks as $block_config_name) {
+    $block = $config_factory->getEditable($block_config_name);
+    $settings = $block->get('settings');
+    if (!empty($settings['id']) && str_starts_with($settings['id'], "block_content:{$bundle}")) {
+      $block->delete();
+    }
+  }
+
+  // 6. Revoke Permissions
+  try {
+    $perms = CgovCoreTools::BLOCK_CONTENT_PERMISSIONS;
+    $permissions_to_revoke = [];
+
+    foreach ($perms as $perm) {
+      if (str_contains($perm, '[content_type]')) {
+        $permissions_to_revoke[] = str_replace('[content_type]', $bundle, $perm);
+      }
+    }
+
+    if (!empty($permissions_to_revoke)) {
+      foreach ($roles as $role_id) {
+        user_role_revoke_permissions($role_id, $permissions_to_revoke);
+      }
+    }
+  }
+  catch (\Throwable $e) {
+    \Drupal::logger('cgov_video')->warning('Permission revoke bypassed: ' . $e->getMessage());
+  }
+
+  // 7. Clear entity and bundle definition caches
+  $entity_type_manager->clearCachedDefinitions();
+  \Drupal::service('entity_type.bundle.info')->clearCachedBundles();
 }
