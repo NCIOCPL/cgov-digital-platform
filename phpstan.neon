@@ -13,15 +13,6 @@ parameters:
     - */tests/fixtures/*.php
     - */settings*.php
     - */node_modules/*
-    ## The following paths should be removed as each module is remediated
-    ### custom modules
-    ### cgov_site Profile Modules
-    - docroot/profiles/custom/cgov_site/modules/custom/cgov_core/src/Controller/CgovMediaController.php
-    - docroot/profiles/custom/cgov_site/modules/custom/cgov_core/src/Plugin/Block/SectionNav.php
-    - docroot/profiles/custom/cgov_site/modules/custom/cgov_home_landing/cgov_home_landing.module
-    - docroot/profiles/custom/cgov_site/modules/custom/cgov_image/cgov_image.module
-    - docroot/profiles/custom/cgov_site/modules/custom/cgov_infographic/cgov_infographic.module
-    - docroot/profiles/custom/cgov_site/modules/custom/cgov_list/cgov_list.module
 
   ignoreErrors:
     ## NOTE: Each rule needs reportUnmatched so that PHPStan does not report unmatched rules
@@ -74,9 +65,17 @@ parameters:
       paths:
         - docroot/profiles/custom/cgov_site/modules/custom/cgov_vocab_manager/src/Form/CgovVocabManagerForm.php
 
-    ## With php 8.2+, some magic properties are reported as errors that aren't reported with php 8.1.
-    ## phpstan complains when a line is marked to be ignored but doesn't cause an error, so we have
-    ## to ignore them here and make appropriate changes when we get to php 8.4 / Drupal 11.
+    ## TICKET 5381: re-checked ahead of Drupal 11. All four below are the same class of issue as
+    ## the TermInterface ignore above -- phpstan-drupal can't see Drupal's dynamic/bundle-specific
+    ## and base-field properties, not an API that Drupal 11 removes or changes. $original is set
+    ## by core's EntityStorageBase on presave for every entity type; moderation_state is added
+    ## dynamically by Content Moderation on bundles with a workflow; preferred_admin_langcode is a
+    ## real User base field just not declared on the narrower UserInterface;
+    ## field_ncids_img_para_ratio is a per-bundle paragraph field (ParagraphInterface already
+    ## extends ContentEntityInterface, so this isn't a too-generic-type issue like the group
+    ## below -- it's the field itself being bundle-conditional config, not a base property).
+    ## None of these are going away in Drupal 11, so these are permanent ignores, not "until we
+    ## fix it" ones.
     -
       message: "#Access to an undefined property Drupal\\\\path_alias\\\\PathAliasInterface::\\$original.#"
       reportUnmatched: false
@@ -93,3 +92,28 @@ parameters:
       reportUnmatched: false
       paths:
         - docroot/profiles/custom/cgov_site/modules/custom/cgov_core/cgov_core.module
+    -
+      message: "#Access to an undefined property Drupal\\\\paragraphs\\\\ParagraphInterface::\\$field_ncids_img_para_ratio#"
+      reportUnmatched: false
+      paths:
+        - docroot/profiles/custom/cgov_site/modules/custom/cgov_home_landing/cgov_home_landing.module
+
+    ## TICKET 5381: surfaced by removing the blanket file-excludes below (was never scanned
+    ## before). Not deprecation-related, and unlike the group above, this one IS a real bug --
+    ## these functions are typed against the generic EntityInterface (covers config entities too)
+    ## instead of ContentEntityInterface, which is what actually declares get()/field access.
+    ## Fixing it means changing live content-rendering function signatures, which deserves its
+    ## own reviewed ticket rather than a drive-by fix here. Tracked in a follow-up ticket, ignored
+    ## here so CI stays green in the meantime.
+    -
+      message: "#Call to an undefined method Drupal\\\\Core\\\\Entity\\\\EntityInterface::get\\(\\)#"
+      reportUnmatched: false
+      paths:
+        - docroot/profiles/custom/cgov_site/modules/custom/cgov_image/cgov_image.module
+        - docroot/profiles/custom/cgov_site/modules/custom/cgov_infographic/cgov_infographic.module
+    -
+      message: "#Access to an undefined property Drupal\\\\Core\\\\Entity\\\\EntityInterface::\\$(field_media_image|field_list_item_style|field_media_link)#"
+      reportUnmatched: false
+      paths:
+        - docroot/profiles/custom/cgov_site/modules/custom/cgov_image/cgov_image.module
+        - docroot/profiles/custom/cgov_site/modules/custom/cgov_list/cgov_list.module
