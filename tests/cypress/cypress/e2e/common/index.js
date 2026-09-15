@@ -1,5 +1,6 @@
 import { Given, Then } from "cypress-cucumber-preprocessor/steps";
 
+const drushCmd = Cypress.env('DRUSH_BIN') || 'drush';
 Given('user navigates to {string}', (path) => {
     cy.visit(path);
 })
@@ -29,15 +30,44 @@ And('user clicks on {string} content type', (contentType) => {
 When('user selects test site section', () => {
     cy.get('summary[aria-controls*="edit-field-site-section"]').click();
     cy.get("input[value='Select Site Section']").click();
+
+    // Type the search filter
     cy.getIframeBody('iframe.entity-browser-modal-iframe')
-        .find('input[name="computed_path_value"]').type('test-site-section');
+        .find('input[name="computed_path_value"]')
+        .clear()
+        .type('test-site-section');
+
+    // Click the filter button
     cy.getIframeBody('iframe.entity-browser-modal-iframe')
-        .find('input#edit-submit-site-section-browser').click();
+        .find('input#edit-submit-site-section-browser')
+        .click();
+
+    // 1. Hard pause to let Drupal's AJAX fire and the throbber to render
+    cy.wait(2000);
+
+    // 2. Now wait for the throbber to finish and detach
     cy.getIframeBody('iframe.entity-browser-modal-iframe')
-        .find('td:contains("test-site-section")').first().parent()
-        .find('td.views-field.views-field-entity-browser-select input').check();
+        .find('.ajax-progress', { timeout: 30000 })
+        .should('not.exist');
+
+    // 3. Select the site section checkbox
     cy.getIframeBody('iframe.entity-browser-modal-iframe')
-        .find("input[id='edit-submit'][value='Select Site Section']").click();
+        .find('td:contains("test-site-section")', { timeout: 15000 })
+        .first()
+        .parent()
+        .find('td.views-field.views-field-entity-browser-select input')
+        .check({ force: true });
+
+    // 4. Submit the modal
+    cy.getIframeBody('iframe.entity-browser-modal-iframe')
+        .find("input[id='edit-submit'][value='Select Site Section']")
+        .click({ force: true });
+
+    // 5. Hard pause to let the POST request fire before asserting iframe detachment
+    cy.wait(2000);
+
+    // 6. Ensure the modal dialog completely detaches
+    cy.get('iframe.entity-browser-modal-iframe', { timeout: 30000 }).should('not.exist');
 });
 
 And('user fills out the following fields', (dataTable) => {
@@ -86,12 +116,12 @@ And('browser waits', () => {
 });
 
 And('user creates new user with username {string}', (username) => {
-    cy.exec(`drush user:create ${username} --mail="${username}@example.com" --password="password123"`)
-})
+    cy.exec(`${drushCmd} user:create ${username} --mail="${username}@example.com" --password="password123"`);
+});
 
 And('user adds the following roles to the following users', (dataTable) => {
     for (const { roles, users } of dataTable.hashes()) {
-        cy.exec(`drush user-add-role "${roles}" ${users}`)
+        cy.exec(`${drushCmd} user-add-role "${roles}" ${users}`)
     }
 })
 
