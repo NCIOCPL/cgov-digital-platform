@@ -219,7 +219,9 @@ class AppPathManager implements AppPathManagerInterface {
 
     // Nothing to see here. Exit.
     /** @var \Drupal\path_alias\PathAliasInterface */
-    // @todo /w PHP 8.2, phpstan reports property.notFound (Fix in Drupal 11.)
+    // $original is set dynamically by core's EntityStorageBase on presave;
+    // phpstan can't see it since it's not on the interface. Not a Drupal 11
+    // issue -- ignored permanently in phpstan.neon, see ticket 5381.
     $originalPath = $path->original;
     if ($path->getAlias() === $originalPath->getAlias()) {
       return;
