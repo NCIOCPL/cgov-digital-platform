@@ -162,7 +162,7 @@ class ApiTest extends BrowserTestBase {
     $this->drug['title'] = 'Jewel Weed';
     $this->store($this->drug, 200);
     $this->publish();
-    $h1 = "<h1>{$this->drug['title']}</h1>";
+    $h1 = "<h1 class=\"nci-heading-h1\">{$this->drug['title']}</h1>";
     $page = $this->drupalGet("node/$nid");
     $this->assertTrue(strpos($page, $h1) !== FALSE, 'Published changes OK');
 
