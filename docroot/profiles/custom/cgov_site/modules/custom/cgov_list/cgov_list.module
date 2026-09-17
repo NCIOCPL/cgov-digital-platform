@@ -102,10 +102,10 @@ function cgov_list_allowed_values_function(
  *
  * This may be better as a field formatter.
  */
-function cgov_list_paragraph_view(array &$build, EntityInterface $entity, EntityViewDisplayInterface $display, $view_mode) {
+function cgov_list_paragraph_view(array &$build, ContentEntityInterface $entity, EntityViewDisplayInterface $display, $view_mode) {
   $bundle = $entity->bundle();
   if ($bundle === 'cgov_list') {
-    $list_item_mode = $entity->field_list_item_style->value;
+    $list_item_mode = $entity->get('field_list_item_style')->value;
 
     // Only rebuild the items if there are some.
     if (
@@ -206,7 +206,13 @@ function cgov_list_paragraph_view(array &$build, EntityInterface $entity, Entity
   // as much as possible, we are going to extract and flatten the pertinent data
   // for conditional formatting here. Translations will be done in templates.
   if ($bundle === 'cgov_media_link') {
-    $media = $entity->field_media_link->entity;
+    /** @var \Drupal\Core\Entity\ContentEntityInterface|null $media */
+    $media = $entity->get('field_media_link')->entity;
+    if ($media === NULL) {
+      // The referenced media entity is missing (e.g. deleted while still
+      // referenced by this paragraph) -- nothing to render.
+      return;
+    }
     $mediaBundle = $media->bundle();
 
     if ($mediaBundle === 'cgov_infographic') {
@@ -225,7 +231,13 @@ function cgov_list_paragraph_view(array &$build, EntityInterface $entity, Entity
       $build['media_link_type'] = [
         '#plain_text' => 'File',
       ];
-      $file = $media->field_media_file->entity;
+      /** @var \Drupal\file\FileInterface|null $file */
+      $file = $media->get('field_media_file')->entity;
+      if ($file === NULL) {
+        // The referenced file is missing (e.g. deleted while still
+        // referenced by this media entity) -- nothing more to add.
+        return;
+      }
       // ##### Format file size.
       $fileSize = (int) $file->getSize();
       $formattedFileSize = _cgov_list_format_bytes($fileSize, 0);
