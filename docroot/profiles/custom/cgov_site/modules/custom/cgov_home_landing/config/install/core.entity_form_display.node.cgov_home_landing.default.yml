@@ -11,7 +11,6 @@ dependencies:
     - field.field.node.cgov_home_landing.field_date_reviewed
     - field.field.node.cgov_home_landing.field_date_updated
     - field.field.node.cgov_home_landing.field_feature_card_description
-    - field.field.node.cgov_home_landing.field_hero_banner
     - field.field.node.cgov_home_landing.field_image_promotional
     - field.field.node.cgov_home_landing.field_landing_contents
     - field.field.node.cgov_home_landing.field_list_description
@@ -28,7 +27,6 @@ dependencies:
     - datetime
     - entity_browser
     - paragraphs
-    - paragraphs_asymmetric_translation_widgets
     - path
 id: node.cgov_home_landing.default
 targetEntityType: node
@@ -94,18 +92,6 @@ content:
     settings:
       size: 60
       placeholder: ''
-    third_party_settings: {  }
-  field_hero_banner:
-    type: paragraphs_classic_asymmetric
-    weight: 11
-    region: content
-    settings:
-      title: Paragraph
-      title_plural: Paragraphs
-      edit_mode: open
-      add_mode: dropdown
-      form_display_mode: default
-      default_paragraph_type: _none
     third_party_settings: {  }
   field_image_promotional:
     type: entity_browser_entity_reference
