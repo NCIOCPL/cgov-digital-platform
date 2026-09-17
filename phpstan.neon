@@ -27,7 +27,7 @@ parameters:
       ## This allows us to do $entity->field_somefield->property where property is not "value".
       ## it also allows us to do $entity->get('field_somefield')->property where property is not "value".
       ## See https://github.com/mglaman/phpstan-drupal/issues/147#issuecomment-760893993
-      message: "#Access to an undefined property Drupal\\\\Core\\\\Field\\\\FieldItemListInterface\\:\\:#"
+      message: "#Access to an undefined property Drupal\\\\Core\\\\Field\\\\FieldItemListInterface(\\<[^>]*\\>)?\\:\\:#"
       reportUnmatched: false
     -
       ## Ignoring a deprecation with PHPUnit 9.6 that does not have a replacement. The fix will most likely
@@ -97,23 +97,3 @@ parameters:
       reportUnmatched: false
       paths:
         - docroot/profiles/custom/cgov_site/modules/custom/cgov_home_landing/cgov_home_landing.module
-
-    ## TICKET 5381: surfaced by removing the blanket file-excludes below (was never scanned
-    ## before). Not deprecation-related, and unlike the group above, this one IS a real bug --
-    ## these functions are typed against the generic EntityInterface (covers config entities too)
-    ## instead of ContentEntityInterface, which is what actually declares get()/field access.
-    ## Fixing it means changing live content-rendering function signatures, which deserves its
-    ## own reviewed ticket rather than a drive-by fix here. Tracked in a follow-up ticket, ignored
-    ## here so CI stays green in the meantime.
-    -
-      message: "#Call to an undefined method Drupal\\\\Core\\\\Entity\\\\EntityInterface::get\\(\\)#"
-      reportUnmatched: false
-      paths:
-        - docroot/profiles/custom/cgov_site/modules/custom/cgov_image/cgov_image.module
-        - docroot/profiles/custom/cgov_site/modules/custom/cgov_infographic/cgov_infographic.module
-    -
-      message: "#Access to an undefined property Drupal\\\\Core\\\\Entity\\\\EntityInterface::\\$(field_media_image|field_list_item_style|field_media_link)#"
-      reportUnmatched: false
-      paths:
-        - docroot/profiles/custom/cgov_site/modules/custom/cgov_image/cgov_image.module
-        - docroot/profiles/custom/cgov_site/modules/custom/cgov_list/cgov_list.module
