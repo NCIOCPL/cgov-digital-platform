@@ -133,20 +133,37 @@ jobs:
         run: |
           blt tests:frontend:run --define drush.alias='${drush.aliases.ci}' --define tests.run-server=false --environment=ci --ansi --verbose --no-interaction
       - name: Start test server
+        env:
+          PHP_CLI_SERVER_WORKERS: 4
         run: |
+              ## Rebuild cache to prevent stale service map issues
+              drush cr
               ## Running drush runserver is equivelent to blt tests:server:start, and is what happens under the hood, except this allows us to bind to all ips on the box.
               ## blt was not letting us bind to those IPs we wanted.
-              drush runserver --quiet 0.0.0.0:8888 &
+              drush runserver -v 0.0.0.0:8888 > /tmp/drush_server.log 2>&1 &
+              sleep 3
       - name: Behavioral Tests
         timeout-minutes: 120
         run: |
               blt tests:cypress:run --define drush.alias='${drush.aliases.ci}' --define tests.run-server=false --environment=ci --ansi --verbose --no-interaction
+      - name: Dump server logs and watchdog on failure
+        if: failure()
+        run: |
+          echo "=== DRUSH SERVER LOG ==="
+          tail -n 100 /tmp/drush_server.log || true
+          echo "=== WATCHDOG RECENT CRITICAL/ERROR ENTRIES ==="
+          drush sql:query "SELECT wid, type, severity, message, variables FROM watchdog WHERE severity <= 4 ORDER BY wid DESC LIMIT 20;" || true
       - name: Upload test screenshots
         if: failure()
         uses: actions/upload-artifact@v4
         with:
           name: cypress-test-screenshots
           path: ./tests/cypress/cypress/screenshots
+      - name: Dump Drush server log on failure
+        if: failure()
+        run: |
+          echo "=== DRUSH RUNSERVER LOG (LAST 100 LINES) ==="
+          tail -n 100 /tmp/drush_server.log || true
       # The weights file is re-generated on every run, but an existing copy is needed in order to help distribute
       # test suites between threads. So, we need to restore the file to its original state in order to avoid
       # failing the job with modified files.
