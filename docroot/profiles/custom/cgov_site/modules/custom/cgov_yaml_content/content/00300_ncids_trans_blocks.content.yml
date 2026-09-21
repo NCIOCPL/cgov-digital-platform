@@ -456,46 +456,51 @@
   field_raw_html:
     - format: "raw_html"
       value: |
-        <div class="error-content-english">
-          <h1>Page Not Found</h1>
-          <p>We can't find the page you're looking for.</p>
-          <p>Visit the <a href="/">homepage</a>, browse by <a href="/types" title="">cancer type</a>, or use the search below.</p>
-          <p>Have a question? <a href="/contact" title="">Get in touch</a>.</p>
-        </div>
-        <div class="error-searchbar">
-          <div id="error-form">
-            <form action="/search/results"
-              method="get"
-              id="pageNotFoundSearchForm"
-              name="pageNotFoundSearchForm"
-              data-language="en"
-              _lpchecked="1">
-              <label class="show-for-sr" for="nfKeyword">Search</label>
-              <input class="searchString ui-autocomplete-input" id="nfKeyword" maxlength="255" name="swKeyword" onblur="bSearchBoxBool=false;" onfocus="bSearchBoxBool=true;" value="" autocomplete="off" aria-autocomplete="list" aria-haspopup="true" type="text">
-              <button class="searchSubmit" id="nf-search__button" type="submit">Search</button>
-            </form>
-          </div>
-        </div>
+        <h1>Page Not Found</h1>
+        <p>We can't find the page you're looking for.</p>
+        <p>Visit the <a href="/">homepage</a>, browse by <a href="/types" title="">cancer type</a>, or use the search below.</p>
+        <p>Have a question? <a href="/contact" title="">Get in touch</a>.</p>
+        <form
+          role="search"
+          action="/search/results"
+          method="get"
+          id="pageNotFoundSearchForm"
+          name="pageNotFoundSearchForm"
+          data-language="en"
+        >
+          <label class="usa-sr-only" for="pageNotFoundKeyword">Search</label>
+          <input class="usa-input" id="pageNotFoundKeyword" maxlength="255" name="swKeyword" data-autosuggest-collection="cgov" aria-autocomplete="list" aria-haspopup="listbox" type="search" autocomplete="off">
+          <button class="usa-button" id="nf-search__button" type="submit" aria-label="Search">
+            <span class="search-button">Search</span>
+            <svg class="usa-icon" xmlns="http://www.w3.org/2000/svg" role="img" viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M0 0h24v24H0z" fill="none"/>
+              <path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/>
+            </svg>
+          </button>
+        </form>
+
   field_raw_html__ES:
     - format: "raw_html"
       value: |
-        <div class="error-content-spanish">
-          <h1>No se encontró la página</h1>
-          <p> No podemos encontrar la página que busca.</p>
-          <p>Visite la <a href="/espanol">página principal</a>, busque por <a href="/espanol/tipos">tipo de cáncer</a>, o use la casilla de búsqueda en la parte de abajo de esta página.</p>
-          <p>¿Tiene una pregunta? <a href="/espanol/contactenos">Contáctenos</a>.</p>
-        </div>
-        <div class="error-searchbar">
-          <div id="error-form">
-            <form action="/espanol/buscar/resultados"
-              method="get"
-              id="pageNotFoundSearchForm"
-              name="pageNotFoundSearchForm"
-              data-language="en"
-              _lpchecked="1">
-              <label class="show-for-sr" for="nfKeyword">Search</label>
-              <input class="searchString ui-autocomplete-input" id="nfKeyword" maxlength="255" name="swKeyword" onblur="bSearchBoxBool=false;" onfocus="bSearchBoxBool=true;" value="" autocomplete="off" aria-autocomplete="list" aria-haspopup="true" type="text">
-              <button class="searchSubmit" id="nf-search__button" type="submit">Buscar</button>
-            </form>
-          </div>
-        </div>
+        <h1>No se encontró la página</h1>
+        <p> No podemos encontrar la página que busca.</p>
+        <p>Visite la <a href="/espanol">página principal</a>, busque por <a href="/espanol/tipos">tipo de cáncer</a>, o use la casilla de búsqueda en la parte de abajo de esta página.</p>
+        <p>¿Tiene una pregunta? <a href="/espanol/contactenos">Contáctenos</a>.</p>
+        <form
+          role="search"
+          action="/espanol/buscar/resultados"
+          method="get"
+          id="pageNotFoundSearchForm"
+          name="pageNotFoundSearchForm"
+          data-language="es"
+        >
+          <label class="usa-sr-only" for="pageNotFoundKeyword">Buscar</label>
+          <input class="usa-input" id="pageNotFoundKeyword" maxlength="255" name="swKeyword" data-autosuggest-collection="cgov" aria-autocomplete="list" aria-haspopup="listbox" type="search" autocomplete="off">
+          <button class="usa-button" id="nf-search__button" type="submit" aria-label="Buscar">
+            <span class="search-button">Buscar</span>
+            <svg class="usa-icon" xmlns="http://www.w3.org/2000/svg" role="img" viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M0 0h24v24H0z" fill="none"/>
+              <path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/>
+            </svg>
+          </button>
+        </form>
