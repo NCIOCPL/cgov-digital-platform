@@ -1,0 +1,62 @@
+// This contains the NCIDS Settings and required items. Nothing in this
+// file should generate markup.
+@forward '../cgdp-required';
+
+// Taken from NCIDS Minimal to ensure things like
+// back to top and site alerts still work on the error pages
+@forward '../../lib/components/usa-banner';
+@forward '../../lib/components/usa-site-alert';
+@forward '../../lib/components/usa-breadcrumb';
+@forward '../../lib/components/usa-footer';
+
+// TODO Keep as last import for now, there is a ordering bug
+// This is also needed for autocomplete styles for the 404 search box.
+@forward '../../lib/components/nci-header';
+
+@forward 'usa-prose';
+@forward 'usa-link';
+
+// Expose USWDS variables and mixins to our imports.
+@use 'uswds-core' as *;
+
+.error-page--403,
+.error-page--404 {
+	@include u-margin-bottom(4);
+
+	// Styles needed to align the input box and search button
+	// (mostly for mobile styles apart from align-items)
+	.nci-autocomplete {
+		align-items: flex-end;
+		.search-button {
+			// Hides / Displays "Search" button text
+			display: none;
+			@include at-media('tablet') {
+				display: flex;
+			}
+		}
+		.usa-input {
+			// Sets input height for the search box on mobile since
+			// the bigger icon size affects the search button height
+			@include u-height(6);
+			@include at-media('tablet') {
+				@include u-height('auto');
+			}
+		}
+		.usa-button {
+			@include u-width('auto');
+			border-top-left-radius: 0;
+			border-bottom-left-radius: 0;
+		}
+		.usa-icon {
+			// Increases the search icon size to be consistent with
+			// the header's search button's icon size
+			@include u-width(3);
+			@include u-height(3);
+			// Hides / Displays "Search" button icon
+			display: flex;
+			@include at-media('tablet') {
+				display: none;
+			}
+		}
+	}
+}

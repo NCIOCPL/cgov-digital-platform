@@ -8,7 +8,6 @@
  */
 
 use Drupal\Core\Datetime\DrupalDateTime;
-use Drupal\Core\Language\LanguageInterface;
 use Drupal\media\Entity\Media;
 use Drupal\node\Entity\Node;
 
@@ -109,18 +108,24 @@ function ncids_trans_theme_suggestions_page_alter(array &$suggestions, array $va
   // 1) Get Request Object.
   $request = \Drupal::request();
 
-  // 2) If there is HTTP Exception..
-  if ($exception = $request->attributes->get('exception')) {
-    // 3) Get the status code.
-    $status_code = $exception->getStatusCode();
-    // 4) Get the current langauge.
-    $language = \Drupal::languageManager()
-      ->getCurrentLanguage(LanguageInterface::TYPE_INTERFACE)
-      ->getId();
-    if (in_array($status_code, [401, 403, 404])) {
-      $suggestions[] = 'page__' . $status_code;
-      $suggestions[] = 'page__' . $status_code . '_' . $language;
-    }
+  // 2) Get the status code from the exception when available.
+  $exception = $request->attributes->get('exception');
+  $status_code = $exception ? $exception->getStatusCode() : NULL;
+
+  // Drupal resolves not-found and access-denied responses to system routes,
+  // where the exception attribute is not available during theme suggestions.
+  if (!$status_code) {
+    $route_name = \Drupal::routeMatch()->getRouteName();
+    $status_code = match ($route_name) {
+      'system.401' => 401,
+      'system.403' => 403,
+      'system.404' => 404,
+      default => NULL,
+    };
+  }
+
+  if (in_array($status_code, [401, 403, 404])) {
+    $suggestions[] = 'page__' . $status_code;
   }
 }
 
@@ -221,6 +226,13 @@ function ncids_trans_preprocess_html(&$variables) {
   if ($hasTranslations) {
     $variables['attributes']['class'][] = 'has-translated-content';
   }
+}
+
+/**
+ * Implements hook_preprocess_page().
+ */
+function ncids_trans_preprocess_page(&$variables) {
+  $variables['langcode'] = \Drupal::languageManager()->getCurrentLanguage()->getId();
 }
 
 /**

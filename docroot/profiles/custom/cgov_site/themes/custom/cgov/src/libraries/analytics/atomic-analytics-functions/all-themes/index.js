@@ -13,30 +13,6 @@ const pageName = 'D=pageName';
  * @file Analytics for both ncids_trans and cgov_common sites.
  */
 export default {
-  PageNotFound: function (sender) {
-    var language = sender.dataset.language;
-    var searchType = "pagenotfoundsearch";
-    var keyword = document.getElementById("nfKeyword").value;
-
-    if (language === "es") {
-      searchType += "_spanish";
-    }
-
-    legacyTrackOther("PageNotFound", "PageNotFound", {
-      Props: {
-        11: searchType,
-        14: keyword,
-      },
-      Evars: {
-        11: searchType,
-        13: "+1",
-        14: keyword,
-      },
-      Events: [2],
-    });
-  },
-
-  //******************************************************************************************************
   CustomLink: function (sender, linkData) {
     if (linkData == null || typeof linkData === "undefined") {
       linkData = "";
