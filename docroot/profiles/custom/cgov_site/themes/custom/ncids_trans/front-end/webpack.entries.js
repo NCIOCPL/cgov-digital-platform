@@ -10,6 +10,10 @@ module.exports = {
 		__dirname,
 		'src/entrypoints/global/ncids-common.ts'
 	),
+	'error-page': path.resolve(
+		__dirname,
+		'src/entrypoints/error-page/error-page.ts'
+	),
 	'ncids-minimal': path.resolve(
 		__dirname,
 		'src/entrypoints/global/ncids-minimal.ts'
