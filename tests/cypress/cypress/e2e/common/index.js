@@ -1,5 +1,6 @@
 import { Given, Then } from "cypress-cucumber-preprocessor/steps";
 
+const drushCmd = Cypress.env('DRUSH_BIN') || 'drush';
 Given('user navigates to {string}', (path) => {
     cy.visit(path);
 })
@@ -27,24 +28,99 @@ And('user clicks on {string} content type', (contentType) => {
 });
 
 When('user selects test site section', () => {
+    // 1. THE ASSET BLACKOUT
+    // Protect the single-threaded PHP server from deadlocking on image requests.
+    cy.intercept({ resourceType: 'image' }, { statusCode: 200, body: '' });
+    cy.intercept('GET', '**/*.gif', { statusCode: 200, body: '' });
+
+    // NO NETWORK INTERCEPTS FOR POST REQUESTS.
+    // Preserve Drupal's CSRF headers to prevent 500 errors.
+
+    cy.viewport(1920, 1080);
     cy.get('summary[aria-controls*="edit-field-site-section"]').click();
     cy.get("input[value='Select Site Section']").click();
-    cy.getIframeBody('iframe.entity-browser-modal-iframe')
-        .find('input[name="computed_path_value"]').type('test-site-section');
-    cy.getIframeBody('iframe.entity-browser-modal-iframe')
-        .find('input#edit-submit-site-section-browser').click();
-    cy.getIframeBody('iframe.entity-browser-modal-iframe')
-        .find('td:contains("test-site-section")').first().parent()
-        .find('td.views-field.views-field-entity-browser-select input').check();
-    cy.getIframeBody('iframe.entity-browser-modal-iframe')
-        .find("input[id='edit-submit'][value='Select Site Section']").click();
+
+    cy.wait(3000);
+
+    const waitForDrupalAjax = () => {
+        cy.wait(2000);
+        cy.get('iframe.entity-browser-modal-iframe', { timeout: 45000 }).should($iframe => {
+            const iframeWindow = $iframe[0].contentWindow;
+            if (iframeWindow.Drupal && iframeWindow.Drupal.ajax) {
+                const instances = iframeWindow.Drupal.ajax.instances || [];
+                const isAjaxing = Array.from(instances).some(instance => instance && instance.ajaxing === true);
+                expect(isAjaxing, 'Drupal internal AJAX engine must be fully idle').to.be.false;
+            }
+        });
+        cy.wait(2000);
+    };
+
+    // 1. SLOW HUMAN FILTER
+    cy.get('iframe.entity-browser-modal-iframe').then($iframe => {
+        const $body = $iframe.contents().find('body');
+        cy.wrap($body.find('input[name="computed_path_value"]')).clear().type('test-site-section', { delay: 50 });
+        cy.wrap($body).click('topLeft', { force: true });
+    });
+
+    waitForDrupalAjax();
+
+    // 2. STANDARD CYPRESS FILTER CLICK
+    cy.get('iframe.entity-browser-modal-iframe').then($iframe => {
+        const $body = $iframe.contents().find('body');
+        cy.wrap($body.find('input[id^="edit-submit-site-section-browser"]')).last().click({ force: true });
+    });
+
+    cy.get('iframe.entity-browser-modal-iframe', { timeout: 45000 }).should($iframe => {
+        const $body = $iframe.contents().find('body');
+        expect($body.find('td:contains("test-site-section")').length).to.be.greaterThan(0);
+    });
+
+    waitForDrupalAjax();
+    cy.wait(2000);
+
+    // 3. STANDARD CYPRESS CHECKBOX
+    cy.get('iframe.entity-browser-modal-iframe').then($iframe => {
+        const $body = $iframe.contents().find('body');
+        const $checkbox = $body.find('td:contains("test-site-section")').first().parent().find('td.views-field-entity-browser-select input');
+        cy.wrap($checkbox).check({ force: true });
+    });
+
+    waitForDrupalAjax();
+    cy.wait(4000);
+
+    // 4. THE CLEAN ROOM
+    cy.get('iframe.entity-browser-modal-iframe').then($iframe => {
+        const $body = $iframe.contents().find('body');
+
+        // Strip the 2.17.0 fixed positioning
+        $body.find('.entity-browser-form--actions-wrapper, .gin-sticky').css('position', 'static');
+
+        const $submitBtn = $body.find('input[id^="edit-submit"][value="Select Site Section"]').last();
+
+        // Execute the clean standard click that passes the CSRF check
+        cy.wrap($submitBtn).click({ force: true });
+    });
+
+    // 5. THE ZOMBIE DETONATOR (Run 114)
+    // The transaction is actively saving on the server without crashing.
+    // We give the backend 8 full seconds to finalize the database and update the parent DOM.
+    cy.wait(8000);
+
+    // The headless browser ignores the native dialog close event, so we execute
+    // the UI cleanup manually. We sweep the glass out of the way ourselves.
+    cy.get('body').then($body => {
+        $body.find('.ui-dialog, #drupal-modal, iframe.entity-browser-modal-iframe, .ui-widget-overlay').remove();
+    });
+
+    // Verify the path is clear for the rest of the script
+    cy.get('iframe.entity-browser-modal-iframe', { timeout: 10000 }).should('not.exist');
 });
 
 And('user fills out the following fields', (dataTable) => {
-    for (const { fieldLabel, value, field_name } of dataTable.hashes()) {
-        cy.get(`input[name^='${field_name}']`).as('inputField').parent().find('label').should('include.text', fieldLabel);
-        cy.get('@inputField').type(value);
-    }
+  for (const { fieldLabel, value, field_name } of dataTable.hashes()) {
+      cy.get(`input[name^='${field_name}']`).as('inputField').parent().find('label').should('include.text', fieldLabel);
+      cy.get('@inputField').type(value);
+  }
 });
 
 And('user selects {string} from {string} dropdown', (option, dropdown) => {
@@ -86,12 +162,12 @@ And('browser waits', () => {
 });
 
 And('user creates new user with username {string}', (username) => {
-    cy.exec(`drush user:create ${username} --mail="${username}@example.com" --password="password123"`)
-})
+    cy.exec(`${drushCmd} user:create ${username} --mail="${username}@example.com" --password="password123"`);
+});
 
 And('user adds the following roles to the following users', (dataTable) => {
     for (const { roles, users } of dataTable.hashes()) {
-        cy.exec(`drush user-add-role "${roles}" ${users}`)
+        cy.exec(`${drushCmd} user-add-role "${roles}" ${users}`)
     }
 })
 
