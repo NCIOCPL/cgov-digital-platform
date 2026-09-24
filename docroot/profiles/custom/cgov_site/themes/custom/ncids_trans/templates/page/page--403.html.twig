@@ -1,0 +1,28 @@
+{{ attach_library('ncids_trans/ncids-global') }}
+{{ attach_library('ncids_trans/error-page') }}
+
+{{ page.ncids_banner }}
+{{ page.ncids_site_alerts }}
+{{ page.ncids_header }}
+
+<div class="grid-container">
+  <div class="grid-row flex-no-wrap">
+    <div class="grid-col-10">
+      {{ page.ncids_breadcrumb }}
+    </div>
+  </div>
+</div>
+
+<div id="page" class="grid-container">
+  <div class="grid-row grid-gap">
+    <div class="grid-col-12 error-page--403">
+      <main id="main-content" class="usa-prose">
+        <h1>Access Denied</h1>
+        <p>You are not authorized to access this page.</p>
+        <p>Log in to the CMS and try again. If you are already logged in, you may not have permission to access this page.</p>
+      </main>
+    </div>
+  </div>
+</div>
+
+{{ page.ncids_footer }}

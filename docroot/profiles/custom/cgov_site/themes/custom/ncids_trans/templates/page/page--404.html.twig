@@ -1,0 +1,49 @@
+{% set is_spanish = langcode == 'es' %}
+{% set search_action = is_spanish ? '/espanol/buscar/resultados' : '/search/results' %}
+{% set search_button_label = is_spanish ? 'Buscar' : 'Search' %}
+
+{{ attach_library('ncids_trans/ncids-global') }}
+{{ attach_library('ncids_trans/error-page') }}
+
+
+{{ page.ncids_banner }}
+{{ page.ncids_site_alerts }}
+{{ page.ncids_header }}
+
+<div class="grid-container">
+  <div class="grid-row flex-no-wrap">
+    <div class="grid-col-10">
+      {{ page.ncids_breadcrumb }}
+    </div>
+  </div>
+</div>
+
+<div id="page" class="grid-container">
+  <div class="grid-row grid-gap">
+    <div class="grid-col-12 error-page--404">
+      <main id="main-content" class="usa-prose">
+        {{ page.page_not_found }}
+        <form
+          action="{{ search_action }}"
+          method="get"
+          id="pageNotFoundSearchForm"
+          name="pageNotFoundSearchForm"
+          data-language="{{ langcode }}"
+          _lpchecked="1"
+        >
+          <label class="usa-sr-only" for="nfKeyword">Search</label>
+          <input class="usa-input" id="nfKeyword" maxlength="255" name="swKeyword" data-autosuggest-collection="cgov" onblur="bSearchBoxBool=false;" onfocus="bSearchBoxBool=true;" value="" autocomplete="off" aria-autocomplete="list" aria-haspopup="true" type="text">
+          <button class="usa-button" id="nf-search__button" type="submit">
+            <span class="search-button">{{ search_button_label }}</span>
+            <svg class="usa-icon" xmlns="http://www.w3.org/2000/svg" role="img" viewbox="0 0 24 24" aria-hidden="true">
+              <path d="M0 0h24v24H0z" fill="none"/>
+              <path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/>
+            </svg>
+          </button>
+        </form>
+      </main>
+    </div>
+  </div>
+</div>
+
+{{ page.ncids_footer }}
