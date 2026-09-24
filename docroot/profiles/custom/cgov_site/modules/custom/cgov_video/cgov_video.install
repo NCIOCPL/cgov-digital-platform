@@ -52,7 +52,23 @@ function _cgov_video_install_permissions(CgovCoreTools $siteHelper) {
 }
 
 /**
- * Latest update hook.
+ * Updates video body field format to ncids_streamlined.
  */
-function cgov_video_update_10002() {
+function cgov_video_update_10003() {
+  $db = \Drupal::database();
+  $bundle = 'cgov_video';
+
+  // Media table updates.
+  $db->update('media__body')
+    ->fields(['body_format' => 'ncids_streamlined'])
+    ->condition('bundle', $bundle)
+    ->condition('body_format', 'full_html')
+    ->execute();
+
+  // Media revision table updates.
+  $db->update('media_revision__body')
+    ->fields(['body_format' => 'ncids_streamlined'])
+    ->condition('bundle', $bundle)
+    ->condition('body_format', 'full_html')
+    ->execute();
 }
