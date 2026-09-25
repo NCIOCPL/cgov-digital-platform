@@ -5,15 +5,12 @@
  * Contains cgov_image.post_update.
  */
 
+use Drupal\cgov_core\CgovCoreTools;
+
 /**
- * Add new D10 block content permissions.
+ * Remove cgov_image_carousel bundle references from block_content field map.
  */
-function cgov_image_post_update_d10_perms() {
-  $tools = \Drupal::service('cgov_core.tools');
-  foreach ([
-    'cgov_image_carousel',
-  ] as $block_type) {
-    // Add content type permissions.
-    $tools->addBlockContentTypePermissions($block_type, ['advanced_editor']);
-  }
+function cgov_image_post_update_purge_image_carousel_field_map(&$sandbox) {
+  CgovCoreTools::purgeBundleFromFieldMap('block_content', 'cgov_image_carousel');
+  return 'Purged cgov_image_carousel from the block_content bundle field map.';
 }
