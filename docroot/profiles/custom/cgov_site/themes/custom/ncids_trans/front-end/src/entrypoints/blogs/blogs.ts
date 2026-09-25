@@ -8,10 +8,6 @@ import cgdpEmbedVideoInit from '../../lib/components/wysiwyg/common/cgdp-embed-v
 import cgdpEmbedCardInit from '../../lib/components/wysiwyg/common/cgdp-embed-card';
 import cgdpDefinitionInit from '../../lib/components/cgdp-definition';
 import { bodyLinkAnalyticsHelper } from '../../lib/core/analytics/inner-page-analytics-tracker';
-import {
-	blogRightRailAnalyticsHelper,
-	blogSeriesListAnalyticsHelper,
-} from '../../lib/core/analytics/blog-analytics-helper';
 import { blogAnalyticsHelper } from '../../lib/core/analytics/blog-analytics-helper';
 
 let blogsBodyAnalyticsInit = false;
@@ -45,8 +41,6 @@ const onDOMContentLoaded = () => {
 	cgdpEmbedCardInit();
 	cgdpDefinitionInit();
 	cgdpBodyAnalyticsInit();
-	blogSeriesListAnalyticsHelper();
-	blogRightRailAnalyticsHelper();
 	blogAnalyticsHelper();
 };
 

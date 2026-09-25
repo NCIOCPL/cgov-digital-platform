@@ -6,6 +6,7 @@
  */
 
 use Drupal\cgov_core\CgovCoreTools;
+use Drupal\cgov_image\CgovImageTools;
 use Drupal\Core\Cache\RefinableCacheableDependencyInterface;
 use Drupal\Core\Entity\Display\EntityViewDisplayInterface;
 use Drupal\Core\Entity\EntityInterface;
@@ -480,6 +481,31 @@ function cgov_image_form_alter(&$form, FormStateInterface &$form_state, string $
 
   // Add our media submitter for images and contextual images.
   $form['actions']['submit']['#submit'][] = [CgovCoreTools::class, 'mediaFormSubmitter'];
+}
+
+/**
+ * Implements hook_field_widget_single_element_form_alter().
+ *
+ * Percussion-migrated content stores embedded images with
+ * data-embed-button="media_entity_embed", which errors when an editor
+ * goes to edit the image (pencil icon) bc no embed_button config entity by that
+ * name exists (see CgovImageTools::fixLegacyImageEmbedButton()). Rewriting
+ * the default value here only affects what loads into the editor; it does
+ * not touch the stored revision unless the editor re-saves the field.
+ */
+function cgov_image_field_widget_single_element_form_alter(&$element, FormStateInterface $form_state, $context) {
+  if (
+    $element === NULL ||
+    ($element['#type'] ?? NULL) !== 'text_format' ||
+    empty($element['#default_value']) ||
+    !in_array($element['#format'] ?? NULL, ['full_html', 'ncids_full_html'], TRUE) ||
+    !str_contains($element['#default_value'], CgovImageTools::LEGACY_IMAGE_EMBED_BUTTON)
+  ) {
+    return;
+  }
+
+  $element['#default_value'] = \Drupal::service('cgov_image.image_tools')
+    ->fixLegacyImageEmbedButton($element['#default_value']);
 }
 
 /**

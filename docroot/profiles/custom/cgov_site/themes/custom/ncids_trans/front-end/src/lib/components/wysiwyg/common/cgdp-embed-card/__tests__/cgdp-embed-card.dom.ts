@@ -48,3 +48,26 @@ export const cgdpEmbedCardEmptyTitle = `
 </a>
   </div>
 </div>`;
+
+export const cgdpRecommendedContentCards = `
+<div class="cgdp-recommended-content cgdp-feature-card-row">
+  <ul class="nci-card-group">
+    <li class="nci-card">
+      <a href="/internal-card" data-eddl-landing-item="feature_card" data-eddl-landing-item-link-type="Internal">
+        <picture class="nci-card__image">
+          <img src="/internal-card.jpg" alt="Internal Recommended Card">
+        </picture>
+        <div class="nci-card__body">
+          <span class="nci-card__title"> Internal Recommended Card </span>
+        </div>
+      </a>
+    </li>
+    <li class="nci-card">
+      <a href="https://example.com/external-card" data-eddl-landing-item="imageless_card" data-eddl-landing-item-link-type="External">
+        <div class="nci-card__body">
+          <span class="nci-card__title">External Recommended Card</span>
+        </div>
+      </a>
+    </li>
+  </ul>
+</div>`;

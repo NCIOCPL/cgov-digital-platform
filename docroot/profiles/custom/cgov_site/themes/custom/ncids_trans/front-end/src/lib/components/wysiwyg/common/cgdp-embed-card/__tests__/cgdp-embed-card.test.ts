@@ -7,6 +7,7 @@ import {
 	cgdpEmbedCardEmptyTitle,
 	cgdpEmbedCardImageless,
 	cgdpEmbedCardRight,
+	cgdpRecommendedContentCards,
 } from './cgdp-embed-card.dom';
 
 jest.mock('../../../../../core/analytics/eddl-util', () => ({
@@ -128,5 +129,116 @@ describe('Embedded Card Analytics Behavior', () => {
 				cardAlignment: 'None',
 			})
 		);
+	});
+
+	it('should track internal recommended content feature card clicks', () => {
+		document.body.innerHTML = cgdpRecommendedContentCards;
+		initialize();
+
+		const card = document.querySelector(
+			'.cgdp-recommended-content [data-eddl-landing-item="feature_card"]'
+		) as HTMLElement;
+		const title = card.querySelector('.nci-card__title') as HTMLElement;
+		fireEvent.click(title);
+
+		expect(trackOther).toHaveBeenCalledWith(
+			'Body:EmbeddedCard:LinkClick',
+			'Body:EmbeddedCard:LinkClick',
+			{
+				location: 'Body',
+				componentType: 'Recommended Content',
+				linkType: 'Internal',
+				cardType: 'Feature',
+				cardTitle: 'Internal Recommended Card',
+				cardAlignment: 'None',
+				linkArea: 'Title',
+			}
+		);
+	});
+
+	it('should identify recommended content image clicks', () => {
+		document.body.innerHTML = cgdpRecommendedContentCards;
+		initialize();
+
+		const image = document.querySelector(
+			'.cgdp-recommended-content [data-eddl-landing-item="feature_card"] img'
+		) as HTMLElement;
+		fireEvent.click(image);
+
+		expect(trackOther).toHaveBeenCalledWith(
+			'Body:EmbeddedCard:LinkClick',
+			'Body:EmbeddedCard:LinkClick',
+			expect.objectContaining({
+				cardAlignment: 'None',
+				linkArea: 'Image',
+			})
+		);
+	});
+
+	it.each([
+		['align-left', 'Left'],
+		['align-right', 'Right'],
+		['align-center', 'Center'],
+	])(
+		'should return %s recommended content alignment as %s',
+		(alignmentClass, expectedAlignment) => {
+			document.body.innerHTML = cgdpRecommendedContentCards;
+			const recommendedContent = document.querySelector(
+				'.cgdp-recommended-content'
+			) as HTMLElement;
+			recommendedContent.classList.add(alignmentClass);
+			initialize();
+
+			const card = document.querySelector(
+				'.cgdp-recommended-content [data-eddl-landing-item="feature_card"]'
+			) as HTMLElement;
+			fireEvent.click(card);
+
+			expect(trackOther).toHaveBeenCalledWith(
+				'Body:EmbeddedCard:LinkClick',
+				'Body:EmbeddedCard:LinkClick',
+				expect.objectContaining({
+					cardAlignment: expectedAlignment,
+				})
+			);
+		}
+	);
+
+	it('should track external recommended content imageless card clicks', () => {
+		document.body.innerHTML = cgdpRecommendedContentCards;
+		initialize();
+
+		const card = document.querySelector(
+			'.cgdp-recommended-content [data-eddl-landing-item="imageless_card"]'
+		) as HTMLElement;
+		const description = card.querySelector('.nci-card__body') as HTMLElement;
+		fireEvent.click(description);
+
+		expect(trackOther).toHaveBeenCalledWith(
+			'Body:EmbeddedCard:LinkClick',
+			'Body:EmbeddedCard:LinkClick',
+			{
+				location: 'Body',
+				componentType: 'Recommended Content',
+				linkType: 'External',
+				cardType: 'Imageless',
+				cardTitle: 'External Recommended Card',
+				cardAlignment: 'None',
+				linkArea: 'Description',
+			}
+		);
+	});
+
+	it('should not attach duplicate recommended content click handlers', () => {
+		document.body.innerHTML = cgdpRecommendedContentCards;
+		initialize();
+		initialize();
+
+		const card = document.querySelector(
+			'.cgdp-recommended-content [data-eddl-landing-item="feature_card"]'
+		) as HTMLElement;
+		fireEvent.click(card);
+
+		expect(trackOther).toHaveBeenCalledTimes(1);
 	});
 });
