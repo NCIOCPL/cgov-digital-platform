@@ -133,7 +133,7 @@ class PDQResource extends ResourceBase {
       'pron' => $node->field_pdq_pronunciation_key->value,
       'updated_date' => $node->field_date_updated->value,
       'public_use' => $node->field_public_use->value,
-      'url' => $node->field_pdq_url->value,
+      'url' => $node->toUrl('canonical')->toString(),
       'published' => $node->status->value,
     ];
     $response = new ResourceResponse($fields);
@@ -197,7 +197,12 @@ class PDQResource extends ResourceBase {
     $node->setTitle(($drug['title']));
     $node->setOwnerId($this->currentUser->id());
     $node->set('body', ['value' => $drug['body'], 'format' => 'raw_html']);
-    $node->set('field_pdq_url', $drug['url']);
+    [$site_section_id, $pretty_url] = $this->parseUrl(
+      $drug['url'] ?? '',
+      $node->language()->getId()
+    );
+    $node->set('field_site_section', $site_section_id);
+    $node->set('field_pretty_url', $pretty_url);
     $node->set('field_pdq_cdr_id', $drug['cdr_id']);
     $node->set('field_date_posted', $drug['posted_date'] ?? $today);
     $node->set('field_date_updated', $drug['updated_date'] ?? $today);
@@ -227,6 +232,48 @@ class PDQResource extends ResourceBase {
 
     // Tell the caller the ID for the possibly new node.
     return new ModifiedResourceResponse(['nid' => $node->id()], $code);
+  }
+
+  /**
+   * Converts a complete PDQ summary URL into its Drupal field values.
+   *
+   * @param string $url
+   *   The complete URL path supplied by the PDQ importer.
+   * @param string $langcode
+   *   The language code for the summary and site section.
+   *
+   * @return array
+   *   The site section term ID and pretty URL value.
+   *
+   * @throws \Symfony\Component\HttpKernel\Exception\BadRequestHttpException
+   *   Thrown when the URL is invalid or its site section cannot be found.
+   */
+  private function parseUrl(string $url, string $langcode): array {
+    $path = parse_url($url, PHP_URL_PATH);
+    $path_parts = is_string($path)
+      ? explode('/', trim($path, '/'))
+      : [];
+    $pretty_url = array_pop($path_parts);
+    if (!$pretty_url || !$path_parts) {
+      throw new BadRequestHttpException("Invalid PDQ Drug Information Summary URL: $url");
+    }
+
+    $site_section_path = '/' . implode('/', $path_parts);
+    $site_sections = $this->entityTypeManager
+      ->getStorage('taxonomy_term')
+      ->loadByProperties([
+        'vid' => 'cgov_site_sections',
+        'computed_path' => $site_section_path,
+        'langcode' => $langcode,
+      ]);
+    if (count($site_sections) !== 1) {
+      throw new BadRequestHttpException(
+        "Site section not found for $site_section_path"
+      );
+    }
+
+    $site_section = reset($site_sections);
+    return [$site_section->id(), $pretty_url];
   }
 
 }

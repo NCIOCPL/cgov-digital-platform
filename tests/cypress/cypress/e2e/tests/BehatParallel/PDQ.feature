@@ -34,7 +34,7 @@ Feature: Perform tasks related to PDQ Import
       | Date                   | 2023-06-08         | field_date_posted[0][value][date]  |
       | Date                   | 2023-06-08         | field_date_updated[0][value][date] |
       | Meta Description       | Test Description   | field_page_description             |
-      | PDQ Summary URL        | /pdq/testpage      | field_pdq_url                      |
+      | Pretty URL             | testpage           | field_pretty_url                   |
       | Pronunciation Audio ID | Audio ID           | field_pdq_audio_id                 |
       | Pronunciation Key      | Audio Key          | field_pdq_pronunciation_key        |
     And user fills out "Body" with "Lorem Ipsum"
