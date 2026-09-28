@@ -1,0 +1,23 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_drugs_in_combination
+    - filter.format.ncids_streamlined_no_headings
+    - node.type.pdq_drug_information_summary
+  module:
+    - text
+id: node.pdq_drug_information_summary.field_drugs_in_combination
+field_name: field_drugs_in_combination
+entity_type: node
+bundle: pdq_drug_information_summary
+label: 'Drugs in Combination'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  allowed_formats:
+    - ncids_streamlined_no_headings
+field_type: text_long
