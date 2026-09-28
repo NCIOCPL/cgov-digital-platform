@@ -13,6 +13,22 @@
 
   {# Render Macro #}
   {{ pdqMacros.pronunciation(audio_id, pronunciation_key) }}
+  {{ content.field_intro_text }}
+
+  {# Render FDA Approval Field #}
+  {% if node.field_drug_info_type.value == 'single' %}
+    {{ content.field_us_brand_name }}
+    {% if node.field_fda_drug_label_url.uri %}
+      <div class="usa-prose cgdp-field-drug-info-type">
+        <a class="usa-link" href="{{ node.field_fda_drug_label_url.uri }}">FDA label information for this drug is available at DailyMed.</a>
+      </div>
+    {% endif %}
+  {% elseif node.field_drug_info_type.value == 'combo' %}
+    {{ content.field_drugs_in_combination }}
+    <div class="usa-prose cgdp-field-drug-info-type">
+      <p>Each of the drugs in this combination is approved by the <a class="cgdp-definition-link" href="/publications/dictionaries/cancer-terms/def/454785" data-gloss-id="454785" data-gloss-dictionary="Cancer.gov" data-gloss-audience="Patient" data-gloss-lang="en">Food and Drug Administration (FDA)</a> to treat cancer or conditions related to cancer.</p>
+    </div>
+  {% endif %}
   <div class="cgdpl resize-content">
     <div id="cgvBody" class="pdqdruginfosummary">
       {{ content.body }}
