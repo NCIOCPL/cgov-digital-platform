@@ -1,0 +1,22 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_fda_drug_label_url
+    - node.type.pdq_drug_information_summary
+  module:
+    - link
+id: node.pdq_drug_information_summary.field_fda_drug_label_url
+field_name: field_fda_drug_label_url
+entity_type: node
+bundle: pdq_drug_information_summary
+label: 'FDA Drug Label URL'
+description: 'Enter the full URL for the FDA drug label, starting with https://'
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  title: 0
+  link_type: 17
+field_type: link
