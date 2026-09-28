@@ -8,6 +8,10 @@ dependencies:
     - field.field.node.pdq_drug_information_summary.field_date_posted
     - field.field.node.pdq_drug_information_summary.field_date_reviewed
     - field.field.node.pdq_drug_information_summary.field_date_updated
+    - field.field.node.pdq_drug_information_summary.field_drug_info_type
+    - field.field.node.pdq_drug_information_summary.field_drugs_in_combination
+    - field.field.node.pdq_drug_information_summary.field_fda_drug_label_url
+    - field.field.node.pdq_drug_information_summary.field_intro_text
     - field.field.node.pdq_drug_information_summary.field_meta_tags
     - field.field.node.pdq_drug_information_summary.field_page_description
     - field.field.node.pdq_drug_information_summary.field_pdq_audio_id
@@ -17,10 +21,12 @@ dependencies:
     - field.field.node.pdq_drug_information_summary.field_public_use
     - field.field.node.pdq_drug_information_summary.field_related_resources
     - field.field.node.pdq_drug_information_summary.field_site_section
+    - field.field.node.pdq_drug_information_summary.field_us_brand_name
     - node.type.pdq_drug_information_summary
   module:
     - cgov_core
     - entity_reference_revisions
+    - link
     - options
     - text
     - user
@@ -89,6 +95,39 @@ content:
     third_party_settings: {  }
     weight: 3
     region: content
+  field_drug_info_type:
+    type: list_default
+    label: above
+    settings: {  }
+    third_party_settings: {  }
+    weight: 19
+    region: content
+  field_drugs_in_combination:
+    type: text_default
+    label: above
+    settings: {  }
+    third_party_settings: {  }
+    weight: 22
+    region: content
+  field_fda_drug_label_url:
+    type: link
+    label: above
+    settings:
+      trim_length: 80
+      url_only: false
+      url_plain: false
+      rel: ''
+      target: ''
+    third_party_settings: {  }
+    weight: 20
+    region: content
+  field_intro_text:
+    type: text_default
+    label: above
+    settings: {  }
+    third_party_settings: {  }
+    weight: 9
+    region: content
   field_page_description:
     type: string
     label: above
@@ -154,6 +193,14 @@ content:
       link: true
     third_party_settings: {  }
     weight: 3
+    region: content
+  field_us_brand_name:
+    type: string
+    label: above
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    weight: 21
     region: content
   links:
     settings: {  }

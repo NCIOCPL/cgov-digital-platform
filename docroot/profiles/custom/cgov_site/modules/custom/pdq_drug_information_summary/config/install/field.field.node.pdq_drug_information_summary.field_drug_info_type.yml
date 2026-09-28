@@ -1,0 +1,22 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_drug_info_type
+    - node.type.pdq_drug_information_summary
+  module:
+    - options
+id: node.pdq_drug_information_summary.field_drug_info_type
+field_name: field_drug_info_type
+entity_type: node
+bundle: pdq_drug_information_summary
+label: 'Drug Info Type'
+description: "Select the type of drug information for this page. Choose Single Drug for information about one drug, or Drug Combination for information about a combination of drugs.\r\n"
+required: true
+translatable: false
+default_value:
+  -
+    value: single
+default_value_callback: ''
+settings: {  }
+field_type: list_string
