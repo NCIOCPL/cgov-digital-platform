@@ -5,7 +5,7 @@ import { screen, fireEvent } from '@testing-library/dom';
 
 import * as eddlUtil from '../../../core/analytics/eddl-util';
 
-import { cgdpVideoDom } from './cgdp-video.dom';
+import { cgdpVideoDom, cgdpVideoWrapperTitleDom } from './cgdp-video.dom';
 import { cgdpVideoBadDom } from './cgdp-video.bad.dom';
 import initialize from '../cgdp-video';
 
@@ -57,29 +57,30 @@ describe('CGDP Video', () => {
 		fireEvent.click(button);
 
 		expect(trackOtherSpy).toHaveBeenCalledWith(
-			'MLP:InlineVideo:LinkClick',
-			'MLP:InlineVideo:LinkClick',
+			'Body:EmbeddedMedia:LinkClick',
+			'Body:EmbeddedMedia:LinkClick',
 			{
 				location: 'Body',
-				pageType: 'cgvMiniLanding',
-				pageTemplate: 'ncids_without_title',
-				pageRowVariant: 'Not Defined',
-				pageRows: 1,
-				pageRowIndex: 1,
-				pageRowCols: 0,
-				pageRowColIndex: 0,
-				containerItems: 1,
-				containerItemIndex: 1,
-				componentType: 'Inline Video',
-				componentTheme: 'Not Defined',
-				componentVariant: 'Standard YouTube Video',
-				title: 'Hedge Maze',
-				linkType: 'Video Player',
-				linkText: 'Play',
-				linkArea: 'Play',
-				totalLinks: 1,
-				linkPosition: 1,
+				componentType: 'Embedded Video',
+				mediaType: 'Video',
+				mediaTitle: 'Hedge Maze',
+				linkText: 'Play Video',
+				linkType: 'play',
 			}
+		);
+	});
+	it('finds the title on the video wrapper', () => {
+		const dom = cgdpVideoWrapperTitleDom();
+		const trackOtherSpy = jest.spyOn(eddlUtil, 'trackOther');
+
+		document.body.insertAdjacentHTML('beforeend', dom.outerHTML);
+		initialize();
+		fireEvent.click(screen.getByRole('button'));
+
+		expect(trackOtherSpy).toHaveBeenCalledWith(
+			'Body:EmbeddedMedia:LinkClick',
+			'Body:EmbeddedMedia:LinkClick',
+			expect.objectContaining({ mediaTitle: 'Wrapper Title' })
 		);
 	});
 	it('sends errors if bad dom', () => {
@@ -98,28 +99,15 @@ describe('CGDP Video', () => {
 		fireEvent.click(button);
 
 		expect(trackOtherSpy).toHaveBeenCalledWith(
-			'MLP:InlineVideo:LinkClick',
-			'MLP:InlineVideo:LinkClick',
+			'Body:EmbeddedMedia:LinkClick',
+			'Body:EmbeddedMedia:LinkClick',
 			{
 				location: 'Body',
-				pageType: 'cgvMiniLanding',
-				pageTemplate: 'ncids_without_title',
-				pageRowVariant: 'Not Defined',
-				pageRows: 1,
-				pageRowIndex: 1,
-				pageRowCols: 0,
-				pageRowColIndex: 0,
-				containerItems: 1,
-				containerItemIndex: 1,
-				componentType: 'Inline Video',
-				componentTheme: 'Not Defined',
-				componentVariant: 'Standard YouTube Video',
-				title: '_ERROR_',
-				linkType: 'Video Player',
-				linkText: 'Play',
-				linkArea: 'Play',
-				totalLinks: 1,
-				linkPosition: 1,
+				componentType: 'Embedded Video',
+				mediaType: 'Video',
+				mediaTitle: '_ERROR_',
+				linkText: 'Play Video',
+				linkType: 'play',
 			}
 		);
 	});

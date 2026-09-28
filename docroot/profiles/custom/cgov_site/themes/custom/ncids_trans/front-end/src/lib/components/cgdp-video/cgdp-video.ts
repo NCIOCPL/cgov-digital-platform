@@ -1,28 +1,30 @@
-import { landingClickTracker } from '../../core/analytics/landing-page-contents-helper';
+import { trackOther } from '../../core/analytics/eddl-util';
 import renderPreviewThumbnails from '../../../../../../cgov/src/libraries/videoPlayer/flexVideo';
 
-/**
- * Handle play button on click handler.
- */
-const playVideoClickHandler = (evt: Event): void => {
-	const video = evt.currentTarget as HTMLElement;
-	//const video = clickTarget.querySelector(`[data-video-title]`) as HTMLElement;
+const getVideoTitle = (video: HTMLElement): string => {
+	const titleElement =
+		video.closest('[data-video-title]') ||
+		video.querySelector('[data-video-title]');
 
-	landingClickTracker(
-		video,
-		'InlineVideo', // linkName
-		1, // containerItems
-		1, // containerItemsIndex
-		'Inline Video', // componentType
-		'Not Defined', // componentTheme
-		'Standard YouTube Video', // componentVariant
-		video.dataset.videoTitle || '_ERROR_', // title
-		'Video Player', // linkType
-		'Play', // linkText
-		'Play', // linkArea
-		1, // totalLinks
-		1 // linkPosition
-	);
+	return titleElement instanceof HTMLElement
+		? titleElement.dataset.videoTitle || '_ERROR_'
+		: '_ERROR_';
+};
+
+/**
+ * Handle play button click analytics call
+ */
+const playVideoClickHandler = ({ currentTarget }: Event): void => {
+	const title = getVideoTitle(currentTarget as HTMLElement);
+
+	trackOther('Body:EmbeddedMedia:LinkClick', 'Body:EmbeddedMedia:LinkClick', {
+		location: 'Body',
+		componentType: 'Embedded Video',
+		mediaType: 'Video',
+		mediaTitle: title.slice(0, 50),
+		linkText: 'Play Video',
+		linkType: 'play',
+	});
 };
 
 /**
@@ -34,9 +36,9 @@ const initialize = (): void => {
 	renderPreviewThumbnails();
 
 	//start analytics here
-	const videoContainers = document.querySelectorAll(
-		'[data-eddl-landing-item="video"]'
-	);
+	const videoContainers = document.querySelectorAll('.cgdp-video');
+
+	if (videoContainers.length === 0) return;
 
 	videoContainers.forEach((videoContainer) => {
 		const video = videoContainer.querySelector('.flex-video');
