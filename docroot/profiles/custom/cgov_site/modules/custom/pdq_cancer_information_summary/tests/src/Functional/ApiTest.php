@@ -4,6 +4,7 @@ namespace Drupal\Tests\pdq_cancer_information_summary\Functional;
 
 use CgovPlatform\Tests\CgovSchemaExclusions;
 use Drupal\Core\Url;
+use Drupal\node\Entity\Node;
 use Drupal\taxonomy\Entity\Term;
 use Drupal\Tests\BrowserTestBase;
 
@@ -148,6 +149,14 @@ class ApiTest extends BrowserTestBase {
    */
   public function testApis() {
 
+    // The DIS-specific REST resource has been removed.
+    $config_storage = \Drupal::service('config.storage');
+    $this->assertFalse($config_storage->exists('rest.resource.pdq_dis_api'));
+    $permissions = \Drupal::config('user.role.pdq_importer')
+      ->get('permissions');
+    $this->assertNotContains('restful get pdq_dis_api', $permissions);
+    $this->assertNotContains('restful post pdq_dis_api', $permissions);
+
     // Attempt to create the Spanish summary first (should fail).
     $payload = $this->store($this->spanish, 400);
     $expected = 'New summary node must be the English version';
@@ -161,6 +170,41 @@ class ApiTest extends BrowserTestBase {
     // Verify that the node ID lookup works correctly.
     $matches = $this->findNodes($this->english['cdr_id']);
     $this->assertEquals($matches, [[$nid, 'en']]);
+
+    // Confirm that the shared PDQ API no longer controls DIS content.
+    $drug = Node::create([
+      'type' => 'pdq_drug_information_summary',
+      'title' => 'Test Drug Summary',
+      'field_pdq_cdr_id' => 6001,
+      'moderation_state' => 'draft',
+    ]);
+    $drug->save();
+    $drug_nid = (int) $drug->id();
+
+    // DIS content cannot be found through the shared API.
+    $response = $this->request('GET', "$this->pdqUrl/6001");
+    $this->assertEquals(404, $response->getStatusCode());
+
+    // DIS content cannot be published through the shared API.
+    $response = $this->request('POST', $this->pdqUrl, [
+      'json' => [[$drug_nid, 'en']],
+    ]);
+    $this->assertEquals(200, $response->getStatusCode());
+    $payload = json_decode($response->getBody()->__toString(), TRUE);
+    $this->assertEquals([
+      [$drug_nid, 'en', 'not a PDQ Cancer Information Summary'],
+    ], $payload['errors']);
+
+    // DIS content cannot be deleted through the shared API.
+    $response = $this->request('DELETE', "$this->pdqUrl/6001");
+    $this->assertEquals(204, $response->getStatusCode());
+    $this->assertNotNull(Node::load($drug_nid));
+
+    // DIS revisions cannot be pruned through the shared API.
+    $response = $this->request('PATCH', "$this->pdqUrl/prune", [
+      'json' => ['nodes' => [$drug_nid]],
+    ]);
+    $this->assertEquals(400, $response->getStatusCode());
 
     // Confirm that the values have been stored correctly.
     $values = $this->fetchNode($nid);
