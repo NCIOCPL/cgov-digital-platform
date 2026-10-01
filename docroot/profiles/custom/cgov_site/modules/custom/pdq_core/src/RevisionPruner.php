@@ -5,11 +5,16 @@ namespace Drupal\pdq_core;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
 
 /**
- * Service for removing unwanted older revisions of PDQ content.
+ * Service for removing unwanted older revisions of PDQ CIS content.
  *
  * @package Drupal\pdq_core
  */
 class RevisionPruner {
+
+  /**
+   * The content type whose revisions can be pruned.
+   */
+  private const CIS_BUNDLE = 'pdq_cancer_information_summary';
 
   /**
    * The entity type manager.
@@ -29,7 +34,7 @@ class RevisionPruner {
   }
 
   /**
-   * Discard older revisions of a specified node.
+   * Discard older revisions of a specified PDQ CIS node.
    *
    * Identify the most recent published revisions for each language found in
    * the node and retain those revisions, deleting the others. The number of
@@ -46,10 +51,15 @@ class RevisionPruner {
    *
    * @throws \Drupal\Component\Plugin\Exception\InvalidPluginDefinitionException
    * @throws \Drupal\Component\Plugin\Exception\PluginNotFoundException
+   * @throws \InvalidArgumentException
+   *   Thrown when the node is not a PDQ Cancer Information Summary.
    */
   public function dropOldRevisions($nid, $keep = 3) {
     $storage = $this->entityTypeManager->getStorage('node');
     $node = $storage->load($nid);
+    if (!$node || $node->bundle() !== self::CIS_BUNDLE) {
+      throw new \InvalidArgumentException("Node $nid is not a PDQ Cancer Information Summary.");
+    }
     $vids = $storage->revisionIds($node);
     sort($vids, SORT_NUMERIC);
     $vids = array_reverse($vids);
