@@ -721,7 +721,7 @@ class CgovCoreTools {
   }
 
   /**
-   * Completely purges a block content type, its content, and config.
+   * Purges a block content type, its content, and config via Entity API.
    *
    * @param string $bundle
    *   The block content type machine name.
@@ -733,7 +733,7 @@ class CgovCoreTools {
   public static function purgeBlockContentBundle(string $bundle, array $roles = ['advanced_editor'], array $extra_config = []): void {
     $entity_type_manager = \Drupal::entityTypeManager();
 
-    // 1. Delete all block content entities via EntityStorageBase::delete.
+    // 1. Delete all block content entities via EntityStorageBase.
     $block_storage = $entity_type_manager->getStorage('block_content');
     $block_ids = $block_storage->getQuery()
       ->accessCheck(FALSE)
@@ -745,7 +745,48 @@ class CgovCoreTools {
       $block_storage->delete($blocks);
     }
 
-    // 2. Explicitly delete language content settings via Entity API.
+    // 2. Delete Form and View Displays FIRST.
+    $display_types = ['entity_form_display', 'entity_view_display'];
+    foreach ($display_types as $display_type) {
+      if ($entity_type_manager->hasDefinition($display_type)) {
+        $display = $entity_type_manager->getStorage($display_type)->load("block_content.{$bundle}.default");
+        if ($display) {
+          $display->delete();
+        }
+      }
+    }
+
+    // 3. Delete Fields and Orphaned Storages via Entity API.
+    $field_config_storage = $entity_type_manager->getStorage('field_config');
+    $field_storage_config_storage = $entity_type_manager->getStorage('field_storage_config');
+    $fields = $field_config_storage->loadByProperties([
+      'entity_type' => 'block_content',
+      'bundle' => $bundle,
+    ]);
+
+    foreach ($fields as $field) {
+      $field_name = $field->getName();
+      $field->delete();
+
+      $field_storage = $field_storage_config_storage->load("block_content.{$field_name}");
+      if ($field_storage) {
+        $bundles = $field_storage->getBundles();
+        if (empty($bundles) || (count($bundles) === 1 && isset($bundles[$bundle]))) {
+          $field_storage->delete();
+        }
+      }
+    }
+
+    // 4. Force a purge batch NOW, before the bundle is deleted.
+    // This empties the CI's field queue so the
+    // bundle deletion has nothing to trip over.
+    $deleted_fields = \Drupal::state()->get('field.field.deleted', []);
+    while (!empty($deleted_fields)) {
+      field_purge_batch(250);
+      $deleted_fields = \Drupal::state()->get('field.field.deleted', []);
+    }
+
+    // 5. Delete Language Settings.
     if ($entity_type_manager->hasDefinition('language_content_settings')) {
       $lang_storage = $entity_type_manager->getStorage('language_content_settings');
       $lang_config = $lang_storage->load("block_content.{$bundle}");
@@ -754,8 +795,7 @@ class CgovCoreTools {
       }
     }
 
-    // 3. Delete any explicitly passed associated
-    // config entities (like entity_browsers).
+    // 6. Delete explicitly passed extra configs (like entity_browsers).
     foreach ($extra_config as $entity_type => $entity_ids) {
       if ($entity_type_manager->hasDefinition($entity_type)) {
         $storage = $entity_type_manager->getStorage($entity_type);
@@ -766,23 +806,33 @@ class CgovCoreTools {
       }
     }
 
-    // 4. Delete the Block Content Type bundle
-    // config directly via ConfigFactory.
-    // (Bypassing $bundle_entity->delete() prevents
-    // the MissingBundleException in CI).
+    // 7. Remove bundle from Simple Workflow configuration.
     $config_factory = \Drupal::configFactory();
-    $bundle_config = $config_factory->getEditable("block_content.type.{$bundle}");
-    if (!$bundle_config->isNew()) {
-      $bundle_config->delete();
+    $workflow_config = $config_factory->getEditable('workflows.workflow.simple_workflow');
+    if (!$workflow_config->isNew()) {
+      $type_settings = $workflow_config->get('type_settings');
+      if (isset($type_settings['entity_types']['block_content'])) {
+        $workflows = $type_settings['entity_types']['block_content'];
+        if (($key = array_search($bundle, $workflows, TRUE)) !== FALSE) {
+          unset($workflows[$key]);
+          $type_settings['entity_types']['block_content'] = array_values($workflows);
+          $workflow_config->set('type_settings', $type_settings)->save(TRUE);
+        }
+      }
     }
 
-    // 5. Scrub the field map synchronously.
+    // 8. Delete the Bundle natively via Entity API.
+    // Because the fields and displays are already purged,
+    // this will not crash the CI.
+    $type_storage = $entity_type_manager->getStorage('block_content_type');
+    $bundle_entity = $type_storage->load($bundle);
+    if ($bundle_entity) {
+      $bundle_entity->delete();
+    }
+
+    // 9. Scrub the field map synchronously & Clear Caches.
     self::purgeBundleFromFieldMap('block_content', $bundle);
-
-    // 6. Revoke Permissions.
     self::revokeBlockContentTypePermissions($bundle, $roles);
-
-    // 7. Clear caches.
     $entity_type_manager->clearCachedDefinitions();
     \Drupal::service('entity_type.bundle.info')->clearCachedBundles();
   }
