@@ -22,7 +22,7 @@ class CgovMediaController extends ControllerBase {
   /**
    * Return an infographic's long description in an HTTP Response.
    *
-   * @param Drupal\media\Entity\Media $media
+   * @param \Drupal\media\Entity\Media $media
    *   Id of the infographic to render.
    */
   public function longDescription(Media $media) {
