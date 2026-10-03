@@ -29,8 +29,8 @@ document.addEventListener('DOMContentLoaded', onDOMContentLoaded);
 // analytics code to treat the fragment as an invalid selector.
 const citAnchorLinks = () => {
 	document.getElementById('cgvBody')?.addEventListener('click', (event) => {
-		const anchor = event.target as HTMLAnchorElement;
-		if (anchor?.hash?.match('#cit/')) {
+		const anchor = (event.target as HTMLElement | null)?.closest('a');
+		if (anchor instanceof HTMLAnchorElement && anchor.hash.includes('#cit/')) {
 			event.preventDefault();
 			window.location.hash = anchor.hash.replace('#cit/', '');
 		}
