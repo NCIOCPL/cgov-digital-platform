@@ -14,9 +14,10 @@ dependencies:
     - field.field.node.pdq_drug_information_summary.field_pdq_audio_id
     - field.field.node.pdq_drug_information_summary.field_pdq_cdr_id
     - field.field.node.pdq_drug_information_summary.field_pdq_pronunciation_key
-    - field.field.node.pdq_drug_information_summary.field_pdq_url
+    - field.field.node.pdq_drug_information_summary.field_pretty_url
     - field.field.node.pdq_drug_information_summary.field_public_use
     - field.field.node.pdq_drug_information_summary.field_related_resources
+    - field.field.node.pdq_drug_information_summary.field_site_section
     - node.type.pdq_drug_information_summary
   module:
     - cgov_core
@@ -95,14 +96,6 @@ content:
     third_party_settings: {  }
     weight: 8
     region: content
-  field_pdq_url:
-    type: string
-    label: above
-    settings:
-      link_to_entity: false
-    third_party_settings: {  }
-    weight: 9
-    region: content
   field_public_use:
     type: list_default
     label: above
@@ -129,4 +122,6 @@ hidden:
   field_meta_tags: true
   field_page_description: true
   field_pdq_cdr_id: true
+  field_pretty_url: true
+  field_site_section: true
   langcode: true
