@@ -29,6 +29,11 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
  */
 class PDQResource extends ResourceBase {
 
+  /**
+   * The only content type supported by the shared PDQ API.
+   */
+  private const CIS_BUNDLE = 'pdq_cancer_information_summary';
+
 
   /**
    * A current user instance.
@@ -120,8 +125,9 @@ class PDQResource extends ResourceBase {
    * Responds to GET requests.
    *
    * @param string $id
-   *   The CDR ID of a PDQ Summary document (optionally prefixed by "CDR"),
-   *   or 'list' to get a catalog of PDQ content in the Drupal CMS.
+   *   The CDR ID of a PDQ Cancer Information Summary document (optionally
+   *   prefixed by "CDR"), or 'list' to get a catalog of PDQ CIS content in the
+   *   Drupal CMS.
    *
    * @return \Drupal\rest\ResourceResponse
    *   The response containing Drupal node ID(s) matching the CDR ID.
@@ -203,6 +209,14 @@ class PDQResource extends ResourceBase {
           // See https://github.com/NCIOCPL/cgov-digital-platform/issues/2630.
           /** @var \Drupal\node\NodeInterface */
           $revision = $storage->loadRevision($vid);
+          if ($revision->bundle() !== self::CIS_BUNDLE) {
+            $errors[] = [
+              $nid,
+              $lang,
+              'not a PDQ Cancer Information Summary',
+            ];
+            continue;
+          }
           $translation = $revision->getTranslation($lang);
           $translation->moderation_state->value = 'published';
           $translation->setRevisionTranslationAffected(TRUE);
@@ -229,8 +243,8 @@ class PDQResource extends ResourceBase {
    * Responds to DELETE requests.
    *
    * @param string $id
-   *   The CDR ID of a PDQ Summary document (optionally prefixed by
-   *   "CDR").
+   *   The CDR ID of a PDQ Cancer Information Summary document (optionally
+   *   prefixed by "CDR").
    *
    * @return \Drupal\rest\ModifiedResourceResponse
    *   The HTTP response object.
@@ -290,8 +304,8 @@ class PDQResource extends ResourceBase {
    * Find the Drupal entities which store a given PDQ document.
    *
    * @param string $id
-   *   The CDR ID of a PDQ Summary document (optionally prefixed by
-   *   "CDR").
+   *   The CDR ID of a PDQ Cancer Information Summary document (optionally
+   *   prefixed by "CDR").
    *
    * @return array
    *   Sequence of value pairs, each of which has a node ID and a
@@ -309,6 +323,7 @@ class PDQResource extends ResourceBase {
     foreach (['en', 'es'] as $langcode) {
       $nids = $storage->getQuery()
         ->accessCheck(FALSE)
+        ->condition('type', self::CIS_BUNDLE)
         ->condition('field_pdq_cdr_id', $id, '=', $langcode)
         ->execute();
       if (!empty($nids)) {
@@ -321,7 +336,7 @@ class PDQResource extends ResourceBase {
   }
 
   /**
-   * Return a catalog of the PDQ content in the Drupal CMS.
+   * Return a catalog of the PDQ CIS content in the Drupal CMS.
    *
    * @return \Drupal\rest\ResourceResponse
    *   Sequence of key-indexed arrays, each of which contains
@@ -334,6 +349,7 @@ class PDQResource extends ResourceBase {
     $query->join('node_field_data', 'd', $join);
     $results = $query->fields('c')
       ->fields('d', ['created', 'changed'])
+      ->condition('c.bundle', self::CIS_BUNDLE)
       ->condition('c.deleted', 0)
       ->orderBy('c.field_pdq_cdr_id_value')
       ->execute();
@@ -402,6 +418,17 @@ class PDQResource extends ResourceBase {
     }
     $response = [];
     $node_ids = $request['nodes'];
+    $storage = $this->entityTypeManager->getStorage('node');
+    $nodes = $storage->loadMultiple($node_ids);
+    foreach ($node_ids as $nid) {
+      if (!isset($nodes[$nid]) || $nodes[$nid]->bundle() !== self::CIS_BUNDLE) {
+        $message = $this->t(
+          'Node @nid is not a PDQ Cancer Information Summary.',
+          ['@nid' => $nid]
+        );
+        throw new BadRequestHttpException($message);
+      }
+    }
     foreach ($node_ids as $nid) {
       $dropped = $this->pruner->dropOldRevisions($nid, $keep);
       $response[] = [$nid, $dropped];

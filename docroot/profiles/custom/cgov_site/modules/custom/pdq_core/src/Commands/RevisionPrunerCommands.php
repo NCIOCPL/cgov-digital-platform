@@ -8,11 +8,16 @@ use Drush\Commands\DrushCommands;
 use Drush\Utils\StringUtils;
 
 /**
- * Drush command for pruning older node revisions.
+ * Drush command for pruning older PDQ CIS node revisions.
  *
  * @package Drupal\cgov_core\Commands
  */
 class RevisionPrunerCommands extends DrushCommands {
+
+  /**
+   * The content type whose revisions can be pruned.
+   */
+  private const CIS_BUNDLE = 'pdq_cancer_information_summary';
 
   /**
    * Storage manager for entities.
@@ -37,26 +42,24 @@ class RevisionPrunerCommands extends DrushCommands {
   }
 
   /**
-   * Delete older revisions of PDQ content nodes.
+   * Delete older revisions of PDQ CIS content nodes.
    *
    * @param string $ids
-   *   A comma-delimited list of IDs of nodes to be pruned.
+   *   A comma-delimited list of IDs of CIS nodes to be pruned.
    * @param array $options
    *   An associative array of options whose values come from cli, aliases,
    *   config, etc.
    *
    * @option bundle
-   *   Prune all nodes of specified bundle. Ignored when ids are specified.
-   *   Only pdq_cancer_information_summary and pdq_drug_information_summary
-   *   nodes are supported.
+   *   Prune all nodes of the specified bundle. Ignored when IDs are specified.
+   *   Only pdq_cancer_information_summary is supported.
    * @option keep
    *   Number of per-language revisions to preserve for each node
    *   (default is 3).
    * @usage drush pdq:prune-node-revisions --bundle=pdq_cancer_information_summary
-   *   Prune older revisions for all nodes of type
-   *   pdq_cancer_information_summary.
+   *   Prune older revisions for all PDQ Cancer Information Summary nodes.
    * @usage drush pdq:prune-node-revisions 960,1187
-   *   Prune older revisions for nodes 960 and 1187.
+   *   Prune older revisions for the specified CIS nodes.
    *
    * @command pdq:prune-node-revisions
    * @aliases rprune
@@ -73,25 +76,34 @@ class RevisionPrunerCommands extends DrushCommands {
     }
     $message = 'keeping at most !revs revisions per language for each node';
     $this->logger()->info(dt($message, ['!revs' => $keep]));
+    $storage = $this->entityTypeManager->getStorage('node');
     $nids = StringUtils::csvToArray($ids);
     if (empty($nids)) {
       $bundle = $options['bundle'];
       if (!empty($bundle)) {
-        $supported = [
-          'pdq_cancer_information_summary',
-          'pdq_drug_information_summary',
-        ];
-        if (!in_array($bundle, $supported)) {
+        if ($bundle !== self::CIS_BUNDLE) {
           $message = 'bundle !b not supported';
           $this->logger()->error(dt($message, ['!b' => $bundle]));
           return;
         }
-        $storage = $this->entityTypeManager->getStorage('node');
         $query = $storage->getQuery()->accessCheck(FALSE);
-        $query->condition('type', $bundle);
+        $query->condition('type', self::CIS_BUNDLE);
         $nids = $query->execute();
       }
     }
+
+    // Validate all explicit node IDs before deleting any revisions.
+    if (!empty($nids)) {
+      $nodes = $storage->loadMultiple($nids);
+      foreach ($nids as $nid) {
+        if (!isset($nodes[$nid]) || $nodes[$nid]->bundle() !== self::CIS_BUNDLE) {
+          $message = 'node !nid not supported; only CIS nodes can be pruned';
+          $this->logger()->error(dt($message, ['!nid' => $nid]));
+          return;
+        }
+      }
+    }
+
     if (empty($nids)) {
       $this->logger()->success(dt('No nodes to be pruned.'));
     }

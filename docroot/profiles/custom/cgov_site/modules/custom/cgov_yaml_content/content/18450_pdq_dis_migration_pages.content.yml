@@ -6,8 +6,15 @@
   field_browser_title: 'Imatinib Mesylate'
   moderation_state:
     value: published
-  field_pdq_url:
-    value: /about-cancer/treatment/drugs/imatinibmesylate
+  field_site_section:
+    - '#process':
+        callback: 'reference'
+        args:
+          - 'taxonomy_term'
+          - vid: 'cgov_site_sections'
+            computed_path: '/about-cancer/treatment/drugs'
+  field_pretty_url:
+    value: imatinibmesylate
   field_pdq_cdr_id:
     value: 487488
   field_date_posted:
@@ -27,6 +34,17 @@
     value: 706105
   field_pdq_pronunciation_key:
     value: ih-MA-tih-nib MEH-zih-layt
+  field_drug_info_type:
+    - value: 'single'
+  field_fda_drug_label_url:
+    - uri: 'https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=211ef2da-2868-4a77-8055-1cb2cd78e24b&audience=consumer'
+  field_intro_text:
+    - format: "simple"
+      value: |
+        <p>This page contains brief information about imatinib mesylate and a collection of links to more information about the use of this drug, research results, and ongoing clinical trials.</p>
+  field_us_brand_name:
+    - value: "Gleevec"
+    - value: "Imkeldi"
   field_related_resources:
     - entity: 'paragraph'
       type: "cgov_external_link"
@@ -49,10 +67,19 @@
   field_browser_title: 'AC-T regimen'
   moderation_state:
     value: published
-  field_pdq_url:
-    value: /about-cancer/treatment/drugs/ac-t
+  field_site_section:
+    - '#process':
+        callback: 'reference'
+        args:
+          - 'taxonomy_term'
+          - vid: 'cgov_site_sections'
+            computed_path: '/about-cancer/treatment/drugs'
+  field_pretty_url:
+    value: ac-t
   field_pdq_cdr_id:
     value: 630806
+  field_drug_info_type:
+    - value: 'combo'
   field_date_posted:
     value: '2009-09-18'
   field_date_updated:
@@ -66,3 +93,21 @@
     value: 'This chemotherapy combination contains the drugs doxorubicin hydrochloride (Adriamycin), cyclophosphamide, and paclitaxel (taxol). Combinations usually work better than single drugs because different drugs kill cancer cells in different ways.'
   field_public_use:
     value: 0
+  field_drugs_in_combination:
+    - format: "ncids_streamlined_no_headings"
+      value: |
+        <ul class="usa-list usa-list--unstyled">
+            <li>
+                <strong>A</strong> <a class="usa-link" href="https://www.cancer.gov/about-cancer/treatment/drugs/doxorubicinhydrochloride">Doxorubicin Hydrochloride</a> (Adriamycin)
+            </li>
+            <li>
+                <strong>C</strong> <a class="usa-link" href="https://www.cancer.gov/about-cancer/treatment/drugs/cyclophosphamide">Cyclophosphamide</a>
+            </li>
+            <li>
+                <strong>T</strong> <a class="usa-link" href="https://www.cancer.gov/about-cancer/treatment/drugs/paclitaxel">Paclitaxel</a> (Taxol)
+            </li>
+        </ul>
+  field_intro_text:
+    - format: "simple"
+      value: |
+        <p>This chemotherapy combination contains the drugs doxorubicin hydrochloride (Adriamycin), cyclophosphamide, and paclitaxel (taxol). Combinations usually work better than single drugs because different drugs kill cancer cells in different ways.</p>
