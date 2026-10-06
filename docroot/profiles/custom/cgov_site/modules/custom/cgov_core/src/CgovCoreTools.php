@@ -693,4 +693,200 @@ class CgovCoreTools {
     }
   }
 
+  /**
+   * Revokes block content type permissions for specified roles.
+   *
+   * @param string $bundle
+   *   The block content type machine name.
+   * @param array $roles
+   *   An array of role IDs to revoke permissions from.
+   *
+   * @throws \Exception
+   */
+  public static function revokeBlockContentTypePermissions(string $bundle, array $roles = ['advanced_editor']): void {
+    $perms = self::BLOCK_CONTENT_PERMISSIONS;
+    $permissions_to_revoke = [];
+
+    foreach ($perms as $perm) {
+      if (str_contains($perm, '[content_type]')) {
+        $permissions_to_revoke[] = str_replace('[content_type]', $bundle, $perm);
+      }
+    }
+
+    if (!empty($permissions_to_revoke)) {
+      foreach ($roles as $role_id) {
+        user_role_revoke_permissions($role_id, $permissions_to_revoke);
+      }
+    }
+  }
+
+  /**
+   * Completely purges a block content type, its content, and config.
+   *
+   * @param string $bundle
+   *   The block content type machine name.
+   * @param array $roles
+   *   Roles from which to revoke permissions.
+   * @param array $extra_config
+   *   An array of additional config entities to delete, keyed by entity type.
+   */
+  public static function purgeBlockContentBundle(string $bundle, array $roles = ['advanced_editor'], array $extra_config = []): void {
+    $entity_type_manager = \Drupal::entityTypeManager();
+
+    // 1. Delete all block content entities via EntityStorageBase.
+    $block_storage = $entity_type_manager->getStorage('block_content');
+    $block_ids = $block_storage->getQuery()->accessCheck(FALSE)->condition('type', $bundle)->execute();
+    if (!empty($block_ids)) {
+      $blocks = $block_storage->loadMultiple($block_ids);
+      $block_storage->delete($blocks);
+    }
+
+    // 2. Delete Form and View Displays FIRST.
+    $display_types = ['entity_form_display', 'entity_view_display'];
+    foreach ($display_types as $display_type) {
+      if ($entity_type_manager->hasDefinition($display_type)) {
+        $display = $entity_type_manager->getStorage($display_type)->load("block_content.{$bundle}.default");
+        if ($display) {
+          $display->delete();
+        }
+      }
+    }
+
+    // 3. Delete Fields & Overrides via Entity API and map their UUIDs.
+    // Maps field UUID to storage UUID for the purger.
+    $purge_map = [];
+
+    if ($entity_type_manager->hasDefinition('base_field_override')) {
+      $overrides = $entity_type_manager->getStorage('base_field_override')->loadByProperties([
+        'entity_type' => 'block_content',
+        'bundle' => $bundle,
+      ]);
+      foreach ($overrides as $override) {
+        $field_uuid = $override->uuid();
+        // Base fields lack a discrete storage UUID.
+        $purge_map[$field_uuid] = NULL;
+        $override->delete();
+      }
+    }
+
+    $field_config_storage = $entity_type_manager->getStorage('field_config');
+    $field_storage_config_storage = $entity_type_manager->getStorage('field_storage_config');
+    $fields = $field_config_storage->loadByProperties([
+      'entity_type' => 'block_content',
+      'bundle' => $bundle,
+    ]);
+
+    foreach ($fields as $field) {
+      $field_uuid = $field->uuid();
+      $field_name = $field->getName();
+      $storage = $field_storage_config_storage->load("block_content.{$field_name}");
+      // Map the field UUID to its concrete storage UUID.
+      $purge_map[$field_uuid] = $storage ? $storage->uuid() : NULL;
+      // Let field_purge_batch handle dropping the storage/tables.
+      $field->delete();
+    }
+
+    // 4. Fully empty the CI queue for our specific fields.
+    // Looping guarantees the purger finishes
+    // dropping tables and orphaned storages.
+    foreach ($purge_map as $field_uuid => $storage_uuid) {
+      $deleted = \Drupal::state()->get('field.field.deleted', []);
+      while (isset($deleted[$field_uuid])) {
+        field_purge_batch(250, $storage_uuid);
+        $deleted = \Drupal::state()->get('field.field.deleted', []);
+      }
+    }
+
+    // 5. Delete Language Settings.
+    if ($entity_type_manager->hasDefinition('language_content_settings')) {
+      $lang_storage = $entity_type_manager->getStorage('language_content_settings');
+      $lang_config = $lang_storage->load("block_content.{$bundle}");
+      if ($lang_config) {
+        $lang_config->delete();
+      }
+    }
+
+    // 6. Delete explicitly passed extra configs (like entity_browsers).
+    foreach ($extra_config as $entity_type => $entity_ids) {
+      if ($entity_type_manager->hasDefinition($entity_type)) {
+        $storage = $entity_type_manager->getStorage($entity_type);
+        $entities = $storage->loadMultiple($entity_ids);
+        if (!empty($entities)) {
+          $storage->delete($entities);
+        }
+      }
+    }
+
+    // 7. Remove bundle from Simple Workflow configuration.
+    $config_factory = \Drupal::configFactory();
+    $workflow_config = $config_factory->getEditable('workflows.workflow.simple_workflow');
+    if (!$workflow_config->isNew()) {
+      $type_settings = $workflow_config->get('type_settings');
+      if (isset($type_settings['entity_types']['block_content'])) {
+        $workflows = $type_settings['entity_types']['block_content'];
+        if (($key = array_search($bundle, $workflows, TRUE)) !== FALSE) {
+          unset($workflows[$key]);
+          $type_settings['entity_types']['block_content'] = array_values($workflows);
+          $workflow_config->set('type_settings', $type_settings)->save(TRUE);
+        }
+      }
+    }
+    $view_config = $config_factory->getEditable('views.view.cgov_image_media_browser');
+    if (!$view_config->isNew()) {
+      $displays = $view_config->get('display');
+      if (isset($displays['image_carousel_browser'])) {
+        unset($displays['image_carousel_browser']);
+        $view_config->set('display', $displays)->save(TRUE);
+      }
+    }
+
+    // 8. Delete the Bundle natively via ConfigFactory (CI Bypass).
+    $bundle_config = $config_factory->getEditable("block_content.type.{$bundle}");
+    if (!$bundle_config->isNew()) {
+      $bundle_config->delete();
+    }
+
+    // 9. Scrub the field map synchronously & Clear Caches.
+    self::purgeBundleFromFieldMap('block_content', $bundle);
+    self::revokeBlockContentTypePermissions($bundle, $roles);
+    $entity_type_manager->clearCachedDefinitions();
+    \Drupal::service('entity_type.bundle.info')->clearCachedBundles();
+  }
+
+  /**
+   * Removes a bundle's references from an entity type's field map.
+   *
+   * @param string $entity_type
+   *   The entity type ID (e.g., 'block_content').
+   * @param string $bundle
+   *   The bundle machine name to purge.
+   */
+  public static function purgeBundleFromFieldMap(string $entity_type, string $bundle): void {
+    $key_value = \Drupal::keyValue('entity.definitions.bundle_field_map');
+    $map = $key_value->get($entity_type);
+
+    if (is_array($map)) {
+      $changed = FALSE;
+
+      foreach ($map as $field_name => &$field_info) {
+        if (isset($field_info['bundles'][$bundle])) {
+          unset($field_info['bundles'][$bundle]);
+          $changed = TRUE;
+        }
+
+        if (empty($field_info['bundles'])) {
+          unset($map[$field_name]);
+          $changed = TRUE;
+        }
+      }
+
+      if ($changed) {
+        $key_value->set($entity_type, $map);
+      }
+    }
+
+    // Clear the cached field definitions so Views and the UI pick up the fix.
+    \Drupal::service('entity_field.manager')->clearCachedFieldDefinitions();
+  }
+
 }
