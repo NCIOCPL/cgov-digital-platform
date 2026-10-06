@@ -20,10 +20,18 @@ function pdq_drug_information_summary_install() {
   $siteHelper = \Drupal::service('cgov_core.tools');
 
   // Add content type permissions and assign to workflow.
-  $restfulPermissions = [
+  $siteHelper->addContentTypePermissions('pdq_drug_information_summary', ['pdq_importer'], CgovCoreTools::DEFAULT_PERMISSIONS);
+}
+
+/**
+ * Remove the PDQ DIS REST resource and its permissions.
+ */
+function pdq_drug_information_summary_update_10001() {
+  \Drupal::configFactory()->getEditable('rest.resource.pdq_dis_api')->delete();
+  $permissions = [
     'restful get pdq_dis_api',
     'restful post pdq_dis_api',
   ];
-  $siteHelper->addContentTypePermissions('pdq_drug_information_summary', ['pdq_importer'], CgovCoreTools::DEFAULT_PERMISSIONS);
-  $siteHelper->addRolePermissions(['pdq_importer' => $restfulPermissions]);
+  $siteHelper = \Drupal::service('cgov_core.tools');
+  $siteHelper->removeRolePermissions(['pdq_importer' => $permissions]);
 }
