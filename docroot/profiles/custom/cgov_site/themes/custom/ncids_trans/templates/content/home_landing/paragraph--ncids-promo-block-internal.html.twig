@@ -28,7 +28,7 @@
   {# Else no description #}
 
   {% set url = path('entity.node.canonical', {'node':  featured_item_node.nid[0].value}) %}
- 
+
   {# ###### Setup Image Position & Image ####### #}
   {% set image_position = paragraph.field_image_position_promo.value %}
   {% if image_position == 'no-img' %}
@@ -49,13 +49,7 @@
 
   {# ###### Setup Theme ####### #}
   {% set promo_theme = paragraph.field_ncids_theme.value %}
-  {# /*
-    The elseif statement below is a hack to address the already existing
-    'nci-promo-block--dark' values that are in the database. 
-    TODO: Issue #3988 
-    https://github.com/NCIOCPL/cgov-digital-platform/issues/3988
-  */ #}
-  {% if promo_theme == 'dark' or promo_theme == 'nci-promo-block--dark' %}
+  {% if promo_theme == 'dark' %}
     {% set promo_theme = 'nci-promo-block--dark' %}
   {% else %}
     {% set promo_theme = '' %}
