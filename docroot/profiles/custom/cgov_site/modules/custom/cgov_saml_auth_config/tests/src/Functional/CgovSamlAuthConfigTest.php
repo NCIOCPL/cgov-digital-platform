@@ -21,11 +21,11 @@ class CgovSamlAuthConfigTest extends BrowserTestBase {
   protected $profile = 'cgov_site';
 
   /**
-   * The theme to use with this test.
+   * Use the frontend theme that renders the customized login form.
    *
    * @var string
    */
-  protected $defaultTheme = 'cgov_admin';
+  protected $defaultTheme = 'ncids_trans';
 
   /**
    * An admin user for testing.
@@ -100,6 +100,34 @@ class CgovSamlAuthConfigTest extends BrowserTestBase {
     $editedEntry = $externalauth->load($edit['name'], 'samlauth');
     $this->assertNotNull($editedEntry, 'Entry was added to the externalauth table.');
 
+  }
+
+  /**
+   * Tests that missing credentials display the generic login error.
+   */
+  public function testMissingCredentialsLoginError(): void {
+    // Cover both fields empty and each field missing independently.
+    $submissions = [
+      [],
+      ['name' => $this->randomMachineName()],
+      ['pass' => $this->randomString()],
+    ];
+
+    foreach ($submissions as $submission) {
+      $this->drupalGet('user/login', [
+        'query' => ['show_login_fields' => 'true'],
+      ]);
+      $this->assertSession()->elementAttributeExists('css', 'form.usa-form', 'novalidate');
+      $this->submitForm($submission, 'Log in');
+
+      $this->assertSession()->pageTextContains('Unrecognized username or password.');
+      $this->assertSession()->elementAttributeContains('css', 'input[name="name"]', 'class', 'usa-input--error');
+      $this->assertSession()->elementAttributeContains('css', 'input[name="name"]', 'aria-describedby', 'edit-name--error');
+      $this->assertSession()->elementAttributeExists('css', 'input[name="name"]', 'autofocus');
+      $this->assertSession()->elementExists('css', '#edit-name--error.usa-error-message');
+      $this->assertSession()->pageTextNotContains('Username field is required.');
+      $this->assertSession()->pageTextNotContains('Password field is required.');
+    }
   }
 
 }
