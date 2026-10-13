@@ -1,0 +1,7 @@
+services:
+  cgov_saml_auth_config.login_form_error_handler:
+    class: Drupal\cgov_saml_auth_config\Form\LoginFormErrorHandler
+    decorates: form_error_handler
+    arguments:
+      - '@cgov_saml_auth_config.login_form_error_handler.inner'
+
