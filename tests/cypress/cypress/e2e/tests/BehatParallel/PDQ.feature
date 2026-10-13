@@ -26,6 +26,7 @@ Feature: Perform tasks related to PDQ Import
   Scenario: Validate fields on PDQ Drug Information Summary
     When user logs in with a role "pdq_user"
     Given user navigates to "node/add/pdq_drug_information_summary"
+    When user selects test site section
     And user fills out the following fields
       | fieldLabel             | value              | field_name                         |
       | Title                  | Test Title         | title[0][value]                    |
@@ -49,4 +50,3 @@ Feature: Perform tasks related to PDQ Import
       | URLs                                    | users    |
       | node/add/pdq_cancer_information_summary | pdq_user |
       | node/add/pdq_drug_information_summary   | pdq_user |
-

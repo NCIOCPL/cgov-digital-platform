@@ -35,3 +35,13 @@ function pdq_drug_information_summary_update_10001() {
   $siteHelper = \Drupal::service('cgov_core.tools');
   $siteHelper->removeRolePermissions(['pdq_importer' => $permissions]);
 }
+
+/**
+ * Add the PDQ DIS page type and disclaimer URL fields.
+ */
+function pdq_drug_information_summary_update_10002(): void {
+  $features_manager = \Drupal::service('features.manager');
+  $assigner = \Drupal::service('features_assigner');
+  $assigner->assignConfigPackages();
+  $features_manager->import(['pdq_drug_information_summary']);
+}

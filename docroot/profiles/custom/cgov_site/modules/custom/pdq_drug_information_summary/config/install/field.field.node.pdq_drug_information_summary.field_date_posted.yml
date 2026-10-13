@@ -11,10 +11,13 @@ field_name: field_date_posted
 entity_type: node
 bundle: pdq_drug_information_summary
 label: 'Posted Date'
-description: "Date the content was posted. Defaults to today's date but can be overridden. "
+description: 'Date the content was posted.'
 required: true
 translatable: true
-default_value: {  }
+default_value:
+  -
+    default_date_type: now
+    default_date: now
 default_value_callback: ''
 settings: {  }
 field_type: datetime
