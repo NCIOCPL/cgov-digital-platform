@@ -20,7 +20,7 @@
     {{ content.field_us_brand_name }}
     {% if node.field_fda_drug_label_url.uri %}
       <div class="usa-prose cgdp-field-drug-info-type">
-        <a class="usa-link" href="{{ node.field_fda_drug_label_url.uri }}">FDA label information for this drug is available at DailyMed.</a>
+        <a class="usa-link" href="{{ node.field_fda_drug_label_url.0.getUrl().toString() }}">FDA label information for this drug is available at DailyMed.</a>
       </div>
     {% endif %}
   {% elseif node.field_drug_info_type.value == 'combo' %}
