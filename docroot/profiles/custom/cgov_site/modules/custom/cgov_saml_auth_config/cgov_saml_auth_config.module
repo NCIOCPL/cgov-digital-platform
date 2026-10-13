@@ -14,6 +14,14 @@ use Drupal\user\Entity\User;
  */
 function cgov_saml_auth_config_form_user_login_form_alter(&$form, FormStateInterface $form_state, $form_id) {
 
+  // Use USWDS form styles on the CMS login page.
+  $form['#attributes']['class'][] = 'usa-form';
+  $form['name']['#attributes']['class'][] = 'usa-input';
+  $form['name']['#label_attributes']['class'][] = 'usa-label';
+  $form['pass']['#attributes']['class'][] = 'usa-input';
+  $form['pass']['#label_attributes']['class'][] = 'usa-label';
+  $form['actions']['submit']['#attributes']['class'][] = 'usa-button';
+
   // Only modify the form if we are actually showing the login link.
   if (isset($form['samlauth_auth_login_link'])) {
 
@@ -24,6 +32,7 @@ function cgov_saml_auth_config_form_user_login_form_alter(&$form, FormStateInter
     $form['samlauth_auth_login_link']['#prefix'] = '<div>';
     $form['samlauth_auth_login_link']['#suffix'] = '</div>';
     $form['samlauth_auth_login_link']['#weight'] = 100;
+    $form['samlauth_auth_login_link']['#attributes']['class'][] = 'usa-button';
     $form['samlauth_auth_login_link']['#attributes']['class'][] = 'button';
 
     $request = \Drupal::request();
