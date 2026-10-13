@@ -1,0 +1,58 @@
+// This contains the NCIDS Settings and required items. Nothing in this
+// file should generate markup.
+@forward '../cgdp-required';
+
+@forward '../../lib/components/usa-breadcrumb';
+@forward '../../lib/components/cgdp-page-options';
+@forward 'usa-error-message';
+
+// Expose USWDS variables and mixins to our imports.
+@use 'uswds-core' as *;
+
+// Styles for the login pages, almost entirely related to spacing
+.login-page {
+	@include u-margin-top(2);
+	@include u-margin-bottom(4);
+	.usa-form-group {
+		&:first-child {
+			@include u-margin-top(0);
+		}
+		@include u-margin-top(3);
+		@include at-media('tablet') {
+			@include u-margin-top(4);
+		}
+		&--error {
+			.usa-label {
+				font-weight: 600;
+			}
+		}
+	}
+	// Do not let the normal interaction state replace an error border.
+	.usa-input--error {
+		&:focus,
+		&:active {
+			border-color: color('error');
+		}
+	}
+	// Styles to control spacing within the login form
+	.user-login-form {
+		.usa-button {
+			@include u-margin-top(3);
+			@include at-media('tablet') {
+				@include u-margin-top(4);
+			}
+		}
+		// Style to remove margin between breadcrumbs and SSO Login Button
+		.samlauth-auth-login-link {
+			@include u-margin(0);
+		}
+		// Style to specify margin between Login stuff and link to switch login methods
+		.login-switch-link {
+			@include u-display('block');
+			@include u-margin-top(3);
+			@include at-media('tablet') {
+				@include u-margin-top(4);
+			}
+		}
+	}
+}
