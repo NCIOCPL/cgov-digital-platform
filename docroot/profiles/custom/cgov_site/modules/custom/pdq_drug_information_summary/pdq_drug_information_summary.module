@@ -1,0 +1,69 @@
+<?php
+
+/**
+ * @file
+ * Form and entity hooks for PDQ Drug Information Summaries.
+ */
+
+use Drupal\Core\Form\FormStateInterface;
+use Drupal\node\NodeInterface;
+
+/**
+ * Implements hook_form_BASE_FORM_ID_alter() for node forms.
+ */
+function pdq_drug_information_summary_form_node_form_alter(array &$form, FormStateInterface $form_state, string $form_id): void {
+  $form_object = $form_state->getFormObject();
+  if (!method_exists($form_object, 'getEntity')) {
+    return;
+  }
+
+  $node = $form_object->getEntity();
+  if ($node->bundle() !== 'pdq_drug_information_summary') {
+    return;
+  }
+
+  if (isset($form['field_us_brand_name'])) {
+    $form['field_us_brand_name']['#states']['visible'] = [
+      ':input[name="field_drug_info_type"]' => ['value' => 'single'],
+    ];
+  }
+
+  if (isset($form['field_fda_drug_label_url'])) {
+    $form['field_fda_drug_label_url']['#states']['visible'] = [
+      ':input[name="field_drug_info_type"]' => ['value' => 'single'],
+    ];
+  }
+
+  if (isset($form['field_drugs_in_combination'])) {
+    $form['field_drugs_in_combination']['#states']['visible'] = [
+      ':input[name="field_drug_info_type"]' => ['value' => 'combo'],
+    ];
+  }
+}
+
+/**
+ * Implements hook_node_presave().
+ */
+function pdq_drug_information_summary_node_presave(NodeInterface $node): void {
+  if ($node->bundle() !== 'pdq_drug_information_summary' ||
+    !$node->hasField('field_drug_info_type')) {
+    return;
+  }
+
+  $drug_info_type = $node->get('field_drug_info_type')->value;
+  if ($drug_info_type === 'single') {
+    if ($node->hasField('field_drugs_in_combination')) {
+      $node->set('field_drugs_in_combination', []);
+    }
+  }
+
+  if ($drug_info_type === 'combo') {
+    if ($node->hasField('field_us_brand_name')) {
+      $node->set('field_us_brand_name', NULL);
+    }
+
+    if ($node->hasField('field_fda_drug_label_url')) {
+      $node->set('field_fda_drug_label_url', NULL);
+    }
+  }
+}
