@@ -38,7 +38,7 @@
 {#- Get proper translated path - views has Core issues that return wrong path for translations -#}
 {%- set pubdate = elements['pubDate'].value -%}
 {%- set link = get_translated_absolute_path(nid) -%}
-{%- set description = get_list_description(nid) -%}
+{%- set description = get_list_description(nid)|trim -%}
 <item>
   <title>{{ title }}</title>
   <link>{{ link }}</link>
