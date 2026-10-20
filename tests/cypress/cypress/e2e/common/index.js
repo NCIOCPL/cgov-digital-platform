@@ -142,3 +142,61 @@ And('user enters {string} into app config text field', (value) => {
 And('{string} user password is changed to {string}', (username, password) => {
     cy.exec(`drush user:password ${username} '${password}'`)
 });
+
+Then('I should not see a link to {string}', (path) => {
+    cy.get(`a[href="${path}"]`).should('not.exist');
+});
+
+And('I should see a link to {string}', (path) => {
+    cy.get(`a[href="${path}"]`).should('exist');
+});
+
+When('user opens the {string} WYSIWYG block browser', (buttonLabel) => {
+    cy.wait(2000);
+
+    cy.contains('button.ck-button', buttonLabel, { timeout: 20000 })
+        .should('be.visible')
+        .click({ force: true });
+
+    // Look for the standard Drupal dialog container instead of an iframe
+    cy.get('.ui-dialog', { timeout: 20000 })
+        .should('be.visible');
+});
+
+Then('the Block type filter should not contain the following options', (dataTable) => {
+    for (const { option } of dataTable.hashes()) {
+        cy.get(`select[name="type"] option[value="${option}"]`)
+            .should('not.exist');
+    }
+});
+
+Then('the Block type filter should contain the following options', (dataTable) => {
+    for (const { option } of dataTable.hashes()) {
+        cy.get(`select[name="type"] option[value="${option}"]`)
+            .should('exist');
+    }
+});
+
+Then('the entity browser Block type filter should not contain the following options', (dataTable) => {
+    for (const { option } of dataTable.hashes()) {
+        // Pierce the iframe inside the dialog to search its DOM
+        cy.get('.ui-dialog iframe', { timeout: 15000 })
+            .its('0.contentDocument.body')
+            .should('not.be.empty')
+            .then(cy.wrap)
+            .find(`select[name="type"] option[value="${option}"]`)
+            .should('not.exist');
+    }
+});
+
+Then('the entity browser Block type filter should contain the following options', (dataTable) => {
+    for (const { option } of dataTable.hashes()) {
+        cy.get('.ui-dialog iframe', { timeout: 15000 })
+            .its('0.contentDocument.body')
+            .should('not.be.empty')
+            .then(cy.wrap)
+            .find(`select[name="type"] option[value="${option}"]`)
+            .should('exist');
+    }
+});
+

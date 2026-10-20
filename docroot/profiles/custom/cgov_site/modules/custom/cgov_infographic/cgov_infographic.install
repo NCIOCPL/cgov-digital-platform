@@ -60,3 +60,25 @@ function cgov_infographic_update_10001() {
   ];
   $siteHelper->addRolePermissions($perms);
 }
+
+/**
+ * Updates infographic body field format to ncids_streamlined.
+ */
+function cgov_infographic_update_10002() {
+  $db = \Drupal::database();
+  $bundle = 'cgov_infographic';
+
+  // Media table updates.
+  $db->update('media__body')
+    ->fields(['body_format' => 'ncids_streamlined'])
+    ->condition('bundle', $bundle)
+    ->condition('body_format', 'full_html')
+    ->execute();
+
+  // Media revision table updates.
+  $db->update('media_revision__body')
+    ->fields(['body_format' => 'ncids_streamlined'])
+    ->condition('bundle', $bundle)
+    ->condition('body_format', 'full_html')
+    ->execute();
+}

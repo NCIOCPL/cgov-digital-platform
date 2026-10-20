@@ -5,15 +5,12 @@
  * Contains cgov_video.post_update.
  */
 
+use Drupal\cgov_core\CgovCoreTools;
+
 /**
- * Add new D10 block content permissions.
+ * Remove cgov_video_carousel bundle references from block_content field map.
  */
-function cgov_video_post_update_d10_perms() {
-  $tools = \Drupal::service('cgov_core.tools');
-  foreach ([
-    'cgov_video_carousel',
-  ] as $block_type) {
-    // Add content type permissions.
-    $tools->addBlockContentTypePermissions($block_type, ['advanced_editor']);
-  }
+function cgov_video_post_update_purge_video_carousel_field_map(&$sandbox) {
+  CgovCoreTools::purgeBundleFromFieldMap('block_content', 'cgov_video_carousel');
+  return 'Purged cgov_video_carousel from the block_content bundle field map.';
 }
