@@ -1,0 +1,17 @@
+<div{{ attributes.addClass([
+  'usa-form-group',
+  errors ? 'usa-form-group--error',
+]) }}>
+  {{ label }}
+  {% if errors %}
+    <div class="usa-error-message">
+      {{ errors }}
+    </div>
+  {% endif %}
+  {{ children }}
+  {% if description.content %}
+    <div{{ description.attributes }}>
+      {{ description.content }}
+    </div>
+  {% endif %}
+</div>

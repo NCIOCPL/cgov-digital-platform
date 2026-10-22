@@ -14,6 +14,17 @@ use Drupal\user\Entity\User;
  */
 function cgov_saml_auth_config_form_user_login_form_alter(&$form, FormStateInterface $form_state, $form_id) {
 
+  // Use USWDS form styles on the CMS login page.
+  $form['#attributes']['class'][] = 'usa-form';
+  $form['name']['#attributes']['class'][] = 'usa-input';
+  $form['name']['#label_attributes']['class'][] = 'usa-label';
+  $form['pass']['#attributes']['class'][] = 'usa-input';
+  $form['pass']['#label_attributes']['class'][] = 'usa-label';
+  $form['actions']['submit']['#attributes']['class'][] = 'usa-button';
+
+  // Do not advertise password reset, which is disabled for SSO accounts.
+  $form['#validate'][] = 'cgov_saml_auth_config_remove_password_reset_error_link';
+
   // Only modify the form if we are actually showing the login link.
   if (isset($form['samlauth_auth_login_link'])) {
 
@@ -24,6 +35,7 @@ function cgov_saml_auth_config_form_user_login_form_alter(&$form, FormStateInter
     $form['samlauth_auth_login_link']['#prefix'] = '<div>';
     $form['samlauth_auth_login_link']['#suffix'] = '</div>';
     $form['samlauth_auth_login_link']['#weight'] = 100;
+    $form['samlauth_auth_login_link']['#attributes']['class'][] = 'usa-button';
     $form['samlauth_auth_login_link']['#attributes']['class'][] = 'button';
 
     $request = \Drupal::request();
@@ -66,6 +78,29 @@ function cgov_saml_auth_config_form_user_login_form_alter(&$form, FormStateInter
       ];
     }
 
+  }
+}
+
+/**
+ * Replaces core's invalid-login error with one that has no password reset link.
+ */
+function cgov_saml_auth_config_remove_password_reset_error_link(array &$form, FormStateInterface $form_state) {
+  $name_error = $form_state->getError($form['name']);
+  $password_reset_url = Url::fromRoute('user.pass')->toString();
+
+  // Leave required-field, blocked-account, and other validation errors intact.
+  if (!$name_error || !str_contains((string) $name_error, $password_reset_url)) {
+    return;
+  }
+
+  // FormState does not provide a way to replace one error, so preserve all
+  // errors while replacing only the username error added by UserLoginForm.
+  $errors = $form_state->getErrors();
+  $form_state->clearErrors();
+  foreach ($errors as $name => $error) {
+    $form_state->setErrorByName($name, $name === 'name'
+      ? t('Unrecognized username or password.')
+      : $error);
   }
 }
 

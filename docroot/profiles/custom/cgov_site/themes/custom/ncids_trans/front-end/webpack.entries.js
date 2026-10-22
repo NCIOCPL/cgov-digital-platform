@@ -30,6 +30,10 @@ module.exports = {
 		'src/entrypoints/ckeditor/ckeditor-ncids.js'
 	),
 	article: path.resolve(__dirname, 'src/entrypoints/article/article.ts'),
+	'login-page': path.resolve(
+		__dirname,
+		'src/entrypoints/login-page/login-page.scss'
+	),
 	'special-report': path.resolve(
 		__dirname,
 		'src/entrypoints/special-report/special-report.ts'

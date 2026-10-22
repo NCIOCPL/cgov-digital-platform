@@ -3,6 +3,8 @@
 namespace Drupal\Tests\cgov_saml_auth_config\Functional;
 
 use CgovPlatform\Tests\CgovSchemaExclusions;
+use Drupal\Core\Site\Settings;
+use Drupal\Core\Url;
 use Drupal\Tests\BrowserTestBase;
 use Drupal\user\Entity\Role;
 
@@ -33,6 +35,29 @@ class CgovSamlAuthConfigTest extends BrowserTestBase {
    * @var \Drupal\user\Entity\User
    */
   protected $adminUser;
+
+  /**
+   * {@inheritdoc}
+   */
+  protected function prepareSettings(): void {
+    parent::prepareSettings();
+
+    $this->writeSettings([
+      'settings' => [
+        'disallow_routes' => (object) [
+          'value' => [
+            'user.pass',
+            'user.pass.http',
+            'user.reset.login',
+            'user.reset',
+            'user.reset.form',
+          ],
+          'required' => TRUE,
+        ],
+      ],
+    ]);
+    Settings::initialize(DRUPAL_ROOT, $this->siteDirectory, $this->classLoader);
+  }
 
   /**
    * {@inheritdoc}
@@ -100,6 +125,49 @@ class CgovSamlAuthConfigTest extends BrowserTestBase {
     $editedEntry = $externalauth->load($edit['name'], 'samlauth');
     $this->assertNotNull($editedEntry, 'Entry was added to the externalauth table.');
 
+  }
+
+  /**
+   * Tests that password reset is unavailable and is not advertised at login.
+   */
+  public function testPasswordResetIsDisabled(): void {
+    $this->drupalGet('user/login', ['query' => ['show_login_fields' => 'true']]);
+    $this->submitForm([
+      'name' => $this->randomMachineName(),
+      'pass' => $this->randomString(),
+    ], 'Log in');
+
+    $this->assertSession()->pageTextContains('Unrecognized username or password.');
+    $this->assertSession()->pageTextNotContains('Forgot your password?');
+
+    $disabled_routes = [
+      'user.pass' => [],
+      'user.reset.login' => [
+        'uid' => 1,
+        'timestamp' => 1,
+        'hash' => 'invalid',
+      ],
+      'user.reset' => [
+        'uid' => 1,
+        'timestamp' => 1,
+        'hash' => 'invalid',
+      ],
+      'user.reset.form' => ['uid' => 1],
+    ];
+
+    foreach ($disabled_routes as $route_name => $parameters) {
+      $this->drupalGet(Url::fromRoute($route_name, $parameters));
+      $this->assertSession()->statusCodeEquals(403);
+    }
+
+    $response = $this->getHttpClient()->request('POST', Url::fromRoute('user.pass.http', [], [
+      'absolute' => TRUE,
+    ])->toString(), [
+      'headers' => ['Accept' => 'application/json'],
+      'http_errors' => FALSE,
+      'json' => [],
+    ]);
+    $this->assertSame(403, $response->getStatusCode());
   }
 
 }

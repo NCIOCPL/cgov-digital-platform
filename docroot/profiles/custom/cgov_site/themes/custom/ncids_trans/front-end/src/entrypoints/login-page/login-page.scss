@@ -1,0 +1,19 @@
+// This contains the NCIDS Settings and required items. Nothing in this
+// file should generate markup.
+@forward '../cgdp-required';
+
+@forward '../../lib/components/usa-breadcrumb';
+@forward 'usa-error-message';
+
+// Expose USWDS variables and mixins to our imports.
+@use 'uswds-core' as *;
+
+.login-page {
+	@include u-margin-bottom(4);
+	.usa-form-group--error {
+		@include u-margin-left(0);
+		.usa-label {
+			font-weight: 600;
+		}
+	}
+}
