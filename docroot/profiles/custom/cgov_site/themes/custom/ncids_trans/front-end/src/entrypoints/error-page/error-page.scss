@@ -1,0 +1,68 @@
+// This contains the NCIDS Settings and required items. Nothing in this
+// file should generate markup.
+@forward '../cgdp-required';
+
+@forward '../../lib/components/usa-breadcrumb';
+
+// Expose USWDS variables and mixins to our imports.
+@use 'uswds-core' as *;
+
+$error-page-search-width: 480px;
+
+.error-page--403,
+.error-page--404 {
+	@include u-margin-bottom(4);
+
+	#pageNotFoundSearchForm {
+		max-width: $error-page-search-width;
+		.listboxWidth {
+			@include u-width('full');
+		}
+	}
+
+	// Styles needed to align the input box and search button
+	.nci-autocomplete {
+		.search-button {
+			// Hides / Displays "Search" button text
+			display: none;
+			@include at-media('desktop') {
+				display: flex;
+			}
+		}
+		.usa-input {
+			// The margin / height combo here is what sets
+			// the height of the autocomplete search on the page
+			// (This is very similar to how the header does it)
+			@include u-margin(0);
+			@include u-height(5);
+			@include u-radius(0);
+			@include at-media('desktop') {
+				@include u-height(4);
+			}
+		}
+		.usa-button {
+			// Limit the size of the search button
+			@include u-width('auto');
+			@include u-margin(0);
+			// Fix the padding of the button so that the height
+			// aligns with the input box
+			@include u-padding-x(1.5);
+			@include u-padding-y(0);
+			// Ensures the search button isn't rounded
+			// when next to the input box
+			border-top-left-radius: 0;
+			border-bottom-left-radius: 0;
+		}
+		.usa-icon {
+			// Increases the search icon size to be consistent with
+			// the header's search button's icon size
+			@include u-width(3);
+			@include u-height(3);
+			// Hides / Displays "Search" button icon
+			display: flex;
+			@include at-media('desktop') {
+				display: none;
+			}
+		}
+	}
+}
