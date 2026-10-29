@@ -14,6 +14,20 @@ use Drupal\user\Entity\User;
  */
 function cgov_saml_auth_config_form_user_login_form_alter(&$form, FormStateInterface $form_state, $form_id) {
 
+  // Use USWDS form styles on the CMS login page.
+  $form['#attributes']['class'][] = 'usa-form';
+  // Let Drupal display consistent errors instead of browser-native required
+  // field messages.
+  $form['#attributes']['novalidate'] = 'novalidate';
+  $form['name']['#attributes']['class'][] = 'usa-input';
+  $form['name']['#label_attributes']['class'][] = 'usa-label';
+  $form['pass']['#attributes']['class'][] = 'usa-input';
+  $form['pass']['#label_attributes']['class'][] = 'usa-label';
+  $form['actions']['submit']['#attributes']['class'][] = 'usa-button';
+
+  // Do not advertise password reset, which is disabled for SSO accounts.
+  $form['#validate'][] = 'cgov_saml_auth_config__remove_password_reset_error_link';
+
   // Only modify the form if we are actually showing the login link.
   if (isset($form['samlauth_auth_login_link'])) {
 
@@ -24,6 +38,7 @@ function cgov_saml_auth_config_form_user_login_form_alter(&$form, FormStateInter
     $form['samlauth_auth_login_link']['#prefix'] = '<div>';
     $form['samlauth_auth_login_link']['#suffix'] = '</div>';
     $form['samlauth_auth_login_link']['#weight'] = 100;
+    $form['samlauth_auth_login_link']['#attributes']['class'][] = 'usa-button';
     $form['samlauth_auth_login_link']['#attributes']['class'][] = 'button';
 
     $request = \Drupal::request();
@@ -45,12 +60,19 @@ function cgov_saml_auth_config_form_user_login_form_alter(&$form, FormStateInter
         '#url' => Url::fromRoute('user.login', [
           'show_login_fields' => 'true',
         ]),
-        '#prefix' => '<p>',
-        '#suffix' => '</p>',
+        '#attributes' => [
+          'class' => ['login-switch-link'],
+        ],
         '#weight' => 101,
       ];
     }
     else {
+
+      // Preserve the bypass flag when submitting the form so validation
+      // errors remain visible with the Drupal login fields.
+      $form['#action'] = Url::fromRoute('user.login', [], [
+        'query' => ['show_login_fields' => 'true'],
+      ])->toString();
 
       // Hide the SAML Button.
       $form['samlauth_auth_login_link']['#access'] = FALSE;
@@ -60,12 +82,48 @@ function cgov_saml_auth_config_form_user_login_form_alter(&$form, FormStateInter
         '#title' => 'Log in with Single Sign-On',
         '#type' => 'link',
         '#url' => Url::fromRoute('user.login'),
-        '#prefix' => '<p>',
-        '#suffix' => '</p>',
+        '#attributes' => [
+          'class' => ['login-switch-link'],
+        ],
         '#weight' => 101,
       ];
     }
 
+  }
+}
+
+/**
+ * Normalizes login errors without advertising password reset.
+ */
+function cgov_saml_auth_config__remove_password_reset_error_link(array &$form, FormStateInterface $form_state) {
+  $name_error = $form_state->getError($form['name']);
+  $password_reset_url = Url::fromRoute('user.pass')->toString();
+  $missing_credentials = trim((string) $form_state->getValue('name')) === ''
+    || trim((string) $form_state->getValue('pass')) === '';
+
+  // Leave blocked-account and unrelated validation errors intact.
+  if (!$missing_credentials && (!$name_error || !str_contains((string) $name_error, $password_reset_url))) {
+    return;
+  }
+
+  // FormState does not provide a way to replace one error, so preserve all
+  // unrelated errors while replacing the login error added by UserLoginForm.
+  $errors = $form_state->getErrors();
+  $form_state->clearErrors();
+
+  if ($missing_credentials) {
+    // Use one generic error on the username field instead of exposing which
+    // credential is missing or rendering two competing required messages.
+    $form_state->setErrorByName('name', t('Unrecognized username or password.'));
+  }
+
+  foreach ($errors as $name => $error) {
+    if (!$missing_credentials && $name === 'name') {
+      $form_state->setErrorByName($name, t('Unrecognized username or password.'));
+    }
+    elseif (!$missing_credentials || !in_array($name, ['name', 'pass'], TRUE)) {
+      $form_state->setErrorByName($name, $error);
+    }
   }
 }
 

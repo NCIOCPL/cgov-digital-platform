@@ -1,0 +1,21 @@
+{# Render login errors directly so inline_form_errors is not enabled globally. #}
+{% set login_errors = element['#errors'] %}
+
+<div{{ attributes.addClass([
+  'usa-form-group',
+  login_errors ? 'usa-form-group--error',
+]) }}>
+  {{ label }}
+  {% if login_errors %}
+    {# LoginFormErrorHandler adds this ID to the input's aria-describedby. #}
+    <div id="{{ element['#cgov_error_id'] }}" class="usa-error-message">
+      {{ login_errors }}
+    </div>
+  {% endif %}
+  {{ children }}
+  {% if description.content %}
+    <div{{ description.attributes }}>
+      {{ description.content }}
+    </div>
+  {% endif %}
+</div>

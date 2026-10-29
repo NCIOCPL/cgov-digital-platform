@@ -56,6 +56,9 @@ $settings['mail_line_endings'] = "\r\n";
 
 // Define unwanted routes to disable and show access denied.
 $settings['disallow_routes'] = [
+  'user.pass',
+  'user.pass.http',
+  'user.well-known.change_password',
   'user.reset.login',
   'user.reset',
   'user.reset.form',
