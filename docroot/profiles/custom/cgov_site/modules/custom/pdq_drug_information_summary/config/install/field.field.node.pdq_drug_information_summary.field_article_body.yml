@@ -1,0 +1,30 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_article_body
+    - node.type.pdq_drug_information_summary
+    - paragraphs.paragraphs_type.body_section
+  module:
+    - entity_reference_revisions
+id: node.pdq_drug_information_summary.field_article_body
+field_name: field_article_body
+entity_type: node
+bundle: pdq_drug_information_summary
+label: Body
+description: 'Main content for the drug information summary.'
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:paragraph'
+  handler_settings:
+    negate: 0
+    target_bundles:
+      body_section: body_section
+    target_bundles_drag_drop:
+      body_section:
+        enabled: true
+        weight: 2
+field_type: entity_reference_revisions

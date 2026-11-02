@@ -118,7 +118,38 @@ And('user fills out {string} with {string}', (section, text) => {
         cy.get(`label:contains("${section}")`).parent().parent().find('div.form-textarea-wrapper').type(text)
     }
     if (section == "Body") {
-        cy.get("textarea[id^=edit-body-0-value").type(text)
+        // Handle Paragraphs field with closed edit mode
+        // Check if body_section paragraph exists, if not create one
+        cy.get('.field--name-field-article-body').within(() => {
+            cy.get('.ck-editor__editable[contenteditable="true"]', { timeout: 2000 }).then(($editor) => {
+                if ($editor.length === 0) {
+                    // No existing paragraph, need to add one
+                    // Click "Add paragraph" button for body_section
+                    cy.get('input[value*="Add body_section"]')
+                        .click({ force: true });
+                    
+                    // Wait for paragraph to be added and form to render
+                    cy.get('[data-paragraph-delta]').last().within(() => {
+                        // Open the paragraph if in closed mode (click the details element)
+                        cy.get('details', { timeout: 3000 }).then(($details) => {
+                            if ($details.length > 0 && !$details.prop('open')) {
+                                cy.get('details').click();
+                            }
+                        });
+                        
+                        // Now type into the CKEditor
+                        cy.get('.ck-editor__editable[contenteditable="true"]', { timeout: 5000 })
+                            .first()
+                            .type(text);
+                    });
+                } else {
+                    // Paragraph exists, just type
+                    cy.get('.ck-editor__editable[contenteditable="true"]')
+                        .first()
+                        .type(text);
+                }
+            });
+        });
     }
 })
 
