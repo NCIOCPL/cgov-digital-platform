@@ -2,7 +2,7 @@ langcode: en
 status: true
 dependencies:
   config:
-    - field.field.node.pdq_drug_information_summary.body
+    - field.field.node.pdq_drug_information_summary.field_article_body
     - field.field.node.pdq_drug_information_summary.field_browser_title
     - field.field.node.pdq_drug_information_summary.field_date_display_mode
     - field.field.node.pdq_drug_information_summary.field_date_posted
@@ -38,10 +38,12 @@ targetEntityType: node
 bundle: pdq_drug_information_summary
 mode: default
 content:
-  body:
-    type: text_default
-    label: above
-    settings: {  }
+  field_article_body:
+    type: entity_reference_revisions_entity_view
+    label: hidden
+    settings:
+      view_mode: default
+      link: ''
     third_party_settings: {  }
     weight: 7
     region: content

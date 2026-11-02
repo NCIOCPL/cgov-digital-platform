@@ -5,7 +5,9 @@
  * Contains pdq_drug_information_summary.install.
  */
 
-use Drupal\cgov_core\CgovCoreTools;
+use Drupal\Core\Config\FileStorage;
+use Drupal\field\Entity\FieldConfig;
+use Drupal\field\Entity\FieldStorageConfig;
 
 /**
  * Implements hook_install().
@@ -19,8 +21,11 @@ function pdq_drug_information_summary_install() {
   // Get our helper.
   $siteHelper = \Drupal::service('cgov_core.tools');
 
-  // Add content type permissions and assign to workflow.
-  $siteHelper->addContentTypePermissions('pdq_drug_information_summary', ['pdq_importer'], CgovCoreTools::DEFAULT_PERMISSIONS);
+  // Allow both XML imports and the standard editorial workflow to manage DIS.
+  $siteHelper->addContentTypePermissions('pdq_drug_information_summary', [
+    'content_author',
+    'pdq_importer',
+  ]);
 }
 
 /**
@@ -34,4 +39,46 @@ function pdq_drug_information_summary_update_10001() {
   ];
   $siteHelper = \Drupal::service('cgov_core.tools');
   $siteHelper->removeRolePermissions(['pdq_importer' => $permissions]);
+}
+
+/**
+ * Install the destination fields for the PDQ DIS migration.
+ */
+function pdq_drug_information_summary_update_10002(): void {
+  // Install the destination fields before enabling the XML migration.
+  $config_storage = new FileStorage(__DIR__ . '/config/install');
+  foreach ($config_storage->listAll('field.storage.node.') as $name) {
+    $config = $config_storage->read($name);
+    $field_name = $config['field_name'];
+    if (!FieldStorageConfig::loadByName('node', $field_name)) {
+      FieldStorageConfig::create($config)->save();
+    }
+  }
+  $prefix = 'field.field.node.pdq_drug_information_summary.';
+  foreach ($config_storage->listAll($prefix) as $name) {
+    $config = $config_storage->read($name);
+    $field_name = $config['field_name'];
+    if (!FieldConfig::loadByName('node', 'pdq_drug_information_summary', $field_name)) {
+      FieldConfig::create($config)->save();
+    }
+  }
+}
+
+/**
+ * Enable the XML migration which switches the type to field_article_body.
+ */
+function pdq_drug_information_summary_update_10003(): void {
+  \Drupal::service('module_installer')->install([
+    'migrate_plus',
+    'migrate_tools',
+    'cgov_migration',
+  ]);
+}
+
+/**
+ * Allow content authors to manage PDQ DIS through the editorial workflow.
+ */
+function pdq_drug_information_summary_update_10004(): void {
+  $siteHelper = \Drupal::service('cgov_core.tools');
+  $siteHelper->addContentTypePermissions('pdq_drug_information_summary', ['content_author']);
 }
