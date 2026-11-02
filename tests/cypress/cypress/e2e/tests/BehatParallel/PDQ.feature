@@ -24,7 +24,7 @@ Feature: Perform tasks related to PDQ Import
     Then user saves the content page
 
   Scenario: Validate fields on PDQ Drug Information Summary
-    When user logs in with a role "pdq_user"
+    When user logs in with a role "simple_blocks"
     Given user navigates to "node/add/pdq_drug_information_summary"
     When user selects test site section
     And user fills out the following fields
@@ -45,8 +45,7 @@ Feature: Perform tasks related to PDQ Import
     And user selects "Published" from "Save as" dropdown
     Then user saves the content page
 
-  Scenario: Ability to Translate Content
+  Scenario: PDQ Workflow Enabled on PDQ Cancer Summary
     And I should see "Draft" and "Published" when I navigate to the following urls while logged in with the following users
       | URLs                                    | users    |
       | node/add/pdq_cancer_information_summary | pdq_user |
-      | node/add/pdq_drug_information_summary   | pdq_user |
