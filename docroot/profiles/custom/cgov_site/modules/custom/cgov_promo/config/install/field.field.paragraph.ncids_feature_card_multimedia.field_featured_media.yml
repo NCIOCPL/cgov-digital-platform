@@ -3,6 +3,10 @@ status: true
 dependencies:
   config:
     - field.storage.paragraph.field_featured_media
+    - media.type.cgov_contextual_image
+    - media.type.cgov_file
+    - media.type.cgov_image
+    - media.type.cgov_infographic
     - paragraphs.paragraphs_type.ncids_feature_card_multimedia
 id: paragraph.ncids_feature_card_multimedia.field_featured_media
 field_name: field_featured_media
@@ -18,7 +22,9 @@ settings:
   handler: cgov_all_selection
   handler_settings:
     target_bundles:
+      cgov_contextual_image: cgov_contextual_image
       cgov_file: cgov_file
+      cgov_image: cgov_image
       cgov_infographic: cgov_infographic
     sort:
       field: _none
