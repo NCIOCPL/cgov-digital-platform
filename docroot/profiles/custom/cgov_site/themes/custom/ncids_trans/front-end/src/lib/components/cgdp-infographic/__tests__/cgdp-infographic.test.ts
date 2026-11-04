@@ -58,6 +58,7 @@ describe('NCIDS Infograpihc', () => {
 				location: 'Body',
 				componentType: 'Embedded Infographic',
 				mediaType: 'Infographic',
+				mediaTitle: 'Pediatric MATCH Infographic',
 				linkText: 'View and Print Infographic',
 				linkType: 'viewPrint',
 			}
@@ -106,6 +107,7 @@ describe('NCIDS Infograpihc', () => {
 				location: 'Body',
 				componentType: 'Embedded Infographic',
 				mediaType: 'Infographic',
+				mediaTitle: 'Pediatric MATCH Infographic',
 				linkText: 'View and Print Infographic',
 				linkType: 'viewPrint',
 			}
@@ -135,6 +137,7 @@ describe('NCIDS Infograpihc', () => {
 				location: 'Body',
 				componentType: 'Embedded Infographic',
 				mediaType: 'Infographic',
+				mediaTitle: 'Pediatric MATCH Infographic',
 				linkText: 'View and Print Infographic',
 				linkType: 'viewPrint',
 			}
@@ -164,6 +167,7 @@ describe('NCIDS Infograpihc', () => {
 				location: 'Body',
 				componentType: 'Embedded Infographic',
 				mediaType: 'Infographic',
+				mediaTitle: 'Pediatric MATCH Infographic',
 				linkText: 'View and Print Infographic',
 				linkType: 'viewPrint',
 			}
@@ -193,6 +197,7 @@ describe('NCIDS Infograpihc', () => {
 				location: 'Body',
 				componentType: 'Embedded Infographic',
 				mediaType: 'Infographic',
+				mediaTitle: 'Pediatric MATCH Infographic',
 				linkText: 'View and Print Infographic',
 				linkType: 'viewPrint',
 			}
@@ -222,6 +227,7 @@ describe('NCIDS Infograpihc', () => {
 				location: 'Body',
 				componentType: 'Embedded Infographic',
 				mediaType: 'Infographic',
+				mediaTitle: 'Pediatric MATCH Infographic',
 				linkText: 'View and Print Infographic',
 				linkType: 'viewPrint',
 			}
