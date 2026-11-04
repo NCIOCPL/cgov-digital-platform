@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "987e204897caae7471c9c5a85ab302ac",
+    "content-hash": "aa07db781e45f9d5b1df0a606cc3f1de",
     "packages": [
         {
             "name": "acquia/acsf-tools",
@@ -5071,7 +5071,8 @@
             "homepage": "https://www.drupal.org/project/purge",
             "support": {
                 "source": "https://git.drupalcode.org/project/purge"
-            }
+            },
+            "published-time": "2024-06-28T06:51:53+00:00"
         },
         {
             "name": "drupal/redirect",
@@ -5968,38 +5969,46 @@
         },
         {
             "name": "drupal/yaml_content",
-            "version": "1.0.0-alpha9",
+            "version": "dev-3.0.x",
             "source": {
                 "type": "git",
                 "url": "https://git.drupalcode.org/project/yaml_content.git",
-                "reference": "8.x-1.0-alpha9"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://ftp.drupal.org/files/projects/yaml_content-8.x-1.0-alpha9.zip",
-                "reference": "8.x-1.0-alpha9",
-                "shasum": "21854b567ef6b9a17883da061c03850f136cc9d1"
+                "reference": "08f73d3b7e77be62f4dbda051797d2969baa529b"
             },
             "require": {
-                "drupal/core": "^9 || ^10"
+                "drupal/core": "^10.6 || ^11",
+                "php": ">=8.3"
+            },
+            "conflict": {
+                "drush/drush": "<13.7"
             },
             "require-dev": {
-                "mikey179/vfsstream": "^1.0"
+                "drupal/core-dev": "^10.6 || ^11",
+                "drush/drush": "^13.7",
+                "mikey179/vfsstream": "^1.6.12"
             },
             "type": "drupal-module",
             "extra": {
+                "branch-alias": {
+                    "dev-3.0.x": "3.0.x-dev"
+                },
                 "drupal": {
-                    "version": "8.x-1.0-alpha9",
-                    "datestamp": "1690397386",
+                    "version": "3.0.x-dev",
+                    "datestamp": "1790828264",
                     "security-coverage": {
                         "status": "not-covered",
                         "message": "Project has not opted into security advisory coverage!"
                     }
-                },
-                "drush": {
-                    "services": {
-                        "drush.services.yml": "^9"
-                    }
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Drupal\\yaml_content\\": "src/"
+                }
+            },
+            "autoload-dev": {
+                "psr-4": {
+                    "Drupal\\Tests\\yaml_content\\": "tests/src/"
                 }
             },
             "notification-url": "https://packages.drupal.org/8/downloads",
@@ -6008,7 +6017,7 @@
             ],
             "authors": [
                 {
-                    "name": "DamienMcKenna",
+                    "name": "damienmckenna",
                     "homepage": "https://www.drupal.org/user/108450"
                 },
                 {
@@ -6018,6 +6027,10 @@
                 {
                     "name": "slucero",
                     "homepage": "https://www.drupal.org/user/1612534"
+                },
+                {
+                    "name": "yovince",
+                    "homepage": "https://www.drupal.org/user/3503856"
                 }
             ],
             "description": "Demo content generator using yaml content templates.",
@@ -16696,7 +16709,8 @@
                     "type": "github"
                 }
             ],
-            "time": "2026-07-28T10:04:39+00:00"
+            "time": "2026-07-28T10:04:39+00:00",
+            "published-time": "2026-07-28T10:04:54+00:00"
         },
         {
             "name": "phpstan/phpstan-deprecation-rules",
@@ -17794,11 +17808,12 @@
     "aliases": [],
     "minimum-stability": "dev",
     "stability-flags": {
-        "drupal/akamai": 5
+        "drupal/akamai": 5,
+        "drupal/yaml_content": 20
     },
     "prefer-stable": true,
     "prefer-lowest": false,
     "platform": {},
     "platform-dev": {},
-    "plugin-api-version": "2.9.0"
+    "plugin-api-version": "2.11.0"
 }

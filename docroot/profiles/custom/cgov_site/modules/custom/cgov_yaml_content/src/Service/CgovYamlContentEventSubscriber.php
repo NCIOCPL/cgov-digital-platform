@@ -4,7 +4,6 @@ namespace Drupal\cgov_yaml_content\Service;
 
 use Drupal\block\Entity\Block;
 use Drupal\block_content\Entity\BlockContent;
-use Drupal\Component\EventDispatcher\ContainerAwareEventDispatcher;
 use Drupal\Component\Render\PlainTextOutput;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\Entity\FieldableEntityInterface;
@@ -25,6 +24,7 @@ use Drupal\yaml_content\Event\EntityPostSaveEvent;
 use Drupal\yaml_content\Event\EntityPreSaveEvent;
 use Drupal\yaml_content\Event\YamlContentEvents;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
+use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
 
 /**
  * Handle yaml_content custom events.
@@ -62,7 +62,7 @@ class CgovYamlContentEventSubscriber implements EventSubscriberInterface {
   /**
    * Drupal Event Dispatcher.
    *
-   * @var \Drupal\Component\EventDispatcher\ContainerAwareEventDispatcher
+   * @var \Symfony\Contracts\EventDispatcher\EventDispatcherInterface
    */
   protected $eventDispatcher;
 
@@ -98,7 +98,7 @@ class CgovYamlContentEventSubscriber implements EventSubscriberInterface {
    *   Drupal file system wrapper.
    * @param \Drupal\Core\Utility\Token $token
    *   Drupal token service.
-   * @param \Drupal\Component\EventDispatcher\ContainerAwareEventDispatcher $dispatcher
+   * @param \Symfony\Contracts\EventDispatcher\EventDispatcherInterface $dispatcher
    *   Drupal Event Dispatcher.
    * @param \Drupal\Core\Extension\ModuleExtensionList $extension_list_module
    *   The module extension list.
@@ -110,7 +110,7 @@ class CgovYamlContentEventSubscriber implements EventSubscriberInterface {
     EntityTypeManagerInterface $entityTypeManager,
     FileSystemInterface $fileSystem,
     Token $token,
-    ContainerAwareEventDispatcher $dispatcher,
+    EventDispatcherInterface $dispatcher,
     ModuleExtensionList $extension_list_module,
     FileRepositoryInterface $file_repository,
   ) {
