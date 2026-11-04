@@ -3,11 +3,14 @@ import { trackOther } from '../../core/analytics/eddl-util';
 /**
  * Click handler for the infographic link click.
  */
-const infographicLinkClickHandler = () => () => {
+const infographicLinkClickHandler = (link: HTMLAnchorElement) => () => {
+	const mediaTitle = link.getAttribute('data-link_title') || '_ERROR_';
+
 	trackOther('Body:EmbeddedMedia:LinkClick', 'Body:EmbeddedMedia:LinkClick', {
 		location: 'Body',
 		componentType: 'Embedded Infographic',
 		mediaType: 'Infographic',
+		mediaTitle: mediaTitle.slice(0, 50),
 		linkText: 'View and Print Infographic',
 		linkType: 'viewPrint',
 	});
@@ -19,7 +22,7 @@ const infographicCreate = (infographicEl: HTMLElement) => {
 	) as HTMLAnchorElement[];
 
 	links.forEach((link) => {
-		link.addEventListener('click', infographicLinkClickHandler());
+		link.addEventListener('click', infographicLinkClickHandler(link));
 	});
 };
 
