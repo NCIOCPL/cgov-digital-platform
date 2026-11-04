@@ -1,0 +1,129 @@
+diff --git a/src/Drush/Commands/YamlContentImportCommand.php b/src/Drush/Commands/YamlContentImportCommand.php
+index 867b044..c609ab1 100644
+--- a/src/Drush/Commands/YamlContentImportCommand.php
++++ b/src/Drush/Commands/YamlContentImportCommand.php
+@@ -6,13 +6,13 @@ namespace Drupal\yaml_content\Drush\Commands;
+ 
+ use Drupal\yaml_content\Service\LoadHelper;
+ use Drush\Commands\AutowireTrait;
++use Psr\Container\ContainerInterface;
+ use Symfony\Component\Console\Attribute\AsCommand;
+ use Symfony\Component\Console\Command\Command;
+ use Symfony\Component\Console\Input\InputArgument;
+ use Symfony\Component\Console\Input\InputInterface;
+ use Symfony\Component\Console\Input\InputOption;
+ use Symfony\Component\Console\Output\OutputInterface;
+-use Symfony\Component\DependencyInjection\Attribute\Autowire;
+ 
+ /**
+  * Imports YAML content from a directory.
+@@ -26,12 +26,13 @@ final class YamlContentImportCommand extends Command {
+ 
+   use AutowireTrait;
+ 
++  protected LoadHelper $loader;
++
+   /**
+    * Constructs a YAML content import command.
+    */
+   public function __construct(
+-    #[Autowire(service: 'yaml_content.load_helper')]
+-    private readonly LoadHelper $loader,
++    private readonly ContainerInterface $container,
+   ) {
+     parent::__construct();
+   }
+@@ -50,6 +51,7 @@ final class YamlContentImportCommand extends Command {
+    * {@inheritdoc}
+    */
+   protected function execute(InputInterface $input, OutputInterface $output): int {
++    $this->loader = $this->container->get('yaml_content.load_helper');
+     $file = $input->getArgument('file');
+     $this->loader->importDirectory(
+       (string) $input->getArgument('directory'),
+diff --git a/src/Drush/Commands/YamlContentImportModuleCommand.php b/src/Drush/Commands/YamlContentImportModuleCommand.php
+index a041d2b..2981d50 100644
+--- a/src/Drush/Commands/YamlContentImportModuleCommand.php
++++ b/src/Drush/Commands/YamlContentImportModuleCommand.php
+@@ -6,13 +6,13 @@ namespace Drupal\yaml_content\Drush\Commands;
+ 
+ use Drupal\yaml_content\Service\LoadHelper;
+ use Drush\Commands\AutowireTrait;
++use Psr\Container\ContainerInterface;
+ use Symfony\Component\Console\Attribute\AsCommand;
+ use Symfony\Component\Console\Command\Command;
+ use Symfony\Component\Console\Input\InputArgument;
+ use Symfony\Component\Console\Input\InputInterface;
+ use Symfony\Component\Console\Input\InputOption;
+ use Symfony\Component\Console\Output\OutputInterface;
+-use Symfony\Component\DependencyInjection\Attribute\Autowire;
+ 
+ /**
+  * Imports YAML content provided by a module.
+@@ -26,12 +26,13 @@ final class YamlContentImportModuleCommand extends Command {
+ 
+   use AutowireTrait;
+ 
++  protected LoadHelper $loader;
++
+   /**
+    * Constructs a YAML content module import command.
+    */
+   public function __construct(
+-    #[Autowire(service: 'yaml_content.load_helper')]
+-    private readonly LoadHelper $loader,
++    private readonly ContainerInterface $container,
+   ) {
+     parent::__construct();
+   }
+@@ -50,6 +51,7 @@ final class YamlContentImportModuleCommand extends Command {
+    * {@inheritdoc}
+    */
+   protected function execute(InputInterface $input, OutputInterface $output): int {
++    $this->loader = $this->container->get('yaml_content.load_helper');
+     $file = $input->getArgument('file');
+     $this->loader->importModule(
+       (string) $input->getArgument('module'),
+diff --git a/src/Drush/Commands/YamlContentImportProfileCommand.php b/src/Drush/Commands/YamlContentImportProfileCommand.php
+index bd74ec1..c5b501a 100644
+--- a/src/Drush/Commands/YamlContentImportProfileCommand.php
++++ b/src/Drush/Commands/YamlContentImportProfileCommand.php
+@@ -7,13 +7,13 @@ namespace Drupal\yaml_content\Drush\Commands;
+ use Drupal\Core\Config\ConfigFactoryInterface;
+ use Drupal\yaml_content\Service\LoadHelper;
+ use Drush\Commands\AutowireTrait;
++use Psr\Container\ContainerInterface;
+ use Symfony\Component\Console\Attribute\AsCommand;
+ use Symfony\Component\Console\Command\Command;
+ use Symfony\Component\Console\Input\InputArgument;
+ use Symfony\Component\Console\Input\InputInterface;
+ use Symfony\Component\Console\Input\InputOption;
+ use Symfony\Component\Console\Output\OutputInterface;
+-use Symfony\Component\DependencyInjection\Attribute\Autowire;
+ 
+ /**
+  * Imports YAML content provided by an installation profile.
+@@ -27,12 +27,13 @@ final class YamlContentImportProfileCommand extends Command {
+ 
+   use AutowireTrait;
+ 
++  protected LoadHelper $loader;
++
+   /**
+    * Constructs a YAML content profile import command.
+    */
+   public function __construct(
+-    #[Autowire(service: 'yaml_content.load_helper')]
+-    private readonly LoadHelper $loader,
++    private readonly ContainerInterface $container,
+     private readonly ConfigFactoryInterface $configFactory,
+   ) {
+     parent::__construct();
+@@ -59,6 +60,7 @@ final class YamlContentImportProfileCommand extends Command {
+       throw new \RuntimeException('No installation profile is active. Pass a profile machine name explicitly.');
+     }
+ 
++    $this->loader = $this->container->get('yaml_content.load_helper');
+     $file = $input->getArgument('file');
+     $this->loader->importProfile(
+       $profile,
