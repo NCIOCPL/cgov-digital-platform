@@ -3,6 +3,39 @@ import {
 	accordionizeForMobile,
 	accordionAnalyticsHandler,
 } from '../../core/util/accordionize-for-mobile';
+import { trackOther } from '../../core/analytics/eddl-util';
+
+const PRESS_RELEASE_REFERENCE_EVENT_NAME = 'PressRelease:Reference:LinkClick';
+const REFERENCE_LINK_SELECTOR = '.cgdp-article-footer-citation a';
+
+const referenceLinkClickHandler = (evt: Event): void => {
+	const link = evt.currentTarget as HTMLAnchorElement;
+
+	trackOther(
+		PRESS_RELEASE_REFERENCE_EVENT_NAME,
+		PRESS_RELEASE_REFERENCE_EVENT_NAME,
+		{
+			location: 'Body',
+			componentType: 'Reference',
+			linkText: link.textContent?.trim() || '_ERROR_',
+		}
+	);
+};
+
+const initializeReferenceLinkAnalytics = (): void => {
+	const referenceLinks = Array.from(
+		document.querySelectorAll(REFERENCE_LINK_SELECTOR)
+	) as HTMLAnchorElement[];
+
+	referenceLinks.forEach((link) => {
+		if (link.dataset.pressReleaseReferenceAnalyticsInit === 'true') {
+			return;
+		}
+
+		link.dataset.pressReleaseReferenceAnalyticsInit = 'true';
+		link.addEventListener('click', referenceLinkClickHandler);
+	});
+};
 
 // Track the accordion instance so we do not repeatedly create/destroy it.
 let accordionInstance: USAAccordion | null = null;
@@ -32,8 +65,13 @@ export const accordionClickHandler =
 /**
  * Wires up the selected resources element
  * as an accordion when on mobile
+ * @param trackPressReleaseReferences Whether to track press release reference links.
  */
-const initialize = () => {
+const initialize = (trackPressReleaseReferences = false) => {
+	if (trackPressReleaseReferences) {
+		initializeReferenceLinkAnalytics();
+	}
+
 	// Initialize the Accordion
 	accordionInstance = accordionizeForMobile(
 		'.cgdp-article-footer-citation',

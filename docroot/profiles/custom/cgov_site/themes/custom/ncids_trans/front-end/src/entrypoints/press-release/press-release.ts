@@ -34,7 +34,7 @@ const cgdpBodyAnalyticsInit = (): void => {
 document.addEventListener('DOMContentLoaded', () => {
 	cgdpDefinitionInit(true);
 	cgdpRelatedResourcesInit();
-	cgdpCitationInit();
+	cgdpCitationInit(true);
 	cgdpInfographicInit();
 	cgdpEmbedVideoInit();
 	cgdpEmbedCardInit();
