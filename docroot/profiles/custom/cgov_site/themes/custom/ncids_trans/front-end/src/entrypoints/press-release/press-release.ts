@@ -8,6 +8,7 @@ import cgdpEmbedVideoInit from '../../lib/components/wysiwyg/common/cgdp-embed-v
 import cgdpEmbedCardInit from '../../lib/components/wysiwyg/common/cgdp-embed-card';
 
 import { bodyLinkAnalyticsHelper } from '../../lib/core/analytics/inner-page-analytics-tracker';
+import { pressReleaseAnalyticsHelper } from '../../lib/core/analytics/press-release-analytics-helper';
 
 let pressReleaseBodyAnalyticsInit = false;
 
@@ -37,5 +38,6 @@ document.addEventListener('DOMContentLoaded', () => {
 	cgdpInfographicInit();
 	cgdpEmbedVideoInit();
 	cgdpEmbedCardInit();
+	pressReleaseAnalyticsHelper();
 	cgdpBodyAnalyticsInit();
 });
