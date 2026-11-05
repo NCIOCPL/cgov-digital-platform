@@ -81,4 +81,44 @@ describe('NCIDS Article Footer Citation', () => {
 
 		expect(accordionHeading).toBeInTheDocument();
 	});
+
+	it('sends press release reference analytics once per click', () => {
+		const spy = jest.spyOn(eddlUtil, 'trackOther');
+		document.body.insertAdjacentHTML(
+			'beforeend',
+			cgdpArticleFooterCitationNoAccordion
+		);
+
+		cgdpArticleFooterCitationInit(true);
+		cgdpArticleFooterCitationInit(true);
+		fireEvent.click(
+			screen.getByRole('link', { name: '10.1056/NEJMct0802899' })
+		);
+
+		expect(spy).toHaveBeenCalledTimes(1);
+		expect(spy).toHaveBeenCalledWith(
+			'PressRelease:Reference:LinkClick',
+			'PressRelease:Reference:LinkClick',
+			{
+				location: 'Body',
+				componentType: 'Reference',
+				linkText: '10.1056/NEJMct0802899',
+			}
+		);
+	});
+
+	it('does not send press release analytics by default', () => {
+		const spy = jest.spyOn(eddlUtil, 'trackOther');
+		document.body.insertAdjacentHTML(
+			'beforeend',
+			cgdpArticleFooterCitationNoAccordion
+		);
+
+		cgdpArticleFooterCitationInit();
+		fireEvent.click(
+			screen.getByRole('link', { name: '10.1056/NEJMct0802899' })
+		);
+
+		expect(spy).not.toHaveBeenCalled();
+	});
 });
