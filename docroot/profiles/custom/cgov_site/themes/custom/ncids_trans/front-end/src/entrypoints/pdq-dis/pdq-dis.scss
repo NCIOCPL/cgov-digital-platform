@@ -6,6 +6,9 @@
 @forward '../../lib/components/cgdp-related-resources/';
 @forward '../../lib/components/cgdp-public-use';
 @forward '../../lib/components/cgdp-audiofile';
+@forward '../../lib/components/cgdp-article-body';
+@forward '../../lib/components/cgdp-definition';
+@forward '../../lib/components/wysiwyg/editors/ncids-full-html';
 
 @use 'uswds-core' as *;
 
@@ -27,4 +30,20 @@
 
 .cgdp-field-drug-info-type {
 	@include u-margin-y(4);
+}
+
+// Margin between accordion sections (8px)
+.cgdp-article-body.usa-accordion {
+	@include u-margin-top(3);
+	section:not(:first-child) {
+		@include u-margin-top(1);
+	}
+}
+
+// Margin for butting related resources accordion
+// directly up against article content accordion above it
+.cgdp-article-footer {
+	&:has(.usa-accordion) {
+		@include u-margin-top(1);
+	}
 }

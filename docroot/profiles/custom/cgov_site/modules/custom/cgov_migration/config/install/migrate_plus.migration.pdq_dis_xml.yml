@@ -1,0 +1,39 @@
+id: pdq_dis_xml
+label: 'Migrate PDQ DIS XML into CMS nodes'
+migration_group: pdq_dis
+migration_tags:
+  - 'PDQ DIS'
+source:
+  plugin: pdq_dis_xml
+  track_changes: true
+process:
+  cdr_id: cdr_id
+  title: title
+  browser_title: title
+  description: description
+  site_section_path: site_section_path
+  pretty_url: pretty_url
+  pronunciation: pronunciation
+  audio_id: audio_id
+  intro_text: intro_text
+  drug_info_type: drug_info_type
+  us_brand_names: us_brand_names
+  drugs_in_combination: drugs_in_combination
+  fda_url: fda_url
+  body_sections: body_sections
+  related_resources: related_resources
+  posted_date: posted_date
+  updated_date: updated_date
+  reviewed_date:
+    plugin: pdq_migration_date
+  date_display_mode: date_display_mode
+  public_use: public_use
+destination:
+  plugin: pdq_dis_node
+migration_dependencies:
+  required: {  }
+  optional: {  }
+dependencies:
+  enforced:
+    module:
+      - cgov_migration

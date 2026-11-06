@@ -118,7 +118,10 @@ And('user fills out {string} with {string}', (section, text) => {
         cy.get(`label:contains("${section}")`).parent().parent().find('div.form-textarea-wrapper').type(text)
     }
     if (section == "Body") {
-        cy.get("textarea[id^=edit-body-0-value").type(text)
+        cy.get('.field--name-field-body-section-content')
+            .find('.ck-editor__editable[contenteditable="true"]')
+            .first()
+            .type(text)
     }
 })
 

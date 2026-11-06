@@ -32,7 +32,9 @@ class PDQConfigOverrider implements ConfigFactoryOverrideInterface {
 
       $content_types = $this->serviceContainer->get('entity_type.bundle.info')->getBundleInfo('node');
       foreach ($content_types as $type => $info) {
-        if (strpos($type, 'pdq_') !== FALSE) {
+        // PDQ DIS uses the standard Editorial Workflow. Only PDQ CIS uses the
+        // PDQ-specific workflow.
+        if ($type === 'pdq_cancer_information_summary') {
           $overrides['workflows.workflow.pdq_workflow']['type_settings']['entity_types']['node'][] = $type;
         }
       }
