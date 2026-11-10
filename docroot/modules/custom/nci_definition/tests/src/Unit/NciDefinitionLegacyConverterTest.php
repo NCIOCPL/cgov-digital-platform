@@ -1,12 +1,12 @@
 <?php
 
-namespace Drupal\nci_definition\tests\src\Unit;
+namespace Drupal\Tests\nci_definition\Unit;
 
 use Drupal\nci_definition\Services\NciDefinitionLegacyConverter;
 use PHPUnit\Framework\TestCase;
 
 /**
- * @coversDefaultClass \Drupal\nci_definition\NciDefinitionLegacyConverter
+ * @coversDefaultClass \Drupal\nci_definition\Services\NciDefinitionLegacyConverter
  *
  * @group nci_definition
  */

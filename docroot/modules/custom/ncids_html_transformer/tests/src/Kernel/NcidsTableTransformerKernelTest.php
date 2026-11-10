@@ -94,7 +94,7 @@ class NcidsTableTransformerKernelTest extends NcidsTransformerKernelTestBase {
   /**
    * Tests removal of width attribute when value is 100%.
    *
-   * @covers ::transform
+   * @covers ::transformAll
    */
   public function testTableStyleTransformationWithPercentWidthAttribute(): void {
     $input = '<table width="100%" style="background-color: #fff; margin: 10px; invalid-prop: value;"><tr style="text-align: center; color: red;"><td style="padding: 5px; font-size: large;">Cell Content</td></tr></table>';
@@ -106,7 +106,7 @@ class NcidsTableTransformerKernelTest extends NcidsTransformerKernelTestBase {
   /**
    * Tests removal of width style when value is 100%.
    *
-   * @covers ::transform
+   * @covers ::transformAll
    */
   public function testTableStyleTransformationWithPercentWidthStyle(): void {
     $input = '<table style="width: 100%; background-color: #fff; margin: 10px; invalid-prop: value;"><tr style="text-align: center; color: red;"><td style="padding: 5px; font-size: large;">Cell Content</td></tr></table>';

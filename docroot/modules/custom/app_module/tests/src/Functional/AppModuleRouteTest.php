@@ -9,6 +9,8 @@ use Drupal\Component\Render\FormattableMarkup;
  *
  * This is pretty much the field formatter test except we are
  * going to use an alias and try some different gets.
+ *
+ * @group app_module
  */
 class AppModuleRouteTest extends AppModuleFieldBrowserTestBase {
 

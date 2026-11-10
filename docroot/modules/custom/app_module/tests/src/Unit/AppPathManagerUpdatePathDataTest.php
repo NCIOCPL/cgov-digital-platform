@@ -11,11 +11,11 @@ use Drupal\Core\Language\Language;
 class AppPathManagerUpdatePathDataTest extends AppPathManagerTestBase {
 
   /**
-   * Tests the registerAppPath method - Negative Test.
+   * Tests the updateAppPath method - Negative Test.
    *
    * Tests for when the entity is not good.
    *
-   * @covers ::updateAppPathData
+   * @covers ::updateAppPath
    */
   public function testRegisterPathNotGoodEntity() {
     // Not a Content Entity.

@@ -195,19 +195,6 @@ cm:
   features:
     allow-overrides: true
     bundle: [default]
-paratest:
-  -
-    config: '${repo.root}/phpunit.xml'
-    path: '${docroot}/modules/custom'
-    class: null
-    file: null
-    procs: 4
-  -
-    config: '${repo.root}/phpunit.xml'
-    path: '${docroot}/profiles/custom/cgov_site'
-    class: null
-    file: null
-    procs: 4
 command-hooks:
   frontend-reqs:
     dir: '${docroot}/profiles/custom/cgov_site'
@@ -264,6 +251,36 @@ tests:
         weightFile: cypress/e2e/tests/parallel-weights.json
     testScript: 'cy:parallel'
     num-threads: 2
+
+  drupal:
+    test-runner: run-tests-script
+    sudo-run-tests: false
+    # See .ddev/config.selenium-standalone-chrome.yaml for simpletest
+    # configuration details.
+    simpletest-base-url: 'http://web'
+    simpletest-db: 'mysql://db:db@db/db'
+    concurrency: 8
+    drupal-tests:
+      -
+        concurrency: '${tests.drupal.concurrency}'
+        types:
+          - 'PHPUnit-Unit'
+          - 'PHPUnit-Kernel'
+          - 'PHPUnit-Functional'
+        directory: '${docroot}/modules/custom'
+        all: false
+        url: '${tests.drupal.simpletest-base-url}'
+        sqlite: '${tests.drupal.sqlite}'
+      -
+        concurrency: '${tests.drupal.concurrency}'
+        types:
+          - 'PHPUnit-Unit'
+          - 'PHPUnit-Kernel'
+          - 'PHPUnit-Functional'
+        directory: '${docroot}/profiles/custom/cgov_site'
+        all: false
+        url: '${tests.drupal.simpletest-base-url}'
+        sqlite: '${tests.drupal.sqlite}'
 
   phpunit:
     - { config: '${repo.root}/phpunit.xml', directory: '${docroot}/modules/custom' }
