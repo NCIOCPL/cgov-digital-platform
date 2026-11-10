@@ -18,6 +18,11 @@ drupal:
 tests.run-server: true
 tests.drupal.sudo-run-tests: false
 tests.chrome.args: '--disable-dev-shm-usage --no-gpu'
+# Neither startup nor cleanup matches this value, leaving DDEV in control.
+tests.drupal.web-driver: external
+# Omitted from BLT's environment assignments by array_filter(),
+# allowing the process to inherit DDEV's value.
+tests.drupal.mink-driver-args-webdriver: ''
 # The local.hostname must be set to 127.0.0.1:8888 because we are using drush runserver to test the site.
 project.local.hostname: 127.0.0.1:8888
 drush.debug: false

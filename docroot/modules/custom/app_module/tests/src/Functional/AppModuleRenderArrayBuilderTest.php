@@ -11,10 +11,7 @@ use Symfony\Component\HttpFoundation\RequestStack;
 /**
  * Test the AppModuleRenderArrayBuilder service.
  *
- * @group config_entity_example
- * @group examples
- *
- * @ingroup config_entity_example
+ * @group app_module
  */
 class AppModuleRenderArrayBuilderTest extends BrowserTestBase {
 
