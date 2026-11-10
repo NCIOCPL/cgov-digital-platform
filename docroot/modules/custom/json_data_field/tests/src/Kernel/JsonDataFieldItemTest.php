@@ -6,7 +6,7 @@ use Drupal\Core\Database\Connection;
 use Drupal\entity_test\Entity\EntityTest;
 
 /**
- * @coversDefaultClass \Drupal\json_data_field\Plugin\Field\FieldType\JSONItem
+ * @coversDefaultClass \Drupal\json_data_field\Plugin\Field\FieldType\JsonDataFieldItem
  *
  * @group json_data_field
  */

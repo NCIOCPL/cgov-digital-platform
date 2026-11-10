@@ -9,6 +9,8 @@ use Drupal\Tests\BrowserTestBase;
 
 /**
  * Verify publication of PDQ Cancer Information Summaries.
+ *
+ * @group pdq_cancer_information_summary
  */
 class ApiTest extends BrowserTestBase {
 

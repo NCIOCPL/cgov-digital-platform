@@ -15,6 +15,8 @@ use Drupal\Component\Render\FormattableMarkup;
  * the future when we have settings plugins, this should test the ability
  * to select an app module. Change its settings. Change the app module and
  * make sure the the previous settings were cleared out. Etc.
+ *
+ * @group app_module
  */
 class AppModuleReferenceSelectWidgetTest extends AppModuleFieldBrowserTestBase {
 

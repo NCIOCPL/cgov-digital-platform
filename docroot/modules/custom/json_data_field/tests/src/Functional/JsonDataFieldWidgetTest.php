@@ -10,6 +10,8 @@ use Drupal\Component\Render\FormattableMarkup;
  * Create a content type with a json_data_field field, configure
  * it with the yaml_textarea, create a node and check for
  * correct values.
+ *
+ * @group json_data_field
  */
 class JsonDataFieldWidgetTest extends JsonDataFieldBrowserTestBase {
 

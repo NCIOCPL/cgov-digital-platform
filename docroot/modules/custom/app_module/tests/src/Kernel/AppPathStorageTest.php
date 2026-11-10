@@ -9,6 +9,7 @@ use Drupal\KernelTests\KernelTestBase;
 /**
  * Tests the AppPathStorage class.
  *
+ * @coversDefaultClass \Drupal\app_module\AppPathStorage
  * @group app_module
  */
 class AppPathStorageTest extends KernelTestBase {
