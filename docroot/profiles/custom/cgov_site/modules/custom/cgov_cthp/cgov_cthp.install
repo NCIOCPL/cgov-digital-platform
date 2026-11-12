@@ -5,18 +5,39 @@
  * Contains cgov_cthp.install.
  */
 
+use Drupal\user\Entity\Role;
+
 /**
- * Implements hook_install().
- *
- * Perform actions to set up the site for this profile.
- *
- * @see system_install()
+ * Remove all cgov_cthp permissions for non-admin roles.
  */
-function cgov_cthp_install() {
-  // Get our helper.
-  $siteHelper = \Drupal::service('cgov_core.tools');
+function cgov_cthp_update_9001() {
+  $permissions_to_revoke = [
+    'create cgov_cthp content',
+    'edit own cgov_cthp content',
+    'edit any cgov_cthp content',
+    'delete own cgov_cthp content',
+    'delete any cgov_cthp content',
+    'view any unpublished cgov_cthp content',
+    'view cgov_cthp revisions',
+    'revert cgov_cthp revisions',
+    'delete cgov_cthp revisions',
+    'translate cgov_cthp node',
+  ];
 
-  // Add content type permissions.
-  $siteHelper->addContentTypePermissions('cgov_cthp', ['content_author']);
+  // Load all user roles to get their IDs.
+  $roles = Role::loadMultiple();
+  $rolePermissions = [];
 
+  // Build the array map expected by the helper function.
+  foreach ($roles as $role_id => $role) {
+    if ($role_id !== 'administrator') {
+      $rolePermissions[$role_id] = $permissions_to_revoke;
+    }
+  }
+
+  // Pass the mapped array to the core tools service.
+  if (!empty($rolePermissions)) {
+    $siteHelper = \Drupal::service('cgov_core.tools');
+    $siteHelper->removeRolePermissions($rolePermissions);
+  }
 }
