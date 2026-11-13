@@ -7,6 +7,8 @@ use Drupal\Tests\UnitTestCase;
 
 /**
  * Tests for the FileBasedZipCodeLookupService.
+ *
+ * @group cgov_cts
  */
 class FileBasedZipCodeLookupServiceTest extends UnitTestCase {
 

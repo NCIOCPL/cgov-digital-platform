@@ -6,7 +6,9 @@ use Drupal\cgov_js_app_module\Plugin\app_module\JsOnlyAppModulePlugin;
 use Drupal\Tests\UnitTestCase;
 
 /**
- * Tests for the PathProcessorAppModule.
+ * Tests the JS-only application module plugin.
+ *
+ * @group cgov_js_app_module
  */
 class JsOnlyAppModulePluginTest extends UnitTestCase {
 

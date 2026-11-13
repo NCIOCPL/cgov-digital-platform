@@ -9,6 +9,8 @@ use Symfony\Component\HttpFoundation\RequestStack;
 
 /**
  * Tests for the PathProcessorAppModule.
+ *
+ * @group app_module
  */
 class PathProcessorAppModuleTest extends UnitTestCase {
 

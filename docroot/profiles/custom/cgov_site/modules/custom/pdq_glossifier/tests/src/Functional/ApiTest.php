@@ -8,6 +8,8 @@ use Drupal\Tests\BrowserTestBase;
 
 /**
  * Verify correct behavior of the PDQ Glossifier service.
+ *
+ * @group pdq_glossifier
  */
 class ApiTest extends BrowserTestBase {
 

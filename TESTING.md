@@ -15,7 +15,7 @@ To make testing work you must:
 * run it inside of our [docker stack](https://github.com/NCIOCPL/cgov-digital-platform/wiki/Onboarding).
 * ensure that you have already completed [3. Get your Drupal Site Up and Running](https://github.com/NCIOCPL/cgov-digital-platform/wiki/Onboarding#3-get-your-drupal-site-up-and-running)
 
-Run `blt custom:paratest`
+Run `blt tests:drupal:run`
 
 ## Making Tests
 
