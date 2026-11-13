@@ -1,0 +1,46 @@
+diff --git a/src/Service/EntityLoadHelper.php b/src/Service/EntityLoadHelper.php
+index a30aecf..8d21514 100644
+--- a/src/Service/EntityLoadHelper.php
++++ b/src/Service/EntityLoadHelper.php
+@@ -201,6 +201,32 @@ class EntityLoadHelper implements ContainerInjectionInterface {
+     if ($entity_type === 'user' && isset($properties['name']) && $properties['name'] !== '') {
+       $properties = ['name' => $properties['name']];
+     }
++    else {
++      // Match on the entity's own globally-unique identity keys (id, uuid)
++      // only - NOT "label", which Drupal's API also calls an entity key but
++      // which is just a display name, never stable identity. Simple scalar
++      // values also get classified as properties (see
++      // self::categorizeAttributes()), but fields like name or weight are
++      // legitimately mutable between imports - requiring them to already
++      // match causes a false "not found" whenever a fixture updates one, and
++      // the import then tries to insert a duplicate with the same explicit
++      // id instead of updating the entity already there.
++      //
++      // Bundle and langcode are deliberately excluded here even though
++      // Drupal's API also calls them entity keys: unlike id/uuid they are
++      // shared by many entities, so collapsing a lookup down to just one of
++      // them (dropping a disambiguating property like name) matches an
++      // arbitrary entity of that bundle instead of the intended one.
++      $entity_definition = $this->getEntityDefinition($entity_type);
++      $identity_keys = array_intersect_key(
++        $entity_definition->getKeys(),
++        array_flip(['id', 'uuid'])
++      );
++      $identity_properties = array_intersect_key($properties, array_flip($identity_keys));
++      if ($identity_properties) {
++        $properties = $identity_properties;
++      }
++    }
+     // Storage property queries turn NULL into an invalid empty IN condition.
+     // Check empty values on matching entities in their default translation.
+     $empty_properties = array_keys($properties, NULL, TRUE);
+@@ -323,7 +349,7 @@ class EntityLoadHelper implements ContainerInjectionInterface {
+     $field_list = $this->getEntityFields($entity_type);
+     $entity_definition = $this->getEntityDefinition($entity_type);
+
+-    if ($entity_definition->hasKey($key)) {
++    if ($entity_definition->hasKey($key) || in_array($key, $entity_definition->getKeys(), TRUE)) {
+       $attribute_type = 'property';
+     }
+     elseif (($entity_definition instanceof ConfigEntityTypeInterface) && in_array($key, $entity_definition->getPropertiesToExport())) {

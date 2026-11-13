@@ -70,7 +70,7 @@
         "drupal/twig_field_value": "^2.0",
         "drupal/twig_tweak": "^3.1",
         "drupal/viewsreference": "2.0-beta10",
-        "drupal/yaml_content": "^1.0-alpha9",
+        "drupal/yaml_content": "dev-3.0.x",
         "drush/drush": "^13",
         "eluceo/ical": "^0.18.0",
         "justinrainbow/json-schema": "^6.5.1",
@@ -230,6 +230,10 @@
             },
             "drupal/features": {
                 "2834130 : Updates Features Diff to Include Alters (https://www.drupal.org/project/features/issues/2834130#comment-13139174, comment 4)": "patches/drupal/features/2834130-4-D8-features-detect-overrides-update.patch"
+            },
+            "drupal/yaml_content": {
+                "3617762 : Drush commands fail to register on Drush 13 due to autowire timing during module command discovery (https://git.drupalcode.org/project/yaml_content/-/work_items/3617762)": "patches/drupal/yaml_content/3617762-drush-command-di-autowire-timing.patch",
+                "3617763 : loadByProperties() reimport matching treats mutable label as identity, causing duplicate-insert collisions (https://git.drupalcode.org/project/yaml_content/-/work_items/3617763)": "patches/drupal/yaml_content/3617763-reimport-identity-matching.patch"
             },
             "drupal/purge": {
                 "3094343 : Garbled purge tag IDs (https://www.drupal.org/project/purge/issues/3094343#comment-15222203, comment 15)": "patches/drupal/purge/3094343-15-purge-tag-ids.patch",
