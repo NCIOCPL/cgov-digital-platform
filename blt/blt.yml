@@ -249,6 +249,10 @@ tests:
         weightFile: cypress/e2e/pretest/parallel-weights.json
       - specDir: cypress/e2e/tests/**/*.feature
         weightFile: cypress/e2e/tests/parallel-weights.json
+      # Keep PDQ pruning and glossary replacement after all parallel specs.
+      # A single feature makes cypress-parallel use one worker automatically.
+      - specDir: cypress/e2e/posttest/*.feature
+        weightFile: cypress/e2e/posttest/parallel-weights.json
     testScript: 'cy:parallel'
     num-threads: 2
 
