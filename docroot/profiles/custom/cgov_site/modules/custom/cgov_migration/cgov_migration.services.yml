@@ -1,0 +1,13 @@
+services:
+  cgov_migration.xml_parser:
+    class: Drupal\cgov_migration\DrugSummaryXmlParser
+  Drupal\cgov_migration\DrugSummaryXmlParser:
+    alias: cgov_migration.xml_parser
+  cgov_migration.pdq_dis_post_import:
+    class: Drupal\cgov_migration\EventSubscriber\PdqDisPostImportSubscriber
+    arguments:
+      - '@features.manager'
+      - '@features_assigner'
+      - '@logger.channel.default'
+    tags:
+      - { name: event_subscriber }

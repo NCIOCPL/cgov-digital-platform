@@ -38,11 +38,14 @@ class CgovConfigOverrider implements ConfigFactoryOverrideInterface {
    */
   public function loadOverrides($names) {
     $overrides = [];
-    // Editorial Workflow for all node types & non-image media items.
+    // Editorial Workflow for CGov and PDQ DIS nodes and non-image media items.
     if (in_array('workflows.workflow.editorial_workflow', $names)) {
       $content_types = $this->getBundleInfoService()->getBundleInfo('node');
       foreach ($content_types as $type => $info) {
-        if (strpos($type, 'cgov_') !== FALSE) {
+        if (
+          strpos($type, 'cgov_') !== FALSE ||
+          $type === 'pdq_drug_information_summary'
+        ) {
           $overrides['workflows.workflow.editorial_workflow']['type_settings']['entity_types']['node'][] = $type;
         }
       }

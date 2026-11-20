@@ -1,6 +1,7 @@
-import './pdq-dis-legacy.scss';
 import './pdq-dis.scss';
 
+import cgdpArticleBodyInit from '../../lib/components/cgdp-article-body';
+import cgdpDefinitionInit from '../../lib/components/cgdp-definition';
 import cgdpRelatedResourcesInit from '../../lib/components/cgdp-related-resources';
 
 declare global {
@@ -19,23 +20,12 @@ declare global {
 
 const onDOMContentLoaded = () => {
 	initializePdqAudio();
-	citAnchorLinks();
+	cgdpArticleBodyInit();
+	cgdpDefinitionInit(true);
 	cgdpRelatedResourcesInit();
 };
 
 document.addEventListener('DOMContentLoaded', onDOMContentLoaded);
-
-// Fix citation anchor links. Slashes in the original fragment can cause
-// analytics code to treat the fragment as an invalid selector.
-const citAnchorLinks = () => {
-	document.getElementById('cgvBody')?.addEventListener('click', (event) => {
-		const anchor = (event.target as HTMLElement | null)?.closest('a');
-		if (anchor instanceof HTMLAnchorElement && anchor.hash.includes('#cit/')) {
-			event.preventDefault();
-			window.location.hash = anchor.hash.replace('#cit/', '');
-		}
-	});
-};
 
 // Find pronunciation blocks on the page and wire up their auidio playback.
 const initializePdqAudio = () => {

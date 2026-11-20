@@ -36,6 +36,7 @@ function _ncids_trans_is_migrated_inner_page($bundle) {
     'cgov_press_release',
     'cgov_infographic',
     'cgov_video',
+    'pdq_drug_information_summary',
   ]);
 }
 
@@ -56,7 +57,6 @@ function ncids_trans_theme_suggestions_page_alter(array &$suggestions, array $va
   // page--ncids-inner-page.html.twig.
   $ncids_inner_page_types = [
     'cgov_cancer_research',
-    'pdq_drug_information_summary',
   ];
 
   if ($node = \Drupal::routeMatch()->getParameter('node')) {
