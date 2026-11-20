@@ -355,3 +355,26 @@ function cgov_core_update_10018(): void {
     $installer->uninstall(['admin_toolbar_links_access_filter']);
   }
 }
+
+/**
+ * Uninstall the retired Cancer Type Home Page module.
+ */
+function cgov_core_update_10019(): void {
+  $permissions = [
+    'content_author' => [
+      'create cgov_cthp content',
+      'delete any cgov_cthp content',
+      'delete own cgov_cthp content',
+      'edit any cgov_cthp content',
+      'edit own cgov_cthp content',
+      'revert cgov_cthp revisions',
+      'translate cgov_cthp node',
+      'view cgov_cthp revisions',
+    ],
+  ];
+  \Drupal::service('cgov_core.tools')->removeRolePermissions($permissions);
+
+  if (\Drupal::moduleHandler()->moduleExists('cgov_cthp')) {
+    \Drupal::service('module_installer')->uninstall(['cgov_cthp'], FALSE);
+  }
+}
