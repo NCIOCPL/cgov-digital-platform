@@ -56,9 +56,11 @@ class FrontendGlobalsForm extends FormBase {
       '#default_value' => $currentSettings,
       '#weight' => '0',
     ];
-    $form['submit'] = [
+    $form['actions'] = ['#type' => 'actions'];
+    $form['actions']['submit'] = [
       '#type' => 'submit',
       '#value' => $this->t('Save'),
+      '#button_type' => 'primary',
     ];
 
     return $form;
