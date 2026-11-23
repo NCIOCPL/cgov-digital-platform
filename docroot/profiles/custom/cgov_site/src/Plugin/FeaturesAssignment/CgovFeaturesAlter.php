@@ -2,6 +2,8 @@
 
 namespace Drupal\cgov_site\Plugin\FeaturesAssignment;
 
+use Drupal\Core\StringTranslation\TranslatableMarkup;
+use Drupal\features\Attribute\Assignment;
 use Drupal\features\FeaturesAssignmentMethodBase;
 
 /**
@@ -18,6 +20,16 @@ use Drupal\features\FeaturesAssignmentMethodBase;
  *   }
  * )
  */
+#[Assignment(
+  id: 'cgov_alter',
+  weight: 0,
+  name: new TranslatableMarkup('CGov Alter'),
+  description: new TranslatableMarkup('Alter configuration items before they are exported. Altering includes options such as removing dependencies from workflow.'),
+  config_route_name: 'cgov_site.cgov_assignment_alter',
+  default_settings: [
+    'workflow' => TRUE,
+  ],
+)]
 class CgovFeaturesAlter extends FeaturesAssignmentMethodBase {
 
   /**

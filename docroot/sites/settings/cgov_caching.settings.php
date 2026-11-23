@@ -32,5 +32,9 @@ if (CGovSettingsUtil::isAcquia()) {
     $ah_group = isset($_ENV['AH_SITE_GROUP']) ? $_ENV['AH_SITE_GROUP'] : NULL;
     $config['akamai.settings']['edgerc_path'] = "/mnt/files/{$_ENV['AH_SITE_GROUP']}.{$_ENV['AH_SITE_ENVIRONMENT']}/cgdp/edgerc";
     $config['akamai.settings']['basepath'] = 'https://' . $domain;
+    // Akamai 5.1+ purges from base_urls, which replaces basepath at runtime.
+    // Its post-update copies the stored (feature default) basepath into
+    // base_urls, so override it here too or purges target the wrong host.
+    $config['akamai.settings']['base_urls'] = ['https://' . $domain];
   }
 }
