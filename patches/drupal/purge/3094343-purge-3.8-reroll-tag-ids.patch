@@ -1,8 +1,8 @@
 diff --git a/src/Plugin/Purge/Queue/DatabaseQueue.php b/src/Plugin/Purge/Queue/DatabaseQueue.php
-index 9621fec..d776b1e 100644
+index 45aac67..61fea92 100644
 --- a/src/Plugin/Purge/Queue/DatabaseQueue.php
 +++ b/src/Plugin/Purge/Queue/DatabaseQueue.php
-@@ -67,40 +67,32 @@ class DatabaseQueue extends CoreDatabaseQueue implements QueueInterface {
+@@ -68,40 +68,32 @@ class DatabaseQueue extends CoreDatabaseQueue implements QueueInterface {
     * {@inheritdoc}
     */
    public function createItemMultiple(array $items) {
@@ -32,7 +32,7 @@ index 9621fec..d776b1e 100644
 -      // A multiple row-insert doesn't give back all the individual IDs, so
 -      // calculate them back by applying subtraction.
 -      for ($i = 1; $i <= count($records); $i++) {
--        $item_ids[] = $id;
+-        $item_ids[] = $this->castItemId($id);
 -        $id++;
 +    // Wrap these in our own loop so we get the right ID values.
 +    $ids = [];
@@ -46,7 +46,7 @@ index 9621fec..d776b1e 100644
 +            'created' => $now,
 +          ]);
 +        if ($id = $query->execute()) {
-+          $ids[] = (int) $id;
++          $ids[] = $this->castItemId($id);
 +        }
 +        else {
 +          // This will trigger a rollback of the transaction.
