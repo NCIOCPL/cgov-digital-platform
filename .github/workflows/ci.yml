@@ -74,103 +74,103 @@ jobs:
       - name: Checkout branch from Github
         uses: actions/checkout@v4
       ## Setup node and npm caching.
-      - name: Setup Node
-        uses: actions/setup-node@v4
-        with:
-          node-version: '24.22.1'
-          cache: 'npm'
-          cache-dependency-path: '**/package-lock.json'
-          registry-url: https://npm.pkg.github.com
-          scope: '@nciocpl'
-      - name: Install NPM
-        run: |
-          npm install -g npm@10.9.2
-      ## Setup PHP and Composer Caching
-      - name: Setup PHP with tools
-        uses: shivammathur/setup-php@v2
-        with:
-          php-version: '8.3'
-          ## This list of extensions matches those we install with our docker file, then I removed
-          ## cli, common, fpm cause they would not install, then I removed xdebug cause why?
-          extensions: bz2, curl, gd, mbstring, memcached, mysql, oauth, opcache, readline, sqlite3, soap, xml
-          tools: composer:v2
-      - name: Get Composer Cache Directory
-        id: composer-cache
-        run: |
-          echo "dir=$(composer config cache-files-dir)" >> $GITHUB_OUTPUT
-      - uses: actions/cache@v4
-        with:
-          path: ${{ steps.composer-cache.outputs.dir }}
-          key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}
-          restore-keys: |
-            ${{ runner.os }}-composer-
-      - name: Composer install
-        env:
-          COMPOSER_AUTH: '{"github-oauth": {"github.com": "${{ secrets.GITHUB_TOKEN }}"} }'
-        run: |
-          composer install
-      - name: Put BLT, Drush, etc. on the path.
-        run: |
-          echo "$PWD/vendor/bin" >> $GITHUB_PATH
-      - name: Setup Env
-        run: |
-          ## The mynci service creates the drupal DB, we need to make the
-          ## simpletest DB for the phpunit tests by hand here.
-          mysql -u root -proot --protocol=TCP -e "CREATE DATABASE IF NOT EXISTS simpletest"
-          mysql -u root -proot --protocol=TCP -e "GRANT ALL ON simpletest.* to 'simpletest'@'%' IDENTIFIED BY 'simpletest'"
-          ## We don't set git info for right now as we are in the NCIOCPL origin right now.
-      - name: Validate
-        run: |
-          blt validate --define drush.alias='${drush.aliases.ci}' --ansi --verbose --no-interaction
-      - name: Setup App
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          COMPOSER_AUTH: '{"github-oauth": {"github.com": "${{ secrets.GITHUB_TOKEN }}"} }'
-        run: |
-          ## The setup app script cannot create build.json as we are in the NCIOCPL origin.
-          blt setup --define drush.alias='${drush.aliases.ci}' --environment=ci --no-interaction --ansi --verbose
-      - name: Run Front-end Tests
-        run: |
-          blt tests:frontend:run --define drush.alias='${drush.aliases.ci}' --define tests.run-server=false --environment=ci --ansi --verbose --no-interaction
-      - name: Start test server
-        run: |
-              ## Running drush runserver is equivelent to blt tests:server:start, and is what happens under the hood, except this allows us to bind to all ips on the box.
-              ## blt was not letting us bind to those IPs we wanted.
-              drush runserver --quiet 0.0.0.0:8888 &
-      - name: Behavioral Tests
-        timeout-minutes: 120
-        run: |
-              blt tests:cypress:run --define drush.alias='${drush.aliases.ci}' --define tests.run-server=false --environment=ci --ansi --verbose --no-interaction
-      - name: Upload test screenshots
-        if: failure()
-        uses: actions/upload-artifact@v4
-        with:
-          name: cypress-test-screenshots
-          path: ./tests/cypress/cypress/screenshots
-      # The weights file is re-generated on every run, but an existing copy is needed in order to help distribute
-      # test suites between threads. So, we need to restore the file to its original state in order to avoid
-      # failing the job with modified files.
-      - name: Reset weights
-        run: |
-              git restore --worktree $(find ./tests/cypress/cypress/e2e/ -name parallel-weights.json)
-      - name: PHP Unit Tests
-        timeout-minutes: 120
-        run: |
-          blt tests:drupal:run --define drush.alias='${drush.aliases.ci}' --environment=ci --ansi --verbose
-      - name: Build Artifact
-        env:
-          NEW_BUILD_DIR: ${{ format('{0}{1}', runner.temp, '/artifact') }}
-          COMPOSER_AUTH: '{"github-oauth": {"github.com": "${{ secrets.GITHUB_TOKEN }}"} }'
-        run: |
-          blt deploy:check-dirty --ansi --verbose --no-interaction
-          blt artifact:build -D deploy.dir=${NEW_BUILD_DIR} -D deploy.docroot=${NEW_BUILD_DIR}/docroot --ansi --verbose --no-interaction
-      - name: Create Build Information
-        env:
-          BUILD_INFO: ${{ toJson(steps.set_vars.outputs) }}
-          NEW_BUILD_DIR: ${{ format('{0}{1}', runner.temp, '/artifact') }}
-        run: |
-          echo $BUILD_INFO
-          echo $BUILD_INFO > ${NEW_BUILD_DIR}/build.json
+      # - name: Setup Node
+      #   uses: actions/setup-node@v4
+      #   with:
+      #     node-version: '24.22.1'
+      #     cache: 'npm'
+      #     cache-dependency-path: '**/package-lock.json'
+      #     registry-url: https://npm.pkg.github.com
+      #     scope: '@nciocpl'
+      # - name: Install NPM
+      #   run: |
+      #     npm install -g npm@10.9.2
+      # ## Setup PHP and Composer Caching
+      # - name: Setup PHP with tools
+      #   uses: shivammathur/setup-php@v2
+      #   with:
+      #     php-version: '8.3'
+      #     ## This list of extensions matches those we install with our docker file, then I removed
+      #     ## cli, common, fpm cause they would not install, then I removed xdebug cause why?
+      #     extensions: bz2, curl, gd, mbstring, memcached, mysql, oauth, opcache, readline, sqlite3, soap, xml
+      #     tools: composer:v2
+      # - name: Get Composer Cache Directory
+      #   id: composer-cache
+      #   run: |
+      #     echo "dir=$(composer config cache-files-dir)" >> $GITHUB_OUTPUT
+      # - uses: actions/cache@v4
+      #   with:
+      #     path: ${{ steps.composer-cache.outputs.dir }}
+      #     key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}
+      #     restore-keys: |
+      #       ${{ runner.os }}-composer-
+      # - name: Composer install
+      #   env:
+      #     COMPOSER_AUTH: '{"github-oauth": {"github.com": "${{ secrets.GITHUB_TOKEN }}"} }'
+      #   run: |
+      #     composer install
+      # - name: Put BLT, Drush, etc. on the path.
+      #   run: |
+      #     echo "$PWD/vendor/bin" >> $GITHUB_PATH
+      # - name: Setup Env
+      #   run: |
+      #     ## The mynci service creates the drupal DB, we need to make the
+      #     ## simpletest DB for the phpunit tests by hand here.
+      #     mysql -u root -proot --protocol=TCP -e "CREATE DATABASE IF NOT EXISTS simpletest"
+      #     mysql -u root -proot --protocol=TCP -e "GRANT ALL ON simpletest.* to 'simpletest'@'%' IDENTIFIED BY 'simpletest'"
+      #     ## We don't set git info for right now as we are in the NCIOCPL origin right now.
+      # - name: Validate
+      #   run: |
+      #     blt validate --define drush.alias='${drush.aliases.ci}' --ansi --verbose --no-interaction
+      # - name: Setup App
+      #   env:
+      #     NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      #     COMPOSER_AUTH: '{"github-oauth": {"github.com": "${{ secrets.GITHUB_TOKEN }}"} }'
+      #   run: |
+      #     ## The setup app script cannot create build.json as we are in the NCIOCPL origin.
+      #     blt setup --define drush.alias='${drush.aliases.ci}' --environment=ci --no-interaction --ansi --verbose
+      # - name: Run Front-end Tests
+      #   run: |
+      #     blt tests:frontend:run --define drush.alias='${drush.aliases.ci}' --define tests.run-server=false --environment=ci --ansi --verbose --no-interaction
+      # - name: Start test server
+      #   run: |
+      #         ## Running drush runserver is equivelent to blt tests:server:start, and is what happens under the hood, except this allows us to bind to all ips on the box.
+      #         ## blt was not letting us bind to those IPs we wanted.
+      #         drush runserver --quiet 0.0.0.0:8888 &
+      # - name: Behavioral Tests
+      #   timeout-minutes: 120
+      #   run: |
+      #         blt tests:cypress:run --define drush.alias='${drush.aliases.ci}' --define tests.run-server=false --environment=ci --ansi --verbose --no-interaction
+      # - name: Upload test screenshots
+      #   if: failure()
+      #   uses: actions/upload-artifact@v4
+      #   with:
+      #     name: cypress-test-screenshots
+      #     path: ./tests/cypress/cypress/screenshots
+      # # The weights file is re-generated on every run, but an existing copy is needed in order to help distribute
+      # # test suites between threads. So, we need to restore the file to its original state in order to avoid
+      # # failing the job with modified files.
+      # - name: Reset weights
+      #   run: |
+      #         git restore --worktree $(find ./tests/cypress/cypress/e2e/ -name parallel-weights.json)
+      # - name: PHP Unit Tests
+      #   timeout-minutes: 120
+      #   run: |
+      #     blt tests:drupal:run --define drush.alias='${drush.aliases.ci}' --environment=ci --ansi --verbose
+      # - name: Build Artifact
+      #   env:
+      #     NEW_BUILD_DIR: ${{ format('{0}{1}', runner.temp, '/artifact') }}
+      #     COMPOSER_AUTH: '{"github-oauth": {"github.com": "${{ secrets.GITHUB_TOKEN }}"} }'
+      #   run: |
+      #     blt deploy:check-dirty --ansi --verbose --no-interaction
+      #     blt artifact:build -D deploy.dir=${NEW_BUILD_DIR} -D deploy.docroot=${NEW_BUILD_DIR}/docroot --ansi --verbose --no-interaction
+      # - name: Create Build Information
+      #   env:
+      #     BUILD_INFO: ${{ toJson(steps.set_vars.outputs) }}
+      #     NEW_BUILD_DIR: ${{ format('{0}{1}', runner.temp, '/artifact') }}
+      #   run: |
+      #     echo $BUILD_INFO
+      #     echo $BUILD_INFO > ${NEW_BUILD_DIR}/build.json
       - name: Setup SSH Keys and known_hosts
         run: |
           mkdir -p $HOME/.ssh
@@ -182,14 +182,14 @@ jobs:
           git config --global user.name "Github Actions"
           git config --global user.email "webcommauto@users.noreply.github.com"
       - name: Push Artifact to Acquia
-        run: ./.github/scripts/push_acquia_git.sh
+        run: ./.github/scripts/test_acquia_git.sh
         shell: bash
         env:
           ACE_GIT_SUBSCRIPTION: ${{ secrets.ACE_GIT_SUBSCRIPTION }}
           ACE_GIT_HOST: ${{ secrets.ACE_GIT_HOST }}
-          ARTIFACT_GIT_DIR: ${{ format('{0}{1}', runner.temp, '/artifact-git') }}
+          #ARTIFACT_GIT_DIR: ${{ format('{0}{1}', runner.temp, '/artifact-git') }}
           ACE_BRANCH_NAME: ${{ format('gh-build-{0}', steps.set_vars.outputs.build_name) }}
-          NEW_BUILD_DIR: ${{ format('{0}{1}', runner.temp, '/artifact') }}
+          #NEW_BUILD_DIR: ${{ format('{0}{1}', runner.temp, '/artifact') }}
           ## This also uses available envs:
           ## - GITHUB_REF
           ## - GITHUB_RUN_ID
