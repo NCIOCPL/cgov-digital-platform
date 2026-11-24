@@ -4,12 +4,8 @@ dependencies:
   config:
     - field.storage.node.field_landing_contents
     - node.type.cgov_mini_landing
-    - paragraphs.paragraphs_type.cgov_card_borderless
     - paragraphs.paragraphs_type.cgov_card_raw_html
-    - paragraphs.paragraphs_type.cgov_content_block
-    - paragraphs.paragraphs_type.cgov_dynamic_list
     - paragraphs.paragraphs_type.cgov_list
-    - paragraphs.paragraphs_type.cgov_two_item_feature_row
     - paragraphs.paragraphs_type.ncids_3_feature_row_opt_head
     - paragraphs.paragraphs_type.ncids_content_block
     - paragraphs.paragraphs_type.ncids_dynamic_list
@@ -35,12 +31,8 @@ settings:
   handler: 'default:paragraph'
   handler_settings:
     target_bundles:
-      cgov_content_block: cgov_content_block
-      cgov_two_item_feature_row: cgov_two_item_feature_row
       cgov_list: cgov_list
-      cgov_card_borderless: cgov_card_borderless
       cgov_card_raw_html: cgov_card_raw_html
-      cgov_dynamic_list: cgov_dynamic_list
       ncids_slim_hero: ncids_slim_hero
       ncids_3_feature_row_opt_head: ncids_3_feature_row_opt_head
       ncids_content_block: ncids_content_block
@@ -57,7 +49,7 @@ settings:
         enabled: false
       cgov_card_borderless:
         weight: 4
-        enabled: true
+        enabled: false
       cgov_card_external:
         weight: -14
         enabled: false
@@ -78,7 +70,7 @@ settings:
         enabled: false
       cgov_content_block:
         weight: 1
-        enabled: true
+        enabled: false
       cgov_cthp_block_card:
         weight: 59
         enabled: false
@@ -105,7 +97,7 @@ settings:
         enabled: false
       cgov_dynamic_list:
         weight: 6
-        enabled: true
+        enabled: false
       cgov_external_link:
         weight: 68
         enabled: false
@@ -138,7 +130,7 @@ settings:
         enabled: false
       cgov_two_item_feature_row:
         weight: 2
-        enabled: true
+        enabled: false
       ncids_2_guide_card_row:
         weight: 79
         enabled: false
