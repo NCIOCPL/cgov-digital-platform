@@ -236,3 +236,8 @@ AddEncoding gzip svgz
   # Set the HSTS header on Acquia sites where the non-Acquia domains are used.
   Header set Strict-Transport-Security "max-age=31557600; preload"
 </IfModule>
+
+# We use drush to install sites. Not need for this to be available.
+<Files "install.php">
+  Require all denied
+</Files>
