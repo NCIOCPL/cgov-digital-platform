@@ -1,0 +1,13 @@
+diff --git docroot/.htaccess docroot/.htaccess
+index 26eb1e37..e1678a66 100644
+--- docroot/.htaccess
++++ docroot/.htaccess
+@@ -236,3 +236,8 @@ AddEncoding gzip svgz
+   # Set the HSTS header on Acquia sites where the non-Acquia domains are used.
+   Header set Strict-Transport-Security "max-age=31557600; preload"
+ </IfModule>
++
++# We use drush to install sites. Not need for this to be available.
++<Files "install.php">
++  Require all denied
++</Files>
