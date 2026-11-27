@@ -1,0 +1,82 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - core.entity_view_mode.media.image_display_admin_card_override
+    - field.field.media.cgov_image.field_accessible_version
+    - field.field.media.cgov_image.field_caption
+    - field.field.media.cgov_image.field_credit
+    - field.field.media.cgov_image.field_display_enlarge
+    - field.field.media.cgov_image.field_media_image
+    - field.field.media.cgov_image.field_ncids_promo_art_16x9
+    - field.field.media.cgov_image.field_ncids_promo_art_1x1
+    - field.field.media.cgov_image.field_ncids_promo_art_4x3
+    - field.field.media.cgov_image.field_original_source
+    - field.field.media.cgov_image.field_override_img_featured
+    - field.field.media.cgov_image.field_override_img_panoramic
+    - field.field.media.cgov_image.field_override_img_social_media
+    - field.field.media.cgov_image.field_override_img_thumbnail
+    - image.style.ncids_promo_1x1
+    - media.type.cgov_image
+  module:
+    - image
+    - layout_builder
+third_party_settings:
+  layout_builder:
+    enabled: false
+    allow_custom: false
+id: media.cgov_image.image_display_admin_card_override
+targetEntityType: media
+bundle: cgov_image
+mode: image_display_admin_card_override
+content:
+  field_media_image:
+    type: image
+    label: above
+    settings:
+      image_link: ''
+      image_style: ncids_featured_16x9
+      image_loading:
+        attribute: lazy
+    third_party_settings: {  }
+    weight: 0
+    region: content
+  field_ncids_promo_art_16x9:
+    type: image
+    label: above
+    settings:
+      image_link: ''
+      image_style: ncids_featured_16x9
+      image_loading:
+        attribute: lazy
+    third_party_settings: {  }
+    weight: 2
+    region: content
+  field_ncids_promo_art_1x1:
+    type: image
+    label: above
+    settings:
+      image_link: ''
+      image_style: ncids_promo_1x1
+      image_loading:
+        attribute: lazy
+    third_party_settings: {  }
+    weight: 1
+    region: content
+hidden:
+  content_moderation_control: true
+  created: true
+  field_accessible_version: true
+  field_caption: true
+  field_credit: true
+  field_display_enlarge: true
+  field_ncids_promo_art_4x3: true
+  field_original_source: true
+  field_override_img_featured: true
+  field_override_img_panoramic: true
+  field_override_img_social_media: true
+  field_override_img_thumbnail: true
+  langcode: true
+  name: true
+  thumbnail: true
+  uid: true

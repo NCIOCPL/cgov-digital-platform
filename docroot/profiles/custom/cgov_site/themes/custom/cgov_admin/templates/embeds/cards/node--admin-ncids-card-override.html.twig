@@ -1,0 +1,36 @@
+{% import '@cgov_admin/templates/embeds/cards/card_macros.twig' as cardMacros %}
+
+<div class="override-fields">
+{# ###### Setup Title ####### #}
+{% set title = content.field_card_title|field_value %}
+{% if title is empty %}
+  {% set title = content.field_browser_title|field_value %}
+{% endif %}
+{% if title is not empty %}
+  <span class="override-fields__title">{{ title }}</span>
+  <p>These are the fields for the selected item prior to being overridden</p>
+  <p><b>field_card_title:</b> {{ title }}</p>
+{% endif %}
+
+{# ####### Set description ###### #}
+{% set description = content.field_feature_card_description|field_value %}
+{% if description is empty %}
+  {% set description = content.field_list_description|field_value %}
+{% endif %}
+{% if description is not empty %}
+  <div class="override-fields__description">
+    <p><b>field_feature_card_description:</b> </br>{{ description }}</p>
+  </div>
+{% endif %}
+
+{# ####### Set Image ######## #}
+  <div class="override-fields__image">
+    {% if content.field_image_promotional|field_value %}
+      {% set image = content.field_image_promotional %}
+      {{- image -}}
+    {% elseif content.field_image_article|field_value %}
+      <div class="field__label">Article Image</div>
+      {{- content.field_image_article -}}
+    {% endif %}
+  </div>
+</div>

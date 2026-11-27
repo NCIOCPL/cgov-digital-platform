@@ -27,7 +27,7 @@ dependencies:
     - datetime
     - entity_browser
     - image
-    - paragraphs_asymmetric_translation_widgets
+    - paragraphs
     - path
 id: node.cgov_mini_landing.default
 targetEntityType: node
@@ -112,16 +112,24 @@ content:
       selection_mode: selection_append
     third_party_settings: {  }
   field_landing_contents:
-    type: paragraphs_classic_asymmetric
+    type: paragraphs
     weight: 13
     region: content
     settings:
       title: Content
       title_plural: Contents
-      edit_mode: open
+      edit_mode: closed
+      closed_mode: summary
+      autocollapse: none
+      closed_mode_threshold: 0
       add_mode: dropdown
       form_display_mode: default
       default_paragraph_type: _none
+      features:
+        add_above: '0'
+        collapse_edit_all: collapse_edit_all
+        convert: '0'
+        duplicate: duplicate
     third_party_settings: {  }
   field_list_description:
     type: string_textarea
